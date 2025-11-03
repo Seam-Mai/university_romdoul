@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="km">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ព័ត៌មាន - សាកលវិទ្យាល័យរំដួលបច្ចេកវិទ្យា</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+    <style>
+      body {
+        font-family: "Antioch Text", "Moul", "Noto Sans Khmer", "Arial",
+          sans-serif;
+        background-color: #f8f8f8;
+        line-height: 1.7;
+        font-size: 15px;
+        color: #333;
+      }
+      .khmer-os-siemreap-font {
+        font-family: "Khmer OS Siemreap", "Moul", "Noto Sans Khmer", "Arial",
+          sans-serif !important;
+      }
+      .container-wrapper {
+        max-width: 1100px;
+      }
+      .header-bg {
+        background-color: #0d47a1;
+      }
+      .nav-link {
+        padding: 14px 20px;
+        display: block;
+        color: white;
+        font-weight: 500;
+        font-size: 15px;
+        border-right: 1px solid rgba(255, 255, 255, 0.1);
+        white-space: nowrap;
+        transition: background-color 0.3s ease;
+      }
+      .nav-link:hover {
+        background-color: #083c6c;
+      }
+      .active-nav {
+        background-color: #083c6c;
+        border-bottom: 3px solid #fbc02d;
+        padding-bottom: 11px;
+      }
+      .footer-bg {
+        background-color: #263238;
+        color: #cfd8dc;
+      }
+      .footer-link:hover {
+        color: #fbc02d;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container-wrapper mx-auto bg-white shadow-xl mt-6 mb-6">
+      <!-- Top Utility Bar -->
+      <div
+        class="flex justify-between items-center px-8 py-2 text-xs text-gray-700 bg-gray-50 border-b border-gray-200"
+      >
+        <div class="flex space-x-4 items-center">
+          <span class="text-blue-700 flex items-center space-x-1">
+            <i class="fas fa-phone-alt text-sm"></i>
+            <span>099 55 55 4444</span>
+          </span>
+          <span class="text-blue-700 flex items-center space-x-1">
+            <i class="fas fa-envelope text-sm"></i>
+            <span>info@romdoult-tech.edu.km</span>
+          </span>
+        </div>
+        <div class="flex space-x-4">
+          <a href="#" class="hover:text-blue-600 transition-colors">English</a>
+          <a href="#" class="hover:text-blue-600 font-bold transition-colors"
+            >ខ្មែរ</a
+          >
+        </div>
+      </div>
+
+      <!-- Header -->
+      <header
+        class="p-6 flex items-center justify-between border-b border-gray-200"
+      >
+        <div class="flex items-center space-x-4">
+          <div
+            class="w-16 h-16 bg-[#0d47a1] rounded-full flex items-center justify-center border-4 border-[#fbc02d] shadow-md"
+          >
+            <span class="text-white font-black text-3xl leading-none">R</span>
+          </div>
+          <div class="flex flex-col">
+            <h1
+              class="text-3xl font-extrabold text-[#0d47a1] khmer-os-siemreap-font"
+            >
+              សាកលវិទ្យាល័យរំដួលបច្ចេកវិទ្យា
+            </h1>
+            <h2
+              class="text-sm text-gray-600 font-semibold uppercase tracking-wider"
+            >
+              Romdoul Technology University
+            </h2>
+          </div>
+        </div>
+        <div class="hidden lg:flex items-center space-x-3">
+          <input
+            type="text"
+            placeholder="ស្វែងរក..."
+            class="p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#0d47a1] focus:border-transparent transition-all w-64 text-sm"
+          />
+          <button
+            class="bg-[#0d47a1] text-white p-2 rounded-lg hover:bg-[#083c6c] transition-colors"
+          >
+            <i class="fas fa-search"></i>
+          </button>
+        </div>
+      </header>
+
+      <!-- Navigation -->
+      <nav class="header-bg shadow-lg">
+        <div class="flex text-sm">
+          <a href="index.html" class="nav-link">ទំព័រដើម</a>
+          <a href="about.html" class="nav-link">អំពីយើង</a>
+          <a href="news.html" class="nav-link active-nav">ព័ត៌មាន</a>
+          <a href="documents.html" class="nav-link">ឯកសារ</a>
+          <a href="publication.html" class="nav-link">ផ្សព្វផ្សាយ</a>
+          <a href="contact.html" class="nav-link">ទំនាក់ទំនង</a>
+          <a href="help.html" class="nav-link">ជំនួយ</a>
+        </div>
+      </nav>
+
+      <!-- Main Content -->
+      <main class="p-8 lg:p-10">
+        <h2 class="text-3xl font-bold text-[#0d47a1] mb-6">ព័ត៌មានថ្មីៗ</h2>
+
+        <!-- Featured News -->
+        <div
+          class="bg-gradient-to-r from-[#0d47a1] to-[#1565c0] text-white p-8 rounded-lg shadow-lg mb-8"
+        >
+          <div class="flex items-center mb-3">
+            <span
+              class="bg-[#fbc02d] text-gray-900 px-3 py-1 rounded-full text-xs font-bold"
+              >ព័ត៌មានពិសេស</span
+            >
+            <span class="ml-3 text-sm">ថ្ងៃទី ០៦ ខែតុលា ឆ្នាំ២០២៣</span>
+          </div>
+          <h3 class="text-2xl font-bold mb-3">
+            សេចក្តីប្រកាសស្តីពីការចុះឈ្មោះនិស្សិតថ្មីជំនាន់ទី១០ ឆ្នាំសិក្សា
+            ២០២៤-២០២៥
+          </h3>
+          <p class="mb-4">
+            សាកលវិទ្យាល័យរំដួលបច្ចេកវិទ្យា
+            សូមជម្រាបជូនដំណឹងដល់សិស្សានុសិស្សទាំងអស់ដែលទើបបញ្ចប់ការសិក្សាថ្នាក់វិទ្យាល័យ...
+          </p>
+          <a
+            href="index.html"
+            class="inline-block bg-white text-[#0d47a1] px-6 py-2 rounded-lg font-semibold hover:bg-gray-100 transition-colors"
+            >អានបន្ថែម →</a
+          >
+        </div>
+
+        <!-- News Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <!-- News Item 1 -->
+          <div
+            class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-shadow"
+          >
+            <img
+              src="https://picsum.photos/400/250?random=20"
+              alt="News"
+              class="w-full h-48 object-cover"
+            />
+            <div class="p-5">
+              <div class="flex items-center mb-2">
+                <span
+                  class="bg-blue-100 text-[#0d47a1] px-2 py-1 rounded text-xs font-semibold"
+                  >ព្រឹត្តិការណ៍</span
+                >
+                <span class="ml-auto text-xs text-gray-500">២៥ តុលា ២០២៤</span>
+              </div>
+              <h3
+                class="text-lg font-bold text-gray-800 mb-2 hover:text-[#0d47a1] cursor-pointer"
+              >
+                កិច្ចប្រជុំស្តីពីការរៀបចំកម្មវិធីសិក្សាថ្មី
+              </h3>
+              <p class="text-sm text-gray-600 mb-3">
+                កិច្ចប្រជុំជាមួយគណៈកម្មការគ្រូបង្រៀនដើម្បីធ្វើបច្ចុប្បន្នភាពកម្មវិធីសិក្សា...
+              </p>
+              <a
+                href="#"
+                class="text-[#0d47a1] text-sm font-semibold hover:underline"
+                >អានបន្ថែម →</a
+              >
+            </div>
+          </div>
+
+          <!-- News Item 2 -->
+          <div
+            class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-shadow"
+          >
+            <img
+              src="https://picsum.photos/400/250?random=21"
+              alt="News"
+              class="w-full h-48 object-cover"
+            />
+            <div class="p-5">
+              <div class="flex items-center mb-2">
+                <span
+                  class="bg-green-100 text-green-700 px-2 py-1 rounded text-xs font-semibold"
+                  >សិស្ស</span
+                >
+                <span class="ml-auto text-xs text-gray-500">២០ តុលា ២០២៤</span>
+              </div>
+              <h3
+                class="text-lg font-bold text-gray-800 mb-2 hover:text-[#0d47a1] cursor-pointer"
+              >
+                ពិធីជួបសំណេះសំណាលជាមួយនិស្សិតឆ្នើម
+              </h3>
+              <p class="text-sm text-gray-600 mb-3">
+                ការជួបជុំសំណេះសំណាលប្រចាំឆ្នាំជាមួយនិស្សិតដែលទទួលបានពិន្ទុខ្ពស់...
+              </p>
+              <a
+                href="#"
+                class="text-[#0d47a1] text-sm font-semibold hover:underline"
+                >អានបន្ថែម →</a
+              >
+            </div>
+          </div>
+
+          <!-- News Item 3 -->
+          <div
+            class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-shadow"
+          >
+            <img
+              src="https://picsum.photos/400/250?random=22"
+              alt="News"
+              class="w-full h-48 object-cover"
+            />
+            <div class="p-5">
+              <div class="flex items-center mb-2">
+                <span
+                  class="bg-yellow-100 text-yellow-700 px-2 py-1 rounded text-xs font-semibold"
+                  >ពិធី</span
+                >
+                <span class="ml-auto text-xs text-gray-500">១៥ តុលា ២០២៤</span>
+              </div>
+              <h3
+                class="text-lg font-bold text-gray-800 mb-2 hover:text-[#0d47a1] cursor-pointer"
+              >
+                ពិធីប្រគល់សញ្ញាបត្រជូនិស្សិតជ័យលាភី ២០២៣
+              </h3>
+              <p class="text-sm text-gray-600 mb-3">
+                ពិធីប្រគល់សញ្ញាបត្របរិញ្ញាបត្រដល់និស្សិតជំនាន់ទី៩ ចំនួនជាង
+                ៥០០នាក់...
+              </p>
+              <a
+                href="#"
+                class="text-[#0d47a1] text-sm font-semibold hover:underline"
+                >អានបន្ថែម →</a
+              >
+            </div>
+          </div>
+
+          <!-- News Item 4 -->
+          <div
+            class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-shadow"
+          >
+            <img
+              src="https://picsum.photos/400/250?random=23"
+              alt="News"
+              class="w-full h-48 object-cover"
+            />
+            <div class="p-5">
+              <div class="flex items-center mb-2">
+                <span
+                  class="bg-purple-100 text-purple-700 px-2 py-1 rounded text-xs font-semibold"
+                  >អាហារូបករណ៍</span
+                >
+                <span class="ml-auto text-xs text-gray-500">១០ តុលា ២០២៤</span>
+              </div>
+              <h3
+                class="text-lg font-bold text-gray-800 mb-2 hover:text-[#0d47a1] cursor-pointer"
+              >
+                សេចក្តីជូនដំណឹងលទ្ធផលអាហារូបករណ៍
+              </h3>
+              <p class="text-sm text-gray-600 mb-3">
+                លទ្ធផលអាហារូបករណ៍សម្រាប់និស្សិតឆ្នើមប្រចាំឆ្នាំសិក្សា
+                ២០២៤-២០២៥...
+              </p>
+              <a
+                href="#"
+                class="text-[#0d47a1] text-sm font-semibold hover:underline"
+                >អានបន្ថែម →</a
+              >
+            </div>
+          </div>
+
+          <!-- News Item 5 -->
+          <div
+            class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-shadow"
+          >
+            <img
+              src="https://picsum.photos/400/250?random=24"
+              alt="News"
+              class="w-full h-48 object-cover"
+            />
+            <div class="p-5">
+              <div class="flex items-center mb-2">
+                <span
+                  class="bg-red-100 text-red-700 px-2 py-1 rounded text-xs font-semibold"
+                  >សិក្ខាសាលា</span
+                >
+                <span class="ml-auto text-xs text-gray-500">០៥ តុលា ២០២៤</span>
+              </div>
+              <h3
+                class="text-lg font-bold text-gray-800 mb-2 hover:text-[#0d47a1] cursor-pointer"
+              >
+                សិក្ខាសាលាស្តីពី AI និងការងារនាពេលអនាគត
+              </h3>
+              <p class="text-sm text-gray-600 mb-3">
+                សិក្ខាសាលាអំពីបញ្ញាសិប្បនិម្មិត (AI)
+                និងឥទ្ធិពលរបស់វាលើទីផ្សារការងារ...
+              </p>
+              <a
+                href="#"
+                class="text-[#0d47a1] text-sm font-semibold hover:underline"
+                >អានបន្ថែម →</a
+              >
+            </div>
+          </div>
+
+          <!-- News Item 6 -->
+          <div
+            class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-shadow"
+          >
+            <img
+              src="https://picsum.photos/400/250?random=25"
+              alt="News"
+              class="w-full h-48 object-cover"
+            />
+            <div class="p-5">
+              <div class="flex items-center mb-2">
+                <span
+                  class="bg-indigo-100 text-indigo-700 px-2 py-1 rounded text-xs font-semibold"
+                  >ការប្រកួត</span
+                >
+                <span class="ml-auto text-xs text-gray-500">០១ តុលា ២០២៤</span>
+              </div>
+              <h3
+                class="text-lg font-bold text-gray-800 mb-2 hover:text-[#0d47a1] cursor-pointer"
+              >
+                ការប្រកួតកូដឌីង និងការច្នៃប្រឌិត
+              </h3>
+              <p class="text-sm text-gray-600 mb-3">
+                ការប្រកួតប្រជែងកូដឌីងប្រចាំឆ្នាំ ២០២៤ ដែលមានក្រុមចូលរួមចំនួន
+                ២០...
+              </p>
+              <a
+                href="#"
+                class="text-[#0d47a1] text-sm font-semibold hover:underline"
+                >អានបន្ថែម →</a
+              >
+            </div>
+          </div>
+        </div>
+
+        <!-- Pagination -->
+        <div class="flex justify-center mt-10">
+          <div class="flex space-x-2">
+            <button
+              class="px-4 py-2 bg-gray-200 text-gray-600 rounded-lg hover:bg-gray-300 transition-colors"
+            >
+              មុន
+            </button>
+            <button class="px-4 py-2 bg-[#0d47a1] text-white rounded-lg">
+              ១
+            </button>
+            <button
+              class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors"
+            >
+              ២
+            </button>
+            <button
+              class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors"
+            >
+              ៣
+            </button>
+            <button
+              class="px-4 py-2 bg-gray-200 text-gray-600 rounded-lg hover:bg-gray-300 transition-colors"
+            >
+              បន្ទាប់
+            </button>
+          </div>
+        </div>
+      </main>
+
+      <!-- Footer -->
+      <footer class="footer-bg">
+        <div class="p-10 grid grid-cols-1 md:grid-cols-4 gap-8">
+          <div>
+            <h4 class="text-xl font-bold text-white mb-4">
+              សាកលវិទ្យាល័យរំដួលបច្ចេកវិទ្យា
+            </h4>
+            <p class="text-sm mb-4">
+              សាកលវិទ្យាល័យបច្ចេកវិទ្យានាំមុខគេក្នុងការអប់រំ និងស្រាវជ្រាវ។
+            </p>
+            <div class="space-y-2 text-sm">
+              <p class="flex items-center space-x-2">
+                <i class="fas fa-map-marker-alt text-[#fbc02d]"></i>
+                <span
+                  >អាសយដ្ឋាន៖ អគារ R-T, ផ្លូវជាតិលេខ ៦, ក្រុងសៀមរាប,
+                  កម្ពុជា</span
+                >
+              </p>
+              <p class="flex items-center space-x-2">
+                <i class="fas fa-phone-alt text-[#fbc02d]"></i>
+                <span>ទូរស័ព្ទ៖ 099 55 55 4444</span>
+              </p>
+              <p class="flex items-center space-x-2">
+                <i class="fas fa-envelope text-[#fbc02d]"></i>
+                <span>អ៊ីម៉ែល៖ info@romdoult-tech.edu.km</span>
+              </p>
+            </div>
+          </div>
+          <div>
+            <h4 class="text-lg font-bold text-white mb-4">ផែនទីគេហទំព័រ</h4>
+            <ul class="space-y-2 text-sm">
+              <li><a href="index.html" class="footer-link">ទំព័រដើម</a></li>
+              <li><a href="about.html" class="footer-link">អំពីយើង</a></li>
+              <li><a href="news.html" class="footer-link">ព័ត៌មាន</a></li>
+              <li><a href="documents.html" class="footer-link">ឯកសារ</a></li>
+              <li>
+                <a href="publication.html" class="footer-link">ផ្សព្វផ្សាយ</a>
+              </li>
+            </ul>
+          </div>
+          <div>
+            <h4 class="text-lg font-bold text-white mb-4">
+              ជំនួយ និង លក្ខខណ្ឌ
+            </h4>
+            <ul class="space-y-2 text-sm">
+              <li><a href="contact.html" class="footer-link">ទំនាក់ទំនង</a></li>
+              <li><a href="#" class="footer-link">សំនួរញឹកញាប់</a></li>
+              <li><a href="#" class="footer-link">គោលការណ៍ឯកជនភាព</a></li>
+              <li><a href="#" class="footer-link">លក្ខខណ្ឌប្រើប្រាស់</a></li>
+              <li><a href="#" class="footer-link">ការកំណត់ខូគី</a></li>
+            </ul>
+          </div>
+          <div>
+            <h4 class="text-lg font-bold text-white mb-4">តាមដានយើង</h4>
+            <div class="flex space-x-3 mb-6">
+              <a
+                href="#"
+                class="text-2xl hover:text-[#3b5998] transition-colors"
+                ><i class="fab fa-facebook-square"></i
+              ></a>
+              <a
+                href="#"
+                class="text-2xl hover:text-[#00acee] transition-colors"
+                ><i class="fab fa-twitter-square"></i
+              ></a>
+              <a
+                href="#"
+                class="text-2xl hover:text-[#FF0000] transition-colors"
+                ><i class="fab fa-youtube-square"></i
+              ></a>
+              <a
+                href="#"
+                class="text-2xl hover:text-[#0088cc] transition-colors"
+                ><i class="fab fa-telegram"></i
+              ></a>
+            </div>
+            <h4 class="text-lg font-bold text-white mb-2">
+              ព្រឹត្តិបត្រព័ត៌មាន
+            </h4>
+            <form class="flex">
+              <input
+                type="email"
+                placeholder="អ៊ីម៉ែលរបស់អ្នក..."
+                class="p-2 text-sm text-gray-900 rounded-l-md w-full focus:outline-none"
+              />
+              <button
+                class="bg-[#fbc02d] text-gray-900 p-2 text-sm rounded-r-md hover:bg-[#e6a200] transition-colors"
+              >
+                ចុះឈ្មោះ
+              </button>
+            </form>
+          </div>
+        </div>
+        <div
+          class="p-4 text-center text-xs border-t border-gray-700 bg-gray-900 text-gray-400"
+        >
+          © 2025 សាកលវិទ្យាល័យរំដួលបច្ចេកវិទ្យា (Romdoul Tech University) |
+          រក្សាសិទ្ធិគ្រប់យ៉ាង
+        </div>
+      </footer>
+    </div>
+  </body>
+</html>

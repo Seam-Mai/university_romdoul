@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="km">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ជំនួយ - សាកលវិទ្យាល័យរំដួលបច្ចេកវិទ្យា</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+    <style>
+      body {
+        font-family: "Khmer OS Siemreap", "Moul", "Noto Sans Khmer", "Arial",
+          sans-serif;
+        background-color: #f8f8f8;
+        line-height: 1.7;
+        font-size: 15px;
+        color: #333;
+      }
+      .container-wrapper {
+        max-width: 1100px;
+      }
+      .header-bg {
+        background-color: #0d47a1;
+      }
+      .nav-link {
+        padding: 14px 20px;
+        display: block;
+        color: white;
+        font-weight: 500;
+        font-size: 15px;
+        border-right: 1px solid rgba(255, 255, 255, 0.1);
+        white-space: nowrap;
+        transition: background-color 0.3s ease;
+      }
+      .nav-link:hover {
+        background-color: #083c6c;
+      }
+      .active-nav {
+        background-color: #083c6c;
+        border-bottom: 3px solid #fbc02d;
+        padding-bottom: 11px;
+      }
+      .footer-bg {
+        background-color: #263238;
+        color: #cfd8dc;
+      }
+      .footer-link:hover {
+        color: #fbc02d;
+      }
+      .faq-item {
+        cursor: pointer;
+      }
+      .faq-answer {
+        display: none;
+      }
+      .faq-item.active .faq-answer {
+        display: block;
+      }
+      .faq-item.active .faq-icon {
+        transform: rotate(180deg);
+      }
+      .faq-icon {
+        transition: transform 0.3s ease;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container-wrapper mx-auto bg-white shadow-xl mt-6 mb-6">
+      <!-- Top Utility Bar -->
+      <div
+        class="flex justify-between items-center px-8 py-2 text-xs text-gray-700 bg-gray-50 border-b border-gray-200"
+      >
+        <div class="flex space-x-4 items-center">
+          <span class="text-blue-700 flex items-center space-x-1">
+            <i class="fas fa-phone-alt text-sm"></i>
+            <span>099 55 55 4444</span>
+          </span>
+          <span class="text-blue-700 flex items-center space-x-1">
+            <i class="fas fa-envelope text-sm"></i>
+            <span>info@romdoult-tech.edu.km</span>
+          </span>
+        </div>
+        <div class="flex space-x-4">
+          <a href="#" class="hover:text-blue-600 transition-colors">English</a>
+          <a href="#" class="hover:text-blue-600 font-bold transition-colors"
+            >ខ្មែរ</a
+          >
+        </div>
+      </div>
+
+      <!-- Header -->
+      <header
+        class="p-6 flex items-center justify-between border-b border-gray-200"
+      >
+        <div class="flex items-center space-x-4">
+          <div
+            class="w-16 h-16 bg-[#0d47a1] rounded-full flex items-center justify-center border-4 border-[#fbc02d] shadow-md"
+          >
+            <span class="text-white font-black text-3xl leading-none">R</span>
+          </div>
+          <div class="flex flex-col">
+            <h1 class="text-3xl font-extrabold text-[#0d47a1]">
+              សាកលវិទ្យាល័យរំដួលបច្ចេកវិទ្យា
+            </h1>
+            <h2
+              class="text-sm text-gray-600 font-semibold uppercase tracking-wider"
+            >
+              Romdoul Technology University
+            </h2>
+          </div>
+        </div>
+        <div class="hidden lg:flex items-center space-x-3">
+          <input
+            type="text"
+            placeholder="ស្វែងរក..."
+            class="p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#0d47a1] focus:border-transparent transition-all w-64 text-sm"
+          />
+          <button
+            class="bg-[#0d47a1] text-white p-2 rounded-lg hover:bg-[#083c6c] transition-colors"
+          >
+            <i class="fas fa-search"></i>
+          </button>
+        </div>
+      </header>
+
+      <!-- Navigation -->
+      <nav class="header-bg shadow-lg">
+        <div class="flex text-sm">
+          <a href="index.html" class="nav-link">ទំព័រដើម</a>
+          <a href="about.html" class="nav-link">អំពីយើង</a>
+          <a href="news.html" class="nav-link">ព័ត៌មាន</a>
+          <a href="documents.html" class="nav-link">ឯកសារ</a>
+          <a href="publication.html" class="nav-link">ផ្សព្វផ្សាយ</a>
+          <a href="contact.html" class="nav-link">ទំនាក់ទំនង</a>
+          <a href="help.html" class="nav-link active-nav">ជំនួយ</a>
+        </div>
+      </nav>
+
+      <!-- Main Content -->
+      <main class="p-8 lg:p-10">
+        <h2 class="text-3xl font-bold text-[#0d47a1] mb-6">មជ្ឈមណ្ឌលជំនួយ</h2>
+
+        <!-- Quick Help Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+          <div
+            class="bg-gradient-to-br from-blue-50 to-blue-100 p-6 rounded-lg border-l-4 border-[#0d47a1] hover:shadow-lg transition-shadow"
+          >
+            <div class="flex items-center mb-3">
+              <div class="bg-[#0d47a1] text-white p-3 rounded-full mr-4">
+                <i class="fas fa-user-graduate text-2xl"></i>
+              </div>
+              <h3 class="text-lg font-bold text-[#0d47a1]">សម្រាប់និស្សិត</h3>
+            </div>
+            <p class="text-sm text-gray-700 mb-3">
+              ព័ត៌មានសម្រាប់និស្សិតបច្ចុប្បន្ន អំពីតារាងសិក្សា ការប្រឡង
+              និងសេវាផ្សេងៗ។
+            </p>
+            <a
+              href="#students"
+              class="text-[#0d47a1] font-semibold text-sm hover:underline"
+              >ស្វែងយល់បន្ថែម →</a
+            >
+          </div>
+
+          <div
+            class="bg-gradient-to-br from-yellow-50 to-yellow-100 p-6 rounded-lg border-l-4 border-[#fbc02d] hover:shadow-lg transition-shadow"
+          >
+            <div class="flex items-center mb-3">
+              <div class="bg-[#fbc02d] text-gray-900 p-3 rounded-full mr-4">
+                <i class="fas fa-file-alt text-2xl"></i>
+              </div>
+              <h3 class="text-lg font-bold text-[#0d47a1]">ចុះឈ្មោះចូលរៀន</h3>
+            </div>
+            <p class="text-sm text-gray-700 mb-3">
+              ព័ត៌មានអំពីការចុះឈ្មោះ លក្ខខណ្ឌ និងនីតិវិធី។
+            </p>
+            <a
+              href="#admission"
+              class="text-[#0d47a1] font-semibold text-sm hover:underline"
+              >ស្វែងយល់បន្ថែម →</a
+            >
+          </div>
+
+          <div
+            class="bg-gradient-to-br from-green-50 to-green-100 p-6 rounded-lg border-l-4 border-green-600 hover:shadow-lg transition-shadow"
+          >
+            <div class="flex items-center mb-3">
+              <div class="bg-green-600 text-white p-3 rounded-full mr-4">
+                <i class="fas fa-question-circle text-2xl"></i>
+              </div>
+              <h3 class="text-lg font-bold text-[#0d47a1]">សំណួរញឹកញាប់</h3>
+            </div>
+            <p class="text-sm text-gray-700 mb-3">
+              ចម្លើយដល់សំណួរដែលត្រូវបានសួរញឹកញាប់បំផុត។
+            </p>
+            <a
+              href="#faq"
+              class="text-[#0d47a1] font-semibold text-sm hover:underline"
+              >មើលសំណួរ →</a
+            >
+          </div>
+        </div>
+
+        <!-- FAQ Section -->
+        <div id="faq" class="mb-10">
+          <h3
+            class="text-2xl font-bold text-[#0d47a1] mb-6 border-b-2 border-[#fbc02d] pb-2 inline-block"
+          >
+            សំណួរញឹកញាប់ (FAQ)
+          </h3>
+
+          <div class="space-y-3">
+            <!-- FAQ Item 1 -->
+            <div
+              class="faq-item bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-md transition-shadow"
+            >
+              <div class="p-4 flex justify-between items-center">
+                <h4 class="font-semibold text-gray-800 flex items-center">
+                  <i class="fas fa-question-circle text-[#0d47a1] mr-3"></i>
+                  តើត្រូវមានឯកសារអ្វីខ្លះសម្រាប់ការចុះឈ្មោះ?
+                </h4>
+                <i class="fas fa-chevron-down faq-icon text-[#0d47a1]"></i>
+              </div>
+              <div
+                class="faq-answer px-4 pb-4 text-gray-700 border-t border-gray-100 pt-3"
+              >
+                <p>សម្រាប់ការចុះឈ្មោះ អ្នកត្រូវការ៖</p>
+                <ul class="list-disc list-inside mt-2 space-y-1">
+                  <li>សញ្ញាបត្របាក់ឌុប ឬសញ្ញាបត្រសមមូល</li>
+                  <li>ប្រតិបត្តិកម្មពិន្ទុ</li>
+                  <li>រូបថតទំហំ 4x6 ចំនួន 4 សន្លឹក</li>
+                  <li>សំណាងអត្តសញ្ញាណប័ណ្ណ ឬសំណាងលិខិតកំណើត</li>
+                  <li>ទម្រង់ពាក្យចុះឈ្មោះបំពេញពេញលេញ</li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- FAQ Item 2 -->
+            <div
+              class="faq-item bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-md transition-shadow"
+            >
+              <div class="p-4 flex justify-between items-center">
+                <h4 class="font-semibold text-gray-800 flex items-center">
+                  <i class="fas fa-question-circle text-[#0d47a1] mr-3"></i>
+                  តើថ្លៃសិក្សាប្រចាំឆ្នាំប៉ុន្មាន?
+                </h4>
+                <i class="fas fa-chevron-down faq-icon text-[#0d47a1]"></i>
+              </div>
+              <div
+                class="faq-answer px-4 pb-4 text-gray-700 border-t border-gray-100 pt-3"
+              >
+                <p>ថ្លៃសិក្សាប្រែប្រួលអាស្រ័យលើជំនាញសិក្សា៖</p>
+                <ul class="list-disc list-inside mt-2 space-y-1">
+                  <li>វិទ្យាសាស្ត្រកុំព្យូទ័រ និង IT៖ $1,200 - $1,500/ឆ្នាំ</li>
+                  <li>វិស្វកម្មស៊ីវិល៖ $1,000 - $1,300/ឆ្នាំ</li>
+                  <li>គ្រប់គ្រងពាណិជ្ជកម្ម៖ $900 - $1,200/ឆ្នាំ</li>
+                </ul>
+                <p class="mt-2">មានអាហារូបករណ៍សម្រាប់សិស្សឆ្នើម។</p>
+              </div>
+            </div>
+
+            <!-- FAQ Item 3 -->
+            <div
+              class="faq-item bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-md transition-shadow"
+            >
+              <div class="p-4 flex justify-between items-center">
+                <h4 class="font-semibold text-gray-800 flex items-center">
+                  <i class="fas fa-question-circle text-[#0d47a1] mr-3"></i>
+                  តើមានកន្លែងស្នាក់នៅសម្រាប់និស្សិតដែរឬទេ?
+                </h4>
+                <i class="fas fa-chevron-down faq-icon text-[#0d47a1]"></i>
+              </div>
+              <div
+                class="faq-answer px-4 pb-4 text-gray-700 border-t border-gray-100 pt-3"
+              >
+                <p>
+                  បាទ/ចាស។
+                  សាកលវិទ្យាល័យមានអន្តេវាសិកដ្ឋានសម្រាប់និស្សិតដែលមានបន្ទប់ទំនើប
+                  មានសុវត្ថិភាព និងគ្រប់គ្រាន់។
+                  និស្សិតក៏អាចស្វែងរកកន្លែងស្នាក់នៅខាងក្រៅបាន។
+                </p>
+              </div>
+            </div>
+
+            <!-- FAQ Item 4 -->
+            <div
+              class="faq-item bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-md transition-shadow"
+            >
+              <div class="p-4 flex justify-between items-center">
+                <h4 class="font-semibold text-gray-800 flex items-center">
+                  <i class="fas fa-question-circle text-[#0d47a1] mr-3"></i>
+                  តើរយៈពេលសិក្សាគឺប៉ុន្មានឆ្នាំ?
+                </h4>
+                <i class="fas fa-chevron-down faq-icon text-[#0d47a1]"></i>
+              </div>
+              <div
+                class="faq-answer px-4 pb-4 text-gray-700 border-t border-gray-100 pt-3"
+              >
+                <p>
+                  កម្មវិធីបរិញ្ញាបត្រមានរយៈពេល 4 ឆ្នាំ (8 ឆមាស)
+                  សម្រាប់ជំនាញភាគច្រើន។
+                  កម្មវិធីមួយចំនួនដូចជាវិស្វកម្មអាចមានរយៈពេល 4-5 ឆ្នាំ។
+                </p>
+              </div>
+            </div>
+
+            <!-- FAQ Item 5 -->
+            <div
+              class="faq-item bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-md transition-shadow"
+            >
+              <div class="p-4 flex justify-between items-center">
+                <h4 class="font-semibold text-gray-800 flex items-center">
+                  <i class="fas fa-question-circle text-[#0d47a1] mr-3"></i>
+                  តើមានការងារធ្វើសម្រាប់និស្សិតដែរឬទេ?
+                </h4>
+                <i class="fas fa-chevron-down faq-icon text-[#0d47a1]"></i>
+              </div>
+              <div
+                class="faq-answer px-4 pb-4 text-gray-700 border-t border-gray-100 pt-3"
+              >
+                <p>
+                  បាទ/ចាស។ សាកលវិទ្យាល័យមានកម្មវិធី Internship
+                  និងការងារក្រៅម៉ោងសម្រាប់និស្សិត។
+                  យើងក៏មានការិយាល័យផ្តល់ប្រឹក្សាអាជីពដើម្បីជួយនិស្សិតស្វែងរកការងារ។
+                </p>
+              </div>
+            </div>
+
+            <!-- FAQ Item 6 -->
+            <div
+              class="faq-item bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-md transition-shadow"
+            >
+              <div class="p-4 flex justify-between items-center">
+                <h4 class="font-semibold text-gray-800 flex items-center">
+                  <i class="fas fa-question-circle text-[#0d47a1] mr-3"></i>
+                  តើអាចបង់ថ្លៃសិក្សារំលស់បានដែរឬទេ?
+                </h4>
+                <i class="fas fa-chevron-down faq-icon text-[#0d47a1]"></i>
+              </div>
+              <div
+                class="faq-answer px-4 pb-4 text-gray-700 border-t border-gray-100 pt-3"
+              >
+                <p>
+                  បាទ/ចាស។ សាកលវិទ្យាល័យផ្តល់ជម្រើសបង់រំលស់ជាពីរដង
+                  (ម្តងក្នុងមួយឆមាស) ឬបីដងក្នុងមួយឆ្នាំសិក្សា។
+                  សូមទំនាក់ទំនងនាយកដ្ឋានហិរញ្ញវត្ថុសម្រាប់ព័ត៌មានលម្អិត។
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Need More Help Section -->
+        <div
+          class="bg-gradient-to-r from-[#0d47a1] to-[#1565c0] text-white p-8 rounded-lg shadow-lg"
+        >
+          <div class="text-center">
+            <i class="fas fa-headset text-5xl mb-4"></i>
+            <h3 class="text-2xl font-bold mb-3">ត្រូវការជំនួយបន្ថែម?</h3>
+            <p class="mb-6">ក្រុមការងាររបស់យើងរង់ចាំជួយអ្នក</p>
+            <div class="flex flex-wrap justify-center gap-4">
+              <a
+                href="contact.html"
+                class="bg-white text-[#0d47a1] px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors flex items-center"
+              >
+                <i class="fas fa-envelope mr-2"></i>
+                ទាក់ទងយើង
+              </a>
+              <a
+                href="tel:099555544444"
+                class="bg-[#fbc02d] text-gray-900 px-6 py-3 rounded-lg font-semibold hover:bg-[#e6a200] transition-colors flex items-center"
+              >
+                <i class="fas fa-phone mr-2"></i>
+                ហៅទូរស័ព្ទ
+              </a>
+            </div>
+          </div>
+        </div>
+      </main>
+
+      <!-- Footer -->
+      <footer class="footer-bg">
+        <div class="p-10 grid grid-cols-1 md:grid-cols-4 gap-8">
+          <div>
+            <h4 class="text-xl font-bold text-white mb-4">
+              សាកលវិទ្យាល័យរំដួលបច្ចេកវិទ្យា
+            </h4>
+            <p class="text-sm mb-4">
+              សាកលវិទ្យាល័យបច្ចេកវិទ្យានាំមុខគេក្នុងការអប់រំ និងស្រាវជ្រាវ។
+            </p>
+            <div class="space-y-2 text-sm">
+              <p class="flex items-center space-x-2">
+                <i class="fas fa-map-marker-alt text-[#fbc02d]"></i>
+                <span
+                  >អាសយដ្ឋាន៖ អគារ R-T, ផ្លូវជាតិលេខ ៦, ក្រុងសៀមរាប,
+                  កម្ពុជា</span
+                >
+              </p>
+              <p class="flex items-center space-x-2">
+                <i class="fas fa-phone-alt text-[#fbc02d]"></i>
+                <span>ទូរស័ព្ទ៖ 099 55 55 4444</span>
+              </p>
+              <p class="flex items-center space-x-2">
+                <i class="fas fa-envelope text-[#fbc02d]"></i>
+                <span>អ៊ីម៉ែល៖ info@romdoult-tech.edu.km</span>
+              </p>
+            </div>
+          </div>
+          <div>
+            <h4 class="text-lg font-bold text-white mb-4">ផែនទីគេហទំព័រ</h4>
+            <ul class="space-y-2 text-sm">
+              <li><a href="index.html" class="footer-link">ទំព័រដើម</a></li>
+              <li><a href="about.html" class="footer-link">អំពីយើង</a></li>
+              <li><a href="news.html" class="footer-link">ព័ត៌មាន</a></li>
+              <li><a href="documents.html" class="footer-link">ឯកសារ</a></li>
+              <li>
+                <a href="publication.html" class="footer-link">ផ្សព្វផ្សាយ</a>
+              </li>
+            </ul>
+          </div>
+          <div>
+            <h4 class="text-lg font-bold text-white mb-4">
+              ជំនួយ និង លក្ខខណ្ឌ
+            </h4>
+            <ul class="space-y-2 text-sm">
+              <li><a href="contact.html" class="footer-link">ទំនាក់ទំនង</a></li>
+              <li><a href="#" class="footer-link">សំនួរញឹកញាប់</a></li>
+              <li><a href="#" class="footer-link">គោលការណ៍ឯកជនភាព</a></li>
+              <li><a href="#" class="footer-link">លក្ខខណ្ឌប្រើប្រាស់</a></li>
+              <li><a href="#" class="footer-link">ការកំណត់ខូគី</a></li>
+            </ul>
+          </div>
+          <div>
+            <h4 class="text-lg font-bold text-white mb-4">តាមដានយើង</h4>
+            <div class="flex space-x-3 mb-6">
+              <a
+                href="#"
+                class="text-2xl hover:text-[#3b5998] transition-colors"
+                ><i class="fab fa-facebook-square"></i
+              ></a>
+              <a
+                href="#"
+                class="text-2xl hover:text-[#00acee] transition-colors"
+                ><i class="fab fa-twitter-square"></i
+              ></a>
+              <a
+                href="#"
+                class="text-2xl hover:text-[#FF0000] transition-colors"
+                ><i class="fab fa-youtube-square"></i
+              ></a>
+              <a
+                href="#"
+                class="text-2xl hover:text-[#0088cc] transition-colors"
+                ><i class="fab fa-telegram"></i
+              ></a>
+            </div>
+            <h4 class="text-lg font-bold text-white mb-2">
+              ព្រឹត្តិបត្រព័ត៌មាន
+            </h4>
+            <form class="flex">
+              <input
+                type="email"
+                placeholder="អ៊ីម៉ែលរបស់អ្នក..."
+                class="p-2 text-sm text-gray-900 rounded-l-md w-full focus:outline-none"
+              />
+              <button
+                class="bg-[#fbc02d] text-gray-900 p-2 text-sm rounded-r-md hover:bg-[#e6a200] transition-colors"
+              >
+                ចុះឈ្មោះ
+              </button>
+            </form>
+          </div>
+        </div>
+        <div
+          class="p-4 text-center text-xs border-t border-gray-700 bg-gray-900 text-gray-400"
+        >
+          © 2025 សាកលវិទ្យាល័យរំដួលបច្ចេកវិទ្យា (Romdoul Tech University) |
+          រក្សាសិទ្ធិគ្រប់យ៉ាង
+        </div>
+      </footer>
+    </div>
+
+    <script>
+      // FAQ Toggle Functionality
+      document.querySelectorAll(".faq-item").forEach((item) => {
+        item.addEventListener("click", function () {
+          const isActive = this.classList.contains("active");
+
+          // Close all FAQ items
+          document.querySelectorAll(".faq-item").forEach((faq) => {
+            faq.classList.remove("active");
+          });
+
+          // Open clicked item if it wasn't active
+          if (!isActive) {
+            this.classList.add("active");
+          }
+        });
+      });
+    </script>
+  </body>
+</html>
