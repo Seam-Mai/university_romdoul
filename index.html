@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>ទំព័រដើម - សាកលវិទ្យាល័យរំដួលបច្ចេកវិទ្យា</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="icon" type="image/png" href="img/logo.png" />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
@@ -28,6 +29,8 @@
       .header-bg {
         background-color: #0d47a1;
       }
+
+      /* Desktop Navigation */
       .nav-link {
         padding: 14px 20px;
         display: block;
@@ -47,23 +50,22 @@
       .nav-item-wrapper > .nav-link {
         border-right: none;
       }
-
       .active-nav {
         background-color: #083c6c;
         border-bottom: 3px solid #fbc02d;
         padding-bottom: 11px;
       }
 
-      /* Custom Styles for Dropdown */
+      /* Desktop Dropdown */
       .nav-dropdown {
         position: absolute;
-        top: 100%; /* Position right below the nav link */
+        top: 100%;
         left: 0;
         min-width: 200px;
-        background-color: #083c6c; /* Darker blue background */
+        background-color: #083c6c;
         z-index: 10;
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        display: none; /* Hidden by default, shown on hover via group-hover:block */
+        display: none;
       }
       .nav-dropdown a {
         padding: 10px 20px;
@@ -75,36 +77,405 @@
         font-weight: 400;
       }
       .nav-dropdown a:hover {
-        background-color: #0d47a1; /* Hover effect */
-        color: #fbc02d; /* Yellow hover text */
+        background-color: #0d47a1;
+        color: #fbc02d;
       }
-
-      /* Nested Dropdown Styles */
-      /* ធាតុរុំសម្រាប់ម៉ឺនុយរង ត្រូវតែជា relative group */
       .nav-dropdown-item-parent {
         position: relative;
       }
-      /* ម៉ឺនុយរងទម្លាក់ចុះខាងស្តាំ */
       .nav-sub-dropdown {
         position: absolute;
-        top: 0; /* Align with the parent item */
-        left: 100%; /* Position to the right of the parent item */
+        top: 0;
+        left: 100%;
         min-width: 200px;
-        background-color: #0d47a1; /* Even darker blue background for nested menu */
-        z-index: 20; /* Higher z-index than main dropdown */
+        background-color: #0d47a1;
+        z-index: 20;
         box-shadow: 4px 4px 6px rgba(0, 0, 0, 0.1);
-        display: none; /* Hidden by default, shown on hover */
+        display: none;
       }
-      /* Hover state for nested parent to show submenu */
       .nav-dropdown-item-parent:hover > .nav-sub-dropdown {
         display: block;
       }
-      /* Hover state for nested item links */
       .nav-sub-dropdown a:hover {
         background-color: #083c6c;
         color: #fbc02d;
       }
-      /* End Nested Dropdown Styles */
+
+      /* Mobile Navigation Styles */
+      .mobile-menu {
+        position: fixed;
+        top: 0;
+        left: -100%;
+        width: 280px;
+        height: 100vh;
+        background-color: #0d47a1;
+        z-index: 1000;
+        transition: left 0.3s ease;
+        overflow-y: auto;
+        overflow-x: hidden;
+        box-shadow: 2px 0 10px rgba(0, 0, 0, 0.3);
+      }
+      .mobile-menu.active {
+        left: 0;
+      }
+      .mobile-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100vh;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 999;
+        display: none;
+      }
+      .mobile-overlay.active {
+        display: block;
+      }
+      .mobile-nav-link {
+        padding: 12px 20px;
+        color: white;
+        display: block;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        transition: background-color 0.2s ease;
+      }
+      .mobile-nav-link:hover {
+        background-color: #083c6c;
+      }
+      .mobile-nav-link.active {
+        background-color: #083c6c;
+        border-left: 4px solid #fbc02d;
+      }
+      .mobile-dropdown {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.3s ease;
+        background-color: #083c6c;
+      }
+      .mobile-dropdown.active {
+        max-height: 500px;
+      }
+      .mobile-dropdown a {
+        padding: 10px 20px 10px 40px;
+        color: white;
+        display: block;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        font-size: 14px;
+      }
+      .mobile-dropdown a:hover {
+        background-color: #0d47a1;
+        color: #fbc02d;
+      }
+      .mobile-sub-dropdown {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.3s ease;
+        background-color: #0d47a1;
+      }
+      .mobile-sub-dropdown.active {
+        max-height: 300px;
+      }
+      .mobile-sub-dropdown a {
+        padding: 8px 20px 8px 60px;
+        font-size: 13px;
+      }
+
+      /* Enhanced Professional Styles */
+      .breadcrumb-separator {
+        color: #cbd5e0;
+        margin: 0 8px;
+      }
+
+      .article-meta {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        flex-wrap: wrap;
+        margin-top: 12px;
+      }
+
+      .meta-item {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        color: #64748b;
+        font-size: 13px;
+      }
+
+      .meta-item i {
+        color: #0d47a1;
+      }
+
+      /* Professional Image Gallery */
+      .image-gallery-container {
+        position: relative;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        background: #000;
+      }
+
+      .main-image-wrapper {
+        position: relative;
+        aspect-ratio: 16/9;
+        overflow: hidden;
+      }
+
+      .main-image-wrapper img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.5s ease;
+      }
+
+      .image-counter {
+        position: absolute;
+        bottom: 16px;
+        right: 16px;
+        background: rgba(0, 0, 0, 0.7);
+        color: white;
+        padding: 6px 12px;
+        border-radius: 20px;
+        font-size: 13px;
+        backdrop-filter: blur(8px);
+      }
+
+      .gallery-nav-btn {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        background: rgba(255, 255, 255, 0.95);
+        color: #0d47a1;
+        border: none;
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        z-index: 2;
+      }
+
+      .gallery-nav-btn:hover {
+        background: white;
+        transform: translateY(-50%) scale(1.1);
+        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+      }
+
+      .gallery-nav-btn.prev {
+        left: 16px;
+      }
+
+      .gallery-nav-btn.next {
+        right: 16px;
+      }
+
+      /* Thumbnail Gallery */
+      .thumbnail-gallery {
+        display: flex;
+        gap: 12px;
+        margin-top: 16px;
+        overflow-x: auto;
+        padding: 8px 0;
+        scrollbar-width: thin;
+        scrollbar-color: #0d47a1 #e2e8f0;
+      }
+
+      .thumbnail-gallery::-webkit-scrollbar {
+        height: 6px;
+      }
+
+      .thumbnail-gallery::-webkit-scrollbar-thumb {
+        background: #0d47a1;
+        border-radius: 3px;
+      }
+
+      .thumbnail-gallery::-webkit-scrollbar-track {
+        background: #e2e8f0;
+        border-radius: 3px;
+      }
+
+      .thumbnail-item {
+        position: relative;
+        flex-shrink: 0;
+        width: 120px;
+        height: 80px;
+        border-radius: 8px;
+        overflow: hidden;
+        cursor: pointer;
+        border: 3px solid transparent;
+        transition: all 0.3s ease;
+      }
+
+      .thumbnail-item:hover {
+        border-color: #0d47a1;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(13, 71, 161, 0.3);
+      }
+
+      .thumbnail-item.active {
+        border-color: #fbc02d;
+        box-shadow: 0 4px 16px rgba(251, 192, 45, 0.4);
+      }
+
+      .thumbnail-item img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      /* Professional Article Content */
+      .article-content {
+        line-height: 2;
+        font-size: 16px;
+      }
+
+      .article-content p {
+        margin-bottom: 24px;
+        text-align: justify;
+      }
+
+      .article-content p:first-of-type::first-letter {
+        font-size: 3.5em;
+        line-height: 1;
+        float: left;
+        margin: 0 12px 0 0;
+        color: #0d47a1;
+        font-weight: bold;
+      }
+
+      /* Enhanced Info Cards */
+      .info-card {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border-radius: 12px;
+        padding: 24px;
+        color: white;
+        margin: 32px 0;
+        box-shadow: 0 8px 24px rgba(102, 126, 234, 0.3);
+      }
+
+      .info-card-blue {
+        background: linear-gradient(135deg, #0d47a1 0%, #1976d2 100%);
+      }
+
+      .info-card-gold {
+        background: linear-gradient(135deg, #fbc02d 0%, #f9a825 100%);
+        color: #1a202c;
+      }
+
+      /* Professional Share Buttons */
+      .share-container {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        flex-wrap: wrap;
+        padding: 20px 0;
+        border-top: 2px solid #e2e8f0;
+        border-bottom: 2px solid #e2e8f0;
+      }
+
+      .share-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 10px 20px;
+        border-radius: 8px;
+        font-size: 14px;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        cursor: pointer;
+        text-decoration: none;
+      }
+
+      .share-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      }
+
+      .share-btn-facebook {
+        background: #3b5998;
+        color: white;
+      }
+
+      .share-btn-telegram {
+        background: #0088cc;
+        color: white;
+      }
+
+      .share-btn-print {
+        background: white;
+        color: #4a5568;
+        border: 2px solid #e2e8f0;
+      }
+
+      /* Enhanced Related Articles */
+      .related-article-card {
+        position: relative;
+        border-radius: 12px;
+        overflow: hidden;
+        transition: all 0.3s ease;
+        background: white;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      .related-article-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+      }
+
+      .related-article-image {
+        position: relative;
+        aspect-ratio: 16/9;
+        overflow: hidden;
+      }
+
+      .related-article-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.5s ease;
+      }
+
+      .related-article-card:hover .related-article-image img {
+        transform: scale(1.1);
+      }
+
+      .related-article-overlay {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+        padding: 16px;
+        color: white;
+      }
+
+      .related-article-content {
+        padding: 16px;
+      }
+
+      .related-article-date {
+        color: #64748b;
+        font-size: 12px;
+        margin-bottom: 8px;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+
+      .related-article-title {
+        font-size: 15px;
+        font-weight: 600;
+        color: #1a202c;
+        line-height: 1.5;
+        transition: color 0.3s ease;
+      }
+
+      .related-article-card:hover .related-article-title {
+        color: #0d47a1;
+      }
 
       .footer-bg {
         background-color: #263238;
@@ -113,26 +484,46 @@
       .footer-link:hover {
         color: #fbc02d;
       }
-      .active-thumbnail {
-        border-color: #fbc02d !important;
-        box-shadow: 0 0 5px rgba(13, 71, 161, 0.5);
+
+      @media (max-width: 1023px) {
+        .container-wrapper {
+          margin-top: 0;
+          margin-bottom: 0;
+        }
+        .gallery-nav-btn {
+          width: 40px;
+          height: 40px;
+        }
+        .thumbnail-item {
+          width: 90px;
+          height: 60px;
+        }
+      }
+
+      @media (max-width: 640px) {
+        .article-content p:first-of-type::first-letter {
+          font-size: 2.5em;
+        }
       }
     </style>
   </head>
   <body>
-    <div class="container-wrapper mx-auto bg-white shadow-xl mt-6 mb-6">
+    <div class="container-wrapper mx-auto bg-white shadow-xl lg:mt-6 lg:mb-6">
       <!-- Top Utility Bar -->
       <div
-        class="flex justify-between items-center px-8 py-2 text-xs text-gray-700 bg-gray-50 border-b border-gray-200"
+        class="flex flex-col sm:flex-row justify-between items-start sm:items-center px-4 sm:px-8 py-2 text-xs text-gray-700 bg-gray-50 border-b border-gray-200 gap-1 sm:gap-0"
       >
-        <div class="flex space-x-4 items-center">
+        <div class="flex flex-wrap gap-x-4 items-center">
           <span class="text-blue-700 flex items-center space-x-1">
             <i class="fas fa-phone-alt text-sm"></i>
             <span>099 55 55 4444</span>
           </span>
           <span class="text-blue-700 flex items-center space-x-1">
             <i class="fas fa-envelope text-sm"></i>
-            <span>info@romdoult-tech.edu.km</span>
+            <span class="hidden sm:inline">info@romdoult-tech.edu.km</span>
+            <span class="sm:hidden truncate max-w-[150px]"
+              >info@romdoult-tech.edu.km</span
+            >
           </span>
         </div>
         <div class="flex space-x-4">
@@ -145,48 +536,60 @@
 
       <!-- Header -->
       <header
-        class="p-6 flex items-center justify-between border-b border-gray-200"
+        class="p-4 sm:p-6 border-b border-gray-200"
+        style="background-image: linear-gradient(to bottom, #c4e0ff, #7ba7e3)"
       >
-        <div class="flex items-center space-x-4">
-          <div
-            class="w-16 h-16 bg-[#0d47a1] rounded-full flex items-center justify-center border-4 border-[#fbc02d] shadow-md"
-          >
-            <span class="text-white font-black text-3xl leading-none">R</span>
-          </div>
-          <div class="flex flex-col">
-            <!-- បានបន្ថែម class khmer-os-siemreap-font -->
-            <h1
-              class="text-3xl font-extrabold text-[#0d47a1] khmer-os-siemreap-font"
+        <div class="header-main-flex flex items-center justify-between">
+          <div class="flex items-center space-x-3 sm:space-x-4">
+            <div
+              class="w-12 h-12 sm:w-16 sm:h-16 bg-[#0d47a1] rounded-full flex items-center justify-center border-2 sm:border-4 border-[#fbc02d] shadow-xl flex-shrink-0"
             >
-              សាកលវិទ្យាល័យរំដួលបច្ចេកវិទ្យា
-            </h1>
-            <h2
-              class="text-sm text-gray-600 font-semibold uppercase tracking-wider"
-            >
-              Romdoul Technology University
-            </h2>
+              <span
+                class="text-white font-black text-2xl sm:text-3xl leading-none"
+                >R</span
+              >
+            </div>
+            <div class="flex flex-col">
+              <h1
+                class="text-xl sm:text-2xl lg:text-3xl text-[#0d47a1] font-extrabold khmer-os-siemreap-font drop-shadow-md"
+              >
+                សាកលវិទ្យាល័យរំដួលបច្ចេកវិទ្យា
+              </h1>
+              <h2
+                class="text-xs sm:text-sm text-[#0d47a1] font-semibold uppercase tracking-wider drop-shadow-md"
+              >
+                Romdoul Technology University
+              </h2>
+            </div>
           </div>
-        </div>
-        <div class="hidden lg:flex items-center space-x-3">
-          <input
-            type="text"
-            placeholder="ស្វែងរក..."
-            class="p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#0d47a1] focus:border-transparent transition-all w-64 text-sm"
-          />
-          <button
-            class="bg-[#0d47a1] text-white p-2 rounded-lg hover:bg-[#083c6c] transition-colors"
-          >
-            <i class="fas fa-search"></i>
-          </button>
+          <div class="flex items-center space-x-3">
+            <div class="hidden lg:flex items-center space-x-3">
+              <input
+                type="text"
+                placeholder="ស្វែងរក..."
+                class="p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#0d47a1] focus:border-transparent transition-all w-64 text-sm"
+              />
+              <button
+                class="bg-[#0d47a1] text-white p-2 rounded-lg hover:bg-[#083c6c] transition-colors"
+              >
+                <i class="fas fa-search"></i>
+              </button>
+            </div>
+            <button
+              id="mobile-menu-btn"
+              class="lg:hidden text-[#0d47a1] text-2xl p-2 hover:bg-white/50 rounded-lg transition-colors"
+              aria-label="Toggle navigation"
+            >
+              <i class="fa-solid fa-bars"></i>
+            </button>
+          </div>
         </div>
       </header>
 
-      <!-- Navigation Nested Dropdown -->
-      <nav class="header-bg shadow-lg">
+      <!-- Desktop Navigation -->
+      <nav class="header-bg shadow-lg hidden lg:block">
         <div class="flex text-sm">
           <a href="index.html" class="nav-link active-nav">ទំព័រដើម</a>
-
-          <!-- Dropdown for អំពីយើង (About Us) -->
           <div class="relative group nav-item-wrapper">
             <a href="about.html" class="nav-link flex items-center space-x-1">
               <span>អំពីយើង</span>
@@ -194,8 +597,6 @@
             </a>
             <div class="nav-dropdown group-hover:block">
               <a href="#">ប្រវត្តិសាកលវិទ្យាល័យ</a>
-
-              <!-- Nested Dropdown for មហាវិទ្យាល័យ (Faculties) -->
               <div class="nav-dropdown-item-parent">
                 <a href="#" class="flex justify-between items-center">
                   <span>មហាវិទ្យាល័យ</span>
@@ -207,27 +608,22 @@
                   <a href="#">មហាវិទ្យាល័យ LAW</a>
                 </div>
               </div>
-              <!-- End Nested Dropdown -->
-
               <a href="#">ចក្ខុវិស័យ និង បេសកកម្ម</a>
               <a href="#">រចនាសម្ព័ន្ធគ្រប់គ្រង</a>
-              <a href="#">បុគ្គលិក និង សាស្ត្រាចារ្យ</a>
+              <a href="professor.html">បុគ្គលិក និង សាស្ត្រាចារ្យ</a>
             </div>
           </div>
-
-          <!-- Dropdown for ព័ត៌មាន (News) -->
           <div class="relative group nav-item-wrapper">
             <a href="news.html" class="nav-link flex items-center space-x-1">
               <span>ព័ត៌មាន</span>
               <i class="fas fa-chevron-down text-xs ml-1"></i>
             </a>
             <div class="nav-dropdown group-hover:block">
-              <a href="#">ព័ត៌មានថ្មីៗ</a>
+              <a href="latestnews.html">ព័ត៌មានថ្មីៗ</a>
               <a href="#">ព្រឹត្តិការណ៍</a>
               <a href="#">សេចក្តីប្រកាស</a>
             </div>
           </div>
-
           <a href="documents.html" class="nav-link">ឯកសារ</a>
           <a href="publication.html" class="nav-link">ផ្សព្វផ្សាយ</a>
           <a href="contact.html" class="nav-link">ទំនាក់ទំនង</a>
@@ -235,216 +631,502 @@
         </div>
       </nav>
 
-      <!-- Main Content -->
-      <main class="p-8 lg:p-10">
-        <div class="mb-5 border-b pb-4">
-          <p class="text-2xl font-bold text-gray-800 mb-2 leading-relaxed">
-            សេចក្តីប្រកាសស្តីពីការចុះឈ្មោះនិស្សិតថ្មីជំនាន់ទី១០ ឆ្នាំសិក្សា
-            ២០២៤-២០២៥
-          </p>
-          <p class="text-sm text-gray-500">
-            <span class="text-blue-700">ទំព័រដើម</span>
-            <span class="mx-1">/</span>
-            <span>ព័ត៌មានថ្មីៗ</span>
-            <span class="mx-1">/</span>
-            <span>ចុះឈ្មោះ</span>
-            <span class="ml-4 text-gray-400">| ថ្ងៃទី ០៦ ខែតុលា ឆ្នាំ២០២៣</span>
-          </p>
-        </div>
-
-        <!-- Image Slider -->
-        <div class="mb-8">
-          <div class="relative overflow-hidden rounded-lg shadow-lg">
-            <img
-              id="main-image"
-              src="img/cost01.jpg"
-              alt="Article Image"
-              class="w-full h-auto object-cover"
-            />
-            <button
-              onclick="prevImage()"
-              class="absolute left-4 top-1/2 transform -translate-y-1/2 p-3 bg-black bg-opacity-30 rounded-full text-white text-xl hover:bg-opacity-50 transition-all"
-            >
-              <i class="fas fa-chevron-left"></i>
-            </button>
-            <button
-              onclick="nextImage()"
-              class="absolute right-4 top-1/2 transform -translate-y-1/2 p-3 bg-black bg-opacity-30 rounded-full text-white text-xl hover:bg-opacity-50 transition-all"
-            >
-              <i class="fas fa-chevron-right"></i>
-            </button>
-          </div>
-          <div class="flex space-x-3 mt-4 overflow-x-auto justify-start">
-            <img
-              src="img/cost10.jpg"
-              onclick="changeImage(0)"
-              class="thumbnail w-24 h-16 object-cover rounded-md border-2 border-transparent hover:border-[#0d47a1] cursor-pointer shadow-sm transition-all"
-            />
-            <img
-              src="img/cost11.jpg"
-              onclick="changeImage(1)"
-              class="thumbnail w-24 h-16 object-cover rounded-md border-2 border-transparent hover:border-[#0d47a1] cursor-pointer shadow-sm transition-all"
-            />
-            <img
-              src="img/cost12.jpg"
-              onclick="changeImage(2)"
-              class="thumbnail w-24 h-16 object-cover rounded-md border-2 border-transparent hover:border-[#0d47a1] cursor-pointer shadow-sm transition-all active-thumbnail"
-            />
-            <img
-              src="img/cost13.jpg"
-              onclick="changeImage(3)"
-              class="thumbnail w-24 h-16 object-cover rounded-md border-2 border-transparent hover:border-[#0d47a1] cursor-pointer shadow-sm transition-all"
-            />
-            <img
-              src="img/cost08.jpg"
-              onclick="changeImage(4)"
-              class="thumbnail w-24 h-16 object-cover rounded-md border-2 border-transparent hover:border-[#0d47a1] cursor-pointer shadow-sm transition-all"
-            />
-            <img
-              src="img/cost09.jpg"
-              onclick="changeImage(5)"
-              class="thumbnail w-24 h-16 object-cover rounded-md border-2 border-transparent hover:border-[#0d47a1] cursor-pointer shadow-sm transition-all"
-            />
-          </div>
-        </div>
-
-        <!-- Article Body -->
-        <div class="text-base text-gray-700 mb-8 space-y-4">
-          <p>
-            សាកលវិទ្យាល័យរំដួលបច្ចេកវិទ្យា
-            សូមជម្រាបជូនដំណឹងដល់សិស្សានុសិស្សទាំងអស់ដែលទើបបញ្ចប់ការសិក្សាថ្នាក់វិទ្យាល័យ
-            និងបេក្ខជនចាស់ៗ ឱ្យបានជ្រាបថា
-            សាកលវិទ្យាល័យនឹងចាប់ផ្តើមទទួលពាក្យចុះឈ្មោះចូលរៀនសម្រាប់ថ្នាក់បរិញ្ញាបត្រជំនាន់ទី
-            ១០ ចាប់ពីថ្ងៃទី ១ ខែវិច្ឆិកា ឆ្នាំ ២០២៤ តទៅ។
-          </p>
-          <p class="mt-4">
-            យើងខ្ញុំមានជំនាញជាច្រើនដែលជាតម្រូវការទីផ្សារ ដូចជា
-            វិទ្យាសាស្ត្រកុំព្យូទ័រ (Computer Science) បច្ចេកវិទ្យាព័ត៌មាន (IT)
-            វិស្វកម្មសំណង់ស៊ីវិល និង គ្រប់គ្រងពាណិជ្ជកម្ម។
-            ការចុះឈ្មោះមានកំណត់ចំនួន ដូច្នេះសូមប្រញាប់រួសរាន់!
-          </p>
-          <p class="mt-4">
-            សម្រាប់ព័ត៌មានលម្អិតបន្ថែម សូមទំនាក់ទំនងមកកាន់ការិយាល័យសិក្សា
-            ឬទាញយកឯកសារលម្អិតនៅត្រង់ផ្ទាំងឯកសារ។ សូមអរគុណ!
-          </p>
-        </div>
-
-        <!-- Social Share -->
+      <!-- Mobile Navigation -->
+      <div id="mobile-overlay" class="mobile-overlay"></div>
+      <div id="mobile-menu" class="mobile-menu">
         <div
-          class="flex space-x-3 mb-8 border-t border-b border-gray-200 py-4 items-center"
+          class="p-4 border-b border-white/10 flex justify-between items-center"
         >
-          <span class="text-gray-600 font-semibold text-sm mr-2"
-            >ចែករំលែក:</span
+          <h3 class="text-white font-bold text-lg">ម៉ឺនុយ</h3>
+          <button
+            id="close-menu-btn"
+            class="text-white text-2xl hover:text-[#fbc02d]"
+            aria-label="Close menu"
           >
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+        <a href="index.html" class="mobile-nav-link active">ទំព័រដើម</a>
+        <div>
           <a
             href="#"
-            class="text-gray-600 border border-gray-400 p-2 rounded-md text-sm ml-4 flex items-center space-x-1 hover:bg-gray-100 transition-colors"
+            class="mobile-nav-link flex justify-between items-center"
+            id="about-toggle"
           >
-            <i class="fas fa-print"></i>
-            <span>បោះពុម្ព</span>
+            <span>អំពីយើង</span>
+            <i class="fas fa-chevron-down text-xs"></i>
           </a>
-        </div>
-
-        <!-- Related Articles -->
-        <div class="mb-8">
-          <h3
-            class="text-xl font-bold mb-4 text-[#0d47a1] border-b-2 border-[#fbc02d] pb-2 inline-block"
-          >
-            ព័ត៌មានថ្មីៗដែលពាក់ព័ន្ធ
-          </h3>
-          <div
-            class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6 mt-4"
-          >
-            <div
-              class="col-span-1 group cursor-pointer p-2 rounded-lg hover:shadow-lg transition-shadow"
-            >
-              <img
-                src="img/cost07.jpg"
-                alt="News"
-                class="w-full h-auto object-cover mb-2 rounded-md group-hover:opacity-90 transition-opacity"
-              />
-              <p
-                class="text-sm font-medium text-gray-800 group-hover:text-[#0d47a1] transition-colors"
+          <div id="about-dropdown" class="mobile-dropdown">
+            <a href="#">ប្រវត្តិសាកលវិទ្យាល័យ</a>
+            <div>
+              <a
+                href="#"
+                class="mobile-dropdown-link flex justify-between items-center"
+                id="faculty-toggle"
               >
-                កិច្ចប្រជុំស្តីពីការរៀបចំកម្មវិធីសិក្សាថ្មី
-              </p>
+                <span>មហាវិទ្យាល័យ</span>
+                <i class="fas fa-chevron-down text-xs"></i>
+              </a>
+              <div id="faculty-dropdown" class="mobile-sub-dropdown">
+                <a href="#">មហាវិទ្យាល័យ IT</a>
+                <a href="#">មហាវិទ្យាល័យ IR</a>
+                <a href="#">មហាវិទ្យាល័យ LAW</a>
+              </div>
             </div>
-            <div
-              class="col-span-1 group cursor-pointer p-2 rounded-lg hover:shadow-lg transition-shadow"
-            >
-              <img
-                src="img/cost02.jpg"
-                alt="News"
-                class="w-full h-auto object-cover mb-2 rounded-md group-hover:opacity-90 transition-opacity"
-              />
-              <p
-                class="text-sm font-medium text-gray-800 group-hover:text-[#0d47a1] transition-colors"
-              >
-                ពិធីជួបសំណេះសំណាលជាមួយនិស្សិតឆ្នើមប្រចាំឆ្នាំ
-              </p>
-            </div>
-            <div
-              class="col-span-1 group cursor-pointer p-2 rounded-lg hover:shadow-lg transition-shadow"
-            >
-              <img
-                src="img/cost04.jpg"
-                alt="News"
-                class="w-full h-auto object-cover mb-2 rounded-md group-hover:opacity-90 transition-opacity"
-              />
-              <p
-                class="text-sm font-medium text-gray-800 group-hover:text-[#0d47a1] transition-colors"
-              >
-                ពិធីប្រគល់សញ្ញាបត្រដល់និស្សិតជ័យលាភីឆ្នាំ ២០២៣
-              </p>
-            </div>
-            <div
-              class="col-span-1 group cursor-pointer p-2 rounded-lg hover:shadow-lg transition-shadow"
-            >
-              <img
-                src="img/cost05.jpg"
-                alt="News"
-                class="w-full h-auto object-cover mb-2 rounded-md group-hover:opacity-90 transition-opacity"
-              />
-              <p
-                class="text-sm font-medium text-gray-800 group-hover:text-[#0d47a1] transition-colors"
-              >
-                សេចក្តីជូនដំណឹងស្តីពីលទ្ធផលអាហារូបករណ៍
-              </p>
-            </div>
-            <div
-              class="col-span-1 group cursor-pointer p-2 rounded-lg hover:shadow-lg transition-shadow"
-            >
-              <img
-                src="img/cost06.jpg"
-                alt="News"
-                class="w-full h-auto object-cover mb-2 rounded-md group-hover:opacity-90 transition-opacity"
-              />
-              <p
-                class="text-sm font-medium text-gray-800 group-hover:text-[#0d47a1] transition-colors"
-              >
-                សិក្ខាសាលាស្តីពី AI និងការងារនាពេលអនាគត
-              </p>
-            </div>
+            <a href="#">ចក្ខុវិស័យ និង បេសកកម្ម</a>
+            <a href="#">រចនាសម្ព័ន្ធគ្រប់គ្រង</a>
+            <a href="professor.html">បុគ្គលិក និង សាស្ត្រាចារ្យ</a>
           </div>
         </div>
+        <div>
+          <a
+            href="#"
+            class="mobile-nav-link flex justify-between items-center"
+            id="news-toggle"
+          >
+            <span>ព័ត៌មាន</span>
+            <i class="fas fa-chevron-down text-xs"></i>
+          </a>
+          <div id="news-dropdown" class="mobile-dropdown">
+            <a href="latestnews.html">ព័ត៌មានថ្មីៗ</a>
+            <a href="#">ព្រឹត្តិការណ៍</a>
+            <a href="#">សេចក្តីប្រកាស</a>
+          </div>
+        </div>
+        <a href="documents.html" class="mobile-nav-link">ឯកសារ</a>
+        <a href="publication.html" class="mobile-nav-link">ផ្សព្វផ្សាយ</a>
+        <a href="contact.html" class="mobile-nav-link">ទំនាក់ទំនង</a>
+        <a href="help.html" class="mobile-nav-link">ជំនួយ</a>
+        <div class="p-4 border-t border-white/10">
+          <div class="flex items-center space-x-2">
+            <input
+              type="text"
+              placeholder="ស្វែងរក..."
+              class="p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#fbc02d] focus:border-transparent transition-all w-full text-sm text-gray-900"
+            />
+            <button
+              class="bg-[#fbc02d] text-gray-900 p-2 rounded-lg hover:bg-[#e6a200] transition-colors"
+            >
+              <i class="fas fa-search"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ENHANCED MAIN CONTENT -->
+      <main class="p-4 sm:p-8 lg:p-12">
+        <!-- Article Header -->
+        <article class="max-w-4xl mx-auto">
+          <div class="mb-8">
+            <!-- Title -->
+            <h1
+              class="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-4 leading-tight"
+            >
+              សេចក្តីប្រកាសស្តីពីការចុះឈ្មោះនិស្សិតថ្មីជំនាន់ទី១០ ឆ្នាំសិក្សា
+              ២០២៤-២០២៥
+            </h1>
+
+            <!-- Breadcrumb & Meta Info -->
+            <div class="flex flex-col gap-3">
+              <nav class="text-sm text-gray-600">
+                <a href="index.html" class="text-blue-600 hover:underline"
+                  >ទំព័រដើម</a
+                >
+                <span class="breadcrumb-separator">/</span>
+                <a href="news.html" class="text-blue-600 hover:underline"
+                  >ព័ត៌មាន</a
+                >
+                <span class="breadcrumb-separator">/</span>
+                <span class="text-gray-800 font-medium">ចុះឈ្មោះ</span>
+              </nav>
+
+              <div class="article-meta">
+                <div class="meta-item">
+                  <i class="far fa-calendar-alt"></i>
+                  <span>ថ្ងៃទី ០៦ ខែតុលា ឆ្នាំ២០២៣</span>
+                </div>
+                <div class="meta-item">
+                  <i class="far fa-clock"></i>
+                  <span>អានរយៈពេល ៥ នាទី</span>
+                </div>
+                <div class="meta-item">
+                  <i class="far fa-eye"></i>
+                  <span>ចំនួនមើល ១,២៣៤</span>
+                </div>
+                <div class="meta-item">
+                  <i class="fas fa-tag"></i>
+                  <span
+                    class="px-2 py-1 bg-blue-100 text-blue-700 rounded text-xs font-medium"
+                    >ចុះឈ្មោះ</span
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Professional Image Gallery -->
+          <div class="mb-10">
+            <div class="image-gallery-container">
+              <div class="main-image-wrapper">
+                <img id="main-image" src="img/cost01.jpg" alt="Article Image" />
+                <div class="image-counter">
+                  <span id="current-index">1</span> /
+                  <span id="total-images">7</span>
+                </div>
+                <button
+                  onclick="prevImage()"
+                  class="gallery-nav-btn prev"
+                  aria-label="Previous image"
+                >
+                  <i class="fas fa-chevron-left"></i>
+                </button>
+                <button
+                  onclick="nextImage()"
+                  class="gallery-nav-btn next"
+                  aria-label="Next image"
+                >
+                  <i class="fas fa-chevron-right"></i>
+                </button>
+              </div>
+            </div>
+
+            <!-- Thumbnail Gallery -->
+            <div class="thumbnail-gallery">
+              <div class="thumbnail-item active" onclick="changeImage(0)">
+                <img src="img/cost01.jpg" alt="Thumbnail 1" />
+              </div>
+              <div class="thumbnail-item" onclick="changeImage(1)">
+                <img src="img/cost10.jpg" alt="Thumbnail 2" />
+              </div>
+              <div class="thumbnail-item" onclick="changeImage(2)">
+                <img src="img/cost11.jpg" alt="Thumbnail 3" />
+              </div>
+              <div class="thumbnail-item" onclick="changeImage(3)">
+                <img src="img/cost12.jpg" alt="Thumbnail 4" />
+              </div>
+              <div class="thumbnail-item" onclick="changeImage(4)">
+                <img src="img/cost13.jpg" alt="Thumbnail 5" />
+              </div>
+              <div class="thumbnail-item" onclick="changeImage(5)">
+                <img src="img/cost08.jpg" alt="Thumbnail 6" />
+              </div>
+              <div class="thumbnail-item" onclick="changeImage(6)">
+                <img src="img/cost09.jpg" alt="Thumbnail 7" />
+              </div>
+            </div>
+          </div>
+
+          <!-- Article Content -->
+          <div class="article-content text-gray-700 mb-10">
+            <p>
+              សាកលវិទ្យាល័យរំដួលបច្ចេកវិទ្យា
+              សូមជម្រាបជូនដំណឹងដល់សិស្សានុសិស្សទាំងអស់ដែលទើបបញ្ចប់ការសិក្សាថ្នាក់វិទ្យាល័យ
+              និងបេក្ខជនចាស់ៗ ឱ្យបានជ្រាបថា
+              សាកលវិទ្យាល័យនឹងចាប់ផ្តើមទទួលពាក្យចុះឈ្មោះចូលរៀនសម្រាប់ថ្នាក់បរិញ្ញាបត្រជំនាន់ទី
+              ១០ ចាប់ពីថ្ងៃទី ១ ខែវិច្ឆិកា ឆ្នាំ ២០២៤ តទៅ។
+              នេះជាឱកាសដ៏ល្អសម្រាប់យុវជនដែលចង់បន្តការសិក្សាកម្រិតខ្ពស់
+              និងអភិវឌ្ឍជំនាញក្នុងផ្នែកបច្ចេកវិទ្យាទំនើប។
+            </p>
+
+            <!-- Info Card -->
+            <div class="info-card info-card-blue">
+              <h3 class="text-xl font-bold mb-3 flex items-center gap-2">
+                <i class="fas fa-graduation-cap"></i>
+                ជំនាញដែលមានផ្តល់ជូន
+              </h3>
+              <ul class="space-y-2">
+                <li class="flex items-start gap-2">
+                  <i class="fas fa-check-circle mt-1"></i>
+                  <span>វិទ្យាសាស្ត្រកុំព្យូទ័រ (Computer Science)</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <i class="fas fa-check-circle mt-1"></i>
+                  <span>បច្ចេកវិទ្យាព័ត៌មាន (Information Technology)</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <i class="fas fa-check-circle mt-1"></i>
+                  <span>វិស្វកម្មសំណង់ស៊ីវិល (Civil Engineering)</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <i class="fas fa-check-circle mt-1"></i>
+                  <span>គ្រប់គ្រងពាណិជ្ជកម្ម (Business Management)</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <i class="fas fa-check-circle mt-1"></i>
+                  <span>ច្បាប់អន្តរជាតិ (International Law)</span>
+                </li>
+              </ul>
+            </div>
+
+            <p>
+              យើងខ្ញុំមានកម្មវិធីសិក្សាដែលទាន់សម័យ
+              និងត្រូវបានរៀបចំឡើងដោយគណៈប្រឹក្សាសាស្ត្រាចារ្យជំនាញ
+              ដែលមានបទពិសោធន៍យូរឆ្នាំក្នុងការបង្រៀន
+              និងស្រាវជ្រាវផ្នែកបច្ចេកវិទ្យា។
+              ការសិក្សានៅសាកលវិទ្យាល័យរបស់យើងមិនត្រឹមតែផ្តល់ចំណេះដឹងទ្រឹស្តីប៉ុណ្ណោះទេ
+              ប៉ុន្តែក៏ផ្តោតលើការអនុវត្តជាក់ស្តែងតាមរយៈគម្រោងផ្សេងៗ
+              ដើម្បីរៀបចំនិស្សិតឱ្យត្រៀមខ្លួនសម្រាប់ការងារនៅពេលអនាគត។
+            </p>
+
+            <p>
+              ការចុះឈ្មោះមានកំណត់ចំនួន ដោយសារតែយើងចង់រក្សាគុណភាពនៃការបង្រៀន
+              និងធានាថានិស្សិតម្នាក់ៗទទួលបានការយកចិត្តទុកដាក់គ្រប់គ្រាន់ពីសាស្ត្រាចារ្យ។
+              ដូច្នេះសូមប្រញាប់រួសរាន់ចុះឈ្មោះមុនពេលកន្លែងពេញ!
+            </p>
+
+            <!-- Info Card Gold -->
+            <div class="info-card info-card-gold">
+              <h3 class="text-xl font-bold mb-3 flex items-center gap-2">
+                <i class="fas fa-gift"></i>
+                អត្ថប្រយោជន៍សម្រាប់និស្សិតថ្មី
+              </h3>
+              <div class="grid sm:grid-cols-2 gap-4">
+                <div>
+                  <p class="font-semibold mb-2">
+                    <i class="fas fa-arrow-right mr-2"></i>ការបញ្ចុះតម្លៃពិសេស
+                  </p>
+                  <p class="text-sm">
+                    ការបញ្ចុះតម្លៃ ១០% សម្រាប់និស្សិតដែលចុះឈ្មោះមុនខែធ្នូ
+                  </p>
+                </div>
+                <div>
+                  <p class="font-semibold mb-2">
+                    <i class="fas fa-arrow-right mr-2"></i>អាហារូបករណ៍
+                  </p>
+                  <p class="text-sm">
+                    មានអាហារូបករណ៍សម្រាប់និស្សិតដែលមានសមត្ថភាពល្អ
+                  </p>
+                </div>
+                <div>
+                  <p class="font-semibold mb-2">
+                    <i class="fas fa-arrow-right mr-2"></i>បណ្ណាល័យទំនើប
+                  </p>
+                  <p class="text-sm">
+                    បណ្ណាល័យជាមួយសៀវភៅ និងធនធានឌីជីថលជាង ៥០,០០០ ចំណង
+                  </p>
+                </div>
+                <div>
+                  <p class="font-semibold mb-2">
+                    <i class="fas fa-arrow-right mr-2"></i>បរិក្ខារទំនើប
+                  </p>
+                  <p class="text-sm">
+                    បន្ទប់មេរៀន និងមន្ទីរពិសោធន៍ដែលមានបរិក្ខារទំនើបបំផុត
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <p>
+              សម្រាប់ព័ត៌មានលម្អិតបន្ថែម សូមទំនាក់ទំនងមកកាន់ការិយាល័យសិក្សា
+              ឬទាញយកឯកសារលម្អិតនៅត្រង់ផ្ទាំងឯកសារ។
+              យើងខ្ញុំរង់ចាំការចូលរួមរបស់អ្នកដើម្បីក្លាយជាផ្នែកមួយនៃគ្រួសាររំដួលបច្ចេកវិទ្យា!
+              សូមអរគុណ!
+            </p>
+
+            <!-- Call to Action -->
+            <div
+              class="mt-8 p-6 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl border-l-4 border-blue-600"
+            >
+              <h4 class="text-lg font-bold text-gray-900 mb-3">
+                <i class="fas fa-info-circle text-blue-600 mr-2"></i
+                >ព័ត៌មានសំខាន់
+              </h4>
+              <div class="space-y-2 text-sm text-gray-700">
+                <p>
+                  <strong>ថ្ងៃចាប់ផ្តើម:</strong> ថ្ងៃទី ១ ខែវិច្ឆិកា ឆ្នាំ ២០២៤
+                </p>
+                <p><strong>ថ្ងៃបញ្ចប់:</strong> ថ្ងៃទី ៣១ ខែធ្នូ ឆ្នាំ ២០២៤</p>
+                <p>
+                  <strong>ទីតាំង:</strong> អគារ R-T, ផ្លូវជាតិលេខ ៦, ក្រុងសៀមរាប
+                </p>
+                <p>
+                  <strong>ទំនាក់ទំនង:</strong> 099 55 55 4444 ឬ
+                  info@romdoult-tech.edu.km
+                </p>
+              </div>
+              <div class="mt-4 flex gap-3 flex-wrap">
+                <a
+                  href="documents.html"
+                  class="inline-flex items-center gap-2 bg-blue-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-blue-700 transition-colors"
+                >
+                  <i class="fas fa-download"></i>
+                  ទាញយកទម្រង់
+                </a>
+                <a
+                  href="contact.html"
+                  class="inline-flex items-center gap-2 bg-white text-blue-600 px-6 py-3 rounded-lg font-medium border-2 border-blue-600 hover:bg-blue-50 transition-colors"
+                >
+                  <i class="fas fa-phone"></i>
+                  ទំនាក់ទំនង
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Professional Share Section -->
+          <div class="share-container mb-12">
+            <span class="text-gray-700 font-semibold">ចែករំលែក:</span>
+            <a href="#" class="share-btn share-btn-facebook">
+              <i class="fab fa-facebook-f"></i>
+              <span>Facebook</span>
+            </a>
+            <a href="#" class="share-btn share-btn-telegram">
+              <i class="fab fa-telegram-plane"></i>
+              <span>Telegram</span>
+            </a>
+            <button onclick="window.print()" class="share-btn share-btn-print">
+              <i class="fas fa-print"></i>
+              <span>បោះពុម្ព</span>
+            </button>
+          </div>
+
+          <!-- Related Articles Section -->
+          <div class="mb-12">
+            <div class="flex items-center gap-3 mb-6">
+              <h3 class="text-2xl font-bold text-gray-900">
+                ព័ត៌មានដែលពាក់ព័ន្ធ
+              </h3>
+              <div
+                class="flex-1 h-1 bg-gradient-to-r from-blue-600 to-transparent rounded"
+              ></div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              <!-- Related Article 1 -->
+              <div class="related-article-card">
+                <div class="related-article-image">
+                  <img src="img/cost07.jpg" alt="News" />
+                  <div class="related-article-overlay">
+                    <span class="text-xs font-semibold">សេចក្តីប្រកាស</span>
+                  </div>
+                </div>
+                <div class="related-article-content">
+                  <div class="related-article-date">
+                    <i class="far fa-calendar"></i>
+                    <span>២៨ កញ្ញា ២០២៣</span>
+                  </div>
+                  <h4 class="related-article-title">
+                    កិច្ចប្រជុំស្តីពីការរៀបចំកម្មវិធីសិក្សាថ្មី
+                  </h4>
+                </div>
+              </div>
+
+              <!-- Related Article 2 -->
+              <div class="related-article-card">
+                <div class="related-article-image">
+                  <img src="img/cost02.jpg" alt="News" />
+                  <div class="related-article-overlay">
+                    <span class="text-xs font-semibold">ព្រឹត្តិការណ៍</span>
+                  </div>
+                </div>
+                <div class="related-article-content">
+                  <div class="related-article-date">
+                    <i class="far fa-calendar"></i>
+                    <span>២៥ កញ្ញា ២០២៣</span>
+                  </div>
+                  <h4 class="related-article-title">
+                    ពិធីជួបសំណេះសំណាលជាមួយនិស្សិតឆ្នើមប្រចាំឆ្នាំ
+                  </h4>
+                </div>
+              </div>
+
+              <!-- Related Article 3 -->
+              <div class="related-article-card">
+                <div class="related-article-image">
+                  <img src="img/cost04.jpg" alt="News" />
+                  <div class="related-article-overlay">
+                    <span class="text-xs font-semibold">ព័ត៌មាន</span>
+                  </div>
+                </div>
+                <div class="related-article-content">
+                  <div class="related-article-date">
+                    <i class="far fa-calendar"></i>
+                    <span>២០ កញ្ញា ២០២៣</span>
+                  </div>
+                  <h4 class="related-article-title">
+                    ពិធីប្រគល់សញ្ញាបត្រដល់និស្សិតជ័យលាភីឆ្នាំ ២០២៣
+                  </h4>
+                </div>
+              </div>
+
+              <!-- Related Article 4 -->
+              <div class="related-article-card">
+                <div class="related-article-image">
+                  <img src="img/cost05.jpg" alt="News" />
+                  <div class="related-article-overlay">
+                    <span class="text-xs font-semibold">សេចក្តីប្រកាស</span>
+                  </div>
+                </div>
+                <div class="related-article-content">
+                  <div class="related-article-date">
+                    <i class="far fa-calendar"></i>
+                    <span>១៨ កញ្ញា ២០២៣</span>
+                  </div>
+                  <h4 class="related-article-title">
+                    សេចក្តីជូនដំណឹងស្តីពីលទ្ធផលអាហារូបករណ៍
+                  </h4>
+                </div>
+              </div>
+
+              <!-- Related Article 5 -->
+              <div class="related-article-card">
+                <div class="related-article-image">
+                  <img src="img/cost06.jpg" alt="News" />
+                  <div class="related-article-overlay">
+                    <span class="text-xs font-semibold">សិក្ខាសាលា</span>
+                  </div>
+                </div>
+                <div class="related-article-content">
+                  <div class="related-article-date">
+                    <i class="far fa-calendar"></i>
+                    <span>១៥ កញ្ញា ២០២៣</span>
+                  </div>
+                  <h4 class="related-article-title">
+                    សិក្ខាសាលាស្តីពី AI និងការងារនាពេលអនាគត
+                  </h4>
+                </div>
+              </div>
+
+              <!-- Related Article 6 -->
+              <div class="related-article-card">
+                <div class="related-article-image">
+                  <img src="img/cost08.jpg" alt="News" />
+                  <div class="related-article-overlay">
+                    <span class="text-xs font-semibold">ព្រឹត្តិការណ៍</span>
+                  </div>
+                </div>
+                <div class="related-article-content">
+                  <div class="related-article-date">
+                    <i class="far fa-calendar"></i>
+                    <span>១២ កញ្ញា ២០២៣</span>
+                  </div>
+                  <h4 class="related-article-title">
+                    កម្មវិធីផ្លាស់ប្តូរវប្បធម៌ជាមួយសាកលវិទ្យាល័យអន្តរជាតិ
+                  </h4>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
       </main>
 
       <!-- Footer -->
       <footer class="footer-bg">
-        <div class="p-10 grid grid-cols-1 md:grid-cols-4 gap-8">
+        <div
+          class="p-6 sm:p-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8"
+        >
           <div>
-            <!-- បានបន្ថែម class khmer-os-siemreap-font -->
             <h4
-              class="text-xl font-bold text-white mb-4 khmer-os-siemreap-font"
+              class="text-lg sm:text-xl font-bold text-white mb-4 khmer-os-siemreap-font"
             >
               សាកលវិទ្យាល័យរំដួលបច្ចេកវិទ្យា
             </h4>
-            <p class="text-sm mb-4">
+            <p class="text-xs sm:text-sm mb-4">
               សាកលវិទ្យាល័យបច្ចេកវិទ្យានាំមុខគេក្នុងការអប់រំ និងស្រាវជ្រាវ។
             </p>
-            <div class="space-y-2 text-sm">
-              <p class="flex items-center space-x-2">
-                <i class="fas fa-map-marker-alt text-[#fbc02d]"></i>
+            <div class="space-y-2 text-xs sm:text-sm">
+              <p class="flex items-start space-x-2">
+                <i class="fas fa-map-marker-alt text-[#fbc02d] mt-1"></i>
                 <span
                   >អាសយដ្ឋាន៖ អគារ R-T, ផ្លូវជាតិលេខ ៦, ក្រុងសៀមរាប,
                   កម្ពុជា</span
@@ -454,15 +1136,19 @@
                 <i class="fas fa-phone-alt text-[#fbc02d]"></i>
                 <span>ទូរស័ព្ទ៖ 099 55 55 4444</span>
               </p>
-              <p class="flex items-center space-x-2">
-                <i class="fas fa-envelope text-[#fbc02d]"></i>
-                <span>អ៊ីម៉ែល៖ info@romdoult-tech.edu.km</span>
+              <p class="flex items-start space-x-2">
+                <i class="fas fa-envelope text-[#fbc02d] mt-1"></i>
+                <span class="break-all"
+                  >អ៊ីម៉ែល៖ info@romdoult-tech.edu.km</span
+                >
               </p>
             </div>
           </div>
           <div>
-            <h4 class="text-lg font-bold text-white mb-4">ផែនទីគេហទំព័រ</h4>
-            <ul class="space-y-2 text-sm">
+            <h4 class="text-base sm:text-lg font-bold text-white mb-4">
+              ផែនទីគេហទំព័រ
+            </h4>
+            <ul class="space-y-2 text-xs sm:text-sm">
               <li><a href="index.html" class="footer-link">ទំព័រដើម</a></li>
               <li><a href="about.html" class="footer-link">អំពីយើង</a></li>
               <li><a href="news.html" class="footer-link">ព័ត៌មាន</a></li>
@@ -473,10 +1159,10 @@
             </ul>
           </div>
           <div>
-            <h4 class="text-lg font-bold text-white mb-4">
+            <h4 class="text-base sm:text-lg font-bold text-white mb-4">
               ជំនួយ និង លក្ខខណ្ឌ
             </h4>
-            <ul class="space-y-2 text-sm">
+            <ul class="space-y-2 text-xs sm:text-sm">
               <li><a href="contact.html" class="footer-link">ទំនាក់ទំនង</a></li>
               <li><a href="#" class="footer-link">សំនួរញឹកញាប់</a></li>
               <li><a href="#" class="footer-link">គោលការណ៍ឯកជនភាព</a></li>
@@ -485,40 +1171,42 @@
             </ul>
           </div>
           <div>
-            <h4 class="text-lg font-bold text-white mb-4">តាមដានយើង</h4>
+            <h4 class="text-base sm:text-lg font-bold text-white mb-4">
+              តាមដានយើង
+            </h4>
             <div class="flex space-x-3 mb-6">
               <a
                 href="#"
-                class="text-2xl hover:text-[#3b5998] transition-colors"
+                class="text-xl sm:text-2xl hover:text-[#3b5998] transition-colors"
                 ><i class="fab fa-facebook-square"></i
               ></a>
               <a
                 href="#"
-                class="text-2xl hover:text-[#00acee] transition-colors"
+                class="text-xl sm:text-2xl hover:text-[#00acee] transition-colors"
                 ><i class="fab fa-twitter-square"></i
               ></a>
               <a
                 href="#"
-                class="text-2xl hover:text-[#FF0000] transition-colors"
+                class="text-xl sm:text-2xl hover:text-[#FF0000] transition-colors"
                 ><i class="fab fa-youtube-square"></i
               ></a>
               <a
                 href="#"
-                class="text-2xl hover:text-[#0088cc] transition-colors"
+                class="text-xl sm:text-2xl hover:text-[#0088cc] transition-colors"
                 ><i class="fab fa-telegram"></i
               ></a>
             </div>
-            <h4 class="text-lg font-bold text-white mb-2">
+            <h4 class="text-base sm:text-lg font-bold text-white mb-2">
               ព្រឹត្តិបត្រព័ត៌មាន
             </h4>
             <form class="flex">
               <input
                 type="email"
                 placeholder="អ៊ីម៉ែលរបស់អ្នក..."
-                class="p-2 text-sm text-gray-900 rounded-l-md w-full focus:outline-none"
+                class="p-2 text-xs sm:text-sm text-gray-900 rounded-l-md w-full focus:outline-none"
               />
               <button
-                class="bg-[#fbc02d] text-gray-900 p-2 text-sm rounded-r-md hover:bg-[#e6a200] transition-colors"
+                class="bg-[#fbc02d] text-gray-900 px-3 py-2 text-xs sm:text-sm rounded-r-md hover:bg-[#e6a200] transition-colors whitespace-nowrap"
               >
                 ចុះឈ្មោះ
               </button>
@@ -535,7 +1223,9 @@
     </div>
 
     <script>
+      // Enhanced Image Gallery
       const images = [
+        "img/cost01.jpg",
         "img/cost10.jpg",
         "img/cost11.jpg",
         "img/cost12.jpg",
@@ -543,13 +1233,23 @@
         "img/cost08.jpg",
         "img/cost09.jpg",
       ];
-      let currentIndex = 2;
+      let currentIndex = 0;
 
       function changeImage(index) {
         currentIndex = index;
-        document.getElementById("main-image").src = images[index];
-        document.querySelectorAll(".thumbnail").forEach((t, i) => {
-          t.classList.toggle("active-thumbnail", i === index);
+        const mainImage = document.getElementById("main-image");
+        mainImage.style.opacity = "0.5";
+
+        setTimeout(() => {
+          mainImage.src = images[index];
+          mainImage.style.opacity = "1";
+        }, 150);
+
+        document.getElementById("current-index").textContent = index + 1;
+        document.getElementById("total-images").textContent = images.length;
+
+        document.querySelectorAll(".thumbnail-item").forEach((t, i) => {
+          t.classList.toggle("active", i === index);
         });
       }
 
@@ -562,6 +1262,95 @@
         currentIndex = (currentIndex + 1) % images.length;
         changeImage(currentIndex);
       }
+
+      // Keyboard navigation
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "ArrowLeft") prevImage();
+        if (e.key === "ArrowRight") nextImage();
+      });
+
+      // Mobile Menu Logic
+      const mobileMenuBtn = document.getElementById("mobile-menu-btn");
+      const closeMenuBtn = document.getElementById("close-menu-btn");
+      const mobileMenu = document.getElementById("mobile-menu");
+      const mobileOverlay = document.getElementById("mobile-overlay");
+
+      function openMobileMenu() {
+        mobileMenu.classList.add("active");
+        mobileOverlay.classList.add("active");
+        document.body.style.overflow = "hidden";
+      }
+
+      function closeMobileMenu() {
+        mobileMenu.classList.remove("active");
+        mobileOverlay.classList.remove("active");
+        document.body.style.overflow = "";
+      }
+
+      mobileMenuBtn.addEventListener("click", openMobileMenu);
+      closeMenuBtn.addEventListener("click", closeMobileMenu);
+      mobileOverlay.addEventListener("click", closeMobileMenu);
+
+      // Mobile Dropdown Toggles
+      const aboutToggle = document.getElementById("about-toggle");
+      const aboutDropdown = document.getElementById("about-dropdown");
+      const newsToggle = document.getElementById("news-toggle");
+      const newsDropdown = document.getElementById("news-dropdown");
+      const facultyToggle = document.getElementById("faculty-toggle");
+      const facultyDropdown = document.getElementById("faculty-dropdown");
+
+      function toggleDropdown(toggleElement, dropdownElement) {
+        dropdownElement.classList.toggle("active");
+        const icon = toggleElement.querySelector("i");
+        if (icon.classList.contains("fa-chevron-down")) {
+          icon.classList.remove("fa-chevron-down");
+          icon.classList.add("fa-chevron-up");
+        } else {
+          icon.classList.remove("fa-chevron-up");
+          icon.classList.add("fa-chevron-down");
+        }
+      }
+
+      aboutToggle.addEventListener("click", (e) => {
+        e.preventDefault();
+        toggleDropdown(aboutToggle, aboutDropdown);
+      });
+
+      newsToggle.addEventListener("click", (e) => {
+        e.preventDefault();
+        toggleDropdown(newsToggle, newsDropdown);
+      });
+
+      facultyToggle.addEventListener("click", (e) => {
+        e.preventDefault();
+        toggleDropdown(facultyToggle, facultyDropdown);
+      });
+
+      window.addEventListener("resize", () => {
+        if (window.innerWidth >= 1024) {
+          closeMobileMenu();
+        }
+      });
+
+      // Smooth scroll for anchor links
+      document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+        anchor.addEventListener("click", function (e) {
+          e.preventDefault();
+          const target = document.querySelector(this.getAttribute("href"));
+          if (target) {
+            target.scrollIntoView({
+              behavior: "smooth",
+              block: "start",
+            });
+          }
+        });
+      });
+
+      // Initialize
+      document.addEventListener("DOMContentLoaded", () => {
+        document.getElementById("current-index").textContent = currentIndex + 1;
+        document.getElementById("total-images").textContent = images.length;
+      });
     </script>
   </body>
 </html>
