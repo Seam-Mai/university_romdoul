@@ -6,6 +6,12 @@
     <title>ទំព័រដើម - សាកលវិទ្យាល័យរំដួលបច្ចេកវិទ្យា</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="icon" type="image/png" href="img/logo.png" />
+    <!-- Bootstrap 5 CSS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-ApNd1WkHsY+6fFvXQlO0ZRm+H/4V4lLkQ1JbqDkqGfHl+0mI5i5y0Fx0HRfo9rJd" crossorigin="anonymous">
+
+<!-- Bootstrap 5 JS (optional, for components like dropdowns, modals) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-Qkz5sXg6yzgK6l8n1C8poeV7czWjVQpZH6g+3V3x5J2a7/U0rMjc5kZskhJk9BoA" crossorigin="anonymous"></script>
+
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
@@ -476,6 +482,26 @@
       .related-article-card:hover .related-article-title {
         color: #0d47a1;
       }
+      @media (max-width: 575.98px) {
+        .info-card{
+          display: none;
+        }
+      }
+
+      @media (min-width: 576px) {}
+
+      @media (min-width: 768px) {}
+
+      @media (min-width: 992px) {}
+
+      @media (min-width: 1200px) {}
+
+      @media (min-width: 1400px) {
+        .khmer-os-siemreap-font{
+          display: none;
+        }
+      }
+
 
       .footer-bg {
         background-color: #263238;
@@ -513,7 +539,7 @@
       <div
         class="flex flex-col sm:flex-row justify-between items-start sm:items-center px-4 sm:px-8 py-2 text-xs text-gray-700 bg-gray-50 border-b border-gray-200 gap-1 sm:gap-0"
       >
-        <div class="flex flex-wrap gap-x-4 items-center">
+        <div class="flex flex-wrap gap-x-4 items-center​​ info">
           <span class="text-blue-700 flex items-center space-x-1">
             <i class="fas fa-phone-alt text-sm"></i>
             <span>099 55 55 4444</span>
@@ -828,31 +854,45 @@
               និងអភិវឌ្ឍជំនាញក្នុងផ្នែកបច្ចេកវិទ្យាទំនើប។
             </p>
 
-            <!-- Info Card -->
-            <div class="info-card info-card-blue">
-              <h3 class="text-xl font-bold mb-3 flex items-center gap-2">
-                <i class="fas fa-graduation-cap"></i>
+            <!-- Info Card (Upgraded) -->
+            <div
+              class="bg-[#0d47a1] text-white rounded-2xl shadow-xl p-6 transition transform hover:-translate-y-2 hover:shadow-2xl"
+            >
+              <h3
+                class="text-2xl font-bold mb-5 flex items-center gap-3 border-b border-white/30 pb-3"
+              >
+                <i class="fas fa-graduation-cap text-yellow-300 text-3xl"></i>
                 ជំនាញដែលមានផ្តល់ជូន
               </h3>
-              <ul class="space-y-2">
-                <li class="flex items-start gap-2">
-                  <i class="fas fa-check-circle mt-1"></i>
+              <ul class="space-y-3">
+                <li
+                  class="flex items-start gap-3 hover:text-yellow-300 transition"
+                >
+                  <i class="fas fa-check-circle mt-1 text-green-300"></i>
                   <span>វិទ្យាសាស្ត្រកុំព្យូទ័រ (Computer Science)</span>
                 </li>
-                <li class="flex items-start gap-2">
-                  <i class="fas fa-check-circle mt-1"></i>
+                <li
+                  class="flex items-start gap-3 hover:text-yellow-300 transition"
+                >
+                  <i class="fas fa-check-circle mt-1 text-green-300"></i>
                   <span>បច្ចេកវិទ្យាព័ត៌មាន (Information Technology)</span>
                 </li>
-                <li class="flex items-start gap-2">
-                  <i class="fas fa-check-circle mt-1"></i>
+                <li
+                  class="flex items-start gap-3 hover:text-yellow-300 transition"
+                >
+                  <i class="fas fa-check-circle mt-1 text-green-300"></i>
                   <span>វិស្វកម្មសំណង់ស៊ីវិល (Civil Engineering)</span>
                 </li>
-                <li class="flex items-start gap-2">
-                  <i class="fas fa-check-circle mt-1"></i>
+                <li
+                  class="flex items-start gap-3 hover:text-yellow-300 transition"
+                >
+                  <i class="fas fa-check-circle mt-1 text-green-300"></i>
                   <span>គ្រប់គ្រងពាណិជ្ជកម្ម (Business Management)</span>
                 </li>
-                <li class="flex items-start gap-2">
-                  <i class="fas fa-check-circle mt-1"></i>
+                <li
+                  class="flex items-start gap-3 hover:text-yellow-300 transition"
+                >
+                  <i class="fas fa-check-circle mt-1 text-green-300"></i>
                   <span>ច្បាប់អន្តរជាតិ (International Law)</span>
                 </li>
               </ul>
@@ -874,47 +914,52 @@
               ដូច្នេះសូមប្រញាប់រួសរាន់ចុះឈ្មោះមុនពេលកន្លែងពេញ!
             </p>
 
-            <!-- Info Card Gold -->
-            <div class="info-card info-card-gold">
-              <h3 class="text-xl font-bold mb-3 flex items-center gap-2">
-                <i class="fas fa-gift"></i>
-                អត្ថប្រយោជន៍សម្រាប់និស្សិតថ្មី
-              </h3>
-              <div class="grid sm:grid-cols-2 gap-4">
-                <div>
-                  <p class="font-semibold mb-2">
-                    <i class="fas fa-arrow-right mr-2"></i>ការបញ្ចុះតម្លៃពិសេស
-                  </p>
-                  <p class="text-sm">
-                    ការបញ្ចុះតម្លៃ ១០% សម្រាប់និស្សិតដែលចុះឈ្មោះមុនខែធ្នូ
-                  </p>
-                </div>
-                <div>
-                  <p class="font-semibold mb-2">
-                    <i class="fas fa-arrow-right mr-2"></i>អាហារូបករណ៍
-                  </p>
-                  <p class="text-sm">
-                    មានអាហារូបករណ៍សម្រាប់និស្សិតដែលមានសមត្ថភាពល្អ
-                  </p>
-                </div>
-                <div>
-                  <p class="font-semibold mb-2">
-                    <i class="fas fa-arrow-right mr-2"></i>បណ្ណាល័យទំនើប
-                  </p>
-                  <p class="text-sm">
-                    បណ្ណាល័យជាមួយសៀវភៅ និងធនធានឌីជីថលជាង ៥០,០០០ ចំណង
-                  </p>
-                </div>
-                <div>
-                  <p class="font-semibold mb-2">
-                    <i class="fas fa-arrow-right mr-2"></i>បរិក្ខារទំនើប
-                  </p>
-                  <p class="text-sm">
-                    បន្ទប់មេរៀន និងមន្ទីរពិសោធន៍ដែលមានបរិក្ខារទំនើបបំផុត
-                  </p>
-                </div>
-              </div>
-            </div>
+        <!-- Info Card Gold (Upgraded Version) -->
+<div class="bg-gradient-to-r from-yellow-400 via-yellow-500 to-amber-500 text-gray-900 rounded-2xl shadow-xl p-6 border border-yellow-300/50 hover:shadow-2xl hover:-translate-y-1 transition transform duration-300">
+  <h3 class="text-2xl font-extrabold mb-6 flex items-center gap-3 border-b border-yellow-300/40 pb-3">
+    <i class="fas fa-gift text-amber-700 bg-yellow-200 p-2 rounded-full shadow-sm"></i>
+    អត្ថប្រយោជន៍សម្រាប់និស្សិតថ្មី
+  </h3>
+
+  <div class="grid sm:grid-cols-2 gap-5">
+    <div class="bg-white/40 backdrop-blur-md rounded-xl p-4 hover:bg-white/60 transition duration-300">
+      <p class="font-semibold mb-2 flex items-center text-lg text-amber-800">
+        <i class="fas fa-arrow-right mr-2 text-amber-700"></i>ការបញ្ចុះតម្លៃពិសេស
+      </p>
+      <p class="text-sm text-gray-800">
+        ការបញ្ចុះតម្លៃ ១០% សម្រាប់និស្សិតដែលចុះឈ្មោះមុនខែធ្នូ
+      </p>
+    </div>
+
+    <div class="bg-white/40 backdrop-blur-md rounded-xl p-4 hover:bg-white/60 transition duration-300">
+      <p class="font-semibold mb-2 flex items-center text-lg text-amber-800">
+        <i class="fas fa-arrow-right mr-2 text-amber-700"></i>អាហារូបករណ៍
+      </p>
+      <p class="text-sm text-gray-800">
+        មានអាហារូបករណ៍សម្រាប់និស្សិតដែលមានសមត្ថភាពល្អ
+      </p>
+    </div>
+
+    <div class="bg-white/40 backdrop-blur-md rounded-xl p-4 hover:bg-white/60 transition duration-300">
+      <p class="font-semibold mb-2 flex items-center text-lg text-amber-800">
+        <i class="fas fa-arrow-right mr-2 text-amber-700"></i>បណ្ណាល័យទំនើប
+      </p>
+      <p class="text-sm text-gray-800">
+        បណ្ណាល័យជាមួយសៀវភៅ និងធនធានឌីជីថលជាង ៥០,០០០ ចំណង
+      </p>
+    </div>
+
+    <div class="bg-white/40 backdrop-blur-md rounded-xl p-4 hover:bg-white/60 transition duration-300">
+      <p class="font-semibold mb-2 flex items-center text-lg text-amber-800">
+        <i class="fas fa-arrow-right mr-2 text-amber-700"></i>បរិក្ខារទំនើប
+      </p>
+      <p class="text-sm text-gray-800">
+        បន្ទប់មេរៀន និងមន្ទីរពិសោធន៍ដែលមានបរិក្ខារទំនើបបំផុត
+      </p>
+    </div>
+  </div>
+</div>
+
 
             <p>
               សម្រាប់ព័ត៌មានលម្អិតបន្ថែម សូមទំនាក់ទំនងមកកាន់ការិយាល័យសិក្សា
@@ -923,45 +968,42 @@
               សូមអរគុណ!
             </p>
 
-            <!-- Call to Action -->
-            <div
-              class="mt-8 p-6 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl border-l-4 border-blue-600"
-            >
-              <h4 class="text-lg font-bold text-gray-900 mb-3">
-                <i class="fas fa-info-circle text-blue-600 mr-2"></i
-                >ព័ត៌មានសំខាន់
-              </h4>
-              <div class="space-y-2 text-sm text-gray-700">
-                <p>
-                  <strong>ថ្ងៃចាប់ផ្តើម:</strong> ថ្ងៃទី ១ ខែវិច្ឆិកា ឆ្នាំ ២០២៤
-                </p>
-                <p><strong>ថ្ងៃបញ្ចប់:</strong> ថ្ងៃទី ៣១ ខែធ្នូ ឆ្នាំ ២០២៤</p>
-                <p>
-                  <strong>ទីតាំង:</strong> អគារ R-T, ផ្លូវជាតិលេខ ៦, ក្រុងសៀមរាប
-                </p>
-                <p>
-                  <strong>ទំនាក់ទំនង:</strong> 099 55 55 4444 ឬ
-                  info@romdoult-tech.edu.km
-                </p>
-              </div>
-              <div class="mt-4 flex gap-3 flex-wrap">
-                <a
-                  href="documents.html"
-                  class="inline-flex items-center gap-2 bg-blue-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-blue-700 transition-colors"
-                >
-                  <i class="fas fa-download"></i>
-                  ទាញយកទម្រង់
-                </a>
-                <a
-                  href="contact.html"
-                  class="inline-flex items-center gap-2 bg-white text-blue-600 px-6 py-3 rounded-lg font-medium border-2 border-blue-600 hover:bg-blue-50 transition-colors"
-                >
-                  <i class="fas fa-phone"></i>
-                  ទំនាក់ទំនង
-                </a>
-              </div>
-            </div>
-          </div>
+          <!-- Call to Action -->
+<div
+  class="mt-8 p-6 bg-gradient-to-r from-blue-50 to-blue-100 rounded-xl border-l-4 border-[#0d47a1] shadow-lg"
+>
+  <h4 class="text-lg font-bold text-gray-900 mb-3">
+    <i class="fas fa-info-circle text-[#0d47a1] mr-2"></i>ព័ត៌មានសំខាន់
+  </h4>
+  <div class="space-y-2 text-sm text-gray-700">
+    <p>
+      <strong>ថ្ងៃចាប់ផ្តើម:</strong> ថ្ងៃទី ១ ខែវិច្ឆិកា ឆ្នាំ ២០២៤
+    </p>
+    <p><strong>ថ្ងៃបញ្ចប់:</strong> ថ្ងៃទី ៣១ ខែធ្នូ ឆ្នាំ ២០២៤</p>
+    <p>
+      <strong>ទីតាំង:</strong> អគារ R-T, ផ្លូវជាតិលេខ ៦, ក្រុងសៀមរាប
+    </p>
+    <p>
+      <strong>ទំនាក់ទំនង:</strong> 099 55 55 4444 ឬ
+      info@romdoult-tech.edu.km
+    </p>
+  </div>
+  <div class="mt-4 flex gap-3 flex-wrap">
+    <a
+      href="documents.html"
+      class="inline-flex items-center gap-2 bg-[#0d47a1] text-white px-6 py-3 rounded-lg font-medium hover:bg-[#0a3878] transition-all duration-300 shadow-md hover:shadow-xl"
+    >
+      <i class="fas fa-download"></i>
+      ទាញយកទម្រង់
+    </a><a
+      href="contact.html"
+      class="inline-flex items-center gap-2 bg-white text-[#0d47a1] px-6 py-3 rounded-lg font-medium border-2 border-[#0d47a1] hover:bg-[#0d47a1] hover:text-white transition-all duration-300 shadow-md hover:shadow-xl"
+    >
+      <i class="fas fa-phone"></i>
+      ទំនាក់ទំនង
+    </a>
+  </div>
+</div>
 
           <!-- Professional Share Section -->
           <div class="share-container mb-12">
@@ -1111,7 +1153,7 @@
       </main>
 
       <!-- Footer -->
-      <footer class="footer-bg">
+      <footer class="footer-bg bg-[#0d47a1]">
         <div
           class="p-6 sm:p-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8"
         >
