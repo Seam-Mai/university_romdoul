@@ -9,99 +9,62 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
     />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Noto+Sans+Khmer:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              brand: {
+                primary: "#00695c",
+                hover: "#004d40",
+              },
+            },
+            fontFamily: {
+              sans: ["Poppins", "Noto Sans Khmer", "sans-serif"],
+              khmer: ["Noto Sans Khmer", "sans-serif"],
+            },
+            animation: {
+              "fade-in-up": "fadeInUp 0.8s ease-out",
+            },
+            keyframes: {
+              fadeInUp: {
+                "0%": { opacity: "0", transform: "translateY(30px)" },
+                "100%": { opacity: "1", transform: "translateY(0)" },
+              },
+            },
+          },
+        },
+      };
+    </script>
     <style>
-      body {
-        font-family: "Antioch Text", "Moul", "Noto Sans Khmer", "Arial",
-          sans-serif;
-        background-color: #f8f8f8;
-        line-height: 1.7;
-        font-size: 15px;
-        color: #333;
+      html {
+        scroll-behavior: smooth;
       }
-      .khmer-os-siemreap-font {
-        font-family: "Khmer OS Siemreap", "Moul", "Noto Sans Khmer", "Arial",
-          sans-serif !important;
+      /* Custom Scrollbar */
+      ::-webkit-scrollbar {
+        width: 10px;
       }
-      .container-wrapper {
-        max-width: 1100px;
+      ::-webkit-scrollbar-track {
+        background: #f1f1f1;
       }
-      .header-bg {
-        background-color: #0d47a1;
+      ::-webkit-scrollbar-thumb {
+        background: #00695c;
+        border-radius: 5px;
       }
-      .nav-link {
-        padding: 14px 20px;
-        display: block;
-        color: white;
-        font-weight: 500;
-        font-size: 15px;
-        border-right: 1px solid rgba(255, 255, 255, 0.1);
-        white-space: nowrap;
-        transition: background-color 0.3s ease;
+      ::-webkit-scrollbar-thumb:hover {
+        background: #004d40;
       }
-      .nav-link:hover {
-        background-color: #083c6c;
+
+      /* Mobile Menu Transitions */
+      .mobile-menu-overlay {
+        transition: transform 0.3s ease-in-out;
       }
-      .nav-item-wrapper {
-        border-right: 1px solid rgba(255, 255, 255, 0.1);
-      }
-      .nav-item-wrapper > .nav-link {
-        border-right: none;
-      }
-      .active-nav {
-        background-color: #083c6c;
-        border-bottom: 3px solid #fbc02d;
-        padding-bottom: 11px;
-      }
-      .nav-dropdown {
-        position: absolute;
-        top: 100%;
-        left: 0;
-        min-width: 200px;
-        background-color: #083c6c;
-        z-index: 10;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        display: none;
-      }
-      .nav-dropdown a {
-        padding: 10px 20px;
-        color: white;
-        display: block;
-        white-space: nowrap;
-        transition: background-color 0.2s ease;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-        font-weight: 400;
-      }
-      .nav-dropdown a:hover {
-        background-color: #0d47a1;
-        color: #fbc02d;
-      }
-      .nav-dropdown-item-parent {
-        position: relative;
-      }
-      .nav-sub-dropdown {
-        position: absolute;
-        top: 0;
-        left: 100%;
-        min-width: 200px;
-        background-color: #0d47a1;
-        z-index: 20;
-        box-shadow: 4px 4px 6px rgba(0, 0, 0, 0.1);
-        display: none;
-      }
-      .nav-dropdown-item-parent:hover > .nav-sub-dropdown {
-        display: block;
-      }
-      .nav-sub-dropdown a:hover {
-        background-color: #083c6c;
-        color: #fbc02d;
-      }
-      .footer-bg {
-        background-color: #263238;
-        color: #cfd8dc;
-      }
-      .footer-link:hover {
-        color: #fbc02d;
-      }
+
+      /* Staff Card & Images */
       .staff-card {
         transition: transform 0.3s ease, box-shadow 0.3s ease;
       }
@@ -109,159 +72,352 @@
         transform: translateY(-5px);
         box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
       }
-      /* UPGRADED: Reduced image height to make the card smaller */
       .staff-photo {
         width: 100%;
-        height: 200px; /* Changed from 280px */
+        height: 220px;
         object-fit: cover;
-        object-position: center;
+        object-position: top center;
       }
+
+      /* Department Header */
       .department-header {
-        background: linear-gradient(135deg, #0d47a1 0%, #1976d2 100%);
+        background: linear-gradient(135deg, #00695c 0%, #004d40 100%);
         color: white;
         padding: 20px;
         border-radius: 8px;
         margin-bottom: 30px;
+        animation: fadeInUp 0.8s ease-out;
       }
+
+      /* Filter Buttons */
       .filter-btn {
         padding: 8px 20px;
-        border: 2px solid #0d47a1;
+        border: 2px solid #00695c;
         background: white;
-        color: #0d47a1;
+        color: #00695c;
         border-radius: 25px;
         font-weight: 500;
         transition: all 0.3s ease;
         cursor: pointer;
+        font-size: 0.9rem;
       }
       .filter-btn:hover,
       .filter-btn.active {
-        background: #0d47a1;
+        background: #00695c;
         color: white;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
       }
     </style>
   </head>
-  <body>
-    <div class="container-wrapper mx-auto bg-white shadow-xl mt-6 mb-6">
-      <!-- Top Utility Bar -->
-      <div
-        class="flex justify-between items-center px-8 py-2 text-xs text-gray-700 bg-gray-50 border-b border-gray-200"
-      >
-        <div class="flex space-x-4 items-center">
-          <span class="text-blue-700 flex items-center space-x-1">
-            <i class="fas fa-phone-alt text-sm"></i>
-            <span>099 55 55 4444</span>
-          </span>
-          <span class="text-blue-700 flex items-center space-x-1">
-            <i class="fas fa-envelope text-sm"></i>
-            <span>info@romdoult-tech.edu.km</span>
-          </span>
-        </div>
-        <div class="flex space-x-4">
-          <a href="#" class="hover:text-blue-600 transition-colors">English</a>
-          <a href="#" class="hover:text-blue-600 font-bold transition-colors"
-            >ខ្មែរ</a
-          >
+  <body
+    class="font-sans text-gray-800 bg-gray-100 overflow-x-hidden font-khmer"
+  >
+    <!-- WRAPPER -->
+    <div
+      class="mx-auto max-w-[1320px] bg-white shadow-2xl overflow-hidden min-h-screen relative"
+    >
+       <div class="block px-4 py-2.5 text-gray-700 hover:bg-gray-50 hover:text-brand-primary transition text-sm"
+                   
+                    >
+      <!-- Top Bar -->
+      <div class="bg-gray-900 text-gray-300 text-xs py-2.5">
+        <div class="container mx-auto px-4 md:px-8">
+          <div class="flex flex-wrap justify-between items-center gap-3">
+            <div class="flex flex-wrap items-center gap-4">
+              <a
+                href="tel:+85599555444"
+                class="flex items-center gap-2 hover:text-white transition"
+              >
+                <i class="fas fa-phone-alt"></i>
+                <span>+855 99 55 55 4444</span>
+              </a>
+              <a
+                href="mailto:info@romdoult-tech.edu.km"
+                class="flex items-center gap-2 hover:text-white transition"
+              >
+                <i class="fas fa-envelope"></i>
+                <span>info@romdoult-tech.edu.km</span>
+              </a>
+            </div>
+            <div class="flex items-center gap-4">
+              <a
+                href="#"
+                class="hover:text-white transition"
+                aria-label="Facebook"
+                ><i class="fab fa-facebook-f"></i
+              ></a>
+              <a
+                href="#"
+                class="hover:text-white transition"
+                aria-label="Twitter"
+                ><i class="fab fa-twitter"></i
+              ></a>
+              <a
+                href="#"
+                class="hover:text-white transition"
+                aria-label="LinkedIn"
+                ><i class="fab fa-linkedin-in"></i
+              ></a>
+              <a
+                href="#"
+                class="hover:text-white transition"
+                aria-label="YouTube"
+                ><i class="fab fa-youtube"></i
+              ></a>
+            </div>
+          </div>
         </div>
       </div>
 
-      <!-- Header -->
-      <header
-        class="p-6 flex items-center justify-between border-b border-gray-200"
-      >
-        <div class="flex items-center space-x-4">
-          <div
-            class="w-16 h-16 bg-[#0d47a1] rounded-full flex items-center justify-center border-4 border-[#fbc02d] shadow-md"
-          >
-            <span class="text-white font-black text-3xl leading-none">R</span>
-          </div>
-          <div class="flex flex-col">
-            <h1
-              class="text-3xl font-extrabold text-[#0d47a1] khmer-os-siemreap-font"
+      <!-- Navigation -->
+      <header class="bg-white shadow-md sticky top-0 z-50">
+        <div class="container mx-auto px-4 md:px-8">
+          <nav class="flex justify-between items-center py-4">
+            <!-- Logo -->
+            <a href="#" class="flex items-center gap-3 z-50">
+              <div
+                class="w-12 h-12 bg-brand-primary rounded-full flex items-center justify-center shadow-lg"
+              >
+                <i class="fas fa-graduation-cap text-white text-xl"></i>
+              </div>
+              <div>
+                <h1 class="text-xl font-bold text-brand-primary tracking-wide">
+                  Romdoul Tech
+                </h1>
+                <p class="text-xs text-gray-600 font-medium">
+                  Excellence in Education
+                </p>
+              </div>
+            </a>
+
+            <!-- Desktop Menu -->
+            <div
+              class="hidden lg:flex items-center space-x-8 text-sm font-medium"
             >
-              សាកលវិទ្យាល័យរំដួលបច្ចេកវិទ្យា
-            </h1>
-            <h2
-              class="text-sm text-gray-600 font-semibold uppercase tracking-wider"
+              <a
+                href="index.html"
+                class="transition"
+                >Home</a
+              >
+
+              <div class="relative group">
+                <button
+                  class="text-gray-700 hover:text-brand-primary transition flex items-center gap-1 cursor-pointer py-2"
+                >
+                  About
+                  <i
+                    class="fas fa-chevron-down text-xs transition-transform group-hover:rotate-180"
+                  ></i>
+                </button>
+                <div
+                  class="absolute left-0 top-full pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform translate-y-2 group-hover:translate-y-0 w-48"
+                >
+                  <div
+                    class="bg-white shadow-xl rounded-lg py-2 border border-gray-100"
+                  >
+                    <a
+                      href="about.html"
+                      class="block px-4 py-2.5 text-gray-700 hover:bg-gray-50 hover:text-brand-primary transition text-sm"
+                      >Our History</a
+                    >
+                    <a
+                      href="#"
+                      class="block px-4 py-2.5 text-gray-700 hover:bg-gray-50 hover:text-brand-primary transition text-sm"
+                      >Mission & Vision</a
+                    >
+                    <a
+                      href="#"
+                      <a
+                      href="#"
+                      class="block px-4 py-2.5 text-gray-700 hover:bg-gray-50 hover:text-brand-primary transition text-sm"
+                      >Help</a
+                    >
+                  </div>
+                </div>
+              </div>
+
+              <div class="relative group">
+                <button
+                  class="text-gray-700 hover:text-brand-primary transition flex items-center gap-1 cursor-pointer py-2"
+                >
+                  Academics
+                  <i
+                    class="fas fa-chevron-down text-xs transition-transform group-hover:rotate-180"
+                  ></i>
+                </button>
+                <div
+                  class="absolute left-0 top-full pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform translate-y-2 group-hover:translate-y-0 w-48"
+                >
+                  <div
+                    class="bg-white shadow-xl rounded-lg py-2 border border-gray-100"
+                  >
+                    <a
+                      href="#programs"
+                      class="block px-4 py-2.5 text-gray-700 hover:bg-gray-50 hover:text-brand-primary transition text-sm"
+                      >Programs</a
+                    >
+                    <a
+                      href="#academics"
+                      class="block px-4 py-2.5 text-gray-700 hover:bg-gray-50 hover:text-brand-primary transition text-sm"
+                      >Faculties</a
+                    >
+                    <a
+                      href="#"
+                      class="block px-4 py-2.5 text-gray-700 hover:bg-gray-50 hover:text-brand-primary transition text-sm"
+                      >Research</a
+                    >
+                    <a
+                      href="#"
+                      class="block px-4 py-2.5 text-gray-700 hover:bg-gray-50 hover:text-brand-primary transition text-sm"
+                      >Documents</a
+                    >
+                  </div>
+                </div>
+              </div>
+
+              <a
+                href="professor.html"
+                class="​​ text-brand-primary border-brand-primary border-b-2  pb-1 ​ font-bold text-gray-700 hover:text-brand-primary transition"
+                >Admissions</a
+              >
+              <a
+                href="#campus-life"
+                class="text-gray-700 hover:text-brand-primary transition"
+                >Campus Life</a
+              >
+              <a
+                href="news.html"
+                class="text-gray-700 hover:text-brand-primary transition"
+                >News</a
+              >
+              <a
+                href="contact.html"
+                class="text-gray-700 hover:text-brand-primary transition"
+                >Contact</a
+              >
+            </div>
+
+            <!-- Right Actions -->
+            <div class="hidden lg:flex items-center space-x-4 z-50">
+              <button
+                class="text-brand-primary hover:text-brand-hover transition text-lg w-10 h-10 rounded-full hover:bg-gray-100 flex items-center justify-center"
+                aria-label="Search"
+              >
+                <i class="fas fa-search"></i>
+              </button>
+              <a
+                href="#apply"
+                class="bg-brand-primary text-white px-6 py-2.5 rounded-full font-semibold hover:bg-brand-hover transition shadow-md hover:shadow-lg transform hover:-translate-y-0.5 duration-200"
+              >
+                Apply Now
+              </a>
+            </div>
+
+            <!-- Mobile Menu Button -->
+            <button
+              id="mobile-menu-btn"
+              class="lg:hidden text-brand-primary text-2xl z-50 focus:outline-none w-10 h-10 flex items-center justify-center"
+              aria-label="Menu"
             >
-              Romdoul Technology University
-            </h2>
-          </div>
+              <i class="fas fa-bars"></i>
+            </button>
+          </nav>
         </div>
-        <div class="hidden lg:flex items-center space-x-3">
-          <input
-            type="text"
-            placeholder="ស្វែងរក..."
-            class="p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#0d47a1] focus:border-transparent transition-all w-64 text-sm"
-          />
-          <button
-            class="bg-[#0d47a1] text-white p-2 rounded-lg hover:bg-[#083c6c] transition-colors"
+
+        <!-- Mobile Menu Overlay -->
+        <div
+          id="mobile-menu"
+          class="fixed inset-0 bg-white z-40 transform translate-x-full mobile-menu-overlay lg:hidden overflow-y-auto"
+        >
+          <div
+            class="flex flex-col items-center justify-center min-h-screen space-y-6 text-lg font-semibold py-20"
           >
-            <i class="fas fa-search"></i>
-          </button>
+            <a
+              href="index.html"
+              class="mobile-link text-gray-700 hover:text-brand-primary transition text-xl"
+              >Home</a
+            >
+            <a
+              href="about.html"
+              class="mobile-link text-gray-700 hover:text-brand-primary transition text-xl"
+              >About</a
+            >
+            <a
+              href="#academics"
+              class="mobile-link text-gray-700 hover:text-brand-primary transition text-xl"
+              >Academics</a
+            >
+            <a
+              href="professor.html"
+              class="mobile-link text-gray-700 hover:text-brand-primary transition text-xl"
+              >Admissions</a
+            >
+            <a
+              href="#campus-life"
+              class="mobile-link text-gray-700 hover:text-brand-primary transition text-xl"
+              >Campus Life</a
+            >
+            <a
+              href="news.html"
+              class="mobile-link text-gray-700 hover:text-brand-primary transition text-xl"
+              >News</a
+            >
+            <a
+              href="#contact"
+              class="mobile-link text-gray-700 hover:text-brand-primary transition text-xl"
+              >Contact</a
+            >
+            <a
+              href="#apply"
+              class="mobile-link bg-brand-primary text-white px-10 py-3 rounded-full font-semibold hover:bg-brand-hover transition shadow-md mt-4"
+            >
+              Apply Now
+            </a>
+          </div>
         </div>
       </header>
 
-      <!-- Navigation -->
-      <nav class="header-bg shadow-lg">
-        <div class="flex text-sm">
-          <a href="index.html" class="nav-link">ទំព័រដើម</a>
-
-          <div class="relative group nav-item-wrapper">
-            <a
-              href="about.html"
-              class="nav-link flex items-center space-x-1 active-nav"
-            >
-              <span>អំពីយើង</span>
-              <i class="fas fa-chevron-down text-xs ml-1"></i>
-            </a>
-            <div class="nav-dropdown group-hover:block">
-              <a href="#">ប្រវត្តិសាកលវិទ្យាល័យ</a>
-              <div class="nav-dropdown-item-parent">
-                <a href="#" class="flex justify-between items-center">
-                  <span>មហាវិទ្យាល័យ</span>
-                  <i class="fas fa-chevron-right text-xs ml-4"></i>
-                </a>
-                <div class="nav-sub-dropdown">
-                  <a href="#">មហាវិទ្យាល័យ IT</a>
-                  <a href="#">មហាវិទ្យាល័យ IR</a>
-                  <a href="#">មហាវិទ្យាល័យ LAW</a>
-                  <a href="#">មហាវិទ្យាល័យ BM</a>
-                </div>
-              </div>
-              <a href="#">ចក្ខុវិស័យ និង បេសកកម្ម</a>
-              <a href="#">រចនាសម្ព័ន្ធគ្រប់គ្រង</a>
-              <a href="staffandprofessor.html">បុគ្គលិក និង សាស្ត្រាចារ្យ</a>
-            </div>
-          </div>
-
-          <div class="relative group nav-item-wrapper">
-            <a href="news.html" class="nav-link flex items-center space-x-1">
-              <span>ព័ត៌មាន</span>
-              <i class="fas fa-chevron-down text-xs ml-1"></i>
-            </a>
-            <div class="nav-dropdown group-hover:block">
-              <a href="latestnews.html">ព័ត៌មានថ្មីៗ</a>
-              <a href="#">ព្រឹត្តិការណ៍</a>
-              <a href="#">សេចក្តីប្រកាស</a>
-            </div>
-          </div>
-
-          <a href="documents.html" class="nav-link">ឯកសារ</a>
-          <a href="publication.html" class="nav-link">ផ្សព្វផ្សាយ</a>
-          <a href="contact.html" class="nav-link">ទំនាក់ទំនង</a>
-          <a href="help.html" class="nav-link">ជំនួយ</a>
-        </div>
-      </nav>
-
       <!-- Main Content -->
-      <main class="p-8 lg:p-10">
+      <main class="p-8 lg:p-10 animate-fade-in-up">
         <!-- Page Title -->
+         <section class="bg-brand-primary relative py-16 overflow-hidden">
+          <div class="container mx-auto px-4 md:px-8 text-center relative z-10">
+            <h1
+              class="text-3xl md:text-4xl font-bold text-white mb-4 animate-fade-in-up"
+            >
+              ទំនាក់ទំនងមកកាន់យើង
+            </h1>
+            <div
+              class="flex justify-center items-center gap-2 text-teal-100 text-sm font-medium animate-fade-in-up"
+              style="animation-delay: 0.1s"
+            >
+              <a href="index.html" class="hover:text-white transition"
+                >ទំព័រដើម</a
+              >
+              <i class="fas fa-chevron-right text-xs"></i>
+              <span class="text-white">លោកគ្រូអ្នកគ្រូ</span>
+            </div>
+          </div>
+          <!-- Background Pattern -->
+          <div
+            class="absolute top-0 left-0 w-full h-full opacity-10 pointer-events-none overflow-hidden"
+          >
+            <div
+              class="absolute -bottom-10 -right-10 w-64 h-64 border-4 border-white rounded-full"
+            ></div>
+            <div
+              class="absolute top-10 left-10 w-32 h-32 bg-white rounded-full blur-3xl"
+            ></div>
+          </div>
+        </section>
         <div class="mb-8 border-b pb-4">
           <h1 class="text-3xl font-bold text-gray-800 mb-2 leading-relaxed">
             បុគ្គលិក និង សាស្ត្រាចារ្យ
           </h1>
           <p class="text-sm text-gray-500">
-            <span class="text-blue-700">ទំព័រដើម</span>
+            <a href="index.html" class="text-brand-primary hover:underline"
+              >ទំព័រដើម</a
+            >
             <span class="mx-1">/</span>
             <span>អំពីយើង</span>
             <span class="mx-1">/</span>
@@ -270,7 +426,9 @@
         </div>
 
         <!-- Introduction -->
-        <div class="mb-10 bg-blue-50 p-6 rounded-lg">
+        <div
+          class="mb-10 bg-teal-50 p-6 rounded-lg border-l-4 border-brand-primary"
+        >
           <p class="text-gray-700 leading-relaxed">
             សាកលវិទ្យាល័យរំដួលបច្ចេកវិទ្យា មានសាស្ត្រាចារ្យ
             និងបុគ្គលិកដែលមានជំនាញខ្ពស់ និងបទពិសោធន៍ជាច្រើនឆ្នាំក្នុងការបង្រៀន
@@ -279,8 +437,8 @@
           </p>
         </div>
 
-        <!-- Filter Buttons (UPDATED with new BM category) -->
-        <div class="flex flex-wrap gap-3 mb-8 justify-center">
+        <!-- Filter Buttons -->
+        <div class="flex flex-wrap gap-3 mb-10 justify-center">
           <button class="filter-btn active" onclick="filterStaff('all', this)">
             ទាំងអស់
           </button>
@@ -304,10 +462,10 @@
           </button>
         </div>
 
-        <!-- Leadership Section (Remains lg:grid-cols-3) -->
+        <!-- Leadership Section -->
         <div class="department-header" data-category="leadership">
-          <h2 class="text-2xl font-bold mb-2">ថ្នាក់ដឹកនាំសាកលវិទ្យាល័យ</h2>
-          <p class="text-blue-100">University Leadership</p>
+          <h2 class="text-2xl font-bold mb-1">ថ្នាក់ដឹកនាំសាកលវិទ្យាល័យ</h2>
+          <p class="text-teal-100 text-sm">University Leadership</p>
         </div>
 
         <div
@@ -318,7 +476,7 @@
           <div class="staff-card bg-white rounded-lg shadow-lg overflow-hidden">
             <div class="relative">
               <img
-                src="https://images.pexels.com/photos/3760067/pexels-photo-3760067.jpeg?auto=compress&cs=tinysrgb&w=400&h=200&fit=crop"
+                src="https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=400&h=220&fit=crop"
                 alt="President"
                 class="staff-photo"
               />
@@ -334,19 +492,15 @@
               <h3 class="text-xl font-bold text-gray-800 mb-1">
                 ឯកឧត្តម សុខ សំណាង
               </h3>
-              <p class="text-sm text-blue-700 mb-3">President</p>
+              <p class="text-sm text-brand-primary mb-3">President</p>
               <p class="text-sm text-gray-600 mb-3">
                 បណ្ឌិត Ph.D វិទ្យាសាស្ត្រកុំព្យូទ័រ
               </p>
               <div
                 class="flex items-center space-x-2 text-sm text-gray-500 mb-2"
               >
-                <i class="fas fa-envelope text-blue-700"></i>
+                <i class="fas fa-envelope text-brand-primary"></i>
                 <span>soksomnang@romdoult-tech.edu.km</span>
-              </div>
-              <div class="flex items-center space-x-2 text-sm text-gray-500">
-                <i class="fas fa-phone text-blue-700"></i>
-                <span>099 555 444 ext. 101</span>
               </div>
             </div>
           </div>
@@ -355,7 +509,7 @@
           <div class="staff-card bg-white rounded-lg shadow-lg overflow-hidden">
             <div class="relative">
               <img
-                src="https://images.pexels.com/photos/3777563/pexels-photo-3777563.jpeg?auto=compress&cs=tinysrgb&w=400&h=200&fit=crop"
+                src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=400&h=220&fit=crop"
                 alt="VP Academic"
                 class="staff-photo"
               />
@@ -371,19 +525,15 @@
               <h3 class="text-xl font-bold text-gray-800 mb-1">
                 លោកស្រី ចន្ទ មករា
               </h3>
-              <p class="text-sm text-blue-700 mb-3">
-                Vice President for Academic Affairs
+              <p class="text-sm text-brand-primary mb-3">
+                VP for Academic Affairs
               </p>
               <p class="text-sm text-gray-600 mb-3">បណ្ឌិត Ph.D អប់រំ</p>
               <div
                 class="flex items-center space-x-2 text-sm text-gray-500 mb-2"
               >
-                <i class="fas fa-envelope text-blue-700"></i>
+                <i class="fas fa-envelope text-brand-primary"></i>
                 <span>chanmakara@romdoult-tech.edu.km</span>
-              </div>
-              <div class="flex items-center space-x-2 text-sm text-gray-500">
-                <i class="fas fa-phone text-blue-700"></i>
-                <span>099 555 444 ext. 102</span>
               </div>
             </div>
           </div>
@@ -392,7 +542,7 @@
           <div class="staff-card bg-white rounded-lg shadow-lg overflow-hidden">
             <div class="relative">
               <img
-                src="https://images.pexels.com/photos/1574523/pexels-photo-1574523.jpeg?auto=compress&cs=tinysrgb&w=400&h=200&fit=crop"
+                src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?q=80&w=400&h=220&fit=crop"
                 alt="VP Admin"
                 class="staff-photo"
               />
@@ -408,8 +558,8 @@
               <h3 class="text-xl font-bold text-gray-800 mb-1">
                 លោក វិរៈ ពិសិដ្ឋ
               </h3>
-              <p class="text-sm text-blue-700 mb-3">
-                Vice President for Administration
+              <p class="text-sm text-brand-primary mb-3">
+                VP for Administration
               </p>
               <p class="text-sm text-gray-600 mb-3">
                 បណ្ឌិត MBA គ្រប់គ្រងពាណិជ្ជកម្ម
@@ -417,33 +567,29 @@
               <div
                 class="flex items-center space-x-2 text-sm text-gray-500 mb-2"
               >
-                <i class="fas fa-envelope text-blue-700"></i>
+                <i class="fas fa-envelope text-brand-primary"></i>
                 <span>virakpiseth@romdoult-tech.edu.km</span>
-              </div>
-              <div class="flex items-center space-x-2 text-sm text-gray-500">
-                <i class="fas fa-phone text-blue-700"></i>
-                <span>099 555 444 ext. 103</span>
               </div>
             </div>
           </div>
         </div>
 
-        <!-- IT Faculty Section (UPGRADED to lg:grid-cols-5 and more cards) -->
+        <!-- IT Faculty Section -->
         <div class="department-header" data-category="it">
-          <h2 class="text-2xl font-bold mb-2">
+          <h2 class="text-2xl font-bold mb-1">
             មហាវិទ្យាល័យបច្ចេកវិទ្យាព័ត៌មាន
           </h2>
-          <p class="text-blue-100">Faculty of Information Technology</p>
+          <p class="text-teal-100 text-sm">Faculty of Information Technology</p>
         </div>
 
         <div
-          class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 mb-12"
+          class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-4 mb-12"
           data-category="it"
         >
           <!-- IT Dean -->
           <div class="staff-card bg-white rounded-lg shadow-lg overflow-hidden">
             <img
-              src="https://images.pexels.com/photos/1574523/pexels-photo-1574523.jpeg?auto=compress&cs=tinysrgb&w=400&h=200&fit=crop"
+              src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=400&h=220&fit=crop"
               alt="Dean"
               class="staff-photo"
             />
@@ -451,21 +597,15 @@
               <h3 class="text-lg font-bold text-gray-800 mb-1">
                 លោក ស៊ុន សុភាព
               </h3>
-              <p class="text-sm text-blue-700 mb-2">Dean - IT Faculty</p>
+              <p class="text-sm text-brand-primary mb-2">Dean - IT Faculty</p>
               <p class="text-xs text-gray-600 mb-2">Ph.D Computer Science</p>
-              <div class="text-xs text-gray-500">
-                <p>
-                  <i class="fas fa-envelope text-blue-700 mr-1"></i
-                  >sunsopheak@rt.edu.km
-                </p>
-              </div>
             </div>
           </div>
 
           <!-- IT Professor -->
           <div class="staff-card bg-white rounded-lg shadow-lg overflow-hidden">
             <img
-              src="https://images.pexels.com/photos/3777563/pexels-photo-3777563.jpeg?auto=compress&cs=tinysrgb&w=400&h=200&fit=crop"
+              src="https://images.unsplash.com/photo-1580489944761-15a19d654956?q=80&w=400&h=220&fit=crop"
               alt="Professor"
               class="staff-photo"
             />
@@ -473,43 +613,31 @@
               <h3 class="text-lg font-bold text-gray-800 mb-1">
                 លោកស្រី លីម សុផល្លា
               </h3>
-              <p class="text-sm text-blue-700 mb-2">Professor</p>
+              <p class="text-sm text-brand-primary mb-2">Professor</p>
               <p class="text-xs text-gray-600 mb-2">
                 Ph.D Software Engineering
               </p>
-              <div class="text-xs text-gray-500">
-                <p>
-                  <i class="fas fa-envelope text-blue-700 mr-1"></i
-                  >limsophalla@rt.edu.km
-                </p>
-              </div>
             </div>
           </div>
 
-          <!-- IT Senior Lecturer 1 -->
+          <!-- IT Senior Lecturer -->
           <div class="staff-card bg-white rounded-lg shadow-lg overflow-hidden">
             <img
-              src="https://images.pexels.com/photos/3760067/pexels-photo-3760067.jpeg?auto=compress&cs=tinysrgb&w=400&h=200&fit=crop"
+              src="https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?q=80&w=400&h=220&fit=crop"
               alt="Lecturer"
               class="staff-photo"
             />
             <div class="p-4">
               <h3 class="text-lg font-bold text-gray-800 mb-1">លោក រ៉ា សុខា</h3>
-              <p class="text-sm text-blue-700 mb-2">Senior Lecturer</p>
+              <p class="text-sm text-brand-primary mb-2">Senior Lecturer</p>
               <p class="text-xs text-gray-600 mb-2">M.Sc Data Science</p>
-              <div class="text-xs text-gray-500">
-                <p>
-                  <i class="fas fa-envelope text-blue-700 mr-1"></i
-                  >rasokha@rt.edu.km
-                </p>
-              </div>
             </div>
           </div>
 
-          <!-- IT Senior Lecturer 2 (New Card) -->
+          <!-- IT Lecturer -->
           <div class="staff-card bg-white rounded-lg shadow-lg overflow-hidden">
             <img
-              src="https://images.pexels.com/photos/1574523/pexels-photo-1574523.jpeg?auto=compress&cs=tinysrgb&w=400&h=200&fit=crop"
+              src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=400&h=220&fit=crop"
               alt="Lecturer"
               class="staff-photo"
             />
@@ -517,304 +645,28 @@
               <h3 class="text-lg font-bold text-gray-800 mb-1">
                 លោក ចាន់ វឌ្ឍនៈ
               </h3>
-              <p class="text-sm text-blue-700 mb-2">Senior Lecturer</p>
+              <p class="text-sm text-brand-primary mb-2">Lecturer</p>
               <p class="text-xs text-gray-600 mb-2">M.Sc AI & Robotics</p>
-              <div class="text-xs text-gray-500">
-                <p>
-                  <i class="fas fa-envelope text-blue-700 mr-1"></i
-                  >chanvathana@rt.edu.km
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <!-- IT Lecturer 1 -->
-          <div class="staff-card bg-white rounded-lg shadow-lg overflow-hidden">
-            <img
-              src="https://images.pexels.com/photos/3760069/pexels-photo-3760069.jpeg?auto=compress&cs=tinysrgb&w=400&h=200&fit=crop"
-              alt="Lecturer"
-              class="staff-photo"
-            />
-            <div class="p-4">
-              <h3 class="text-lg font-bold text-gray-800 mb-1">
-                លោកស្រី ម៉ៅ សុវណ្ណា
-              </h3>
-              <p class="text-sm text-blue-700 mb-2">Lecturer</p>
-              <p class="text-xs text-gray-600 mb-2">M.Sc Cybersecurity</p>
-              <div class="text-xs text-gray-500">
-                <p>
-                  <i class="fas fa-envelope text-blue-700 mr-1"></i
-                  >maosovanna@rt.edu.km
-                </p>
-              </div>
             </div>
           </div>
         </div>
 
-        <!-- IR Faculty Section (UPGRADED to lg:grid-cols-5 and more cards) -->
-        <div class="department-header" data-category="ir">
-          <h2 class="text-2xl font-bold mb-2">
-            មហាវិទ្យាល័យទំនាក់ទំនងអន្តរជាតិ
-          </h2>
-          <p class="text-blue-100">Faculty of International Relations</p>
-        </div>
-
-        <div
-          class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 mb-12"
-          data-category="ir"
-        >
-          <!-- IR Dean -->
-          <div class="staff-card bg-white rounded-lg shadow-lg overflow-hidden">
-            <img
-              src="https://images.pexels.com/photos/3760067/pexels-photo-3760067.jpeg?auto=compress&cs=tinysrgb&w=400&h=200&fit=crop"
-              alt="Dean"
-              class="staff-photo"
-            />
-            <div class="p-4">
-              <h3 class="text-lg font-bold text-gray-800 mb-1">
-                លោក ហេង វិចិត្រ
-              </h3>
-              <p class="text-sm text-blue-700 mb-2">Dean - IR Faculty</p>
-              <p class="text-xs text-gray-600 mb-2">
-                Ph.D International Relations
-              </p>
-              <div class="text-xs text-gray-500">
-                <p>
-                  <i class="fas fa-envelope text-blue-700 mr-1"></i
-                  >hengvichit@rt.edu.km
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <!-- IR Associate Professor -->
-          <div class="staff-card bg-white rounded-lg shadow-lg overflow-hidden">
-            <img
-              src="https://images.pexels.com/photos/3777563/pexels-photo-3777563.jpeg?auto=compress&cs=tinysrgb&w=400&h=200&fit=crop"
-              alt="Professor"
-              class="staff-photo"
-            />
-            <div class="p-4">
-              <h3 class="text-lg font-bold text-gray-800 mb-1">
-                លោកស្រី ជា ម៉េងលី
-              </h3>
-              <p class="text-sm text-blue-700 mb-2">Associate Professor</p>
-              <p class="text-xs text-gray-600 mb-2">Ph.D Political Science</p>
-              <div class="text-xs text-gray-500">
-                <p>
-                  <i class="fas fa-envelope text-blue-700 mr-1"></i
-                  >chamengly@rt.edu.km
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <!-- IR Senior Lecturer -->
-          <div class="staff-card bg-white rounded-lg shadow-lg overflow-hidden">
-            <img
-              src="https://images.pexels.com/photos/1574523/pexels-photo-1574523.jpeg?auto=compress&cs=tinysrgb&w=400&h=200&fit=crop"
-              alt="Lecturer"
-              class="staff-photo"
-            />
-            <div class="p-4">
-              <h3 class="text-lg font-bold text-gray-800 mb-1">
-                លោក ណារិទ្ធ សុវត្ថិ
-              </h3>
-              <p class="text-sm text-blue-700 mb-2">Senior Lecturer</p>
-              <p class="text-xs text-gray-600 mb-2">
-                M.A International Studies
-              </p>
-              <div class="text-xs text-gray-500">
-                <p>
-                  <i class="fas fa-envelope text-blue-700 mr-1"></i
-                  >narithsovath@rt.edu.km
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <!-- IR Lecturer 1 -->
-          <div class="staff-card bg-white rounded-lg shadow-lg overflow-hidden">
-            <img
-              src="https://images.pexels.com/photos/3760069/pexels-photo-3760069.jpeg?auto=compress&cs=tinysrgb&w=400&h=200&fit=crop"
-              alt="Lecturer"
-              class="staff-photo"
-            />
-            <div class="p-4">
-              <h3 class="text-lg font-bold text-gray-800 mb-1">
-                លោកស្រី ស៊ិន ចន្ទនី
-              </h3>
-              <p class="text-sm text-blue-700 mb-2">Lecturer</p>
-              <p class="text-xs text-gray-600 mb-2">M.A Diplomacy</p>
-              <div class="text-xs text-gray-500">
-                <p>
-                  <i class="fas fa-envelope text-blue-700 mr-1"></i
-                  >sinchanthanee@rt.edu.km
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <!-- IR Lecturer 2 (New Card) -->
-          <div class="staff-card bg-white rounded-lg shadow-lg overflow-hidden">
-            <img
-              src="https://images.pexels.com/photos/3777563/pexels-photo-3777563.jpeg?auto=compress&cs=tinysrgb&w=400&h=200&fit=crop"
-              alt="Lecturer"
-              class="staff-photo"
-            />
-            <div class="p-4">
-              <h3 class="text-lg font-bold text-gray-800 mb-1">
-                លោក ណាក់ សុគន្ធា
-              </h3>
-              <p class="text-sm text-blue-700 mb-2">Lecturer</p>
-              <p class="text-xs text-gray-600 mb-2">M.A Security Studies</p>
-              <div class="text-xs text-gray-500">
-                <p>
-                  <i class="fas fa-envelope text-blue-700 mr-1"></i
-                  >naksokunthea@rt.edu.km
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Law Faculty Section (UPGRADED to lg:grid-cols-5 and more cards) -->
-        <div class="department-header" data-category="law">
-          <h2 class="text-2xl font-bold mb-2">មហាវិទ្យាល័យច្បាប់</h2>
-          <p class="text-blue-100">Faculty of Law</p>
-        </div>
-
-        <div
-          class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 mb-12"
-          data-category="law"
-        >
-          <!-- Law Dean -->
-          <div class="staff-card bg-white rounded-lg shadow-lg overflow-hidden">
-            <img
-              src="https://images.pexels.com/photos/1574523/pexels-photo-1574523.jpeg?auto=compress&cs=tinysrgb&w=400&h=200&fit=crop"
-              alt="Dean"
-              class="staff-photo"
-            />
-            <div class="p-4">
-              <h3 class="text-lg font-bold text-gray-800 mb-1">
-                លោក ហ៊ុន ពិសិដ្ឋ
-              </h3>
-              <p class="text-sm text-blue-700 mb-2">Dean - Law Faculty</p>
-              <p class="text-xs text-gray-600 mb-2">Ph.D Law</p>
-              <div class="text-xs text-gray-500">
-                <p>
-                  <i class="fas fa-envelope text-blue-700 mr-1"></i
-                  >hunpiseth@rt.edu.km
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <!-- Law Professor -->
-          <div class="staff-card bg-white rounded-lg shadow-lg overflow-hidden">
-            <img
-              src="https://images.pexels.com/photos/3777563/pexels-photo-3777563.jpeg?auto=compress&cs=tinysrgb&w=400&h=200&fit=crop"
-              alt="Professor"
-              class="staff-photo"
-            />
-            <div class="p-4">
-              <h3 class="text-lg font-bold text-gray-800 mb-1">
-                លោកស្រី ឈិន សុខមុនី
-              </h3>
-              <p class="text-sm text-blue-700 mb-2">Professor</p>
-              <p class="text-xs text-gray-600 mb-2">Ph.D Constitutional Law</p>
-              <div class="text-xs text-gray-500">
-                <p>
-                  <i class="fas fa-envelope text-blue-700 mr-1"></i
-                  >chinsokmonee@rt.edu.km
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <!-- Law Senior Lecturer -->
-          <div class="staff-card bg-white rounded-lg shadow-lg overflow-hidden">
-            <img
-              src="https://images.pexels.com/photos/3760067/pexels-photo-3760067.jpeg?auto=compress&cs=tinysrgb&w=400&h=200&fit=crop"
-              alt="Lecturer"
-              class="staff-photo"
-            />
-            <div class="p-4">
-              <h3 class="text-lg font-bold text-gray-800 mb-1">
-                លោក ឃុន សុវណ្ណ
-              </h3>
-              <p class="text-sm text-blue-700 mb-2">Senior Lecturer</p>
-              <p class="text-xs text-gray-600 mb-2">LL.M Criminal Law</p>
-              <div class="text-xs text-gray-500">
-                <p>
-                  <i class="fas fa-envelope text-blue-700 mr-1"></i
-                  >khunsovann@rt.edu.km
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <!-- Law Lecturer 1 -->
-          <div class="staff-card bg-white rounded-lg shadow-lg overflow-hidden">
-            <img
-              src="https://images.pexels.com/photos/3760069/pexels-photo-3760069.jpeg?auto=compress&cs=tinysrgb&w=400&h=200&fit=crop"
-              alt="Lecturer"
-              class="staff-photo"
-            />
-            <div class="p-4">
-              <h3 class="text-lg font-bold text-gray-800 mb-1">
-                លោកស្រី ព្រែក សុជាតា
-              </h3>
-              <p class="text-sm text-blue-700 mb-2">Lecturer</p>
-              <p class="text-xs text-gray-600 mb-2">LL.M Business Law</p>
-              <div class="text-xs text-gray-500">
-                <p>
-                  <i class="fas fa-envelope text-blue-700 mr-1"></i
-                  >preksocheta@rt.edu.km
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <!-- Law Lecturer 2 (New Card) -->
-          <div class="staff-card bg-white rounded-lg shadow-lg overflow-hidden">
-            <img
-              src="https://images.pexels.com/photos/3777563/pexels-photo-3777563.jpeg?auto=compress&cs=tinysrgb&w=400&h=200&fit=crop"
-              alt="Lecturer"
-              class="staff-photo"
-            />
-            <div class="p-4">
-              <h3 class="text-lg font-bold text-gray-800 mb-1">
-                លោក វ៉ាន់ សុផាណិត
-              </h3>
-              <p class="text-sm text-blue-700 mb-2">Lecturer</p>
-              <p class="text-xs text-gray-600 mb-2">LL.M Civil Law</p>
-              <div class="text-xs text-gray-500">
-                <p>
-                  <i class="fas fa-envelope text-blue-700 mr-1"></i
-                  >vansophanit@rt.edu.km
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- NEW FACULTY SECTION: BUSINESS MANAGEMENT (BM) -->
+        <!-- Business Management (BM) -->
         <div class="department-header" data-category="bm">
-          <h2 class="text-2xl font-bold mb-2">
+          <h2 class="text-2xl font-bold mb-1">
             មហាវិទ្យាល័យគ្រប់គ្រងពាណិជ្ជកម្ម
           </h2>
-          <p class="text-blue-100">Faculty of Business Management</p>
+          <p class="text-teal-100 text-sm">Faculty of Business Management</p>
         </div>
 
         <div
-          class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 mb-12"
+          class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-4 mb-12"
           data-category="bm"
         >
           <!-- BM Dean -->
           <div class="staff-card bg-white rounded-lg shadow-lg overflow-hidden">
             <img
-              src="https://images.pexels.com/photos/3760067/pexels-photo-3760067.jpeg?auto=compress&cs=tinysrgb&w=400&h=200&fit=crop"
+              src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=400&h=220&fit=crop"
               alt="Dean"
               class="staff-photo"
             />
@@ -822,23 +674,15 @@
               <h3 class="text-lg font-bold text-gray-800 mb-1">
                 បណ្ឌិត ម៉ៅ បូរី
               </h3>
-              <p class="text-sm text-blue-700 mb-2">Dean - BM Faculty</p>
-              <p class="text-xs text-gray-600 mb-2">
-                Ph.D Business Administration
-              </p>
-              <div class="text-xs text-gray-500">
-                <p>
-                  <i class="fas fa-envelope text-blue-700 mr-1"></i
-                  >maobory@rt.edu.km
-                </p>
-              </div>
+              <p class="text-sm text-brand-primary mb-2">Dean - BM Faculty</p>
+              <p class="text-xs text-gray-600 mb-2">Ph.D Business Admin</p>
             </div>
           </div>
 
-          <!-- BM Associate Professor 1 -->
+          <!-- BM Assoc Prof -->
           <div class="staff-card bg-white rounded-lg shadow-lg overflow-hidden">
             <img
-              src="https://images.pexels.com/photos/3777563/pexels-photo-3777563.jpeg?auto=compress&cs=tinysrgb&w=400&h=200&fit=crop"
+              src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=400&h=220&fit=crop"
               alt="Professor"
               class="staff-photo"
             />
@@ -846,98 +690,26 @@
               <h3 class="text-lg font-bold text-gray-800 mb-1">
                 លោកស្រី នុត សុខលី
               </h3>
-              <p class="text-sm text-blue-700 mb-2">Associate Professor</p>
+              <p class="text-sm text-brand-primary mb-2">Associate Professor</p>
               <p class="text-xs text-gray-600 mb-2">Ph.D Finance</p>
-              <div class="text-xs text-gray-500">
-                <p>
-                  <i class="fas fa-envelope text-blue-700 mr-1"></i
-                  >noutsokhly@rt.edu.km
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <!-- BM Associate Professor 2 -->
-          <div class="staff-card bg-white rounded-lg shadow-lg overflow-hidden">
-            <img
-              src="https://images.pexels.com/photos/1574523/pexels-photo-1574523.jpeg?auto=compress&cs=tinysrgb&w=400&h=200&fit=crop"
-              alt="Professor"
-              class="staff-photo"
-            />
-            <div class="p-4">
-              <h3 class="text-lg font-bold text-gray-800 mb-1">
-                លោក សាន ពិសិដ្ឋ
-              </h3>
-              <p class="text-sm text-blue-700 mb-2">Associate Professor</p>
-              <p class="text-xs text-gray-600 mb-2">Ph.D Economics</p>
-              <div class="text-xs text-gray-500">
-                <p>
-                  <i class="fas fa-envelope text-blue-700 mr-1"></i
-                  >sanpisith@rt.edu.km
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <!-- BM Lecturer 1 -->
-          <div class="staff-card bg-white rounded-lg shadow-lg overflow-hidden">
-            <img
-              src="https://images.pexels.com/photos/3760069/pexels-photo-3760069.jpeg?auto=compress&cs=tinysrgb&w=400&h=200&fit=crop"
-              alt="Lecturer"
-              class="staff-photo"
-            />
-            <div class="p-4">
-              <h3 class="text-lg font-bold text-gray-800 mb-1">
-                លោកស្រី អ៊ុំ សុវណ្ណារី
-              </h3>
-              <p class="text-sm text-blue-700 mb-2">Senior Lecturer</p>
-              <p class="text-xs text-gray-600 mb-2">MBA Marketing</p>
-              <div class="text-xs text-gray-500">
-                <p>
-                  <i class="fas fa-envelope text-blue-700 mr-1"></i
-                  >oumsvannary@rt.edu.km
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <!-- BM Lecturer 2 -->
-          <div class="staff-card bg-white rounded-lg shadow-lg overflow-hidden">
-            <img
-              src="https://images.pexels.com/photos/3777563/pexels-photo-3777563.jpeg?auto=compress&cs=tinysrgb&w=400&h=200&fit=crop"
-              alt="Lecturer"
-              class="staff-photo"
-            />
-            <div class="p-4">
-              <h3 class="text-lg font-bold text-gray-800 mb-1">
-                លោក គីម វណ្ណារិទ្ធ
-              </h3>
-              <p class="text-sm text-blue-700 mb-2">Lecturer</p>
-              <p class="text-xs text-gray-600 mb-2">M.A Human Resource Mgt</p>
-              <div class="text-xs text-gray-500">
-                <p>
-                  <i class="fas fa-envelope text-blue-700 mr-1"></i
-                  >kimvannarith@rt.edu.km
-                </p>
-              </div>
             </div>
           </div>
         </div>
 
-        <!-- Administrative Staff Section (UPGRADED to lg:grid-cols-5 and more cards) -->
+        <!-- Administrative Staff -->
         <div class="department-header" data-category="admin">
-          <h2 class="text-2xl font-bold mb-2">បុគ្គលិករដ្ឋបាល</h2>
-          <p class="text-blue-100">Administrative Staff</p>
+          <h2 class="text-2xl font-bold mb-1">បុគ្គលិករដ្ឋបាល</h2>
+          <p class="text-teal-100 text-sm">Administrative Staff</p>
         </div>
 
         <div
-          class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 mb-12"
+          class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-4 mb-12"
           data-category="admin"
         >
           <!-- Registrar -->
           <div class="staff-card bg-white rounded-lg shadow-lg overflow-hidden">
             <img
-              src="https://images.pexels.com/photos/3777563/pexels-photo-3777563.jpeg?auto=compress&cs=tinysrgb&w=400&h=200&fit=crop"
+              src="https://images.unsplash.com/photo-1594744803329-e58b31de8bf5?q=80&w=400&h=220&fit=crop"
               alt="Registrar"
               class="staff-photo"
             />
@@ -945,23 +717,15 @@
               <h3 class="text-lg font-bold text-gray-800 mb-1">
                 លោកស្រី សុខ ពេជ្រ
               </h3>
-              <p class="text-sm text-blue-700 mb-2">Registrar</p>
-              <p class="text-xs text-gray-600 mb-2">
-                M.Ed Educational Administration
-              </p>
-              <div class="text-xs text-gray-500">
-                <p>
-                  <i class="fas fa-envelope text-blue-700 mr-1"></i
-                  >sokpich@rt.edu.km
-                </p>
-              </div>
+              <p class="text-sm text-brand-primary mb-2">Registrar</p>
+              <p class="text-xs text-gray-600 mb-2">M.Ed Administration</p>
             </div>
           </div>
 
-          <!-- Head Librarian -->
+          <!-- Librarian -->
           <div class="staff-card bg-white rounded-lg shadow-lg overflow-hidden">
             <img
-              src="https://images.pexels.com/photos/1574523/pexels-photo-1574523.jpeg?auto=compress&cs=tinysrgb&w=400&h=200&fit=crop"
+              src="https://images.unsplash.com/photo-1530268729831-4b0b9e170218?q=80&w=400&h=220&fit=crop"
               alt="Librarian"
               class="staff-photo"
             />
@@ -969,153 +733,53 @@
               <h3 class="text-lg font-bold text-gray-800 mb-1">
                 លោក ស៊ុយ ដារ៉ា
               </h3>
-              <p class="text-sm text-blue-700 mb-2">Head Librarian</p>
-              <p class="text-xs text-gray-600 mb-2">M.L.I.S Library Science</p>
-              <div class="text-xs text-gray-500">
-                <p>
-                  <i class="fas fa-envelope text-blue-700 mr-1"></i
-                  >suydara@rt.edu.km
-                </p>
-              </div>
+              <p class="text-sm text-brand-primary mb-2">Head Librarian</p>
+              <p class="text-xs text-gray-600 mb-2">M.L.I.S Documents Science</p>
             </div>
           </div>
 
-          <!-- Finance Manager -->
+          <!-- HR -->
           <div class="staff-card bg-white rounded-lg shadow-lg overflow-hidden">
             <img
-              src="https://images.pexels.com/photos/3760069/pexels-photo-3760069.jpeg?auto=compress&cs=tinysrgb&w=400&h=200&fit=crop"
-              alt="Finance"
-              class="staff-photo"
-            />
-            <div class="p-4">
-              <h3 class="text-lg font-bold text-gray-800 mb-1">
-                លោកស្រី ហ៊ុច សុផាត់
-              </h3>
-              <p class="text-sm text-blue-700 mb-2">Finance Manager</p>
-              <p class="text-xs text-gray-600 mb-2">MBA Accounting</p>
-              <div class="text-xs text-gray-500">
-                <p>
-                  <i class="fas fa-envelope text-blue-700 mr-1"></i
-                  >hochsophat@rt.edu.km
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <!-- HR Manager -->
-          <div class="staff-card bg-white rounded-lg shadow-lg overflow-hidden">
-            <img
-              src="https://images.pexels.com/photos/3760067/pexels-photo-3760067.jpeg?auto=compress&cs=tinysrgb&w=400&h=200&fit=crop"
+              src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=400&h=220&fit=crop"
               alt="HR"
               class="staff-photo"
             />
             <div class="p-4">
               <h3 class="text-lg font-bold text-gray-800 mb-1">លោក ធី វិបុល</h3>
-              <p class="text-sm text-blue-700 mb-2">HR Manager</p>
+              <p class="text-sm text-brand-primary mb-2">HR Manager</p>
               <p class="text-xs text-gray-600 mb-2">M.A Human Resources</p>
-              <div class="text-xs text-gray-500">
-                <p>
-                  <i class="fas fa-envelope text-blue-700 mr-1"></i
-                  >theyvipul@rt.edu.km
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <!-- IT Support Manager -->
-          <div class="staff-card bg-white rounded-lg shadow-lg overflow-hidden">
-            <img
-              src="https://images.pexels.com/photos/1574523/pexels-photo-1574523.jpeg?auto=compress&cs=tinysrgb&w=400&h=200&fit=crop"
-              alt="IT Support"
-              class="staff-photo"
-            />
-            <div class="p-4">
-              <h3 class="text-lg font-bold text-gray-800 mb-1">
-                លោក ផល សុវត្ថិ
-              </h3>
-              <p class="text-sm text-blue-700 mb-2">IT Support Manager</p>
-              <p class="text-xs text-gray-600 mb-2">B.Sc Information Systems</p>
-              <div class="text-xs text-gray-500">
-                <p>
-                  <i class="fas fa-envelope text-blue-700 mr-1"></i
-                  >pholsovath@rt.edu.km
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <!-- Student Affairs Officer (New Card) -->
-          <div class="staff-card bg-white rounded-lg shadow-lg overflow-hidden">
-            <img
-              src="https://images.pexels.com/photos/3777563/pexels-photo-3777563.jpeg?auto=compress&cs=tinysrgb&w=400&h=200&fit=crop"
-              alt="Student Affairs"
-              class="staff-photo"
-            />
-            <div class="p-4">
-              <h3 class="text-lg font-bold text-gray-800 mb-1">
-                លោកស្រី ញ៉ែម សុខជា
-              </h3>
-              <p class="text-sm text-blue-700 mb-2">Student Affairs Officer</p>
-              <p class="text-xs text-gray-600 mb-2">B.A Psychology</p>
-              <div class="text-xs text-gray-500">
-                <p>
-                  <i class="fas fa-envelope text-blue-700 mr-1"></i
-                  >nhaemsokchea@rt.edu.km
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <!-- Marketing Coordinator (New Card) -->
-          <div class="staff-card bg-white rounded-lg shadow-lg overflow-hidden">
-            <img
-              src="https://images.pexels.com/photos/3760067/pexels-photo-3760067.jpeg?auto=compress&cs=tinysrgb&w=400&h=200&fit=crop"
-              alt="Marketing"
-              class="staff-photo"
-            />
-            <div class="p-4">
-              <h3 class="text-lg font-bold text-gray-800 mb-1">
-                លោក ឡេង ច័ន្ទធីតា
-              </h3>
-              <p class="text-sm text-blue-700 mb-2">Marketing Coordinator</p>
-              <p class="text-xs text-gray-600 mb-2">B.A Marketing</p>
-              <div class="text-xs text-gray-500">
-                <p>
-                  <i class="fas fa-envelope text-blue-700 mr-1"></i
-                  >lengchanthida@rt.edu.km
-                </p>
-              </div>
             </div>
           </div>
         </div>
 
         <!-- Contact Section -->
         <div
-          class="bg-gradient-to-r from-blue-50 to-blue-100 p-8 rounded-lg mt-12"
+          class="bg-gradient-to-r from-teal-50 to-teal-100 p-8 rounded-lg mt-12 text-center border border-teal-200"
         >
-          <h3 class="text-2xl font-bold text-[#0d47a1] mb-4 text-center">
+          <h3 class="text-2xl font-bold text-brand-primary mb-4">
             ទាក់ទងបុគ្គលិក និង សាស្ត្រាចារ្យ
           </h3>
-          <p class="text-center text-gray-700 mb-6">
+          <p class="text-gray-700 mb-6 max-w-2xl mx-auto">
             ប្រសិនបើអ្នកត្រូវការទំនាក់ទំនងបុគ្គលិក ឬសាស្ត្រាចារ្យណាមួយ
             សូមទាក់ទងតាមរយៈអ៊ីមែល ឬលេខទូរស័ព្ទដែលបានផ្តល់ឱ្យខាងលើ។
           </p>
           <div class="flex flex-wrap justify-center gap-4">
             <div
-              class="flex items-center space-x-3 bg-white px-6 py-3 rounded-lg shadow"
+              class="flex items-center space-x-3 bg-white px-6 py-3 rounded-lg shadow-sm hover:shadow-md transition"
             >
-              <i class="fas fa-phone-alt text-2xl text-blue-700"></i>
+              <i class="fas fa-phone-alt text-2xl text-brand-primary"></i>
               <div>
-                <p class="text-sm text-gray-500">ទូរស័ព្ទទូទៅ</p>
+                <p class="text-xs text-gray-500 uppercase">ទូរស័ព្ទទូទៅ</p>
                 <p class="font-bold text-gray-800">099 55 55 4444</p>
               </div>
             </div>
             <div
-              class="flex items-center space-x-3 bg-white px-6 py-3 rounded-lg shadow"
+              class="flex items-center space-x-3 bg-white px-6 py-3 rounded-lg shadow-sm hover:shadow-md transition"
             >
-              <i class="fas fa-envelope text-2xl text-blue-700"></i>
+              <i class="fas fa-envelope text-2xl text-brand-primary"></i>
               <div>
-                <p class="text-sm text-gray-500">អ៊ីមែលទូទៅ</p>
+                <p class="text-xs text-gray-500 uppercase">អ៊ីមែលទូទៅ</p>
                 <p class="font-bold text-gray-800">hr@romdoult-tech.edu.km</p>
               </div>
             </div>
@@ -1124,139 +788,462 @@
       </main>
 
       <!-- Footer -->
-      <footer class="footer-bg bg-[#0d47a1]">
-        <div class="p-10 grid grid-cols-1 md:grid-cols-4 gap-8">
-          <div>
-            <h4
-              class="text-xl font-bold text-white mb-4 khmer-os-siemreap-font"
-            >
-              សាកលវិទ្យាល័យរំដួលបច្ចេកវិទ្យា
-            </h4>
-            <p class="text-sm mb-4">
-              សាកលវិទ្យាល័យបច្ចេកវិទ្យានាំមុខគេក្នុងការអប់រំ និងស្រាវជ្រាវ។
-            </p>
-            <div class="space-y-2 text-sm">
-              <p class="flex items-center space-x-2">
-                <i class="fas fa-map-marker-alt text-[#fbc02d]"></i>
-                <span
-                  >អាសយដ្ឋាន៖ អគារ R-T, ផ្លូវជាតិលេខ ៦, ក្រុងសៀមរាប,
-                  កម្ពុជា</span
+      <!-- Footer -->
+      <footer class="bg-gray-900 text-gray-300 font-sans">
+        <!-- Main Footer Content -->
+        <div class="container mx-auto px-4 md:px-8 py-16">
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
+            <!-- About University -->
+            <div>
+              <div class="flex items-center gap-3 mb-6">
+                <div
+                  class="w-10 h-10 bg-brand-primary rounded-full flex items-center justify-center shadow-lg"
                 >
+                  <i class="fas fa-graduation-cap text-white text-sm"></i>
+                </div>
+                <div>
+                  <h3 class="text-white text-lg font-bold tracking-wide">
+                    Romdoul Tech
+                  </h3>
+                  <p class="text-xs text-gray-400">Excellence in Education</p>
+                </div>
+              </div>
+              <p class="text-sm text-gray-400 leading-relaxed mb-6">
+                <span class="font-khmer">សាកលវិទ្យាល័យរំដួលបច្ចេកវិទ្យា</span
+                ><br />
+                Leading the way in innovative education and research, preparing
+                students for global success in technology and business.
               </p>
-              <p class="flex items-center space-x-2">
-                <i class="fas fa-phone-alt text-[#fbc02d]"></i>
-                <span>ទូរស័ព្ទ៖ 099 55 55 4444</span>
-              </p>
-              <p class="flex items-center space-x-2">
-                <i class="fas fa-envelope text-[#fbc02d]"></i>
-                <span>អ៊ីម៉ែល៖ info@romdoult-tech.edu.km</span>
-              </p>
+              <div class="flex gap-3">
+                <a
+                  href="#"
+                  class="w-9 h-9 bg-gray-800 rounded-full flex items-center justify-center hover:bg-brand-primary hover:text-white transition-all duration-300 text-sm"
+                  aria-label="Facebook"
+                >
+                  <i class="fab fa-facebook-f"></i>
+                </a>
+                <a
+                  href="#"
+                  class="w-9 h-9 bg-gray-800 rounded-full flex items-center justify-center hover:bg-brand-primary hover:text-white transition-all duration-300 text-sm"
+                  aria-label="Twitter"
+                >
+                  <i class="fab fa-twitter"></i>
+                </a>
+                <a
+                  href="#"
+                  class="w-9 h-9 bg-gray-800 rounded-full flex items-center justify-center hover:bg-brand-primary hover:text-white transition-all duration-300 text-sm"
+                  aria-label="LinkedIn"
+                >
+                  <i class="fab fa-linkedin-in"></i>
+                </a>
+                <a
+                  href="#"
+                  class="w-9 h-9 bg-gray-800 rounded-full flex items-center justify-center hover:bg-brand-primary hover:text-white transition-all duration-300 text-sm"
+                  aria-label="YouTube"
+                >
+                  <i class="fab fa-youtube"></i>
+                </a>
+                <a
+                  href="#"
+                  class="w-9 h-9 bg-gray-800 rounded-full flex items-center justify-center hover:bg-brand-primary hover:text-white transition-all duration-300 text-sm"
+                  aria-label="Instagram"
+                >
+                  <i class="fab fa-instagram"></i>
+                </a>
+              </div>
             </div>
-          </div>
-          <div>
-            <h4 class="text-lg font-bold text-white mb-4">ផែនទីគេហទំព័រ</h4>
-            <ul class="space-y-2 text-sm">
-              <li><a href="index.html" class="footer-link">ទំព័រដើម</a></li>
-              <li><a href="about.html" class="footer-link">អំពីយើង</a></li>
-              <li><a href="news.html" class="footer-link">ព័ត៌មាន</a></li>
-              <li><a href="documents.html" class="footer-link">ឯកសារ</a></li>
-              <li>
-                <a href="publication.html" class="footer-link">ផ្សព្វផ្សាយ</a>
-              </li>
-            </ul>
-          </div>
-          <div>
-            <h4 class="text-lg font-bold text-white mb-4">
-              ជំនួយ និង លក្ខខណ្ឌ
-            </h4>
-            <ul class="space-y-2 text-sm">
-              <li><a href="contact.html" class="footer-link">ទំនាក់ទំនង</a></li>
-              <li><a href="#" class="footer-link">សំនួរញឹកញាប់</a></li>
-              <li><a href="#" class="footer-link">គោលការណ៍ឯកជនភាព</a></li>
-              <li><a href="#" class="footer-link">លក្ខខណ្ឌប្រើប្រាស់</a></li>
-              <li><a href="#" class="footer-link">ការកំណត់ខូគី</a></li>
-            </ul>
-          </div>
-          <div>
-            <h4 class="text-lg font-bold text-white mb-4">តាមដានយើង</h4>
-            <div class="flex space-x-3 mb-6">
-              <a
-                href="#"
-                class="text-2xl hover:text-[#3b5998] transition-colors"
-                ><i class="fab fa-facebook-square"></i
-              ></a>
-              <a
-                href="#"
-                class="text-2xl hover:text-[#00acee] transition-colors"
-                ><i class="fab fa-twitter-square"></i
-              ></a>
-              <a
-                href="#"
-                class="text-2xl hover:text-[#FF0000] transition-colors"
-                ><i class="fab fa-youtube-square"></i
-              ></a>
-              <a
-                href="#"
-                class="text-2xl hover:text-[#0088cc] transition-colors"
-                ><i class="fab fa-telegram"></i
-              ></a>
-            </div>
-            <h4 class="text-lg font-bold text-white mb-2">
-              ព្រឹត្តិបត្រព័ត៌មាន
-            </h4>
-            <form class="flex">
-              <input
-                type="email"
-                placeholder="អ៊ីម៉ែលរបស់អ្នក..."
-                class="p-2 text-sm text-gray-900 rounded-l-md w-full focus:outline-none"
-              />
-              <button
-                class="bg-[#fbc02d] text-gray-900 p-2 text-sm rounded-r-md hover:bg-[#e6a200] transition-colors"
+
+            <!-- Quick Links -->
+            <div>
+              <h4
+                class="text-white text-lg font-bold mb-6 relative inline-block pb-2"
               >
-                ចុះឈ្មោះ
-              </button>
-            </form>
+                Quick Links
+                <span
+                  class="absolute bottom-0 left-0 w-12 h-0.5 bg-brand-primary rounded-full"
+                ></span>
+              </h4>
+              <ul class="space-y-3 text-sm">
+                <li>
+                  <a
+                    href="#"
+                    class="hover:text-brand-primary transition-colors flex items-center gap-2 group"
+                  >
+                    <i
+                      class="fas fa-chevron-right text-[10px] text-gray-600 group-hover:text-brand-primary transition-colors"
+                    ></i>
+                    About University
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="#"
+                    class="hover:text-brand-primary transition-colors flex items-center gap-2 group"
+                  >
+                    <i
+                      class="fas fa-chevron-right text-[10px] text-gray-600 group-hover:text-brand-primary transition-colors"
+                    ></i>
+                    Academic Programs
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="#"
+                    class="hover:text-brand-primary transition-colors flex items-center gap-2 group"
+                  >
+                    <i
+                      class="fas fa-chevron-right text-[10px] text-gray-600 group-hover:text-brand-primary transition-colors"
+                    ></i>
+                    Admissions
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="#"
+                    class="hover:text-brand-primary transition-colors flex items-center gap-2 group"
+                  >
+                    <i
+                      class="fas fa-chevron-right text-[10px] text-gray-600 group-hover:text-brand-primary transition-colors"
+                    ></i>
+                    Student Life
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="#"
+                    class="hover:text-brand-primary transition-colors flex items-center gap-2 group"
+                  >
+                    <i
+                      class="fas fa-chevron-right text-[10px] text-gray-600 group-hover:text-brand-primary transition-colors"
+                    ></i>
+                    Research & Innovation
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="#"
+                    class="hover:text-brand-primary transition-colors flex items-center gap-2 group"
+                  >
+                    <i
+                      class="fas fa-chevron-right text-[10px] text-gray-600 group-hover:text-brand-primary transition-colors"
+                    ></i>
+                    Alumni Network
+                  </a>
+                </li>
+              </ul>
+            </div>
+
+            <!-- Resources -->
+            <div>
+              <h4
+                class="text-white text-lg font-bold mb-6 relative inline-block pb-2"
+              >
+                Resources
+                <span
+                  class="absolute bottom-0 left-0 w-12 h-0.5 bg-brand-primary rounded-full"
+                ></span>
+              </h4>
+              <ul class="space-y-3 text-sm">
+                <li>
+                  <a
+                    href="#"
+                    class="hover:text-brand-primary transition-colors flex items-center gap-2 group"
+                  >
+                    <i
+                      class="fas fa-chevron-right text-[10px] text-gray-600 group-hover:text-brand-primary transition-colors"
+                    ></i>
+                    Student Portal
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="#"
+                    class="hover:text-brand-primary transition-colors flex items-center gap-2 group"
+                  >
+                    <i
+                      class="fas fa-chevron-right text-[10px] text-gray-600 group-hover:text-brand-primary transition-colors"
+                    ></i>
+                    Faculty Portal
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="#"
+                    class="hover:text-brand-primary transition-colors flex items-center gap-2 group"
+                  >
+                    <i
+                      class="fas fa-chevron-right text-[10px] text-gray-600 group-hover:text-brand-primary transition-colors"
+                    ></i>
+                    Documents
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="#"
+                    class="hover:text-brand-primary transition-colors flex items-center gap-2 group"
+                  >
+                    <i
+                      class="fas fa-chevron-right text-[10px] text-gray-600 group-hover:text-brand-primary transition-colors"
+                    ></i>
+                    Online Learning
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="#"
+                    class="hover:text-brand-primary transition-colors flex items-center gap-2 group"
+                  >
+                    <i
+                      class="fas fa-chevron-right text-[10px] text-gray-600 group-hover:text-brand-primary transition-colors"
+                    ></i>
+                    Campus Map
+                  </a>
+                </li>
+              </ul>
+            </div>
+
+            <!-- Contact Info -->
+            <div>
+              <h4
+                class="text-white text-lg font-bold mb-6 relative inline-block pb-2"
+              >
+                Contact Us
+                <span
+                  class="absolute bottom-0 left-0 w-12 h-0.5 bg-brand-primary rounded-full"
+                ></span>
+              </h4>
+              <ul class="space-y-4 text-sm">
+                <li class="flex items-start gap-3">
+                  <div class="mt-1 w-5 flex justify-center">
+                    <i class="fas fa-map-marker-alt text-brand-primary"></i>
+                  </div>
+                  <span class="leading-relaxed text-gray-400"
+                    >Building R-T, National Road #6<br />Siem Reap City,
+                    Cambodia</span
+                  >
+                </li>
+                <li class="flex items-center gap-3">
+                  <div class="w-5 flex justify-center">
+                    <i class="fas fa-phone-alt text-brand-primary"></i>
+                  </div>
+                  <a
+                    href="tel:+85599555444"
+                    class="hover:text-brand-primary transition-colors text-gray-400"
+                    >+855 99 55 55 4444</a
+                  >
+                </li>
+                <li class="flex items-center gap-3">
+                  <div class="w-5 flex justify-center">
+                    <i class="fas fa-envelope text-brand-primary"></i>
+                  </div>
+                  <a
+                    href="mailto:info@romdoult-tech.edu.km"
+                    class="hover:text-brand-primary transition-colors text-gray-400"
+                    >info@romdoult-tech.edu.km</a
+                  >
+                </li>
+                <li class="flex items-center gap-3">
+                  <div class="w-5 flex justify-center">
+                    <i class="fas fa-globe text-brand-primary"></i>
+                  </div>
+                  <span class="text-gray-400">www.romdoult-tech.edu.km</span>
+                </li>
+              </ul>
+
+              <!-- Newsletter -->
+              <div class="mt-8">
+                <h5 class="text-white font-semibold mb-3 text-sm">
+                  Subscribe to Newsletter
+                </h5>
+                <form class="flex" onsubmit="event.preventDefault()">
+                  <input
+                    type="email"
+                    placeholder="Your email address..."
+                    required
+                    class="flex-1 px-4 py-2.5 text-sm bg-gray-800 border border-gray-700 rounded-l-lg focus:outline-none focus:border-brand-primary text-white placeholder-gray-500 transition-colors"
+                  />
+                  <button
+                    type="submit"
+                    class="px-4 py-2.5 bg-brand-primary text-white rounded-r-lg hover:bg-brand-hover transition-colors"
+                  >
+                    <i class="fas fa-paper-plane"></i>
+                  </button>
+                </form>
+              </div>
+            </div>
           </div>
         </div>
-        <div
-          class="p-4 text-center text-xs border-t border-gray-700 bg-gray-900 text-gray-400"
-        >
-          © 2025 សាកលវិទ្យាល័យរំដួលបច្ចេកវិទ្យា (Romdoul Tech University) |
-          រក្សាសិទ្ធិគ្រប់យ៉ាង
+
+        <!-- Help & Partners Bar -->
+        <div class="border-t border-gray-800 bg-gray-950">
+          <div class="container mx-auto px-4 md:px-8 py-8">
+            <div class="text-center mb-6">
+              <h5
+                class="text-gray-500 text-xs font-bold mb-4 uppercase tracking-widest"
+              >
+                Accredited & Recognized By
+              </h5>
+            </div>
+            <div
+              class="flex flex-wrap justify-center items-center gap-8 lg:gap-16 text-gray-600"
+            >
+              <div
+                class="flex items-center gap-2 hover:text-gray-400 transition-colors cursor-default"
+              >
+                <i class="fas fa-certificate text-xl"></i>
+                <span class="text-xs font-semibold">Ministry of Education</span>
+              </div>
+              <div
+                class="flex items-center gap-2 hover:text-gray-400 transition-colors cursor-default"
+              >
+                <i class="fas fa-university text-xl"></i>
+                <span class="text-xs font-semibold"
+                  >ASEAN University Network</span
+                >
+              </div>
+              <div
+                class="flex items-center gap-2 hover:text-gray-400 transition-colors cursor-default"
+              >
+                <i class="fas fa-globe-asia text-xl"></i>
+                <span class="text-xs font-semibold">UNESCO</span>
+              </div>
+              <div
+                class="flex items-center gap-2 hover:text-gray-400 transition-colors cursor-default"
+              >
+                <i class="fas fa-handshake text-xl"></i>
+                <span class="text-xs font-semibold">World Bank Partner</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bottom Footer -->
+        <div class="border-t border-gray-800 bg-black">
+          <div class="container mx-auto px-4 md:px-8 py-6">
+            <div
+              class="flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-gray-600"
+            >
+              <p>
+                © 2025
+                <span class="font-khmer">សាកលវិទ្យាល័យរំដួលបច្ចេកវិទ្យា</span>
+                (Romdoul Tech). All Rights Reserved.
+              </p>
+              <div class="flex flex-wrap justify-center gap-6">
+                <a href="#" class="hover:text-brand-primary transition-colors"
+                  >Privacy Policy</a
+                >
+                <a href="#" class="hover:text-brand-primary transition-colors"
+                  >Terms of Service</a
+                >
+                <a href="#" class="hover:text-brand-primary transition-colors"
+                  >Cookie Policy</a
+                >
+                <a href="#" class="hover:text-brand-primary transition-colors"
+                  >Accessibility</a
+                >
+              </div>
+            </div>
+          </div>
         </div>
       </footer>
     </div>
+    <!-- End Main Wrapper -->
 
-    <!-- UPDATED JAVASCRIPT: uses 'this' for robustness -->
+    <!-- Scroll to Top Button -->
+    <button
+      id="scroll-to-top"
+      class="fixed bottom-8 right-8 w-12 h-12 bg-brand-primary text-white rounded-full shadow-lg hover-brand-primary transition-all opacity-0 invisible z-50 flex items-center justify-center"
+      aria-label="Scroll to top"
+    >
+      <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- Main Script -->
     <script>
-      /**
-       * Filters the staff members displayed on the page and updates the active button state.
-       * @param {string} category - The staff category to display ('all', 'leadership', 'it', 'ir', 'law', 'bm', 'admin').
-       * @param {HTMLElement} clickedButton - The button element that was clicked (passed via 'this' in HTML).
-       */
-      function filterStaff(category, clickedButton) {
-        // 1. Update button states
-        const buttons = document.querySelectorAll(".filter-btn");
-        buttons.forEach((btn) => {
-          btn.classList.remove("active");
+      // 1. Mobile Menu Logic
+      const menuBtn = document.getElementById("mobile-menu-btn");
+      const mobileMenu = document.getElementById("mobile-menu");
+      let isMenuOpen = false;
+
+      menuBtn.addEventListener("click", () => {
+        isMenuOpen = !isMenuOpen;
+        if (isMenuOpen) {
+          mobileMenu.classList.remove("translate-x-full");
+          menuBtn.innerHTML = '<i class="fas fa-times"></i>';
+          document.body.style.overflow = "hidden";
+        } else {
+          mobileMenu.classList.add("translate-x-full");
+          menuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+          document.body.style.overflow = "auto";
+        }
+      });
+
+      // Close mobile menu when clicking links
+      document.querySelectorAll(".mobile-link").forEach((link) => {
+        link.addEventListener("click", () => {
+          mobileMenu.classList.add("translate-x-full");
+          menuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+          document.body.style.overflow = "auto";
+          isMenuOpen = false;
         });
-        // Set the clicked button as active
+      });
+
+      // 2. Staff Filter Logic
+      function filterStaff(category, clickedButton) {
+        // Update button states
+        const buttons = document.querySelectorAll(".filter-btn");
+        buttons.forEach((btn) => btn.classList.remove("active"));
         clickedButton.classList.add("active");
 
-        // 2. Filter content
-        const sections = document.querySelectorAll("[data-category]");
+        // Filter content
+        const sections = document.querySelectorAll(
+          ".department-header, [data-category]:not(.department-header)"
+        );
         sections.forEach((section) => {
-          if (category === "all") {
-            section.style.display = ""; // Show all sections
-          } else {
-            if (section.getAttribute("data-category") === category) {
-              section.style.display = ""; // Show matching section
+          // If section is a header or a grid container
+          if (section.hasAttribute("data-category")) {
+            if (category === "all") {
+              section.style.display = ""; // Show all
             } else {
-              section.style.display = "none"; // Hide non-matching section
+              if (section.getAttribute("data-category") === category) {
+                section.style.display = "";
+              } else {
+                section.style.display = "none";
+              }
             }
           }
         });
       }
+
+      // 3. Scroll Logic & Animation
+      const scrollToTopBtn = document.getElementById("scroll-to-top");
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.remove("opacity-0", "translate-y-8");
+              entry.target.classList.add("opacity-100", "translate-y-0");
+            }
+          });
+        },
+        { threshold: 0.1 }
+      );
+      document
+        .querySelectorAll(".animate-fade-in-up")
+        .forEach((section) => observer.observe(section));
+
+      window.addEventListener("scroll", () => {
+        if (window.pageYOffset > 300) {
+          scrollToTopBtn.classList.remove("opacity-0", "invisible");
+          scrollToTopBtn.classList.add("opacity-100", "visible");
+        } else {
+          scrollToTopBtn.classList.add("opacity-0", "invisible");
+          scrollToTopBtn.classList.remove("opacity-100", "visible");
+        }
+      });
+      scrollToTopBtn.addEventListener("click", () =>
+        window.scrollTo({ top: 0, behavior: "smooth" })
+      );
     </script>
   </body>
 </html>

@@ -3,608 +3,989 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>ឯកសារ - សាកលវិទ្យាល័យរំដួលបច្ចេកវិទ្យា</title>
+    <title>ឯកសារ និងធនធាន - សាកលវិទ្យាល័យរំដួលបច្ចេកវិទ្យា</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
     />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Noto+Sans+Khmer:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              brand: {
+                primary: "#00695c", // Teal
+                hover: "#004d40",
+                light: "#e0f2f1",
+              },
+            },
+            fontFamily: {
+              sans: ["Poppins", "Noto Sans Khmer", "sans-serif"],
+              khmer: ["Noto Sans Khmer", "sans-serif"],
+            },
+            animation: {
+              "fade-in-up": "fadeInUp 0.8s ease-out",
+            },
+            keyframes: {
+              fadeInUp: {
+                "0%": { opacity: "0", transform: "translateY(30px)" },
+                "100%": { opacity: "1", transform: "translateY(0)" },
+              },
+            },
+          },
+        },
+      };
+    </script>
     <style>
-      body {
-        font-family: "Antioch Text", "Moul", "Noto Sans Khmer", "Arial",
-          sans-serif;
-        background-color: #f8f8f8;
-        line-height: 1.7;
-        font-size: 15px;
-        color: #333;
+      html {
+        scroll-behavior: smooth;
       }
-      .khmer-os-siemreap-font {
-        font-family: "Khmer OS Siemreap", "Moul", "Noto Sans Khmer", "Arial",
-          sans-serif !important;
+      ::-webkit-scrollbar {
+        width: 10px;
       }
-      .container-wrapper {
-        max-width: 1100px;
+      ::-webkit-scrollbar-track {
+        background: #f1f1f1;
       }
-      .header-bg {
-        background-color: #0d47a1;
+      ::-webkit-scrollbar-thumb {
+        background: #00695c;
+        border-radius: 5px;
       }
-      .nav-link {
-        padding: 14px 20px;
-        display: block;
-        color: white;
-        font-weight: 500;
-        font-size: 15px;
-        border-right: 1px solid rgba(255, 255, 255, 0.1);
-        white-space: nowrap;
-        transition: background-color 0.3s ease;
+      ::-webkit-scrollbar-thumb:hover {
+        background: #004d40;
       }
-      .nav-link:hover {
-        background-color: #083c6c;
-      }
-
-      /* *** CSS ថ្មីសម្រាប់ Dropdown និង Nested Dropdown *** */
-      .nav-item-wrapper {
-        border-right: 1px solid rgba(255, 255, 255, 0.1);
-      }
-      .nav-item-wrapper > .nav-link {
-        border-right: none;
-      }
-      .active-nav {
-        background-color: #083c6c;
-        border-bottom: 3px solid #fbc02d;
-        padding-bottom: 11px;
-      }
-
-      /* Custom Styles for Dropdown */
-      .nav-dropdown {
-        position: absolute;
-        top: 100%; /* Position right below the nav link */
-        left: 0;
-        min-width: 200px;
-        background-color: #083c6c; /* Darker blue background */
-        z-index: 10;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        display: none; /* Hidden by default, shown on hover via group-hover:block */
-      }
-      .nav-dropdown a {
-        padding: 10px 20px;
-        color: white;
-        display: block;
-        white-space: nowrap;
-        transition: background-color 0.2s ease;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-        font-weight: 400;
-      }
-      .nav-dropdown a:hover {
-        background-color: #0d47a1; /* Hover effect */
-        color: #fbc02d; /* Yellow hover text */
-      }
-
-      /* Nested Dropdown Styles */
-      /* ធាតុរុំសម្រាប់ម៉ឺនុយរង ត្រូវតែជា relative group */
-      .nav-dropdown-item-parent {
-        position: relative;
-      }
-      /* ម៉ឺនុយរងទម្លាក់ចុះខាងស្តាំ */
-      .nav-sub-dropdown {
-        position: absolute;
-        top: 0; /* Align with the parent item */
-        left: 100%; /* Position to the right of the parent item */
-        min-width: 200px;
-        background-color: #0d47a1; /* Even darker blue background for nested menu */
-        z-index: 20; /* Higher z-index than main dropdown */
-        box-shadow: 4px 4px 6px rgba(0, 0, 0, 0.1);
-        display: none; /* Hidden by default, shown on hover */
-      }
-      /* Hover state for nested parent to show submenu */
-      .nav-dropdown-item-parent:hover > .nav-sub-dropdown {
-        display: block;
-      }
-      /* Hover state for nested item links */
-      .nav-sub-dropdown a:hover {
-        background-color: #083c6c;
-        color: #fbc02d;
-      }
-      /* End Nested Dropdown Styles */
-      /* *** បញ្ចប់ CSS ថ្មី *** */
-
-      .footer-bg {
-        background-color: #263238;
-        color: #cfd8dc;
-      }
-      .footer-link:hover {
-        color: #fbc02d;
+      /* Mobile Menu Transitions */
+      .mobile-menu-overlay {
+        transition: transform 0.3s ease-in-out;
       }
     </style>
   </head>
-  <body>
-    <div class="container-wrapper mx-auto bg-white shadow-xl mt-6 mb-6">
-      <!-- Top Utility Bar -->
-      <div
-        class="flex justify-between items-center px-8 py-2 text-xs text-gray-700 bg-gray-50 border-b border-gray-200"
-      >
-        <div class="flex space-x-4 items-center">
-          <span class="text-blue-700 flex items-center space-x-1">
-            <i class="fas fa-phone-alt text-sm"></i>
-            <span>099 55 55 4444</span>
-          </span>
-          <span class="text-blue-700 flex items-center space-x-1">
-            <i class="fas fa-envelope text-sm"></i>
-            <span>info@romdoult-tech.edu.km</span>
-          </span>
-        </div>
-        <div class="flex space-x-4">
-          <a href="#" class="hover:text-blue-600 transition-colors">English</a>
-          <a href="#" class="hover:text-blue-600 font-bold transition-colors"
-            >ខ្មែរ</a
-          >
+  <body
+    class="font-sans text-gray-800 bg-gray-100 overflow-x-hidden font-khmer"
+  >
+    <!-- WRAPPER -->
+    <div
+      class="mx-auto max-w-[1320px] bg-white shadow-2xl overflow-hidden min-h-screen relative"
+    >
+     <div class="block px-4 py-2.5 text-gray-700 hover:bg-gray-50 hover:text-brand-primary transition text-sm"
+                   
+                    >
+     <!-- Top Bar -->
+      <div class="bg-gray-900 text-gray-300 text-xs py-2.5">
+        <div class="container mx-auto px-4 md:px-8">
+          <div class="flex flex-wrap justify-between items-center gap-3">
+            <div class="flex flex-wrap items-center gap-4">
+              <a
+                href="tel:+85599555444"
+                class="flex items-center gap-2 hover:text-white transition"
+              >
+                <i class="fas fa-phone-alt"></i>
+                <span>+855 99 55 55 4444</span>
+              </a>
+              <a
+                href="mailto:info@romdoult-tech.edu.km"
+                class="flex items-center gap-2 hover:text-white transition"
+              >
+                <i class="fas fa-envelope"></i>
+                <span>info@romdoult-tech.edu.km</span>
+              </a>
+            </div>
+            <div class="flex items-center gap-4">
+              <a
+                href="#"
+                class="hover:text-white transition"
+                aria-label="Facebook"
+                ><i class="fab fa-facebook-f"></i
+              ></a>
+              <a
+                href="#"
+                class="hover:text-white transition"
+                aria-label="Twitter"
+                ><i class="fab fa-twitter"></i
+              ></a>
+              <a
+                href="#"
+                class="hover:text-white transition"
+                aria-label="LinkedIn"
+                ><i class="fab fa-linkedin-in"></i
+              ></a>
+              <a
+                href="#"
+                class="hover:text-white transition"
+                aria-label="YouTube"
+                ><i class="fab fa-youtube"></i
+              ></a>
+            </div>
+          </div>
         </div>
       </div>
 
-      <!-- Header -->
-      <header
-        class="p-6 flex items-center justify-between border-b border-gray-200"
-      >
-        <div class="flex items-center space-x-4">
-          <div
-            class="w-16 h-16 bg-[#0d47a1] rounded-full flex items-center justify-center border-4 border-[#fbc02d] shadow-md"
-          >
-            <span class="text-white font-black text-3xl leading-none">R</span>
-          </div>
-          <div class="flex flex-col">
-            <h1
-              class="text-3xl font-extrabold text-[#0d47a1] khmer-os-siemreap-font"
+      <!-- Navigation -->
+      <header class="bg-white shadow-md sticky top-0 z-50">
+        <div class="container mx-auto px-4 md:px-8">
+          <nav class="flex justify-between items-center py-4">
+            <!-- Logo -->
+            <a href="#" class="flex items-center gap-3 z-50">
+              <div
+                class="w-12 h-12 bg-brand-primary rounded-full flex items-center justify-center shadow-lg"
+              >
+                <i class="fas fa-graduation-cap text-white text-xl"></i>
+              </div>
+              <div>
+                <h1 class="text-xl font-bold text-brand-primary tracking-wide">
+                  Romdoul Tech
+                </h1>
+                <p class="text-xs text-gray-600 font-medium">
+                  Excellence in Education
+                </p>
+              </div>
+            </a>
+
+            <!-- Desktop Menu -->
+            <div
+              class="hidden lg:flex items-center space-x-8 text-sm font-medium"
             >
-              សាកលវិទ្យាល័យរំដួលបច្ចេកវិទ្យា
-            </h1>
-            <h2
-              class="text-sm text-gray-600 font-semibold uppercase tracking-wider"
+              <a
+                href="index.html"
+                class="transition"
+                >Home</a
+              >
+
+              <div class="relative group">
+                <button
+                  class="text-gray-700 hover:text-brand-primary transition flex items-center gap-1 cursor-pointer py-2"
+                >
+                  About
+                  <i
+                    class="fas fa-chevron-down text-xs transition-transform group-hover:rotate-180"
+                  ></i>
+                </button>
+                <div
+                  class="absolute left-0 top-full pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform translate-y-2 group-hover:translate-y-0 w-48"
+                >
+                  <div
+                    class="bg-white shadow-xl rounded-lg py-2 border border-gray-100"
+                  >
+                    <a
+                      href="about.html"
+                      class="block px-4 py-2.5 text-gray-700 hover:bg-gray-50 hover:text-brand-primary transition text-sm"
+                      >Our History</a
+                    >
+                    <a
+                      href="#"
+                      class="block px-4 py-2.5 text-gray-700 hover:bg-gray-50 hover:text-brand-primary transition text-sm"
+                      >Mission & Vision</a
+                    >
+                    <a
+                      href="#"
+                    <a
+                      href="#"
+                      class="block px-4 py-2.5 text-gray-700 hover:bg-gray-50 hover:text-brand-primary transition text-sm"
+                      >Help</a
+                    >
+                  </div>
+                </div>
+              </div>
+
+              <div class="relative group">
+                <button
+                  class=" text-brand-primary font-bold border-b-2 border-brand-primary pb-1 text-gray-700 hover:text-brand-primary transition flex items-center gap-1 cursor-pointer py-2"
+                >
+                  Academics
+                  <i
+                    class="fas fa-chevron-down text-xs transition-transform group-hover:rotate-180"
+                  ></i>
+                </button>
+                <div
+                  class="absolute left-0 top-full pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform translate-y-2 group-hover:translate-y-0 w-48"
+                >
+                  <div
+                    class="bg-white shadow-xl rounded-lg py-2 border border-gray-100"
+                  >
+                    <a
+                      href="#programs"
+                      class="block px-4 py-2.5 text-gray-700 hover:bg-gray-50 hover:text-brand-primary transition text-sm"
+                      >Programs</a
+                    >
+                    <a
+                      href="#academics"
+                      class="block px-4 py-2.5 text-gray-700 hover:bg-gray-50 hover:text-brand-primary transition text-sm"
+                      >Faculties</a
+                    >
+                    <a
+                      href="#"
+                      class="block px-4 py-2.5 text-gray-700 hover:bg-gray-50 hover:text-brand-primary transition text-sm"
+                      >Research</a
+                    >
+                    <a
+                      href="documents.html"
+                      class="block px-4 py-2.5 text-gray-700 hover:bg-gray-50 hover:text-brand-primary transition text-sm"
+                      >Documents</a
+                    >
+                  </div>
+                </div>
+              </div>
+
+              <a
+                href="professor.html"
+                class="text-gray-700 hover:text-brand-primary transition"
+                >Admissions</a
+              >
+              <a
+                href="#campus-life"
+                class="text-gray-700 hover:text-brand-primary transition"
+                >Campus Life</a
+              >
+              <a
+                href="news.html"
+                class="text-gray-700 hover:text-brand-primary transition"
+                >News</a
+              >
+              <a
+                href="contact.html"
+                class="text-gray-700 hover:text-brand-primary transition"
+                >Contact</a
+              >
+            </div>
+
+            <!-- Right Actions -->
+            <div class="hidden lg:flex items-center space-x-4 z-50">
+              <button
+                class="text-brand-primary hover:text-brand-hover transition text-lg w-10 h-10 rounded-full hover:bg-gray-100 flex items-center justify-center"
+                aria-label="Search"
+              >
+                <i class="fas fa-search"></i>
+              </button>
+              <a
+                href="#apply"
+                class="bg-brand-primary text-white px-6 py-2.5 rounded-full font-semibold hover:bg-brand-hover transition shadow-md hover:shadow-lg transform hover:-translate-y-0.5 duration-200"
+              >
+                Apply Now
+              </a>
+            </div>
+
+            <!-- Mobile Menu Button -->
+            <button
+              id="mobile-menu-btn"
+              class="lg:hidden text-brand-primary text-2xl z-50 focus:outline-none w-10 h-10 flex items-center justify-center"
+              aria-label="Menu"
             >
-              Romdoul Technology University
-            </h2>
-          </div>
+              <i class="fas fa-bars"></i>
+            </button>
+          </nav>
         </div>
-        <div class="hidden lg:flex items-center space-x-3">
-          <input
-            type="text"
-            placeholder="ស្វែងរក..."
-            class="p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#0d47a1] focus:border-transparent transition-all w-64 text-sm"
-          />
-          <button
-            class="bg-[#0d47a1] text-white p-2 rounded-lg hover:bg-[#083c6c] transition-colors"
+
+        <!-- Mobile Menu Overlay -->
+        <div
+          id="mobile-menu"
+          class="fixed inset-0 bg-white z-40 transform translate-x-full mobile-menu-overlay lg:hidden overflow-y-auto"
+        >
+          <div
+            class="flex flex-col items-center justify-center min-h-screen space-y-6 text-lg font-semibold py-20"
           >
-            <i class="fas fa-search"></i>
-          </button>
+            <a
+              href="index.html"
+              class="mobile-link text-gray-700 hover:text-brand-primary transition text-xl"
+              >Home</a
+            >
+            <a
+              href="about.html"
+              class="mobile-link text-gray-700 hover:text-brand-primary transition text-xl"
+              >About</a
+            >
+            <a
+              href="#academics"
+              class="mobile-link text-gray-700 hover:text-brand-primary transition text-xl"
+              >Academics</a
+            >
+            <a
+              href="professor.html"
+              class="mobile-link text-gray-700 hover:text-brand-primary transition text-xl"
+              >Admissions</a
+            >
+            <a
+              href="#campus-life"
+              class="mobile-link text-gray-700 hover:text-brand-primary transition text-xl"
+              >Campus Life</a
+            >
+            <a
+              href="news.html"
+              class="mobile-link text-gray-700 hover:text-brand-primary transition text-xl"
+              >News</a
+            >
+            <a
+              href="#contact"
+              class="mobile-link text-gray-700 hover:text-brand-primary transition text-xl"
+              >Contact</a
+            >
+            <a
+              href="#apply"
+              class="mobile-link bg-brand-primary text-white px-10 py-3 rounded-full font-semibold hover:bg-brand-hover transition shadow-md mt-4"
+            >
+              Apply Now
+            </a>
+          </div>
         </div>
       </header>
 
-      <!-- Navigation Nested Dropdown (បានជំនួសពីកូដទីមួយ) -->
-      <nav class="header-bg shadow-lg">
-        <div class="flex text-sm">
-          <a href="index.html" class="nav-link">ទំព័រដើម</a>
-
-          <!-- Dropdown for អំពីយើង (About Us) -->
-          <div class="relative group nav-item-wrapper">
-            <a href="about.html" class="nav-link flex items-center space-x-1">
-              <span>អំពីយើង</span>
-              <i class="fas fa-chevron-down text-xs ml-1"></i>
-            </a>
-            <div class="nav-dropdown group-hover:block">
-              <a href="#">ប្រវត្តិសាកលវិទ្យាល័យ</a>
-
-              <!-- Nested Dropdown for មហាវិទ្យាល័យ (Faculties) -->
-              <div class="nav-dropdown-item-parent">
-                <a href="#" class="flex justify-between items-center">
-                  <span>មហាវិទ្យាល័យ</span>
-                  <i class="fas fa-chevron-right text-xs ml-4"></i>
-                </a>
-                <div class="nav-sub-dropdown">
-                  <a href="#">មហាវិទ្យាល័យ IT</a>
-                  <a href="#">មហាវិទ្យាល័យ IR</a>
-                  <a href="#">មហាវិទ្យាល័យ LAW</a>
-                </div>
-              </div>
-              <!-- End Nested Dropdown -->
-
-              <a href="#">ចក្ខុវិស័យ និង បេសកកម្ម</a>
-              <a href="#">រចនាសម្ព័ន្ធគ្រប់គ្រង</a>
-              <a href="#">បុគ្គលិក និង សាស្ត្រាចារ្យ</a>
-            </div>
-          </div>
-
-          <!-- Dropdown for ព័ត៌មាន (News) -->
-          <div class="relative group nav-item-wrapper">
-            <a href="news.html" class="nav-link flex items-center space-x-1">
-              <span>ព័ត៌មាន</span>
-              <i class="fas fa-chevron-down text-xs ml-1"></i>
-            </a>
-            <div class="nav-dropdown group-hover:block">
-              <a href="#">ព័ត៌មានថ្មីៗ</a>
-              <a href="#">ព្រឹត្តិការណ៍</a>
-              <a href="#">សេចក្តីប្រកាស</a>
-            </div>
-          </div>
-
-          <a href="documents.html" class="nav-link active-nav">ឯកសារ</a>
-          <!-- ដាក់ active-nav នៅទីនេះ -->
-          <a href="publication.html" class="nav-link">ផ្សព្វផ្សាយ</a>
-          <a href="contact.html" class="nav-link">ទំនាក់ទំនង</a>
-          <a href="help.html" class="nav-link">ជំនួយ</a>
-        </div>
-      </nav>
-
-      <!-- Main Content -->
-      <main class="p-8 lg:p-10">
-        <h2 class="text-3xl font-bold text-[#0d47a1] mb-6">ឯកសារសាធារណៈ</h2>
-
-        <!-- Document Categories -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-          <!-- Category 1: Strategic Documents -->
-          <div
-            class="bg-gradient-to-br from-blue-50 to-blue-100 p-6 rounded-lg border-l-4 border-[#0d47a1]"
-          >
-            <h3 class="text-xl font-bold text-[#0d47a1] mb-4 flex items-center">
-              <i class="fas fa-file-contract mr-3 text-2xl"></i>
-              ឯកសារយុទ្ធសាស្ត្រ
-            </h3>
-            <ul class="space-y-3">
-              <li
-                class="bg-white p-4 rounded-lg shadow-sm hover:shadow-md transition-shadow flex justify-between items-center"
-              >
-                <div class="flex items-center space-x-3">
-                  <i class="fas fa-file-pdf text-red-600 text-2xl"></i>
-                  <div>
-                    <p class="font-semibold text-gray-800">
-                      ផែនការយុទ្ធសាស្ត្រឆ្នាំ ២០២៤-២០២៨
-                    </p>
-                    <p class="text-xs text-gray-500">
-                      PDF • 2.5 MB • ធ្វើបច្ចុប្បន្នភាព ០១/០១/២០២៤
-                    </p>
-                  </div>
-                </div>
-                <a
-                  href="#"
-                  class="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 transition-colors text-sm font-semibold"
-                >
-                  <i class="fas fa-download mr-1"></i> ទាញយក
-                </a>
-              </li>
-              <li
-                class="bg-white p-4 rounded-lg shadow-sm hover:shadow-md transition-shadow flex justify-between items-center"
-              >
-                <div class="flex items-center space-x-3">
-                  <i class="fas fa-file-pdf text-red-600 text-2xl"></i>
-                  <div>
-                    <p class="font-semibold text-gray-800">
-                      របាយការណ៍ប្រចាំឆ្នាំ ២០២៣
-                    </p>
-                    <p class="text-xs text-gray-500">
-                      PDF • 4.1 MB • ធ្វើបច្ចុប្បន្នភាព ១៥/១២/២០២៣
-                    </p>
-                  </div>
-                </div>
-                <a
-                  href="#"
-                  class="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 transition-colors text-sm font-semibold"
-                >
-                  <i class="fas fa-download mr-1"></i> ទាញយក
-                </a>
-              </li>
-            </ul>
-          </div>
-
-          <!-- Category 2: Academic Documents -->
-          <div
-            class="bg-gradient-to-br from-yellow-50 to-yellow-100 p-6 rounded-lg border-l-4 border-[#fbc02d]"
-          >
-            <h3 class="text-xl font-bold text-[#0d47a1] mb-4 flex items-center">
-              <i class="fas fa-graduation-cap mr-3 text-2xl"></i>
-              ឯកសារសិក្សា
-            </h3>
-            <ul class="space-y-3">
-              <li
-                class="bg-white p-4 rounded-lg shadow-sm hover:shadow-md transition-shadow flex justify-between items-center"
-              >
-                <div class="flex items-center space-x-3">
-                  <i class="fas fa-file-alt text-blue-600 text-2xl"></i>
-                  <div>
-                    <p class="font-semibold text-gray-800">
-                      កម្មវិធីសិក្សា វិទ្យាសាស្ត្រកុំព្យូទ័រ
-                    </p>
-                    <p class="text-xs text-gray-500">
-                      PDF • 1.8 MB • ធ្វើបច្ចុប្បន្នភាព ១០/០៩/២០២៤
-                    </p>
-                  </div>
-                </div>
-                <a
-                  href="#"
-                  class="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 transition-colors text-sm font-semibold"
-                >
-                  <i class="fas fa-download mr-1"></i> ទាញយក
-                </a>
-              </li>
-              <li
-                class="bg-white p-4 rounded-lg shadow-sm hover:shadow-md transition-shadow flex justify-between items-center"
-              >
-                <div class="flex items-center space-x-3">
-                  <i class="fas fa-file-alt text-blue-600 text-2xl"></i>
-                  <div>
-                    <p class="font-semibold text-gray-800">
-                      កម្មវិធីសិក្សា វិស្វកម្មស៊ីវិល
-                    </p>
-                    <p class="text-xs text-gray-500">
-                      PDF • 2.0 MB • ធ្វើបច្ចុប្បន្នភាព ០៥/០៩/២០២៤
-                    </p>
-                  </div>
-                </div>
-                <a
-                  href="#"
-                  class="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 transition-colors text-sm font-semibold"
-                >
-                  <i class="fas fa-download mr-1"></i> ទាញយក
-                </a>
-              </li>
-            </ul>
-          </div>
-        </div>
-
-        <!-- Enrollment Forms -->
-        <div class="bg-white border border-gray-200 rounded-lg p-6 mb-8">
-          <h3 class="text-xl font-bold text-[#0d47a1] mb-4 flex items-center">
-            <i class="fas fa-clipboard-list mr-3 text-2xl text-[#fbc02d]"></i>
-            ទម្រង់បែបបទចុះឈ្មោះ
-          </h3>
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div
-              class="flex items-center justify-between p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"
+      <!-- Main Content (Kept from Original Page) -->
+      <main>
+        <!-- Hero Section -->
+        <section class="bg-brand-primary relative py-16 overflow-hidden">
+          <div class="container mx-auto px-4 md:px-8 text-center relative z-10">
+            <h1
+              class="text-3xl md:text-4xl font-bold text-white mb-4 animate-fade-in-up"
             >
-              <div class="flex items-center space-x-3">
-                <i class="fas fa-file-word text-blue-700 text-2xl"></i>
-                <div>
-                  <p class="font-semibold text-gray-800">
-                    ទម្រង់ពាក្យចុះឈ្មោះបរិញ្ញាបត្រ
-                  </p>
-                  <p class="text-xs text-gray-500">DOCX • 156 KB</p>
-                </div>
-              </div>
-              <a
-                href="#"
-                class="bg-[#0d47a1] text-white px-4 py-2 rounded-lg hover:bg-[#083c6c] transition-colors text-sm"
-              >
-                <i class="fas fa-download"></i>
-              </a>
-            </div>
-
-            <div
-              class="flex items-center justify-between p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"
+              មជ្ឈមណ្ឌលឯកសារ និងធនធាន
+            </h1>
+            <p
+              class="text-teal-100 max-w-2xl mx-auto text-sm md:text-base animate-fade-in-up"
+              style="animation-delay: 0.1s"
             >
-              <div class="flex items-center space-x-3">
-                <i class="fas fa-file-word text-blue-700 text-2xl"></i>
-                <div>
-                  <p class="font-semibold text-gray-800">
-                    ទម្រង់ស្នើសុំអាហារូបករណ៍
-                  </p>
-                  <p class="text-xs text-gray-500">DOCX • 128 KB</p>
-                </div>
-              </div>
-              <a
-                href="#"
-                class="bg-[#0d47a1] text-white px-4 py-2 rounded-lg hover:bg-[#083c6c] transition-colors text-sm"
-              >
-                <i class="fas fa-download"></i>
-              </a>
-            </div>
-
-            <div
-              class="flex items-center justify-between p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"
-            >
-              <div class="flex items-center space-x-3">
-                <i class="fas fa-file-excel text-green-700 text-2xl"></i>
-                <div>
-                  <p class="font-semibold text-gray-800">តារាងកាលវិភាគសិក្សា</p>
-                  <p class="text-xs text-gray-500">XLSX • 245 KB</p>
-                </div>
-              </div>
-              <a
-                href="#"
-                class="bg-[#0d47a1] text-white px-4 py-2 rounded-lg hover:bg-[#083c6c] transition-colors text-sm"
-              >
-                <i class="fas fa-download"></i>
-              </a>
-            </div>
-
-            <div
-              class="flex items-center justify-between p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"
-            >
-              <div class="flex items-center space-x-3">
-                <i class="fas fa-file-pdf text-red-600 text-2xl"></i>
-                <div>
-                  <p class="font-semibold text-gray-800">លក្ខខណ្ឌចូលរៀន</p>
-                  <p class="text-xs text-gray-500">PDF • 890 KB</p>
-                </div>
-              </div>
-              <a
-                href="#"
-                class="bg-[#0d47a1] text-white px-4 py-2 rounded-lg hover:bg-[#083c6c] transition-colors text-sm"
-              >
-                <i class="fas fa-download"></i>
-              </a>
-            </div>
-          </div>
-        </div>
-
-        <!-- Regulations & Policies -->
-        <div class="bg-white border border-gray-200 rounded-lg p-6">
-          <h3 class="text-xl font-bold text-[#0d47a1] mb-4 flex items-center">
-            <i class="fas fa-balance-scale mr-3 text-2xl text-[#fbc02d]"></i>
-            លក្ខន្តិកៈ និងគោលការណ៍
-          </h3>
-          <ul class="space-y-3">
-            <li
-              class="p-4 border-b border-gray-100 flex justify-between items-center hover:bg-gray-50 transition-colors"
-            >
-              <div class="flex items-center space-x-4">
-                <i class="fas fa-gavel text-[#0d47a1] text-xl"></i>
-                <div>
-                  <p class="font-semibold text-gray-800">
-                    លក្ខន្តិកៈស្តីពីវិន័យនិស្សិត
-                  </p>
-                  <p class="text-xs text-gray-500">
-                    កែប្រែចុងក្រោយ ១៥ មីនា ២០២៤
-                  </p>
-                </div>
-              </div>
-              <a
-                href="#"
-                class="text-[#0d47a1] text-sm font-semibold hover:underline flex items-center"
-              >
-                មើលលម្អិត <i class="fas fa-arrow-right ml-2"></i>
-              </a>
-            </li>
-            <li
-              class="p-4 border-b border-gray-100 flex justify-between items-center hover:bg-gray-50 transition-colors"
-            >
-              <div class="flex items-center space-x-4">
-                <i class="fas fa-shield-alt text-[#0d47a1] text-xl"></i>
-                <div>
-                  <p class="font-semibold text-gray-800">គោលការណ៍ឯកជនភាព</p>
-                  <p class="text-xs text-gray-500">
-                    កែប្រែចុងក្រោយ ០១ មករា ២០២៤
-                  </p>
-                </div>
-              </div>
-              <a
-                href="#"
-                class="text-[#0d47a1] text-sm font-semibold hover:underline flex items-center"
-              >
-                មើលលម្អិត <i class="fas fa-arrow-right ml-2"></i>
-              </a>
-            </li>
-            <li
-              class="p-4 flex justify-between items-center hover:bg-gray-50 transition-colors"
-            >
-              <div class="flex items-center space-x-4">
-                <i class="fas fa-book text-[#0d47a1] text-xl"></i>
-                <div>
-                  <p class="font-semibold text-gray-800">
-                    គោលការណ៍ប្រើប្រាស់បណ្ណាល័យ
-                  </p>
-                  <p class="text-xs text-gray-500">
-                    កែប្រែចុងក្រោយ ១០ កុម្ភៈ ២០២៤
-                  </p>
-                </div>
-              </div>
-              <a
-                href="#"
-                class="text-[#0d47a1] text-sm font-semibold hover:underline flex items-center"
-              >
-                មើលលម្អិត <i class="fas fa-arrow-right ml-2"></i>
-              </a>
-            </li>
-          </ul>
-        </div>
-      </main>
-
-      <!-- Footer -->
-      <footer class="footer-bg bg-[#0d47a1]">
-        <div class="p-10 grid grid-cols-1 md:grid-cols-4 gap-8">
-          <div>
-            <h4 class="text-xl font-bold text-white mb-4">
-              សាកលវិទ្យាល័យរំដួលបច្ចេកវិទ្យា
-            </h4>
-            <p class="text-sm mb-4">
-              សាកលវិទ្យាល័យបច្ចេកវិទ្យានាំមុខគេក្នុងការអប់រំ និងស្រាវជ្រាវ។
+              ស្វែងរក ទាញយក និងប្រើប្រាស់ឯកសារផ្លូវការ កម្មវិធីសិក្សា
+              និងលិខិតបទដ្ឋានគតិយុត្តផ្សេងៗ។
             </p>
-            <div class="space-y-2 text-sm">
-              <p class="flex items-center space-x-2">
-                <i class="fas fa-map-marker-alt text-[#fbc02d]"></i>
-                <span
-                  >អាសយដ្ឋាន៖ អគារ R-T, ផ្លូវជាតិលេខ ៦, ក្រុងសៀមរាប,
-                  កម្ពុជា</span
-                >
-              </p>
-              <p class="flex items-center space-x-2">
-                <i class="fas fa-phone-alt text-[#fbc02d]"></i>
-                <span>ទូរស័ព្ទ៖ 099 55 55 4444</span>
-              </p>
-              <p class="flex items-center space-x-2">
-                <i class="fas fa-envelope text-[#fbc02d]"></i>
-                <span>អ៊ីម៉ែល៖ info@romdoult-tech.edu.km</span>
-              </p>
-            </div>
-          </div>
-          <div>
-            <h4 class="text-lg font-bold text-white mb-4">ផែនទីគេហទំព័រ</h4>
-            <ul class="space-y-2 text-sm">
-              <li><a href="index.html" class="footer-link">ទំព័រដើម</a></li>
-              <li><a href="about.html" class="footer-link">អំពីយើង</a></li>
-              <li><a href="news.html" class="footer-link">ព័ត៌មាន</a></li>
-              <li><a href="documents.html" class="footer-link">ឯកសារ</a></li>
-              <li>
-                <a href="publication.html" class="footer-link">ផ្សព្វផ្សាយ</a>
-              </li>
-            </ul>
-          </div>
-          <div>
-            <h4 class="text-lg font-bold text-white mb-4">
-              ជំនួយ និង លក្ខខណ្ឌ
-            </h4>
-            <ul class="space-y-2 text-sm">
-              <li><a href="contact.html" class="footer-link">ទំនាក់ទំនង</a></li>
-              <li><a href="#" class="footer-link">សំនួរញឹកញាប់</a></li>
-              <li><a href="#" class="footer-link">គោលការណ៍ឯកជនភាព</a></li>
-              <li><a href="#" class="footer-link">លក្ខខណ្ឌប្រើប្រាស់</a></li>
-              <li><a href="#" class="footer-link">ការកំណត់ខូគី</a></li>
-            </ul>
-          </div>
-          <div>
-            <h4 class="text-lg font-bold text-white mb-4">តាមដានយើង</h4>
-            <div class="flex space-x-3 mb-6">
-              <a
-                href="#"
-                class="text-2xl hover:text-[#3b5998] transition-colors"
-                ><i class="fab fa-facebook-square"></i
-              ></a>
-              <a
-                href="#"
-                class="text-2xl hover:text-[#00acee] transition-colors"
-                ><i class="fab fa-twitter-square"></i
-              ></a>
-              <a
-                href="#"
-                class="text-2xl hover:text-[#FF0000] transition-colors"
-                ><i class="fab fa-youtube-square"></i
-              ></a>
-              <a
-                href="#"
-                class="text-2xl hover:text-[#0088cc] transition-colors"
-                ><i class="fab fa-telegram"></i
-              ></a>
-            </div>
-            <h4 class="text-lg font-bold text-white mb-2">
-              ព្រឹត្តិបត្រព័ត៌មាន
-            </h4>
-            <form class="flex">
+
+            <!-- Search Box -->
+            <div
+              class="mt-8 max-w-xl mx-auto relative animate-fade-in-up"
+              style="animation-delay: 0.2s"
+            >
               <input
-                type="email"
-                placeholder="អ៊ីម៉ែលរបស់អ្នក..."
-                class="p-2 text-sm text-gray-900 rounded-l-md w-full focus:outline-none"
+                type="text"
+                placeholder="ស្វែងរកឯកសារ (ឧ. អាហារូបករណ៍, កាលវិភាគ...)"
+                class="w-full py-4 pl-6 pr-12 rounded-full shadow-lg focus:outline-none focus:ring-4 focus:ring-teal-300 text-gray-700"
               />
               <button
-                class="bg-[#fbc02d] text-gray-900 p-2 text-sm rounded-r-md hover:bg-[#e6a200] transition-colors"
+                class="absolute right-2 top-2 bg-brand-primary text-white w-10 h-10 rounded-full flex items-center justify-center hover:bg-brand-hover transition"
               >
-                ចុះឈ្មោះ
+                <i class="fas fa-search"></i>
               </button>
-            </form>
+            </div>
+          </div>
+
+          <!-- Decorative Background -->
+          <div
+            class="absolute top-0 left-0 w-full h-full opacity-10 pointer-events-none overflow-hidden"
+          >
+            <div
+              class="absolute -bottom-10 -right-10 w-64 h-64 border-4 border-white rounded-full"
+            ></div>
+            <div
+              class="absolute top-10 left-10 w-32 h-32 bg-white rounded-full blur-3xl"
+            ></div>
+          </div>
+        </section>
+
+        <!-- Document Content Section -->
+        <section class="py-12 bg-gray-50">
+          <div class="container mx-auto px-4 md:px-8">
+            <!-- Category Tabs -->
+            <div class="flex flex-wrap justify-center gap-4 mb-12">
+              <button
+                class="px-6 py-2 rounded-full bg-brand-primary text-white font-semibold shadow-md"
+              >
+                ទាំងអស់
+              </button>
+              <button
+                class="px-6 py-2 rounded-full bg-white text-gray-600 font-medium shadow-sm hover:bg-gray-100 transition"
+              >
+                និស្សិត
+              </button>
+              <button
+                class="px-6 py-2 rounded-full bg-white text-gray-600 font-medium shadow-sm hover:bg-gray-100 transition"
+              >
+                រដ្ឋបាល
+              </button>
+              <button
+                class="px-6 py-2 rounded-full bg-white text-gray-600 font-medium shadow-sm hover:bg-gray-100 transition"
+              >
+                ស្រាវជ្រាវ
+              </button>
+            </div>
+
+            <!-- Featured/Strategic Documents -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+              <!-- Card 1 -->
+              <div
+                class="bg-white p-8 rounded-2xl shadow-sm border-l-4 border-brand-primary hover:shadow-xl transition-all"
+              >
+                <div class="flex items-center mb-6">
+                  <div
+                    class="w-12 h-12 bg-teal-50 rounded-lg flex items-center justify-center text-brand-primary mr-4"
+                  >
+                    <i class="fas fa-file-contract text-2xl"></i>
+                  </div>
+                  <div>
+                    <h3 class="text-xl font-bold text-gray-800">
+                      ឯកសារយុទ្ធសាស្ត្រ
+                    </h3>
+                    <p class="text-xs text-gray-500">Strategic Documents</p>
+                  </div>
+                </div>
+                <ul class="space-y-4">
+                  <li
+                    class="flex justify-between items-center group border-b border-gray-100 pb-3"
+                  >
+                    <div class="flex items-center gap-3">
+                      <i class="fas fa-file-pdf text-red-500 text-xl"></i>
+                      <div>
+                        <p
+                          class="font-medium text-gray-700 group-hover:text-brand-primary transition"
+                        >
+                          ផែនការយុទ្ធសាស្ត្រ ២០២៤-២០២៨
+                        </p>
+                        <p class="text-[10px] text-gray-400">2.5 MB • PDF</p>
+                      </div>
+                    </div>
+                    <a href="#" class="text-gray-400 hover:text-brand-primary"
+                      ><i class="fas fa-download"></i
+                    ></a>
+                  </li>
+                  <li
+                    class="flex justify-between items-center group border-b border-gray-100 pb-3"
+                  >
+                    <div class="flex items-center gap-3">
+                      <i class="fas fa-file-pdf text-red-500 text-xl"></i>
+                      <div>
+                        <p
+                          class="font-medium text-gray-700 group-hover:text-brand-primary transition"
+                        >
+                          របាយការណ៍ប្រចាំឆ្នាំ ២០២៣
+                        </p>
+                        <p class="text-[10px] text-gray-400">4.1 MB • PDF</p>
+                      </div>
+                    </div>
+                    <a href="#" class="text-gray-400 hover:text-brand-primary"
+                      ><i class="fas fa-download"></i
+                    ></a>
+                  </li>
+                </ul>
+              </div>
+
+              <!-- Card 2 -->
+              <div
+                class="bg-white p-8 rounded-2xl shadow-sm border-l-4 border-yellow-500 hover:shadow-xl transition-all"
+              >
+                <div class="flex items-center mb-6">
+                  <div
+                    class="w-12 h-12 bg-yellow-50 rounded-lg flex items-center justify-center text-yellow-600 mr-4"
+                  >
+                    <i class="fas fa-graduation-cap text-2xl"></i>
+                  </div>
+                  <div>
+                    <h3 class="text-xl font-bold text-gray-800">ឯកសារសិក្សា</h3>
+                    <p class="text-xs text-gray-500">Academic Curriculums</p>
+                  </div>
+                </div>
+                <ul class="space-y-4">
+                  <li
+                    class="flex justify-between items-center group border-b border-gray-100 pb-3"
+                  >
+                    <div class="flex items-center gap-3">
+                      <i class="fas fa-file-alt text-blue-500 text-xl"></i>
+                      <div>
+                        <p
+                          class="font-medium text-gray-700 group-hover:text-brand-primary transition"
+                        >
+                          កម្មវិធីសិក្សា វិទ្យាសាស្ត្រកុំព្យូទ័រ
+                        </p>
+                        <p class="text-[10px] text-gray-400">1.8 MB • PDF</p>
+                      </div>
+                    </div>
+                    <a href="#" class="text-gray-400 hover:text-brand-primary"
+                      ><i class="fas fa-download"></i
+                    ></a>
+                  </li>
+                  <li
+                    class="flex justify-between items-center group border-b border-gray-100 pb-3"
+                  >
+                    <div class="flex items-center gap-3">
+                      <i class="fas fa-file-alt text-blue-500 text-xl"></i>
+                      <div>
+                        <p
+                          class="font-medium text-gray-700 group-hover:text-brand-primary transition"
+                        >
+                          កម្មវិធីសិក្សា វិស្វកម្មស៊ីវិល
+                        </p>
+                        <p class="text-[10px] text-gray-400">2.0 MB • PDF</p>
+                      </div>
+                    </div>
+                    <a href="#" class="text-gray-400 hover:text-brand-primary"
+                      ><i class="fas fa-download"></i
+                    ></a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- Forms Grid -->
+            <h3
+              class="text-2xl font-bold text-gray-800 mb-6 pl-2 border-l-4 border-brand-primary"
+            >
+              ទម្រង់បែបបទសម្រាប់និស្សិត (Forms)
+            </h3>
+            <div
+              class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-16"
+            >
+              <!-- Form Item -->
+              <div
+                class="bg-white p-6 rounded-xl shadow hover:shadow-lg transition hover:-translate-y-1 border border-gray-100 group"
+              >
+                <div class="flex justify-between items-start mb-4">
+                  <i class="fas fa-file-word text-3xl text-blue-700"></i>
+                  <span
+                    class="bg-gray-100 text-gray-600 text-[10px] px-2 py-1 rounded uppercase font-bold"
+                    >Docx</span
+                  >
+                </div>
+                <h4
+                  class="font-bold text-gray-800 mb-2 group-hover:text-brand-primary transition"
+                >
+                  ពាក្យចុះឈ្មោះចូលរៀន
+                </h4>
+                <p class="text-xs text-gray-500 mb-4">
+                  សម្រាប់និស្សិតឆ្នាំទី១ និងផ្ទេរការសិក្សា
+                </p>
+                <a
+                  href="#"
+                  class="w-full block text-center bg-gray-50 text-gray-700 py-2 rounded hover:bg-brand-primary hover:text-white transition text-sm font-medium"
+                  >ទាញយក</a
+                >
+              </div>
+
+              <!-- Form Item -->
+              <div
+                class="bg-white p-6 rounded-xl shadow hover:shadow-lg transition hover:-translate-y-1 border border-gray-100 group"
+              >
+                <div class="flex justify-between items-start mb-4">
+                  <i class="fas fa-file-word text-3xl text-blue-700"></i>
+                  <span
+                    class="bg-gray-100 text-gray-600 text-[10px] px-2 py-1 rounded uppercase font-bold"
+                    >Docx</span
+                  >
+                </div>
+                <h4
+                  class="font-bold text-gray-800 mb-2 group-hover:text-brand-primary transition"
+                >
+                  ពាក្យស្នើសុំអាហារូបករណ៍
+                </h4>
+                <p class="text-xs text-gray-500 mb-4">
+                  អាហារូបករណ៍ថ្លៃសិក្សា និងការស្នាក់នៅ
+                </p>
+                <a
+                  href="#"
+                  class="w-full block text-center bg-gray-50 text-gray-700 py-2 rounded hover:bg-brand-primary hover:text-white transition text-sm font-medium"
+                  >ទាញយក</a
+                >
+              </div>
+
+              <!-- Form Item -->
+              <div
+                class="bg-white p-6 rounded-xl shadow hover:shadow-lg transition hover:-translate-y-1 border border-gray-100 group"
+              >
+                <div class="flex justify-between items-start mb-4">
+                  <i class="fas fa-file-excel text-3xl text-green-600"></i>
+                  <span
+                    class="bg-gray-100 text-gray-600 text-[10px] px-2 py-1 rounded uppercase font-bold"
+                    >Xlsx</span
+                  >
+                </div>
+                <h4
+                  class="font-bold text-gray-800 mb-2 group-hover:text-brand-primary transition"
+                >
+                  ទម្រង់ជ្រើសរើសមុខវិជ្ជា
+                </h4>
+                <p class="text-xs text-gray-500 mb-4">
+                  សម្រាប់ឆមាសទី ១ និងទី ២
+                </p>
+                <a
+                  href="#"
+                  class="w-full block text-center bg-gray-50 text-gray-700 py-2 rounded hover:bg-brand-primary hover:text-white transition text-sm font-medium"
+                  >ទាញយក</a
+                >
+              </div>
+
+              <!-- Form Item -->
+              <div
+                class="bg-white p-6 rounded-xl shadow hover:shadow-lg transition hover:-translate-y-1 border border-gray-100 group"
+              >
+                <div class="flex justify-between items-start mb-4">
+                  <i class="fas fa-file-pdf text-3xl text-red-600"></i>
+                  <span
+                    class="bg-gray-100 text-gray-600 text-[10px] px-2 py-1 rounded uppercase font-bold"
+                    >PDF</span
+                  >
+                </div>
+                <h4
+                  class="font-bold text-gray-800 mb-2 group-hover:text-brand-primary transition"
+                >
+                  សៀវភៅណែនាំនិស្សិត
+                </h4>
+                <p class="text-xs text-gray-500 mb-4">
+                  បទបញ្ជាផ្ទៃក្នុង និងព័ត៌មានសំខាន់ៗ
+                </p>
+                <a
+                  href="#"
+                  class="w-full block text-center bg-gray-50 text-gray-700 py-2 rounded hover:bg-brand-primary hover:text-white transition text-sm font-medium"
+                  >ទាញយក</a
+                >
+              </div>
+            </div>
+
+            <!-- Regulations List -->
+            <div
+              class="bg-white rounded-2xl shadow-md border border-gray-100 overflow-hidden"
+            >
+              <div
+                class="bg-gray-50 px-6 py-4 border-b border-gray-200 flex justify-between items-center"
+              >
+                <h3 class="font-bold text-gray-800 flex items-center">
+                  <i class="fas fa-gavel text-brand-primary mr-2"></i>
+                  លក្ខន្តិកៈ និងគោលការណ៍ (Regulations)
+                </h3>
+                <button class="text-sm text-brand-primary hover:underline">
+                  មើលទាំងអស់
+                </button>
+              </div>
+              <div class="divide-y divide-gray-100">
+                <div
+                  class="p-4 flex items-center justify-between hover:bg-gray-50 transition"
+                >
+                  <div class="flex items-center gap-4">
+                    <div
+                      class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center text-gray-500"
+                    >
+                      <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <div>
+                      <p class="font-medium text-gray-800 text-sm">
+                        គោលការណ៍ឯកជនភាព និងសុវត្ថិភាពទិន្នន័យ
+                      </p>
+                      <p class="text-[10px] text-gray-400">
+                        Updated: 01 Jan 2024
+                      </p>
+                    </div>
+                  </div>
+                  <a
+                    href="#"
+                    class="text-gray-400 hover:text-brand-primary px-3"
+                    ><i class="fas fa-eye"></i
+                  ></a>
+                </div>
+                <div
+                  class="p-4 flex items-center justify-between hover:bg-gray-50 transition"
+                >
+                  <div class="flex items-center gap-4">
+                    <div
+                      class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center text-gray-500"
+                    >
+                      <i class="fas fa-book"></i>
+                    </div>
+                    <div>
+                      <p class="font-medium text-gray-800 text-sm">
+                        បទបញ្ជាស្តីពីការប្រើប្រាស់បណ្ណាល័យ
+                      </p>
+                      <p class="text-[10px] text-gray-400">
+                        Updated: 10 Feb 2024
+                      </p>
+                    </div>
+                  </div>
+                  <a
+                    href="#"
+                    class="text-gray-400 hover:text-brand-primary px-3"
+                    ><i class="fas fa-eye"></i
+                  ></a>
+                </div>
+                <div
+                  class="p-4 flex items-center justify-between hover:bg-gray-50 transition"
+                >
+                  <div class="flex items-center gap-4">
+                    <div
+                      class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center text-gray-500"
+                    >
+                      <i class="fas fa-laptop-code"></i>
+                    </div>
+                    <div>
+                      <p class="font-medium text-gray-800 text-sm">
+                        គោលការណ៍ប្រើប្រាស់បន្ទប់ Lab កុំព្យូទ័រ
+                      </p>
+                      <p class="text-[10px] text-gray-400">
+                        Updated: 15 Mar 2024
+                      </p>
+                    </div>
+                  </div>
+                  <a
+                    href="#"
+                    class="text-gray-400 hover:text-brand-primary px-3"
+                    ><i class="fas fa-eye"></i
+                  ></a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <!-- Footer (Updated from Template) -->
+      <footer class="bg-gray-900 text-gray-300 font-sans">
+        <div class="container mx-auto px-4 md:px-8 py-16">
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
+            <!-- About University -->
+            <div>
+              <div class="flex items-center gap-3 mb-6">
+                <div
+                  class="w-10 h-10 bg-brand-primary rounded-full flex items-center justify-center shadow-lg"
+                >
+                  <i class="fas fa-graduation-cap text-white text-sm"></i>
+                </div>
+                <div>
+                  <h3 class="text-white text-lg font-bold tracking-wide">
+                    Romdoul Tech
+                  </h3>
+                  <p class="text-xs text-gray-400">Excellence in Education</p>
+                </div>
+              </div>
+              <p class="text-sm text-gray-400 leading-relaxed mb-6">
+                <span class="font-khmer">សាកលវិទ្យាល័យរំដួលបច្ចេកវិទ្យា</span
+                ><br />
+                Leading the way in innovative education and research, preparing
+                students for global success in technology and business.
+              </p>
+              <div class="flex gap-3">
+                <a
+                  href="#"
+                  class="w-9 h-9 bg-gray-800 rounded-full flex items-center justify-center hover:bg-brand-primary hover:text-white transition-all duration-300 text-sm"
+                  ><i class="fab fa-facebook-f"></i
+                ></a>
+                <a
+                  href="#"
+                  class="w-9 h-9 bg-gray-800 rounded-full flex items-center justify-center hover:bg-brand-primary hover:text-white transition-all duration-300 text-sm"
+                  ><i class="fab fa-telegram"></i
+                ></a>
+                <a
+                  href="#"
+                  class="w-9 h-9 bg-gray-800 rounded-full flex items-center justify-center hover:bg-brand-primary hover:text-white transition-all duration-300 text-sm"
+                  ><i class="fab fa-linkedin-in"></i
+                ></a>
+              </div>
+            </div>
+
+            <!-- Quick Links -->
+            <div>
+              <h4
+                class="text-white text-lg font-bold mb-6 relative inline-block pb-2"
+              >
+                Quick Links
+                <span
+                  class="absolute bottom-0 left-0 w-12 h-0.5 bg-brand-primary rounded-full"
+                ></span>
+              </h4>
+              <ul class="space-y-3 text-sm">
+                <li>
+                  <a
+                    href="index.html"
+                    class="hover:text-brand-primary transition-colors flex items-center gap-2 group"
+                    ><i
+                      class="fas fa-chevron-right text-[10px] text-gray-600 group-hover:text-brand-primary transition-colors"
+                    ></i
+                    >Home</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="about.html"
+                    class="hover:text-brand-primary transition-colors flex items-center gap-2 group"
+                    ><i
+                      class="fas fa-chevron-right text-[10px] text-gray-600 group-hover:text-brand-primary transition-colors"
+                    ></i
+                    >About</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="#"
+                    class="hover:text-brand-primary transition-colors flex items-center gap-2 group"
+                    ><i
+                      class="fas fa-chevron-right text-[10px] text-gray-600 group-hover:text-brand-primary transition-colors"
+                    ></i
+                    >Documents</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="contact.html"
+                    class="hover:text-brand-primary transition-colors flex items-center gap-2 group"
+                    ><i
+                      class="fas fa-chevron-right text-[10px] text-gray-600 group-hover:text-brand-primary transition-colors"
+                    ></i
+                    >Contact</a
+                  >
+                </li>
+              </ul>
+            </div>
+
+            <!-- Resources -->
+            <div>
+              <h4
+                class="text-white text-lg font-bold mb-6 relative inline-block pb-2"
+              >
+                Resources
+                <span
+                  class="absolute bottom-0 left-0 w-12 h-0.5 bg-brand-primary rounded-full"
+                ></span>
+              </h4>
+              <ul class="space-y-3 text-sm">
+                <li>
+                  <a
+                    href="#"
+                    class="hover:text-brand-primary transition-colors flex items-center gap-2 group"
+                    ><i
+                      class="fas fa-chevron-right text-[10px] text-gray-600 group-hover:text-brand-primary transition-colors"
+                    ></i
+                    >Student Portal</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="#"
+                    class="hover:text-brand-primary transition-colors flex items-center gap-2 group"
+                    ><i
+                      class="fas fa-chevron-right text-[10px] text-gray-600 group-hover:text-brand-primary transition-colors"
+                    ></i
+                    >Documents</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="#"
+                    class="hover:text-brand-primary transition-colors flex items-center gap-2 group"
+                    ><i
+                      class="fas fa-chevron-right text-[10px] text-gray-600 group-hover:text-brand-primary transition-colors"
+                    ></i
+                    >Research</a
+                  >
+                </li>
+              </ul>
+            </div>
+
+            <!-- Contact Info -->
+            <div>
+              <h4
+                class="text-white text-lg font-bold mb-6 relative inline-block pb-2"
+              >
+                Contact Us
+                <span
+                  class="absolute bottom-0 left-0 w-12 h-0.5 bg-brand-primary rounded-full"
+                ></span>
+              </h4>
+              <ul class="space-y-4 text-sm">
+                <li class="flex items-start gap-3">
+                  <div class="mt-1 w-5 flex justify-center">
+                    <i class="fas fa-map-marker-alt text-brand-primary"></i>
+                  </div>
+                  <span class="text-gray-400">Siem Reap, Cambodia</span>
+                </li>
+                <li class="flex items-center gap-3">
+                  <div class="w-5 flex justify-center">
+                    <i class="fas fa-phone-alt text-brand-primary"></i>
+                  </div>
+                  <span class="text-gray-400">+855 99 55 55 4444</span>
+                </li>
+                <li class="flex items-center gap-3">
+                  <div class="w-5 flex justify-center">
+                    <i class="fas fa-envelope text-brand-primary"></i>
+                  </div>
+                  <span class="text-gray-400">info@romdoult-tech.edu.km</span>
+                </li>
+              </ul>
+            </div>
           </div>
         </div>
-        <div
-          class="p-4 text-center text-xs border-t border-gray-700 bg-gray-900 text-gray-400"
-        >
-          © 2025 សាកលវិទ្យាល័យរំដួលបច្ចេកវិទ្យា (Romdoul Tech University) |
-          រក្សាសិទ្ធិគ្រប់យ៉ាង
+
+        <!-- Bottom Footer -->
+        <div class="border-t border-gray-800 bg-black">
+          <div
+            class="container mx-auto px-4 md:px-8 py-6 text-center text-xs text-gray-600"
+          >
+            <p>© 2025 Romdoul Tech University. All Rights Reserved.</p>
+          </div>
         </div>
       </footer>
     </div>
+    <!-- End Wrapper -->
+
+    <!-- Scroll Top -->
+    <button
+      id="scroll-to-top"
+      class="fixed bottom-8 right-8 w-12 h-12 bg-brand-primary text-white rounded-full shadow-lg hover:bg-brand-hover transition-all opacity-0 invisible z-50 flex items-center justify-center"
+    >
+      <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <script>
+      // Menu Logic
+      const menuBtn = document.getElementById("mobile-menu-btn");
+      const mobileMenu = document.getElementById("mobile-menu");
+      let isMenuOpen = false;
+
+      menuBtn.addEventListener("click", () => {
+        isMenuOpen = !isMenuOpen;
+        if (isMenuOpen) {
+          mobileMenu.classList.remove("translate-x-full");
+          menuBtn.innerHTML = '<i class="fas fa-times"></i>';
+          document.body.style.overflow = "hidden";
+        } else {
+          mobileMenu.classList.add("translate-x-full");
+          menuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+          document.body.style.overflow = "auto";
+        }
+      });
+
+      // Close mobile menu when clicking links
+      const mobileLinks = document.querySelectorAll(".mobile-link");
+      mobileLinks.forEach((link) => {
+        link.addEventListener("click", () => {
+          mobileMenu.classList.add("translate-x-full");
+          menuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+          document.body.style.overflow = "auto";
+          isMenuOpen = false;
+        });
+      });
+
+      // Scroll Logic & Animation
+      const scrollToTopBtn = document.getElementById("scroll-to-top");
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.remove("opacity-0", "translate-y-8");
+              entry.target.classList.add("opacity-100", "translate-y-0");
+            }
+          });
+        },
+        { threshold: 0.1 }
+      );
+      document
+        .querySelectorAll(".animate-fade-in-up")
+        .forEach((section) => observer.observe(section));
+
+      window.addEventListener("scroll", () => {
+        if (window.pageYOffset > 300) {
+          scrollToTopBtn.classList.remove("opacity-0", "invisible");
+          scrollToTopBtn.classList.add("opacity-100", "visible");
+        } else {
+          scrollToTopBtn.classList.add("opacity-0", "invisible");
+          scrollToTopBtn.classList.remove("opacity-100", "visible");
+        }
+      });
+      scrollToTopBtn.addEventListener("click", () =>
+        window.scrollTo({ top: 0, behavior: "smooth" })
+      );
+    </script>
   </body>
 </html>

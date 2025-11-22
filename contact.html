@@ -9,589 +9,1105 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
     />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Noto+Sans+Khmer:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              brand: {
+                primary: "#00695c", // Template Teal
+                hover: "#004d40",
+                light: "#e0f2f1",
+              },
+            },
+            fontFamily: {
+              sans: ["Poppins", "Noto Sans Khmer", "sans-serif"],
+              khmer: ["Noto Sans Khmer", "sans-serif"],
+            },
+            animation: {
+              "fade-in-up": "fadeInUp 0.8s ease-out",
+            },
+            keyframes: {
+              fadeInUp: {
+                "0%": { opacity: "0", transform: "translateY(30px)" },
+                "100%": { opacity: "1", transform: "translateY(0)" },
+              },
+            },
+          },
+        },
+      };
+    </script>
     <style>
-      body {
-        font-family: "Antioch Text", "Moul", "Noto Sans Khmer", "Arial",
-          sans-serif;
-        background-color: #f8f8f8;
-        line-height: 1.7;
-        font-size: 15px;
-        color: #333;
+      html {
+        scroll-behavior: smooth;
       }
-      .khmer-os-siemreap-font {
-        font-family: "Khmer OS Siemreap", "Moul", "Noto Sans Khmer", "Arial",
-          sans-serif !important;
+      ::-webkit-scrollbar {
+        width: 10px;
       }
-      .container-wrapper {
-        max-width: 1100px;
+      ::-webkit-scrollbar-track {
+        background: #f1f1f1;
       }
-      .header-bg {
-        background-color: #0d47a1;
+      ::-webkit-scrollbar-thumb {
+        background: #00695c;
+        border-radius: 5px;
       }
-      .nav-link {
-        padding: 14px 20px;
-        display: block;
-        color: white;
-        font-weight: 500;
-        font-size: 15px;
-        border-right: 1px solid rgba(255, 255, 255, 0.1);
-        white-space: nowrap;
-        transition: background-color 0.3s ease;
-      }
-      .nav-link:hover {
-        background-color: #083c6c;
-      }
-
-      /* *** CSS ថ្មីសម្រាប់ Dropdown និង Nested Dropdown *** */
-      .nav-item-wrapper {
-        border-right: 1px solid rgba(255, 255, 255, 0.1);
-      }
-      .nav-item-wrapper > .nav-link {
-        border-right: none;
-      }
-      .active-nav {
-        background-color: #083c6c;
-        border-bottom: 3px solid #fbc02d;
-        padding-bottom: 11px;
-      }
-
-      /* Custom Styles for Dropdown */
-      .nav-dropdown {
-        position: absolute;
-        top: 100%; /* Position right below the nav link */
-        left: 0;
-        min-width: 200px;
-        background-color: #083c6c; /* Darker blue background */
-        z-index: 10;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        display: none; /* Hidden by default, shown on hover via group-hover:block */
-      }
-      .nav-dropdown a {
-        padding: 10px 20px;
-        color: white;
-        display: block;
-        white-space: nowrap;
-        transition: background-color 0.2s ease;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-        font-weight: 400;
-      }
-      .nav-dropdown a:hover {
-        background-color: #0d47a1; /* Hover effect */
-        color: #fbc02d; /* Yellow hover text */
-      }
-
-      /* Nested Dropdown Styles */
-      /* ធាតុរុំសម្រាប់ម៉ឺនុយរង ត្រូវតែជា relative group */
-      .nav-dropdown-item-parent {
-        position: relative;
-      }
-      /* ម៉ឺនុយរងទម្លាក់ចុះខាងស្តាំ */
-      .nav-sub-dropdown {
-        position: absolute;
-        top: 0; /* Align with the parent item */
-        left: 100%; /* Position to the right of the parent item */
-        min-width: 200px;
-        background-color: #0d47a1; /* Even darker blue background for nested menu */
-        z-index: 20; /* Higher z-index than main dropdown */
-        box-shadow: 4px 4px 6px rgba(0, 0, 0, 0.1);
-        display: none; /* Hidden by default, shown on hover */
-      }
-      /* Hover state for nested parent to show submenu */
-      .nav-dropdown-item-parent:hover > .nav-sub-dropdown {
-        display: block;
-      }
-      /* Hover state for nested item links */
-      .nav-sub-dropdown a:hover {
-        background-color: #083c6c;
-        color: #fbc02d;
-      }
-      /* End Nested Dropdown Styles */
-      /* *** បញ្ចប់ CSS ថ្មី *** */
-
-      .footer-bg {
-        background-color: #263238;
-        color: #cfd8dc;
-      }
-      .footer-link:hover {
-        color: #fbc02d;
+      ::-webkit-scrollbar-thumb:hover {
+        background: #004d40;
       }
     </style>
   </head>
-  <body>
-    <div class="container-wrapper mx-auto bg-white shadow-xl mt-6 mb-6">
-      <!-- Top Utility Bar -->
-      <div
-        class="flex justify-between items-center px-8 py-2 text-xs text-gray-700 bg-gray-50 border-b border-gray-200"
-      >
-        <div class="flex space-x-4 items-center">
-          <span class="text-blue-700 flex items-center space-x-1">
-            <i class="fas fa-phone-alt text-sm"></i>
-            <span>099 55 55 4444</span>
-          </span>
-          <span class="text-blue-700 flex items-center space-x-1">
-            <i class="fas fa-envelope text-sm"></i>
-            <span>info@romdoult-tech.edu.km</span>
-          </span>
-        </div>
-        <div class="flex space-x-4">
-          <a href="#" class="hover:text-blue-600 transition-colors">English</a>
-          <a href="#" class="hover:text-blue-600 font-bold transition-colors"
-            >ខ្មែរ</a
-          >
+
+  <!-- BODY with Gray Background for Boxed Layout contrast -->
+  <body
+    class="font-sans text-gray-800 bg-gray-100 overflow-x-hidden font-khmer"
+  >
+    <!-- MAIN WRAPPER: Boxed Layout (max-w-[1320px]) -->
+    <div
+      class="mx-auto max-w-[1320px] bg-white shadow-2xl overflow-hidden min-h-screen relative"
+    >
+     <div class="block px-4 py-2.5 text-gray-700 hover:bg-gray-50 hover:text-brand-primary transition text-sm"
+                   
+                    >
+      <!-- Top Bar -->
+      <!-- Top Bar -->
+      <div class="bg-gray-900 text-gray-300 text-xs py-2.5">
+        <div class="container mx-auto px-4 md:px-8">
+          <div class="flex flex-wrap justify-between items-center gap-3">
+            <div class="flex flex-wrap items-center gap-4">
+              <a
+                href="tel:+85599555444"
+                class="flex items-center gap-2 hover:text-white transition"
+              >
+                <i class="fas fa-phone-alt"></i>
+                <span>+855 99 55 55 4444</span>
+              </a>
+              <a
+                href="mailto:info@romdoult-tech.edu.km"
+                class="flex items-center gap-2 hover:text-white transition"
+              >
+                <i class="fas fa-envelope"></i>
+                <span>info@romdoult-tech.edu.km</span>
+              </a>
+            </div>
+            <div class="flex items-center gap-4">
+              <a
+                href="#"
+                class="hover:text-white transition"
+                aria-label="Facebook"
+                ><i class="fab fa-facebook-f"></i
+              ></a>
+              <a
+                href="#"
+                class="hover:text-white transition"
+                aria-label="Twitter"
+                ><i class="fab fa-twitter"></i
+              ></a>
+              <a
+                href="#"
+                class="hover:text-white transition"
+                aria-label="LinkedIn"
+                ><i class="fab fa-linkedin-in"></i
+              ></a>
+              <a
+                href="#"
+                class="hover:text-white transition"
+                aria-label="YouTube"
+                ><i class="fab fa-youtube"></i
+              ></a>
+            </div>
+          </div>
         </div>
       </div>
 
-      <!-- Header -->
-      <header
-        class="p-6 flex items-center justify-between border-b border-gray-200"
-      >
-        <div class="flex items-center space-x-4">
-          <div
-            class="w-16 h-16 bg-[#0d47a1] rounded-full flex items-center justify-center border-4 border-[#fbc02d] shadow-md"
-          >
-            <span class="text-white font-black text-3xl leading-none">R</span>
-          </div>
-          <div class="flex flex-col">
-            <h1
-              class="text-3xl font-extrabold text-[#0d47a1] khmer-os-siemreap-font"
+      <!-- Navigation -->
+      <header class="bg-white shadow-md sticky top-0 z-50">
+        <div class="container mx-auto px-4 md:px-8">
+          <nav class="flex justify-between items-center py-4">
+            <!-- Logo -->
+            <a href="#" class="flex items-center gap-3 z-50">
+              <div
+                class="w-12 h-12 bg-brand-primary rounded-full flex items-center justify-center shadow-lg"
+              >
+                <i class="fas fa-graduation-cap text-white text-xl"></i>
+              </div>
+              <div>
+                <h1 class="text-xl font-bold text-brand-primary tracking-wide">
+                  Romdoul Tech
+                </h1>
+                <p class="text-xs text-gray-600 font-medium">
+                  Excellence in Education
+                </p>
+              </div>
+            </a>
+
+            <!-- Desktop Menu -->
+            <div
+              class="hidden lg:flex items-center space-x-8 text-sm font-medium"
             >
-              សាកលវិទ្យាល័យរំដួលបច្ចេកវិទ្យា
-            </h1>
-            <h2
-              class="text-sm text-gray-600 font-semibold uppercase tracking-wider"
+              <a
+                href="index.html"
+                class=" transition"
+                >Home</a
+              >
+
+              <div class="relative group">
+                <button
+                  class="text-gray-700 hover:text-brand-primary transition flex items-center gap-1 cursor-pointer py-2"
+                >
+                  About
+                  <i
+                    class="fas fa-chevron-down text-xs transition-transform group-hover:rotate-180"
+                  ></i>
+                </button>
+                <div
+                  class="absolute left-0 top-full pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform translate-y-2 group-hover:translate-y-0 w-48"
+                >
+                  <div
+                    class="bg-white shadow-xl rounded-lg py-2 border border-gray-100"
+                  >
+                    <a
+                      href="about.html"
+                      class="block px-4 py-2.5 text-gray-700 hover:bg-gray-50 hover:text-brand-primary transition text-sm"
+                      >Our History</a
+                    >
+                    <a
+                      href="#"
+                      class="block px-4 py-2.5 text-gray-700 hover:bg-gray-50 hover:text-brand-primary transition text-sm"
+                      >Mission & Vision</a
+                    >
+                    <a
+                      href="#"
+                    <a
+                      href="#"
+                      class="block px-4 py-2.5 text-gray-700 hover:bg-gray-50 hover:text-brand-primary transition text-sm"
+                      >Help</a
+                    >
+                  </div>
+                </div>
+              </div>
+
+              <div class="relative group">
+                <button
+                  class="text-gray-700 hover:text-brand-primary transition flex items-center gap-1 cursor-pointer py-2"
+                >
+                  Academics
+                  <i
+                    class="fas fa-chevron-down text-xs transition-transform group-hover:rotate-180"
+                  ></i>
+                </button>
+                <div
+                  class="absolute left-0 top-full pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform translate-y-2 group-hover:translate-y-0 w-48"
+                >
+                  <div
+                    class="bg-white shadow-xl rounded-lg py-2 border border-gray-100"
+                  >
+                    <a
+                      href="#programs"
+                      class="block px-4 py-2.5 text-gray-700 hover:bg-gray-50 hover:text-brand-primary transition text-sm"
+                      >Programs</a
+                    >
+                    <a
+                      href="#academics"
+                      class="block px-4 py-2.5 text-gray-700 hover:bg-gray-50 hover:text-brand-primary transition text-sm"
+                      >Faculties</a
+                    >
+                    <a
+                      href="#"
+                      class="block px-4 py-2.5 text-gray-700 hover:bg-gray-50 hover:text-brand-primary transition text-sm"
+                      >Research</a
+                    >
+                    <a
+                      href="#"
+                      class="block px-4 py-2.5 text-gray-700 hover:bg-gray-50 hover:text-brand-primary transition text-sm"
+                      >Documents</a
+                    >
+                  </div>
+                </div>
+              </div>
+
+              <a
+                href="professor.html"
+                class="text-gray-700 hover:text-brand-primary transition"
+                >Admissions</a
+              >
+              <a
+                href="#campus-life"
+                class="text-gray-700 hover:text-brand-primary transition"
+                >Campus Life</a
+              >
+              <a
+                href="news.html"
+                class="text-gray-700 hover:text-brand-primary transition"
+                >News</a
+              >
+              <a
+                href="contact.html"
+                class=" text-brand-primary border-brand-primary border-b-2  pb-1 ​ font-bold text-gray-700 hover:text-brand-primary transition"
+                >Contact</a
+              >
+            </div>
+
+            <!-- Right Actions -->
+            <div class="hidden lg:flex items-center space-x-4 z-50">
+              <button
+                class="text-brand-primary hover:text-brand-hover transition text-lg w-10 h-10 rounded-full hover:bg-gray-100 flex items-center justify-center"
+                aria-label="Search"
+              >
+                <i class="fas fa-search"></i>
+              </button>
+              <a
+                href="#apply"
+                class="bg-brand-primary text-white px-6 py-2.5 rounded-full font-semibold hover:bg-brand-hover transition shadow-md hover:shadow-lg transform hover:-translate-y-0.5 duration-200"
+              >
+                Apply Now
+              </a>
+            </div>
+
+            <!-- Mobile Menu Button -->
+            <button
+              id="mobile-menu-btn"
+              class="lg:hidden text-brand-primary text-2xl z-50 focus:outline-none w-10 h-10 flex items-center justify-center"
+              aria-label="Menu"
             >
-              Romdoul Technology University
-            </h2>
-          </div>
+              <i class="fas fa-bars"></i>
+            </button>
+          </nav>
         </div>
-        <div class="hidden lg:flex items-center space-x-3">
-          <input
-            type="text"
-            placeholder="ស្វែងរក..."
-            class="p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#0d47a1] focus:border-transparent transition-all w-64 text-sm"
-          />
-          <button
-            class="bg-[#0d47a1] text-white p-2 rounded-lg hover:bg-[#083c6c] transition-colors"
+
+        <!-- Mobile Menu Overlay -->
+        <div
+          id="mobile-menu"
+          class="fixed inset-0 bg-white z-40 transform translate-x-full mobile-menu-overlay lg:hidden overflow-y-auto"
+        >
+          <div
+            class="flex flex-col items-center justify-center min-h-screen space-y-6 text-lg font-semibold py-20"
           >
-            <i class="fas fa-search"></i>
-          </button>
+            <a
+              href="index.html"
+              class="mobile-link text-gray-700 hover:text-brand-primary transition text-xl"
+              >Home</a
+            >
+            <a
+              href="about.html"
+              class="mobile-link text-gray-700 hover:text-brand-primary transition text-xl"
+              >About</a
+            >
+            <a
+              href="#academics"
+              class="mobile-link text-gray-700 hover:text-brand-primary transition text-xl"
+              >Academics</a
+            >
+            <a
+              href="professor.html"
+              class="mobile-link text-gray-700 hover:text-brand-primary transition text-xl"
+              >Admissions</a
+            >
+            <a
+              href="#campus-life"
+              class="mobile-link text-gray-700 hover:text-brand-primary transition text-xl"
+              >Campus Life</a
+            >
+            <a
+              href="news.html"
+              class="mobile-link text-gray-700 hover:text-brand-primary transition text-xl"
+              >News</a
+            >
+            <a
+              href="#contact"
+              class="mobile-link text-gray-700 hover:text-brand-primary transition text-xl"
+              >Contact</a
+            >
+            <a
+              href="#apply"
+              class="mobile-link bg-brand-primary text-white px-10 py-3 rounded-full font-semibold hover:bg-brand-hover transition shadow-md mt-4"
+            >
+              Apply Now
+            </a>
+          </div>
         </div>
       </header>
 
-      <!-- Navigation Nested Dropdown (បានជំនួសពីកូដទីមួយ) -->
-      <nav class="header-bg shadow-lg">
-        <div class="flex text-sm">
-          <a href="index.html" class="nav-link">ទំព័រដើម</a>
 
-          <!-- Dropdown for អំពីយើង (About Us) -->
-          <div class="relative group nav-item-wrapper">
-            <a href="about.html" class="nav-link flex items-center space-x-1">
-              <span>អំពីយើង</span>
-              <i class="fas fa-chevron-down text-xs ml-1"></i>
-            </a>
-            <div class="nav-dropdown group-hover:block">
-              <a href="#">ប្រវត្តិសាកលវិទ្យាល័យ</a>
-
-              <!-- Nested Dropdown for មហាវិទ្យាល័យ (Faculties) -->
-              <div class="nav-dropdown-item-parent">
-                <a href="#" class="flex justify-between items-center">
-                  <span>មហាវិទ្យាល័យ</span>
-                  <i class="fas fa-chevron-right text-xs ml-4"></i>
-                </a>
-                <div class="nav-sub-dropdown">
-                  <a href="#">មហាវិទ្យាល័យ IT</a>
-                  <a href="#">មហាវិទ្យាល័យ IR</a>
-                  <a href="#">មហាវិទ្យាល័យ LAW</a>
-                </div>
-              </div>
-              <!-- End Nested Dropdown -->
-
-              <a href="#">ចក្ខុវិស័យ និង បេសកកម្ម</a>
-              <a href="#">រចនាសម្ព័ន្ធគ្រប់គ្រង</a>
-              <a href="#">បុគ្គលិក និង សាស្ត្រាចារ្យ</a>
+      <main>
+        <!-- Page Header / Hero -->
+        <section class="bg-brand-primary relative py-16 overflow-hidden">
+          <div class="container mx-auto px-4 md:px-8 text-center relative z-10">
+            <h1
+              class="text-3xl md:text-4xl font-bold text-white mb-4 animate-fade-in-up"
+            >
+              ទំនាក់ទំនងមកកាន់យើង
+            </h1>
+            <div
+              class="flex justify-center items-center gap-2 text-teal-100 text-sm font-medium animate-fade-in-up"
+              style="animation-delay: 0.1s"
+            >
+              <a href="index.html" class="hover:text-white transition"
+                >ទំព័រដើម</a
+              >
+              <i class="fas fa-chevron-right text-xs"></i>
+              <span class="text-white">ទំនាក់ទំនង</span>
             </div>
           </div>
-
-          <!-- Dropdown for ព័ត៌មាន (News) -->
-          <div class="relative group nav-item-wrapper">
-            <a href="news.html" class="nav-link flex items-center space-x-1">
-              <span>ព័ត៌មាន</span>
-              <i class="fas fa-chevron-down text-xs ml-1"></i>
-            </a>
-            <div class="nav-dropdown group-hover:block">
-              <a href="#">ព័ត៌មានថ្មីៗ</a>
-              <a href="#">ព្រឹត្តិការណ៍</a>
-              <a href="#">សេចក្តីប្រកាស</a>
-            </div>
+          <!-- Background Pattern -->
+          <div
+            class="absolute top-0 left-0 w-full h-full opacity-10 pointer-events-none overflow-hidden"
+          >
+            <div
+              class="absolute -bottom-10 -right-10 w-64 h-64 border-4 border-white rounded-full"
+            ></div>
+            <div
+              class="absolute top-10 left-10 w-32 h-32 bg-white rounded-full blur-3xl"
+            ></div>
           </div>
+        </section>
 
-          <a href="documents.html" class="nav-link">ឯកសារ</a>
-          <a href="publication.html" class="nav-link">ផ្សព្វផ្សាយ</a>
-          <a href="contact.html" class="nav-link active-nav">ទំនាក់ទំនង</a>
-          <!-- ដាក់ active-nav នៅទីនេះ -->
-          <a href="help.html" class="nav-link">ជំនួយ</a>
-        </div>
-      </nav>
-
-      <!-- Main Content -->
-      <main class="p-8 lg:p-10">
-        <h2 class="text-3xl font-bold text-[#0d47a1] mb-6">
-          ទំនាក់ទំនងមកកាន់យើង
-        </h2>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-10">
-          <!-- Contact Information -->
-          <div>
-            <h3 class="text-xl font-bold text-[#0d47a1] mb-4">
-              ព័ត៌មានទំនាក់ទំនង
-            </h3>
-
-            <div class="space-y-4 mb-6">
-              <div class="bg-blue-50 p-4 rounded-lg flex items-start space-x-4">
-                <div class="bg-[#0d47a1] text-white p-3 rounded-full">
-                  <i class="fas fa-map-marker-alt text-xl"></i>
-                </div>
-                <div>
-                  <h4 class="font-bold text-gray-800 mb-1">អាសយដ្ឋាន</h4>
-                  <p class="text-gray-700">
-                    អគារ R-T, ផ្លូវជាតិលេខ ៦<br />ក្រុងសៀមរាប, កម្ពុជា
+        <!-- Main Content Section -->
+        <section class="py-16 bg-white">
+          <div class="container mx-auto px-4 md:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+              <!-- Left Column: Info & Social -->
+              <div class="animate-fade-in-up">
+                <div class="mb-8">
+                  <h3 class="text-2xl font-bold text-brand-primary mb-6">
+                    ព័ត៌មានទំនាក់ទំនង
+                  </h3>
+                  <p class="text-gray-600 mb-8 leading-relaxed">
+                    មានចម្ងល់ ឬត្រូវការជំនួយ?
+                    សូមទំនាក់ទំនងមកកាន់យើងខ្ញុំតាមរយៈព័ត៌មានខាងក្រោម
+                    ឬផ្ញើសារតាមរយៈទម្រង់បែបបទ។
                   </p>
+
+                  <div class="space-y-6">
+                    <!-- Address -->
+                    <div class="flex items-start space-x-4 group">
+                      <div
+                        class="w-12 h-12 bg-brand-light rounded-full flex items-center justify-center flex-shrink-0 group-hover:bg-brand-primary transition-colors duration-300"
+                      >
+                        <i
+                          class="fas fa-map-marker-alt text-xl text-brand-primary group-hover:text-white transition-colors"
+                        ></i>
+                      </div>
+                      <div>
+                        <h4 class="font-bold text-gray-800 mb-1">អាសយដ្ឋាន</h4>
+                        <p class="text-gray-600 text-sm">
+                          អគារ R-T, ផ្លូវជាតិលេខ ៦, ក្រុងសៀមរាប, កម្ពុជា
+                        </p>
+                      </div>
+                    </div>
+
+                    <!-- Phone -->
+                    <div class="flex items-start space-x-4 group">
+                      <div
+                        class="w-12 h-12 bg-yellow-50 rounded-full flex items-center justify-center flex-shrink-0 group-hover:bg-yellow-500 transition-colors duration-300"
+                      >
+                        <i
+                          class="fas fa-phone-alt text-xl text-yellow-600 group-hover:text-white transition-colors"
+                        ></i>
+                      </div>
+                      <div>
+                        <h4 class="font-bold text-gray-800 mb-1">ទូរស័ព្ទ</h4>
+                        <p class="text-gray-600 text-sm">099 55 55 4444</p>
+                        <p class="text-gray-600 text-sm">
+                          023 888 999 (ការិយាល័យ)
+                        </p>
+                      </div>
+                    </div>
+
+                    <!-- Email -->
+                    <div class="flex items-start space-x-4 group">
+                      <div
+                        class="w-12 h-12 bg-blue-50 rounded-full flex items-center justify-center flex-shrink-0 group-hover:bg-blue-500 transition-colors duration-300"
+                      >
+                        <i
+                          class="fas fa-envelope text-xl text-blue-600 group-hover:text-white transition-colors"
+                        ></i>
+                      </div>
+                      <div>
+                        <h4 class="font-bold text-gray-800 mb-1">អ៊ីម៉ែល</h4>
+                        <p class="text-gray-600 text-sm">
+                          info@romdoult-tech.edu.km
+                        </p>
+                        <p class="text-gray-600 text-sm">
+                          admissions@romdoult-tech.edu.km
+                        </p>
+                      </div>
+                    </div>
+
+                    <!-- Hours -->
+                    <div class="flex items-start space-x-4 group">
+                      <div
+                        class="w-12 h-12 bg-purple-50 rounded-full flex items-center justify-center flex-shrink-0 group-hover:bg-purple-500 transition-colors duration-300"
+                      >
+                        <i
+                          class="fas fa-clock text-xl text-purple-600 group-hover:text-white transition-colors"
+                        ></i>
+                      </div>
+                      <div>
+                        <h4 class="font-bold text-gray-800 mb-1">
+                          ម៉ោងធ្វើការ
+                        </h4>
+                        <p class="text-gray-600 text-sm">
+                          ច័ន្ទ - សុក្រ៖ 7:30AM - 5:00PM
+                        </p>
+                        <p class="text-gray-600 text-sm">
+                          សៅរ៍៖ 8:00AM - 12:00PM
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Social Media -->
+                <div class="mt-10">
+                  <h4 class="font-bold text-gray-800 mb-4">តាមដានយើងនៅលើ</h4>
+                  <div class="flex space-x-4">
+                    <a
+                      href="#"
+                      class="w-10 h-10 rounded-full bg-blue-600 text-white flex items-center justify-center hover:bg-blue-700 transition transform hover:-translate-y-1"
+                    >
+                      <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a
+                      href="#"
+                      class="w-10 h-10 rounded-full bg-sky-500 text-white flex items-center justify-center hover:bg-sky-600 transition transform hover:-translate-y-1"
+                    >
+                      <i class="fab fa-twitter"></i>
+                    </a>
+                    <a
+                      href="#"
+                      class="w-10 h-10 rounded-full bg-red-600 text-white flex items-center justify-center hover:bg-red-700 transition transform hover:-translate-y-1"
+                    >
+                      <i class="fab fa-youtube"></i>
+                    </a>
+                    <a
+                      href="#"
+                      class="w-10 h-10 rounded-full bg-blue-500 text-white flex items-center justify-center hover:bg-blue-600 transition transform hover:-translate-y-1"
+                    >
+                      <i class="fab fa-telegram"></i>
+                    </a>
+                  </div>
                 </div>
               </div>
 
+              <!-- Right Column: Form -->
               <div
-                class="bg-yellow-50 p-4 rounded-lg flex items-start space-x-4"
+                class="bg-gray-50 p-8 rounded-2xl shadow-lg border border-gray-100 animate-fade-in-up"
+                style="animation-delay: 0.2s"
               >
-                <div class="bg-[#fbc02d] text-gray-900 p-3 rounded-full">
-                  <i class="fas fa-phone-alt text-xl"></i>
-                </div>
-                <div>
-                  <h4 class="font-bold text-gray-800 mb-1">ទូរស័ព្ទ</h4>
-                  <p class="text-gray-700">
-                    099 55 55 4444<br />023 888 999 (ការិយាល័យ)
-                  </p>
-                </div>
-              </div>
-
-              <div
-                class="bg-green-50 p-4 rounded-lg flex items-start space-x-4"
-              >
-                <div class="bg-green-600 text-white p-3 rounded-full">
-                  <i class="fas fa-envelope text-xl"></i>
-                </div>
-                <div>
-                  <h4 class="font-bold text-gray-800 mb-1">អ៊ីម៉ែល</h4>
-                  <p class="text-gray-700">
-                    info@romdoult-tech.edu.km<br />admissions@romdoult-tech.edu.km
-                  </p>
-                </div>
-              </div>
-
-              <div
-                class="bg-purple-50 p-4 rounded-lg flex items-start space-x-4"
-              >
-                <div class="bg-purple-600 text-white p-3 rounded-full">
-                  <i class="fas fa-clock text-xl"></i>
-                </div>
-                <div>
-                  <h4 class="font-bold text-gray-800 mb-1">ម៉ោងធ្វើការ</h4>
-                  <p class="text-gray-700">
-                    ច័ន្ទ - សុក្រ៖ 7:30AM - 5:00PM<br />សៅរ៍៖ 8:00AM - 12:00PM
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            <!-- Office Image -->
-            <img
-              src="img/uccapus.jpg"
-              alt="University Office"
-              class="rounded-lg shadow-md w-full"
-            />
-
-            <!-- Social Media -->
-            <div class="mt-6">
-              <h4 class="font-bold text-gray-800 mb-3">តាមដានយើងនៅលើ</h4>
-              <div class="flex space-x-3">
-                <a
-                  href="#"
-                  class="bg-[#3b5998] text-white p-3 rounded-full hover:bg-[#2d4373] transition-colors"
+                <h3
+                  class="text-xl font-bold text-brand-primary mb-6 border-b border-gray-200 pb-2"
                 >
-                  <i class="fab fa-facebook-f text-xl"></i>
-                </a>
-                <a
-                  href="#"
-                  class="bg-[#00acee] text-white p-3 rounded-full hover:bg-[#0095d5] transition-colors"
-                >
-                  <i class="fab fa-twitter text-xl"></i>
-                </a>
-                <a
-                  href="#"
-                  class="bg-[#FF0000] text-white p-3 rounded-full hover:bg-[#cc0000] transition-colors"
-                >
-                  <i class="fab fa-youtube text-xl"></i>
-                </a>
-                <a
-                  href="#"
-                  class="bg-[#0088cc] text-white p-3 rounded-full hover:bg-[#0077b3] transition-colors"
-                >
-                  <i class="fab fa-telegram text-xl"></i>
-                </a>
+                  ផ្ញើសារមកកាន់យើង
+                </h3>
+
+                <form class="space-y-5">
+                  <div>
+                    <label
+                      class="block text-gray-700 font-semibold mb-2 text-sm"
+                      >ឈ្មោះពេញ <span class="text-red-500">*</span></label
+                    >
+                    <input
+                      type="text"
+                      required
+                      class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-primary focus:border-transparent transition-all outline-none text-sm"
+                      placeholder="បញ្ចូលឈ្មោះពេញរបស់អ្នក"
+                    />
+                  </div>
+
+                  <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                    <div>
+                      <label
+                        class="block text-gray-700 font-semibold mb-2 text-sm"
+                        >អ៊ីម៉ែល <span class="text-red-500">*</span></label
+                      >
+                      <input
+                        type="email"
+                        required
+                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-primary focus:border-transparent transition-all outline-none text-sm"
+                        placeholder="example@email.com"
+                      />
+                    </div>
+                    <div>
+                      <label
+                        class="block text-gray-700 font-semibold mb-2 text-sm"
+                        >លេខទូរស័ព្ទ</label
+                      >
+                      <input
+                        type="tel"
+                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-primary focus:border-transparent transition-all outline-none text-sm"
+                        placeholder="012 345 678"
+                      />
+                    </div>
+                  </div>
+
+                  <div>
+                    <label
+                      class="block text-gray-700 font-semibold mb-2 text-sm"
+                      >ប្រធានបទ <span class="text-red-500">*</span></label
+                    >
+                    <select
+                      required
+                      class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-primary focus:border-transparent transition-all outline-none text-sm"
+                    >
+                      <option value="">ជ្រើសរើសប្រធានបទ</option>
+                      <option value="admission">សំណួរអំពីការចុះឈ្មោះ</option>
+                      <option value="programs">ព័ត៌មានពីកម្មវិធីសិក្សា</option>
+                      <option value="scholarship">អាហារូបករណ៍</option>
+                      <option value="general">សំណួរទូទៅ</option>
+                      <option value="other">ផ្សេងៗ</option>
+                    </select>
+                  </div>
+
+                  <div>
+                    <label
+                      class="block text-gray-700 font-semibold mb-2 text-sm"
+                      >សារ <span class="text-red-500">*</span></label
+                    >
+                    <textarea
+                      required
+                      rows="4"
+                      class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-primary focus:border-transparent transition-all outline-none text-sm"
+                      placeholder="សូមបញ្ចូលសាររបស់អ្នកនៅទីនេះ..."
+                    ></textarea>
+                  </div>
+
+                  <button
+                    type="submit"
+                    class="w-full bg-brand-primary text-white py-3.5 rounded-lg font-bold hover:bg-brand-hover transition-all shadow-md hover:shadow-lg transform hover:-translate-y-0.5 flex items-center justify-center gap-2"
+                  >
+                    <i class="fas fa-paper-plane"></i>
+                    ផ្ញើសារ
+                  </button>
+                </form>
               </div>
             </div>
           </div>
-
-          <!-- Contact Form -->
-          <div>
-            <h3 class="text-xl font-bold text-[#0d47a1] mb-4">
-              ផ្ញើសារមកកាន់យើង
-            </h3>
-
-            <form class="space-y-4 bg-gray-50 p-6 rounded-lg shadow-md">
-              <div>
-                <label class="block text-gray-700 font-semibold mb-2"
-                  >ឈ្មោះពេញ <span class="text-red-500">*</span></label
-                >
-                <input
-                  type="text"
-                  required
-                  class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#0d47a1] focus:border-transparent transition-all"
-                  placeholder="បញ្ចូលឈ្មោះពេញរបស់អ្នក"
-                />
-              </div>
-
-              <div>
-                <label class="block text-gray-700 font-semibold mb-2"
-                  >អ៊ីម៉ែល <span class="text-red-500">*</span></label
-                >
-                <input
-                  type="email"
-                  required
-                  class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#0d47a1] focus:border-transparent transition-all"
-                  placeholder="example@email.com"
-                />
-              </div>
-
-              <div>
-                <label class="block text-gray-700 font-semibold mb-2"
-                  >លេខទូរស័ព្ទ</label
-                >
-                <input
-                  type="tel"
-                  class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#0d47a1] focus:border-transparent transition-all"
-                  placeholder="012 345 678"
-                />
-              </div>
-
-              <div>
-                <label class="block text-gray-700 font-semibold mb-2"
-                  >ប្រធានបទ <span class="text-red-500">*</span></label
-                >
-                <select
-                  required
-                  class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#0d47a1] focus:border-transparent transition-all"
-                >
-                  <option value="">ជ្រើសរើសប្រធានបទ</option>
-                  <option value="admission">សំណួរអំពីការចុះឈ្មោះ</option>
-                  <option value="programs">ព័ត៌មានពីកម្មវិធីសិក្សា</option>
-                  <option value="scholarship">អាហារូបករណ៍</option>
-                  <option value="general">សំណួរទូទៅ</option>
-                  <option value="other">ផ្សេងៗ</option>
-                </select>
-              </div>
-
-              <div>
-                <label class="block text-gray-700 font-semibold mb-2"
-                  >សារ <span class="text-red-500">*</span></label
-                >
-                <textarea
-                  required
-                  rows="5"
-                  class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#0d47a1] focus:border-transparent transition-all"
-                  placeholder="សូមបញ្ចូលសាររបស់អ្នកនៅទីនេះ..."
-                ></textarea>
-              </div>
-
-              <button
-                type="submit"
-                class="w-full bg-[#0d47a1] text-white p-3 rounded-lg font-semibold hover:bg-[#083c6c] transition-colors flex items-center justify-center"
-              >
-                <i class="fas fa-paper-plane mr-2"></i>
-                ផ្ញើសារ
-              </button>
-
-              <p class="text-xs text-gray-500 text-center">
-                យើងនឹងឆ្លើយតបក្នុងរយៈពេល ២៤ ម៉ោង
-              </p>
-            </form>
-          </div>
-        </div>
+        </section>
 
         <!-- Map Section -->
-        <div class="mt-10">
-          <h3 class="text-2xl font-bold text-[#0d47a1] mb-4">ទីតាំងរបស់យើង</h3>
-          <div
-            class="bg-gray-200 rounded-lg overflow-hidden shadow-lg"
-            style="height: 400px"
-          >
-            <!-- Google Map Embed with Pin at UC -->
-            <iframe
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3903.0399888246037!2d104.89076207503097!3d11.54487294425556!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31095149fc8aeb2d%3A0x29e54ee9154e8e0b!2sThe%20University%20of%20Cambodia!5e0!3m2!1sen!2skh!4v1730728888888!5m2!1sen!2skh"
-              width="100%"
-              height="100%"
-              style="border: 0"
-              allowfullscreen=""
-              loading="lazy"
-              referrerpolicy="no-referrer-when-downgrade"
-            ></iframe>
+        <section class="bg-gray-50 py-16">
+          <div class="container mx-auto px-4 md:px-8">
+            <div class="text-center mb-10">
+              <h3 class="text-2xl font-bold text-brand-primary">
+                ទីតាំងរបស់យើង
+              </h3>
+              <p class="text-gray-600 mt-2">ស្វែងរកយើងនៅលើផែនទី Google Map</p>
+            </div>
+            <div
+              class="rounded-2xl overflow-hidden shadow-xl border border-gray-200 h-[450px]"
+            >
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3903.0399888246037!2d104.89076207503097!3d11.54487294425556!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31095149fc8aeb2d%3A0x29e54ee9154e8e0b!2sThe%20University%20of%20Cambodia!5e0!3m2!1sen!2skh!4v1730728888888!5m2!1sen!2skh"
+                width="100%"
+                height="100%"
+                style="border: 0"
+                allowfullscreen=""
+                loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade"
+              ></iframe>
+            </div>
           </div>
-        </div>
+        </section>
 
-        <!-- Departments Contact -->
-        <div
-          class="mt-10 bg-gradient-to-r from-blue-50 to-yellow-50 p-6 rounded-lg"
-        >
-          <h3 class="text-2xl font-bold text-[#0d47a1] mb-4">
-            ទំនាក់ទំនងនាយកដ្ឋានផ្សេងៗ
-          </h3>
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div class="bg-white p-4 rounded-lg shadow-sm">
-              <h4 class="font-bold text-[#0d47a1] mb-2">នាយកដ្ឋានសិក្សា</h4>
-              <p class="text-sm text-gray-700 mb-1">
-                <i class="fas fa-phone text-[#fbc02d] mr-2"></i>023 888 100
-              </p>
-              <p class="text-sm text-gray-700">
-                <i class="fas fa-envelope text-[#fbc02d] mr-2"></i
-                >academic@romdoult-tech.edu.km
-              </p>
-            </div>
-            <div class="bg-white p-4 rounded-lg shadow-sm">
-              <h4 class="font-bold text-[#0d47a1] mb-2">នាយកដ្ឋានចុះឈ្មោះ</h4>
-              <p class="text-sm text-gray-700 mb-1">
-                <i class="fas fa-phone text-[#fbc02d] mr-2"></i>023 888 200
-              </p>
-              <p class="text-sm text-gray-700">
-                <i class="fas fa-envelope text-[#fbc02d] mr-2"></i
-                >admissions@romdoult-tech.edu.km
-              </p>
-            </div>
-            <div class="bg-white p-4 rounded-lg shadow-sm">
-              <h4 class="font-bold text-[#0d47a1] mb-2">
-                នាយកដ្ឋានហិរញ្ញវត្ថុ
-              </h4>
-              <p class="text-sm text-gray-700 mb-1">
-                <i class="fas fa-phone text-[#fbc02d] mr-2"></i>023 888 300
-              </p>
-              <p class="text-sm text-gray-700">
-                <i class="fas fa-envelope text-[#fbc02d] mr-2"></i
-                >finance@romdoult-tech.edu.km
-              </p>
+        <!-- Departments Section -->
+        <section class="py-16 bg-white border-t border-gray-100">
+          <div class="container mx-auto px-4 md:px-8">
+            <h3 class="text-2xl font-bold text-brand-primary mb-8 text-center">
+              ទំនាក់ទំនងនាយកដ្ឋានផ្សេងៗ
+            </h3>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <!-- Card 1 -->
+              <div
+                class="bg-white p-6 rounded-xl shadow-md border border-gray-100 hover:shadow-lg transition-shadow text-center group"
+              >
+                <div
+                  class="w-12 h-12 bg-blue-50 text-blue-600 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-blue-600 group-hover:text-white transition-colors"
+                >
+                  <i class="fas fa-user-graduate text-xl"></i>
+                </div>
+                <h4 class="font-bold text-gray-800 mb-2">នាយកដ្ឋានសិក្សា</h4>
+                <p class="text-sm text-gray-600 mb-1">
+                  <i class="fas fa-phone text-brand-primary mr-2"></i>023 888
+                  100
+                </p>
+                <p class="text-sm text-gray-600">
+                  <i class="fas fa-envelope text-brand-primary mr-2"></i
+                  >academic@romdoult.edu.km
+                </p>
+              </div>
+
+              <!-- Card 2 -->
+              <div
+                class="bg-white p-6 rounded-xl shadow-md border border-gray-100 hover:shadow-lg transition-shadow text-center group"
+              >
+                <div
+                  class="w-12 h-12 bg-green-50 text-green-600 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-green-600 group-hover:text-white transition-colors"
+                >
+                  <i class="fas fa-file-signature text-xl"></i>
+                </div>
+                <h4 class="font-bold text-gray-800 mb-2">នាយកដ្ឋានចុះឈ្មោះ</h4>
+                <p class="text-sm text-gray-600 mb-1">
+                  <i class="fas fa-phone text-brand-primary mr-2"></i>023 888
+                  200
+                </p>
+                <p class="text-sm text-gray-600">
+                  <i class="fas fa-envelope text-brand-primary mr-2"></i
+                  >admissions@romdoult.edu.km
+                </p>
+              </div>
+
+              <!-- Card 3 -->
+              <div
+                class="bg-white p-6 rounded-xl shadow-md border border-gray-100 hover:shadow-lg transition-shadow text-center group"
+              >
+                <div
+                  class="w-12 h-12 bg-orange-50 text-orange-600 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-orange-600 group-hover:text-white transition-colors"
+                >
+                  <i class="fas fa-coins text-xl"></i>
+                </div>
+                <h4 class="font-bold text-gray-800 mb-2">
+                  នាយកដ្ឋានហិរញ្ញវត្ថុ
+                </h4>
+                <p class="text-sm text-gray-600 mb-1">
+                  <i class="fas fa-phone text-brand-primary mr-2"></i>023 888
+                  300
+                </p>
+                <p class="text-sm text-gray-600">
+                  <i class="fas fa-envelope text-brand-primary mr-2"></i
+                  >finance@romdoult.edu.km
+                </p>
+              </div>
             </div>
           </div>
-        </div>
+        </section>
       </main>
 
       <!-- Footer -->
-      <footer class="footer-bg bg-[#0d47a1]">
-        <div class="p-10 grid grid-cols-1 md:grid-cols-4 gap-8">
-          <div>
-            <h4 class="text-xl font-bold text-white mb-4">
-              សាកលវិទ្យាល័យរំដួលបច្ចេកវិទ្យា
-            </h4>
-            <p class="text-sm mb-4">
-              សាកលវិទ្យាល័យបច្ចេកវិទ្យានាំមុខគេក្នុងការអប់រំ និងស្រាវជ្រាវ។
-            </p>
-            <div class="space-y-2 text-sm">
-              <p class="flex items-center space-x-2">
-                <i class="fas fa-map-marker-alt text-[#fbc02d]"></i>
-                <span
-                  >អាសយដ្ឋាន៖ អគារ R-T, ផ្លូវជាតិលេខ ៦, ក្រុងសៀមរាប,
-                  កម្ពុជា</span
+       <!-- Footer -->
+      <footer class="bg-gray-900 text-gray-300 font-sans">
+        <!-- Main Footer Content -->
+        <div class="container mx-auto px-4 md:px-8 py-16">
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
+            <!-- About University -->
+            <div>
+              <div class="flex items-center gap-3 mb-6">
+                <div
+                  class="w-10 h-10 bg-brand-primary rounded-full flex items-center justify-center shadow-lg"
                 >
+                  <i class="fas fa-graduation-cap text-white text-sm"></i>
+                </div>
+                <div>
+                  <h3 class="text-white text-lg font-bold tracking-wide">
+                    Romdoul Tech
+                  </h3>
+                  <p class="text-xs text-gray-400">Excellence in Education</p>
+                </div>
+              </div>
+              <p class="text-sm text-gray-400 leading-relaxed mb-6">
+                <span class="font-khmer">សាកលវិទ្យាល័យរំដួលបច្ចេកវិទ្យា</span
+                ><br />
+                Leading the way in innovative education and research, preparing
+                students for global success in technology and business.
               </p>
-              <p class="flex items-center space-x-2">
-                <i class="fas fa-phone-alt text-[#fbc02d]"></i>
-                <span>ទូរស័ព្ទ៖ 099 55 55 4444</span>
-              </p>
-              <p class="flex items-center space-x-2">
-                <i class="fas fa-envelope text-[#fbc02d]"></i>
-                <span>អ៊ីម៉ែល៖ info@romdoult-tech.edu.km</span>
-              </p>
+              <div class="flex gap-3">
+                <a
+                  href="#"
+                  class="w-9 h-9 bg-gray-800 rounded-full flex items-center justify-center hover:bg-brand-primary hover:text-white transition-all duration-300 text-sm"
+                  aria-label="Facebook"
+                >
+                  <i class="fab fa-facebook-f"></i>
+                </a>
+                <a
+                  href="#"
+                  class="w-9 h-9 bg-gray-800 rounded-full flex items-center justify-center hover:bg-brand-primary hover:text-white transition-all duration-300 text-sm"
+                  aria-label="Twitter"
+                >
+                  <i class="fab fa-twitter"></i>
+                </a>
+                <a
+                  href="#"
+                  class="w-9 h-9 bg-gray-800 rounded-full flex items-center justify-center hover:bg-brand-primary hover:text-white transition-all duration-300 text-sm"
+                  aria-label="LinkedIn"
+                >
+                  <i class="fab fa-linkedin-in"></i>
+                </a>
+                <a
+                  href="#"
+                  class="w-9 h-9 bg-gray-800 rounded-full flex items-center justify-center hover:bg-brand-primary hover:text-white transition-all duration-300 text-sm"
+                  aria-label="YouTube"
+                >
+                  <i class="fab fa-youtube"></i>
+                </a>
+                <a
+                  href="#"
+                  class="w-9 h-9 bg-gray-800 rounded-full flex items-center justify-center hover:bg-brand-primary hover:text-white transition-all duration-300 text-sm"
+                  aria-label="Instagram"
+                >
+                  <i class="fab fa-instagram"></i>
+                </a>
+              </div>
             </div>
-          </div>
-          <div>
-            <h4 class="text-lg font-bold text-white mb-4">ផែនទីគេហទំព័រ</h4>
-            <ul class="space-y-2 text-sm">
-              <li><a href="index.html" class="footer-link">ទំព័រដើម</a></li>
-              <li><a href="about.html" class="footer-link">អំពីយើង</a></li>
-              <li><a href="news.html" class="footer-link">ព័ត៌មាន</a></li>
-              <li><a href="documents.html" class="footer-link">ឯកសារ</a></li>
-              <li>
-                <a href="publication.html" class="footer-link">ផ្សព្វផ្សាយ</a>
-              </li>
-            </ul>
-          </div>
-          <div>
-            <h4 class="text-lg font-bold text-white mb-4">
-              ជំនួយ និង លក្ខខណ្ឌ
-            </h4>
-            <ul class="space-y-2 text-sm">
-              <li><a href="contact.html" class="footer-link">ទំនាក់ទំនង</a></li>
-              <li><a href="#" class="footer-link">សំនួរញឹកញាប់</a></li>
-              <li><a href="#" class="footer-link">គោលការណ៍ឯកជនភាព</a></li>
-              <li><a href="#" class="footer-link">លក្ខខណ្ឌប្រើប្រាស់</a></li>
-              <li><a href="#" class="footer-link">ការកំណត់ខូគី</a></li>
-            </ul>
-          </div>
-          <div>
-            <h4 class="text-lg font-bold text-white mb-4">តាមដានយើង</h4>
-            <div class="flex space-x-3 mb-6">
-              <a
-                href="#"
-                class="text-2xl hover:text-[#3b5998] transition-colors"
-                ><i class="fab fa-facebook-square"></i
-              ></a>
-              <a
-                href="#"
-                class="text-2xl hover:text-[#00acee] transition-colors"
-                ><i class="fab fa-twitter-square"></i
-              ></a>
-              <a
-                href="#"
-                class="text-2xl hover:text-[#FF0000] transition-colors"
-                ><i class="fab fa-youtube-square"></i
-              ></a>
-              <a
-                href="#"
-                class="text-2xl hover:text-[#0088cc] transition-colors"
-                ><i class="fab fa-telegram"></i
-              ></a>
-            </div>
-            <h4 class="text-lg font-bold text-white mb-2">
-              ព្រឹត្តិបត្រព័ត៌មាន
-            </h4>
-            <form class="flex">
-              <input
-                type="email"
-                placeholder="អ៊ីម៉ែលរបស់អ្នក..."
-                class="p-2 text-sm text-gray-900 rounded-l-md w-full focus:outline-none"
-              />
-              <button
-                class="bg-[#fbc02d] text-gray-900 p-2 text-sm rounded-r-md hover:bg-[#e6a200] transition-colors"
+
+            <!-- Quick Links -->
+            <div>
+              <h4
+                class="text-white text-lg font-bold mb-6 relative inline-block pb-2"
               >
-                ចុះឈ្មោះ
-              </button>
-            </form>
+                Quick Links
+                <span
+                  class="absolute bottom-0 left-0 w-12 h-0.5 bg-brand-primary rounded-full"
+                ></span>
+              </h4>
+              <ul class="space-y-3 text-sm">
+                <li>
+                  <a
+                    href="#"
+                    class="hover:text-brand-primary transition-colors flex items-center gap-2 group"
+                  >
+                    <i
+                      class="fas fa-chevron-right text-[10px] text-gray-600 group-hover:text-brand-primary transition-colors"
+                    ></i>
+                    About University
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="#"
+                    class="hover:text-brand-primary transition-colors flex items-center gap-2 group"
+                  >
+                    <i
+                      class="fas fa-chevron-right text-[10px] text-gray-600 group-hover:text-brand-primary transition-colors"
+                    ></i>
+                    Academic Programs
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="#"
+                    class="hover:text-brand-primary transition-colors flex items-center gap-2 group"
+                  >
+                    <i
+                      class="fas fa-chevron-right text-[10px] text-gray-600 group-hover:text-brand-primary transition-colors"
+                    ></i>
+                    Admissions
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="#"
+                    class="hover:text-brand-primary transition-colors flex items-center gap-2 group"
+                  >
+                    <i
+                      class="fas fa-chevron-right text-[10px] text-gray-600 group-hover:text-brand-primary transition-colors"
+                    ></i>
+                    Student Life
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="#"
+                    class="hover:text-brand-primary transition-colors flex items-center gap-2 group"
+                  >
+                    <i
+                      class="fas fa-chevron-right text-[10px] text-gray-600 group-hover:text-brand-primary transition-colors"
+                    ></i>
+                    Research & Innovation
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="#"
+                    class="hover:text-brand-primary transition-colors flex items-center gap-2 group"
+                  >
+                    <i
+                      class="fas fa-chevron-right text-[10px] text-gray-600 group-hover:text-brand-primary transition-colors"
+                    ></i>
+                    Alumni Network
+                  </a>
+                </li>
+              </ul>
+            </div>
+
+            <!-- Resources -->
+            <div>
+              <h4
+                class="text-white text-lg font-bold mb-6 relative inline-block pb-2"
+              >
+                Resources
+                <span
+                  class="absolute bottom-0 left-0 w-12 h-0.5 bg-brand-primary rounded-full"
+                ></span>
+              </h4>
+              <ul class="space-y-3 text-sm">
+                <li>
+                  <a
+                    href="#"
+                    class="hover:text-brand-primary transition-colors flex items-center gap-2 group"
+                  >
+                    <i
+                      class="fas fa-chevron-right text-[10px] text-gray-600 group-hover:text-brand-primary transition-colors"
+                    ></i>
+                    Student Portal
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="#"
+                    class="hover:text-brand-primary transition-colors flex items-center gap-2 group"
+                  >
+                    <i
+                      class="fas fa-chevron-right text-[10px] text-gray-600 group-hover:text-brand-primary transition-colors"
+                    ></i>
+                    Faculty Portal
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="#"
+                    class="hover:text-brand-primary transition-colors flex items-center gap-2 group"
+                  >
+                    <i
+                      class="fas fa-chevron-right text-[10px] text-gray-600 group-hover:text-brand-primary transition-colors"
+                    ></i>
+                    Documents
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="#"
+                    class="hover:text-brand-primary transition-colors flex items-center gap-2 group"
+                  >
+                    <i
+                      class="fas fa-chevron-right text-[10px] text-gray-600 group-hover:text-brand-primary transition-colors"
+                    ></i>
+                    Online Learning
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="#"
+                    class="hover:text-brand-primary transition-colors flex items-center gap-2 group"
+                  >
+                    <i
+                      class="fas fa-chevron-right text-[10px] text-gray-600 group-hover:text-brand-primary transition-colors"
+                    ></i>
+                    Campus Map
+                  </a>
+                </li>
+              </ul>
+            </div>
+
+            <!-- Contact Info -->
+            <div>
+              <h4
+                class="text-white text-lg font-bold mb-6 relative inline-block pb-2"
+              >
+                Contact Us
+                <span
+                  class="absolute bottom-0 left-0 w-12 h-0.5 bg-brand-primary rounded-full"
+                ></span>
+              </h4>
+              <ul class="space-y-4 text-sm">
+                <li class="flex items-start gap-3">
+                  <div class="mt-1 w-5 flex justify-center">
+                    <i class="fas fa-map-marker-alt text-brand-primary"></i>
+                  </div>
+                  <span class="leading-relaxed text-gray-400"
+                    >Building R-T, National Road #6<br />Siem Reap City,
+                    Cambodia</span
+                  >
+                </li>
+                <li class="flex items-center gap-3">
+                  <div class="w-5 flex justify-center">
+                    <i class="fas fa-phone-alt text-brand-primary"></i>
+                  </div>
+                  <a
+                    href="tel:+85599555444"
+                    class="hover:text-brand-primary transition-colors text-gray-400"
+                    >+855 99 55 55 4444</a
+                  >
+                </li>
+                <li class="flex items-center gap-3">
+                  <div class="w-5 flex justify-center">
+                    <i class="fas fa-envelope text-brand-primary"></i>
+                  </div>
+                  <a
+                    href="mailto:info@romdoult-tech.edu.km"
+                    class="hover:text-brand-primary transition-colors text-gray-400"
+                    >info@romdoult-tech.edu.km</a
+                  >
+                </li>
+                <li class="flex items-center gap-3">
+                  <div class="w-5 flex justify-center">
+                    <i class="fas fa-globe text-brand-primary"></i>
+                  </div>
+                  <span class="text-gray-400">www.romdoult-tech.edu.km</span>
+                </li>
+              </ul>
+
+              <!-- Newsletter -->
+              <div class="mt-8">
+                <h5 class="text-white font-semibold mb-3 text-sm">
+                  Subscribe to Newsletter
+                </h5>
+                <form class="flex" onsubmit="event.preventDefault()">
+                  <input
+                    type="email"
+                    placeholder="Your email address..."
+                    required
+                    class="flex-1 px-4 py-2.5 text-sm bg-gray-800 border border-gray-700 rounded-l-lg focus:outline-none focus:border-brand-primary text-white placeholder-gray-500 transition-colors"
+                  />
+                  <button
+                    type="submit"
+                    class="px-4 py-2.5 bg-brand-primary text-white rounded-r-lg hover:bg-brand-hover transition-colors"
+                  >
+                    <i class="fas fa-paper-plane"></i>
+                  </button>
+                </form>
+              </div>
+            </div>
           </div>
         </div>
-        <div
-          class="p-4 text-center text-xs border-t border-gray-700 bg-gray-900 text-gray-400"
-        >
-          © 2025 សាកលវិទ្យាល័យរំដួលបច្ចេកវិទ្យា (Romdoul Tech University) |
-          រក្សាសិទ្ធិគ្រប់យ៉ាង
+
+        <!-- Help & Partners Bar -->
+        <div class="border-t border-gray-800 bg-gray-950">
+          <div class="container mx-auto px-4 md:px-8 py-8">
+            <div class="text-center mb-6">
+              <h5
+                class="text-gray-500 text-xs font-bold mb-4 uppercase tracking-widest"
+              >
+                Accredited & Recognized By
+              </h5>
+            </div>
+            <div
+              class="flex flex-wrap justify-center items-center gap-8 lg:gap-16 text-gray-600"
+            >
+              <div
+                class="flex items-center gap-2 hover:text-gray-400 transition-colors cursor-default"
+              >
+                <i class="fas fa-certificate text-xl"></i>
+                <span class="text-xs font-semibold">Ministry of Education</span>
+              </div>
+              <div
+                class="flex items-center gap-2 hover:text-gray-400 transition-colors cursor-default"
+              >
+                <i class="fas fa-university text-xl"></i>
+                <span class="text-xs font-semibold"
+                  >ASEAN University Network</span
+                >
+              </div>
+              <div
+                class="flex items-center gap-2 hover:text-gray-400 transition-colors cursor-default"
+              >
+                <i class="fas fa-globe-asia text-xl"></i>
+                <span class="text-xs font-semibold">UNESCO</span>
+              </div>
+              <div
+                class="flex items-center gap-2 hover:text-gray-400 transition-colors cursor-default"
+              >
+                <i class="fas fa-handshake text-xl"></i>
+                <span class="text-xs font-semibold">World Bank Partner</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bottom Footer -->
+        <div class="border-t border-gray-800 bg-black">
+          <div class="container mx-auto px-4 md:px-8 py-6">
+            <div
+              class="flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-gray-600"
+            >
+              <p>
+                © 2025
+                <span class="font-khmer">សាកលវិទ្យាល័យរំដួលបច្ចេកវិទ្យា</span>
+                (Romdoul Tech). All Rights Reserved.
+              </p>
+              <div class="flex flex-wrap justify-center gap-6">
+                <a href="#" class="hover:text-brand-primary transition-colors"
+                  >Privacy Policy</a
+                >
+                <a href="#" class="hover:text-brand-primary transition-colors"
+                  >Terms of Service</a
+                >
+                <a href="#" class="hover:text-brand-primary transition-colors"
+                  >Cookie Policy</a
+                >
+                <a href="#" class="hover:text-brand-primary transition-colors"
+                  >Accessibility</a
+                >
+              </div>
+            </div>
+          </div>
         </div>
       </footer>
     </div>
+    <!-- End Main Wrapper -->
+
+    <!-- Scroll to Top Button -->
+    <button
+      id="scroll-to-top"
+      class="fixed bottom-8 right-8 w-12 h-12 bg-brand-primary text-white rounded-full shadow-lg hover-brand-primary transition-all opacity-0 invisible z-50 flex items-center justify-center"
+      aria-label="Scroll to top"
+    >
+      <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <script>
+      // Mobile Menu Logic
+      const menuBtn = document.getElementById("mobile-menu-btn");
+      const mobileMenu = document.getElementById("mobile-menu");
+      let isMenuOpen = false;
+
+      menuBtn.addEventListener("click", () => {
+        isMenuOpen = !isMenuOpen;
+        if (isMenuOpen) {
+          mobileMenu.classList.remove("translate-x-full");
+          menuBtn.innerHTML = '<i class="fas fa-times"></i>';
+          document.body.style.overflow = "hidden";
+        } else {
+          mobileMenu.classList.add("translate-x-full");
+          menuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+          document.body.style.overflow = "auto";
+        }
+      });
+
+      // Scroll to Top & Scroll Animations
+      const scrollToTopBtn = document.getElementById("scroll-to-top");
+      const observerOptions = {
+        threshold: 0.1,
+        rootMargin: "0px 0px -50px 0px",
+      };
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.remove("opacity-0", "translate-y-8");
+            entry.target.classList.add("opacity-100", "translate-y-0");
+          }
+        });
+      }, observerOptions);
+
+      document.querySelectorAll(".animate-on-scroll").forEach((section) => {
+        observer.observe(section);
+      });
+
+      window.addEventListener("scroll", () => {
+        if (window.pageYOffset > 300) {
+          scrollToTopBtn.classList.remove("opacity-0", "invisible");
+          scrollToTopBtn.classList.add("opacity-100", "visible");
+        } else {
+          scrollToTopBtn.classList.add("opacity-0", "invisible");
+          scrollToTopBtn.classList.remove("opacity-100", "visible");
+        }
+      });
+
+      scrollToTopBtn.addEventListener("click", () => {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      });
+    </script>
   </body>
 </html>
-```

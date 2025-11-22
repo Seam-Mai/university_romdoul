@@ -1,1395 +1,1963 @@
 <!DOCTYPE html>
-<html lang="km">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>ទំព័រដើម - សាកលវិទ្យាល័យរំដួលបច្ចេកវិទ្យា</title>
+    <title>Romdoul Technology University - Excellence in Education</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="icon" type="image/png" href="img/logo.png" />
-    <!-- Bootstrap 5 CSS -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-ApNd1WkHsY+6fFvXQlO0ZRm+H/4V4lLkQ1JbqDkqGfHl+0mI5i5y0Fx0HRfo9rJd" crossorigin="anonymous">
-
-<!-- Bootstrap 5 JS (optional, for components like dropdowns, modals) -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-Qkz5sXg6yzgK6l8n1C8poeV7czWjVQpZH6g+3V3x5J2a7/U0rMjc5kZskhJk9BoA" crossorigin="anonymous"></script>
-
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
     />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Noto+Sans+Khmer:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              brand: {
+                primary: "#00695c",
+                hover: "#004d40",
+              },
+            },
+            fontFamily: {
+              sans: ["Poppins", "Noto Sans Khmer", "sans-serif"],
+              khmer: ["Noto Sans Khmer", "sans-serif"],
+            },
+            animation: {
+              "fade-in-up": "fadeInUp 0.8s ease-out",
+              "slide-in-left": "slideInLeft 0.8s ease-out",
+              "spin-slow": "spin 3s linear infinite",
+              bounce: "bounce 3s infinite",
+            },
+            keyframes: {
+              fadeInUp: {
+                "0%": { opacity: "0", transform: "translateY(30px)" },
+                "100%": { opacity: "1", transform: "translateY(0)" },
+              },
+              slideInLeft: {
+                "0%": { opacity: "0", transform: "translateX(-50px)" },
+                "100%": { opacity: "1", transform: "translateX(0)" },
+              },
+            },
+          },
+        },
+      };
+    </script>
     <style>
-      body {
-        font-family: "Antioch Text", "Moul", "Noto Sans Khmer", "Arial",
-          sans-serif;
-        background-color: #f8f8f8;
-        line-height: 1.7;
-        font-size: 15px;
-        color: #333;
-      }
-      .khmer-os-siemreap-font {
-        font-family: "Khmer OS Siemreap", "Moul", "Noto Sans Khmer", "Arial",
-          sans-serif !important;
-      }
-      .container-wrapper {
-        max-width: 1100px;
-      }
-      .header-bg {
-        background-color: #0d47a1;
+    
+      html {
+        scroll-behavior: smooth;
       }
 
-      /* Desktop Navigation */
-      .nav-link {
-        padding: 14px 20px;
-        display: block;
-        color: white;
-        font-weight: 500;
-        font-size: 15px;
-        border-right: 1px solid rgba(255, 255, 255, 0.1);
-        white-space: nowrap;
-        transition: background-color 0.3s ease;
+      /* Custom Scrollbar */
+      ::-webkit-scrollbar {
+        width: 10px;
       }
-      .nav-link:hover {
-        background-color: #083c6c;
+      ::-webkit-scrollbar-track {
+        background: #f1f1f1;
       }
-      .nav-item-wrapper {
-        border-right: 1px solid rgba(255, 255, 255, 0.1);
+      ::-webkit-scrollbar-thumb {
+        background: #00695c;
+        border-radius: 5px;
       }
-      .nav-item-wrapper > .nav-link {
-        border-right: none;
-      }
-      .active-nav {
-        background-color: #083c6c;
-        border-bottom: 3px solid #fbc02d;
-        padding-bottom: 11px;
+      ::-webkit-scrollbar-thumb:hover {
+        background: #004d40;
       }
 
-      /* Desktop Dropdown */
-      .nav-dropdown {
-        position: absolute;
-        top: 100%;
-        left: 0;
-        min-width: 200px;
-        background-color: #083c6c;
-        z-index: 10;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        display: none;
-      }
-      .nav-dropdown a {
-        padding: 10px 20px;
-        color: white;
-        display: block;
-        white-space: nowrap;
-        transition: background-color 0.2s ease;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-        font-weight: 400;
-      }
-      .nav-dropdown a:hover {
-        background-color: #0d47a1;
-        color: #fbc02d;
-      }
-      .nav-dropdown-item-parent {
-        position: relative;
-      }
-      .nav-sub-dropdown {
-        position: absolute;
-        top: 0;
-        left: 100%;
-        min-width: 200px;
-        background-color: #0d47a1;
-        z-index: 20;
-        box-shadow: 4px 4px 6px rgba(0, 0, 0, 0.1);
-        display: none;
-      }
-      .nav-dropdown-item-parent:hover > .nav-sub-dropdown {
-        display: block;
-      }
-      .nav-sub-dropdown a:hover {
-        background-color: #083c6c;
-        color: #fbc02d;
+      /* Hero Image Mask */
+      .hero-image-mask {
+        mask-image: linear-gradient(to bottom, black 80%, transparent 100%);
+        -webkit-mask-image: linear-gradient(
+          to bottom,
+          black 80%,
+          transparent 100%
+        );
       }
 
-      /* Mobile Navigation Styles */
-      .mobile-menu {
-        position: fixed;
-        top: 0;
-        left: -100%;
-        width: 280px;
-        height: 100vh;
-        background-color: #0d47a1;
-        z-index: 1000;
-        transition: left 0.3s ease;
-        overflow-y: auto;
-        overflow-x: hidden;
-        box-shadow: 2px 0 10px rgba(0, 0, 0, 0.3);
-      }
-      .mobile-menu.active {
-        left: 0;
-      }
-      .mobile-overlay {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100vh;
-        background-color: rgba(0, 0, 0, 0.5);
-        z-index: 999;
-        display: none;
-      }
-      .mobile-overlay.active {
-        display: block;
-      }
-      .mobile-nav-link {
-        padding: 12px 20px;
-        color: white;
-        display: block;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        transition: background-color 0.2s ease;
-      }
-      .mobile-nav-link:hover {
-        background-color: #083c6c;
-      }
-      .mobile-nav-link.active {
-        background-color: #083c6c;
-        border-left: 4px solid #fbc02d;
-      }
-      .mobile-dropdown {
-        max-height: 0;
-        overflow: hidden;
-        transition: max-height 0.3s ease;
-        background-color: #083c6c;
-      }
-      .mobile-dropdown.active {
-        max-height: 500px;
-      }
-      .mobile-dropdown a {
-        padding: 10px 20px 10px 40px;
-        color: white;
-        display: block;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-        font-size: 14px;
-      }
-      .mobile-dropdown a:hover {
-        background-color: #0d47a1;
-        color: #fbc02d;
-      }
-      .mobile-sub-dropdown {
-        max-height: 0;
-        overflow: hidden;
-        transition: max-height 0.3s ease;
-        background-color: #0d47a1;
-      }
-      .mobile-sub-dropdown.active {
-        max-height: 300px;
-      }
-      .mobile-sub-dropdown a {
-        padding: 8px 20px 8px 60px;
-        font-size: 13px;
-      }
-
-      /* Enhanced Professional Styles */
-      .breadcrumb-separator {
-        color: #cbd5e0;
-        margin: 0 8px;
-      }
-
-      .article-meta {
-        display: flex;
-        align-items: center;
-        gap: 16px;
-        flex-wrap: wrap;
-        margin-top: 12px;
-      }
-
-      .meta-item {
-        display: flex;
-        align-items: center;
-        gap: 6px;
-        color: #64748b;
-        font-size: 13px;
-      }
-
-      .meta-item i {
-        color: #0d47a1;
-      }
-
-      /* Professional Image Gallery */
-      .image-gallery-container {
-        position: relative;
-        border-radius: 12px;
-        overflow: hidden;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
-        background: #000;
-      }
-
-      .main-image-wrapper {
-        position: relative;
-        aspect-ratio: 16/9;
-        overflow: hidden;
-      }
-
-      .main-image-wrapper img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        transition: transform 0.5s ease;
-      }
-
-      .image-counter {
-        position: absolute;
-        bottom: 16px;
-        right: 16px;
-        background: rgba(0, 0, 0, 0.7);
-        color: white;
-        padding: 6px 12px;
-        border-radius: 20px;
-        font-size: 13px;
-        backdrop-filter: blur(8px);
-      }
-
-      .gallery-nav-btn {
-        position: absolute;
-        top: 50%;
-        transform: translateY(-50%);
-        background: rgba(255, 255, 255, 0.95);
-        color: #0d47a1;
-        border: none;
-        width: 48px;
-        height: 48px;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-        z-index: 2;
-      }
-
-      .gallery-nav-btn:hover {
-        background: white;
-        transform: translateY(-50%) scale(1.1);
-        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
-      }
-
-      .gallery-nav-btn.prev {
-        left: 16px;
-      }
-
-      .gallery-nav-btn.next {
-        right: 16px;
-      }
-
-      /* Thumbnail Gallery */
-      .thumbnail-gallery {
-        display: flex;
-        gap: 12px;
-        margin-top: 16px;
-        overflow-x: auto;
-        padding: 8px 0;
-        scrollbar-width: thin;
-        scrollbar-color: #0d47a1 #e2e8f0;
-      }
-
-      .thumbnail-gallery::-webkit-scrollbar {
-        height: 6px;
-      }
-
-      .thumbnail-gallery::-webkit-scrollbar-thumb {
-        background: #0d47a1;
-        border-radius: 3px;
-      }
-
-      .thumbnail-gallery::-webkit-scrollbar-track {
-        background: #e2e8f0;
-        border-radius: 3px;
-      }
-
-      .thumbnail-item {
-        position: relative;
-        flex-shrink: 0;
-        width: 120px;
-        height: 80px;
-        border-radius: 8px;
-        overflow: hidden;
-        cursor: pointer;
-        border: 3px solid transparent;
+      .card-hover {
         transition: all 0.3s ease;
       }
-
-      .thumbnail-item:hover {
-        border-color: #0d47a1;
-        transform: translateY(-2px);
-        box-shadow: 0 4px 12px rgba(13, 71, 161, 0.3);
+      .card-hover:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
+          0 10px 10px -5px rgba(0, 0, 0, 0.04);
       }
 
-      .thumbnail-item.active {
-        border-color: #fbc02d;
-        box-shadow: 0 4px 16px rgba(251, 192, 45, 0.4);
+      /* Mobile Menu Transitions */
+      .mobile-menu-overlay {
+        transition: transform 0.3s ease-in-out;
       }
-
-      .thumbnail-item img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-      }
-
-      /* Professional Article Content */
-      .article-content {
-        line-height: 2;
-        font-size: 16px;
-      }
-
-      .article-content p {
-        margin-bottom: 24px;
-        text-align: justify;
-      }
-
-      .article-content p:first-of-type::first-letter {
-        font-size: 3.5em;
-        line-height: 1;
-        float: left;
-        margin: 0 12px 0 0;
-        color: #0d47a1;
-        font-weight: bold;
-      }
-
-      /* Enhanced Info Cards */
-      .info-card {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        border-radius: 12px;
-        padding: 24px;
-        color: white;
-        margin: 32px 0;
-        box-shadow: 0 8px 24px rgba(102, 126, 234, 0.3);
-      }
-
-      .info-card-blue {
-        background: linear-gradient(135deg, #0d47a1 0%, #1976d2 100%);
-      }
-
-      .info-card-gold {
-        background: linear-gradient(135deg, #fbc02d 0%, #f9a825 100%);
-        color: #1a202c;
-      }
-
-      /* Professional Share Buttons */
-      .share-container {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        flex-wrap: wrap;
-        padding: 20px 0;
-        border-top: 2px solid #e2e8f0;
-        border-bottom: 2px solid #e2e8f0;
-      }
-
-      .share-btn {
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        padding: 10px 20px;
-        border-radius: 8px;
-        font-size: 14px;
-        font-weight: 500;
-        transition: all 0.3s ease;
-        cursor: pointer;
-        text-decoration: none;
-      }
-
-      .share-btn:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-      }
-
-      .share-btn-facebook {
-        background: #3b5998;
-        color: white;
-      }
-
-      .share-btn-telegram {
-        background: #0088cc;
-        color: white;
-      }
-
-      .share-btn-print {
-        background: white;
-        color: #4a5568;
-        border: 2px solid #e2e8f0;
-      }
-
-      /* Enhanced Related Articles */
-      .related-article-card {
-        position: relative;
-        border-radius: 12px;
-        overflow: hidden;
-        transition: all 0.3s ease;
-        background: white;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-      }
-
-      .related-article-card:hover {
-        transform: translateY(-8px);
-        box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
-      }
-
-      .related-article-image {
-        position: relative;
-        aspect-ratio: 16/9;
-        overflow: hidden;
-      }
-
-      .related-article-image img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        transition: transform 0.5s ease;
-      }
-
-      .related-article-card:hover .related-article-image img {
-        transform: scale(1.1);
-      }
-
-      .related-article-overlay {
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
-        padding: 16px;
-        color: white;
-      }
-
-      .related-article-content {
-        padding: 16px;
-      }
-
-      .related-article-date {
-        color: #64748b;
-        font-size: 12px;
-        margin-bottom: 8px;
-        display: flex;
-        align-items: center;
-        gap: 6px;
-      }
-
-      .related-article-title {
-        font-size: 15px;
-        font-weight: 600;
-        color: #1a202c;
-        line-height: 1.5;
-        transition: color 0.3s ease;
-      }
-
-      .related-article-card:hover .related-article-title {
-        color: #0d47a1;
-      }
-      @media (max-width: 575.98px) {
-        .info-card{
-          display: none;
-        }
-      }
-
-      @media (min-width: 576px) {}
-
-      @media (min-width: 768px) {}
-
-      @media (min-width: 992px) {}
-
-      @media (min-width: 1200px) {}
-
-      @media (min-width: 1400px) {
-        
-      }
-
-
-      .footer-bg {
-        background-color: #263238;
-        color: #cfd8dc;
-      }
-      .footer-link:hover {
-        color: #fbc02d;
-      }
-
-      @media (max-width: 1023px) {
-        .container-wrapper {
-          margin-top: 0;
-          margin-bottom: 0;
-        }
-        .gallery-nav-btn {
-          width: 40px;
-          height: 40px;
-        }
-        .thumbnail-item {
-          width: 90px;
-          height: 60px;
-        }
-      }
-
-      @media (max-width: 640px) {
-        .article-content p:first-of-type::first-letter {
-          font-size: 2.5em;
-        }
-      }
+      .active-lang {
+    @apply font-bold text-yellow-500;
+  }
+  .lang-item:hover {
+    @apply text-yellow-400;
+  }
     </style>
+    <script type="importmap">
+      {
+        "imports": {
+          "react": "https://aistudiocdn.com/react@^19.2.0",
+          "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
+          "react/": "https://aistudiocdn.com/react@^19.2.0/"
+        }
+      }
+    </script>
+    <script>
+  const kh = document.getElementById("kh");
+  const en = document.getElementById("en");
+
+  function setLang(active) {
+    kh.classList.remove("active-lang");
+    en.classList.remove("active-lang");
+
+    if (active === "kh") kh.classList.add("active-lang");
+    if (active === "en") en.classList.add("active-lang");
+  }
+
+  kh.onclick = () => setLang("kh");
+  en.onclick = () => setLang("en");
+
+  // default selected
+  setLang("en");
+</script>
+
   </head>
-  <body>
-    <div class="container-wrapper mx-auto bg-white shadow-xl lg:mt-6 lg:mb-6">
-      <!-- Top Utility Bar -->
-      <div
-        class="flex flex-col sm:flex-row justify-between items-start sm:items-center px-4 sm:px-8 py-2 text-xs text-gray-700 bg-gray-50 border-b border-gray-200 gap-1 sm:gap-0"
-      >
-        <div class="flex flex-wrap gap-x-4 items-center​​ info">
-          <span class="text-blue-700 flex items-center space-x-1">
-            <i class="fas fa-phone-alt text-sm"></i>
-            <span>099 55 55 4444</span>
-          </span>
-          <span class="text-blue-700 flex items-center space-x-1">
-            <i class="fas fa-envelope text-sm"></i>
-            <span class="hidden sm:inline">info@romdoult-tech.edu.km</span>
-            <span class="sm:hidden truncate max-w-[150px]"
-              >info@romdoult-tech.edu.km</span
-            >
-          </span>
-        </div>
-        <div class="flex space-x-4">
-          <a href="#" class="hover:text-blue-600 transition-colors">English</a>
-          <a href="#" class="hover:text-blue-600 font-bold transition-colors"
-            >ខ្មែរ</a
-          >
+
+  <body class="font-sans text-gray-800 bg-gray-100 overflow-x-hidden">
+    <div
+      class="mx-auto max-w-[1320px] bg-white shadow-2xl overflow-hidden min-h-screen relative"
+    >
+         <div class="block px-4 py-2.5 text-gray-700 hover:bg-gray-50 hover:text-brand-primary transition text-sm"
+                   
+                    >
+      <!-- Top Bar -->
+      <div class="bg-gray-900 text-gray-300 text-xs py-2.5">
+        <div class="container mx-auto px-4 md:px-8">
+          <div class="flex flex-wrap justify-between items-center gap-3">
+            <div class="flex flex-wrap items-center gap-4">
+              <a
+                href="tel:+85599555444"
+                class="flex items-center gap-2 hover:text-white transition"
+              >
+                <i class="fas fa-phone-alt"></i>
+                <span>+855 99 55 55 4444</span>
+              </a>
+              <a
+                href="mailto:info@romdoult-tech.edu.km"
+                class="flex items-center gap-2 hover:text-white transition"
+              >
+                <i class="fas fa-envelope"></i>
+                <span>info@romdoult-tech.edu.km</span>
+              </a>
+            </div>
+            <div class="flex items-center gap-4">
+             <div class="flex gap-3 cursor-pointer" id="lang-switch">
+               <span id="kh" class="lang-item">KH</span>
+                 <span id="en" class="lang-item text-yellow-500">EN</span>
+                      </div>
+
+              <a
+                href="#"
+                class="hover:text-white transition"
+                aria-label="Facebook"
+                ><i class="fab fa-facebook-f"></i
+              ></a>
+              <a
+                href="#"
+                class="hover:text-white transition"
+                aria-label="Twitter"
+                ><i class="fab fa-twitter"></i
+              ></a>
+              <a
+                href="#"
+                class="hover:text-white transition"
+                aria-label="LinkedIn"
+                ><i class="fab fa-linkedin-in"></i
+              ></a>
+              <a
+                href="#"
+                class="hover:text-white transition"
+                aria-label="YouTube"
+                ><i class="fab fa-youtube"></i
+              ></a>
+            </div>
+          </div>
         </div>
       </div>
 
-      <!-- Header -->
-      <header
-        class="p-4 sm:p-6 border-b border-gray-200"
-        style="background-image: linear-gradient(to bottom, #c4e0ff, #7ba7e3)"
-      >
-        <div class="header-main-flex flex items-center justify-between">
-          <div class="flex items-center space-x-3 sm:space-x-4">
+      <!-- Navigation -->
+      <header class="bg-white shadow-md sticky top-0 z-50">
+        <div class="container mx-auto px-4 md:px-8">
+          <nav class="flex justify-between items-center py-4">
+            <!-- Logo -->
+            <a href="#" class="flex items-center gap-3 z-50">
+              <div
+                class="w-12 h-12 bg-brand-primary rounded-full flex items-center justify-center shadow-lg"
+              >
+                <i class="fas fa-graduation-cap text-white text-xl"></i>
+              </div>
+              <div>
+                <h1 class="text-xl font-bold text-brand-primary tracking-wide">
+                  Romdoul Tech
+                </h1>
+                <p class="text-xs text-gray-600 font-medium">
+                  Excellence in Education
+                </p>
+              </div>
+            </a>
+
+            <!-- Desktop Menu -->
             <div
-              class="w-12 h-12 sm:w-16 sm:h-16 bg-[#0d47a1] rounded-full flex items-center justify-center border-2 sm:border-4 border-[#fbc02d] shadow-xl flex-shrink-0"
+              class="hidden lg:flex items-center space-x-8 text-sm font-medium"
             >
-              <span
-                class="text-white font-black text-2xl sm:text-3xl leading-none"
-                >R</span
+              <a
+                href="index.html"
+                class="text-brand-primary font-bold border-b-2 border-brand-primary pb-1 transition"
+                >Home</a
+              >
+
+              <div class="relative group">
+                <button
+                  class="text-gray-700 hover:text-brand-primary transition flex items-center gap-1 cursor-pointer py-2"
+                >
+                  About
+                  <i
+                    class="fas fa-chevron-down text-xs transition-transform group-hover:rotate-180"
+                  ></i>
+                </button>
+                <div
+                  class="absolute left-0 top-full pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform translate-y-2 group-hover:translate-y-0 w-48"
+                >
+                  <div
+                    class="bg-white shadow-xl rounded-lg py-2 border border-gray-100"
+                  >
+                    <a
+                      href="about.html"
+                      class="block px-4 py-2.5 text-gray-700 hover:bg-gray-50 hover:text-brand-primary transition text-sm"
+                      >Our History</a
+                    >
+                    <a
+                      href="#"
+                      class="block px-4 py-2.5 text-gray-700 hover:bg-gray-50 hover:text-brand-primary transition text-sm"
+                      >Mission & Vision</a
+                    >
+                    <a
+                      href="help.html"
+                    <a
+                      href="#"
+                      class="block px-4 py-2.5 text-gray-700 hover:bg-gray-50 hover:text-brand-primary transition text-sm"
+                      >Help</a
+                    >
+                  </div>
+                </div>
+              </div>
+
+              <div class="relative group">
+                <button
+                  class="text-gray-700 hover:text-brand-primary transition flex items-center gap-1 cursor-pointer py-2"
+                >
+                  Academics
+                  <i
+                    class="fas fa-chevron-down text-xs transition-transform group-hover:rotate-180"
+                  ></i>
+                </button>
+                <div
+                  class="absolute left-0 top-full pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform translate-y-2 group-hover:translate-y-0 w-48"
+                >
+                  <div
+                    class="bg-white shadow-xl rounded-lg py-2 border border-gray-100"
+                  >
+                    <a
+                      href="#programs"
+                      class="block px-4 py-2.5 text-gray-700 hover:bg-gray-50 hover:text-brand-primary transition text-sm"
+                      >Programs</a
+                    >
+                    <a
+                      href="#academics"
+                      class="block px-4 py-2.5 text-gray-700 hover:bg-gray-50 hover:text-brand-primary transition text-sm"
+                      >Faculties</a
+                    >
+                    <a
+                      href="#"
+                      class="block px-4 py-2.5 text-gray-700 hover:bg-gray-50 hover:text-brand-primary transition text-sm"
+                      >Research</a
+                    >
+                    <a
+                      href="documents.html"
+                      class="block px-4 py-2.5 text-gray-700 hover:bg-gray-50 hover:text-brand-primary transition text-sm"
+                      >Documents</a
+                    >
+                  </div>
+                </div>
+              </div>
+
+              <a
+                href="professor.html"
+                class="text-gray-700 hover:text-brand-primary transition"
+                >Admissions</a
+              >
+              <a
+                href="#campus-life"
+                class="text-gray-700 hover:text-brand-primary transition"
+                >Campus Life</a
+              >
+              <a
+                href="news.html"
+                class="text-gray-700 hover:text-brand-primary transition"
+                >News</a
+              >
+              <a
+                href="contact.html"
+                class="text-gray-700 hover:text-brand-primary transition"
+                >Contact</a
               >
             </div>
-            <div class="flex flex-col">
-              <h1
-                class="text-xl sm:text-2xl lg:text-3xl text-[#0d47a1] font-extrabold khmer-os-siemreap-font drop-shadow-md"
-              >
-                សាកលវិទ្យាល័យរំដួលបច្ចេកវិទ្យា
-              </h1>
-              <h2
-                class="text-xs sm:text-sm text-[#0d47a1] font-semibold uppercase tracking-wider drop-shadow-md"
-              >
-                Romdoul Technology University
-              </h2>
-            </div>
-          </div>
-          <div class="flex items-center space-x-3">
-            <div class="hidden lg:flex items-center space-x-3">
-              <input
-                type="text"
-                placeholder="ស្វែងរក..."
-                class="p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#0d47a1] focus:border-transparent transition-all w-64 text-sm"
-              />
+
+            <!-- Right Actions -->
+            <div class="hidden lg:flex items-center space-x-4 z-50">
               <button
-                class="bg-[#0d47a1] text-white p-2 rounded-lg hover:bg-[#083c6c] transition-colors"
+                class="text-brand-primary hover:text-brand-hover transition text-lg w-10 h-10 rounded-full hover:bg-gray-100 flex items-center justify-center"
+                aria-label="Search"
               >
                 <i class="fas fa-search"></i>
               </button>
+              <a
+                href="#apply"
+                class="bg-brand-primary text-white px-6 py-2.5 rounded-full font-semibold hover:bg-brand-hover transition shadow-md hover:shadow-lg transform hover:-translate-y-0.5 duration-200"
+              >
+                Apply Now
+              </a>
             </div>
+
+            <!-- Mobile Menu Button -->
             <button
               id="mobile-menu-btn"
-              class="lg:hidden text-[#0d47a1] text-2xl p-2 hover:bg-white/50 rounded-lg transition-colors"
-              aria-label="Toggle navigation"
+              class="lg:hidden text-brand-primary text-2xl z-50 focus:outline-none w-10 h-10 flex items-center justify-center"
+              aria-label="Menu"
             >
-              <i class="fa-solid fa-bars"></i>
+              <i class="fas fa-bars"></i>
             </button>
+          </nav>
+        </div>
+
+        <!-- Mobile Menu Overlay -->
+        <div
+          id="mobile-menu"
+          class="fixed inset-0 bg-white z-40 transform translate-x-full mobile-menu-overlay lg:hidden overflow-y-auto"
+        >
+          <div
+            class="flex flex-col items-center justify-center min-h-screen space-y-6 text-lg font-semibold py-20"
+          >
+            <a
+              href="index.html"
+              class="mobile-link text-gray-700 hover:text-brand-primary transition text-xl"
+              >Home</a
+            >
+            <a
+              href="about.html"
+              class="mobile-link text-gray-700 hover:text-brand-primary transition text-xl"
+              >About</a
+            >
+            <a
+              href="#academics"
+              class="mobile-link text-gray-700 hover:text-brand-primary transition text-xl"
+              >Academics</a
+            >
+            <a
+              href="professor.html"
+              class="mobile-link text-gray-700 hover:text-brand-primary transition text-xl"
+              >Admissions</a
+            >
+            <a
+              href="#campus-life"
+              class="mobile-link text-gray-700 hover:text-brand-primary transition text-xl"
+              >Campus Life</a
+            >
+            <a
+              href="news.html"
+              class="mobile-link text-gray-700 hover:text-brand-primary transition text-xl"
+              >News</a
+            >
+            <a
+              href="#contact"
+              class="mobile-link text-gray-700 hover:text-brand-primary transition text-xl"
+              >Contact</a
+            >
+            <a
+              href="#apply"
+              class="mobile-link bg-brand-primary text-white px-10 py-3 rounded-full font-semibold hover:bg-brand-hover transition shadow-md mt-4"
+            >
+              Apply Now
+            </a>
           </div>
         </div>
       </header>
 
-      <!-- Desktop Navigation -->
-      <nav class="header-bg shadow-lg hidden lg:block">
-        <div class="flex text-sm">
-          <a href="index.html" class="nav-link active-nav">ទំព័រដើម</a>
-          <div class="relative group nav-item-wrapper">
-            <a href="about.html" class="nav-link flex items-center space-x-1">
-              <span>អំពីយើង</span>
-              <i class="fas fa-chevron-down text-xs ml-1"></i>
-            </a>
-            <div class="nav-dropdown group-hover:block">
-              <a href="#">ប្រវត្តិសាកលវិទ្យាល័យ</a>
-              <div class="nav-dropdown-item-parent">
-                <a href="#" class="flex justify-between items-center">
-                  <span>មហាវិទ្យាល័យ</span>
-                  <i class="fas fa-chevron-right text-xs ml-4"></i>
-                </a>
-                <div class="nav-sub-dropdown">
-                  <a href="#">មហាវិទ្យាល័យ IT</a>
-                  <a href="#">មហាវិទ្យាល័យ IR</a>
-                  <a href="#">មហាវិទ្យាល័យ LAW</a>
-                </div>
-              </div>
-              <a href="#">ចក្ខុវិស័យ និង បេសកកម្ម</a>
-              <a href="#">រចនាសម្ព័ន្ធគ្រប់គ្រង</a>
-              <a href="professor.html">បុគ្គលិក និង សាស្ត្រាចារ្យ</a>
-            </div>
-          </div>
-          <div class="relative group nav-item-wrapper">
-            <a href="news.html" class="nav-link flex items-center space-x-1">
-              <span>ព័ត៌មាន</span>
-              <i class="fas fa-chevron-down text-xs ml-1"></i>
-            </a>
-            <div class="nav-dropdown group-hover:block">
-              <a href="latestnews.html">ព័ត៌មានថ្មីៗ</a>
-              <a href="#">ព្រឹត្តិការណ៍</a>
-              <a href="#">សេចក្តីប្រកាស</a>
-            </div>
-          </div>
-          <a href="documents.html" class="nav-link">ឯកសារ</a>
-          <a href="publication.html" class="nav-link">ផ្សព្វផ្សាយ</a>
-          <a href="contact.html" class="nav-link">ទំនាក់ទំនង</a>
-          <a href="help.html" class="nav-link">ជំនួយ</a>
-        </div>
-      </nav>
-
-      <!-- Mobile Navigation -->
-      <div id="mobile-overlay" class="mobile-overlay"></div>
-      <div id="mobile-menu" class="mobile-menu">
-        <div
-          class="p-4 border-b border-white/10 flex justify-between items-center"
+      <main>
+        <!-- Hero Section -->
+        <section
+          id="home"
+          class="bg-brand-primary relative pb-32 lg:pb-48 pt-16 lg:pt-24 overflow-hidden"
         >
-          <h3 class="text-white font-bold text-lg">ម៉ឺនុយ</h3>
-          <button
-            id="close-menu-btn"
-            class="text-white text-2xl hover:text-[#fbc02d]"
-            aria-label="Close menu"
-          >
-            <i class="fas fa-times"></i>
-          </button>
-        </div>
-        <a href="index.html" class="mobile-nav-link active">ទំព័រដើម</a>
-        <div>
-          <a
-            href="#"
-            class="mobile-nav-link flex justify-between items-center"
-            id="about-toggle"
-          >
-            <span>អំពីយើង</span>
-            <i class="fas fa-chevron-down text-xs"></i>
-          </a>
-          <div id="about-dropdown" class="mobile-dropdown">
-            <a href="#">ប្រវត្តិសាកលវិទ្យាល័យ</a>
-            <div>
-              <a
-                href="#"
-                class="mobile-dropdown-link flex justify-between items-center"
-                id="faculty-toggle"
+          <div class="container mx-auto px-4 md:px-8">
+            <div class="flex flex-col lg:flex-row items-center gap-12">
+              <!-- Hero Text -->
+              <div class="lg:w-1/2 text-white z-10 animate-slide-in-left">
+                <div
+                  class="inline-block bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-4 py-1.5 text-xs font-semibold text-teal-100 mb-6"
+                >
+                  <i class="fas fa-star text-yellow-400 mr-2"></i> Top Ranked
+                  University in 2025
+                </div>
+                <h1
+                  class="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6 font-sans"
+                >
+                  Pioneering Excellence in <br />
+                  <span class="text-teal-200">Technology Education</span>
+                </h1>
+                <p
+                  class="text-teal-50 text-base md:text-lg leading-relaxed mb-8 max-w-xl"
+                >
+                  Embark on a transformative journey at Romdoul Tech. We combine
+                  academic rigor with real-world innovation to prepare the next
+                  generation of global leaders and changemakers.
+                </p>
+                <div class="flex flex-wrap gap-4">
+                  <a
+                    href="latestnews.html"
+                    class="inline-block bg-white text-brand-primary px-8 py-3.5 rounded-full font-bold text-base shadow-lg hover:bg-gray-50 hover:shadow-xl hover:scale-105 transition-all duration-300"
+                  >
+                    Explore Programs
+                  </a>
+                  <a
+                    href="publication.html"
+                    class="inline-block border-2 border-white text-white px-8 py-3.5 rounded-full font-bold text-base hover:bg-white hover:text-brand-primary transition-all duration-300"
+                  >
+                    Virtual Tour <i class="fas fa-play-circle ml-2"></i>
+                  </a>
+                </div>
+              </div>
+
+              <!-- Hero Image -->
+              <div
+                class="lg:w-1/2 relative z-10 flex justify-center lg:justify-end animate-fade-in-up"
               >
-                <span>មហាវិទ្យាល័យ</span>
-                <i class="fas fa-chevron-down text-xs"></i>
-              </a>
-              <div id="faculty-dropdown" class="mobile-sub-dropdown">
-                <a href="#">មហាវិទ្យាល័យ IT</a>
-                <a href="#">មហាវិទ្យាល័យ IR</a>
-                <a href="#">មហាវិទ្យាល័យ LAW</a>
+                <div class="relative">
+                  <div
+                    class="absolute -inset-4 bg-teal-400/20 rounded-full blur-2xl"
+                  ></div>
+                  <img
+                    src="img/cost11.jpg"
+                    alt="Students at Romdoul Tech University"
+                    class="w-full max-w-md lg:max-w-lg rounded-2xl shadow-2xl object-cover relative z-10 hero-image-mask"
+                  />
+
+                  <!-- Floating Badge -->
+                  <div
+                    class="absolute -bottom-6 -left-6 bg-white p-4 rounded-xl shadow-xl z-20 hidden md:flex items-center gap-3 animate-bounce"
+                  >
+                    <div
+                      class="w-12 h-12 bg-yellow-100 rounded-full flex items-center justify-center text-yellow-600"
+                    >
+                      <i class="fas fa-certificate text-2xl"></i>
+                    </div>
+                    <div>
+                      <p class="text-xs text-gray-500 font-semibold">
+                        Accredited By
+                      </p>
+                      <p class="text-sm font-bold text-gray-800">
+                        Ministry of Education
+                      </p>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
-            <a href="#">ចក្ខុវិស័យ និង បេសកកម្ម</a>
-            <a href="#">រចនាសម្ព័ន្ធគ្រប់គ្រង</a>
-            <a href="professor.html">បុគ្គលិក និង សាស្ត្រាចារ្យ</a>
           </div>
-        </div>
-        <div>
-          <a
-            href="#"
-            class="mobile-nav-link flex justify-between items-center"
-            id="news-toggle"
+
+          <!-- Background Pattern -->
+          <div
+            class="absolute top-0 left-0 w-full h-full opacity-5 pointer-events-none overflow-hidden"
           >
-            <span>ព័ត៌មាន</span>
-            <i class="fas fa-chevron-down text-xs"></i>
-          </a>
-          <div id="news-dropdown" class="mobile-dropdown">
-            <a href="latestnews.html">ព័ត៌មានថ្មីៗ</a>
-            <a href="#">ព្រឹត្តិការណ៍</a>
-            <a href="#">សេចក្តីប្រកាស</a>
+            <div
+              class="absolute top-10 left-10 w-64 h-64 border-4 border-white rounded-full opacity-50"
+            ></div>
+            <div
+              class="absolute bottom-10 right-10 w-96 h-96 border-4 border-white rounded-full opacity-50"
+            ></div>
+            <div
+              class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-white/10 to-transparent"
+            ></div>
           </div>
-        </div>
-        <a href="documents.html" class="mobile-nav-link">ឯកសារ</a>
-        <a href="publication.html" class="mobile-nav-link">ផ្សព្វផ្សាយ</a>
-        <a href="contact.html" class="mobile-nav-link">ទំនាក់ទំនង</a>
-        <a href="help.html" class="mobile-nav-link">ជំនួយ</a>
-        <div class="p-4 border-t border-white/10">
-          <div class="flex items-center space-x-2">
-            <input
-              type="text"
-              placeholder="ស្វែងរក..."
-              class="p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#fbc02d] focus:border-transparent transition-all w-full text-sm text-gray-900"
-            />
-            <button
-              class="bg-[#fbc02d] text-gray-900 p-2 rounded-lg hover:bg-[#e6a200] transition-colors"
+        </section>
+
+        <!-- Stats Section -->
+        <div class="relative z-20 -mt-20 md:-mt-24 mb-20">
+          <div class="container mx-auto px-4 md:px-8">
+            <div
+              class="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-5xl mx-auto"
             >
-              <i class="fas fa-search"></i>
-            </button>
-          </div>
-        </div>
-      </div>
-
-      <!-- ENHANCED MAIN CONTENT -->
-      <main class="p-4 sm:p-8 lg:p-12">
-        <!-- Article Header -->
-        <article class="max-w-4xl mx-auto">
-          <div class="mb-8">
-            <!-- Title -->
-            <h1
-              class="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-4 leading-tight"
-            >
-              សេចក្តីប្រកាសស្តីពីការចុះឈ្មោះនិស្សិតថ្មីជំនាន់ទី១០ ឆ្នាំសិក្សា
-              ២០២៤-២០២៥
-            </h1>
-
-            <!-- Breadcrumb & Meta Info -->
-            <div class="flex flex-col gap-3">
-              <nav class="text-sm text-gray-600">
-                <a href="index.html" class="text-blue-600 hover:underline"
-                  >ទំព័រដើម</a
+              <div
+                class="group flex flex-col items-center cursor-default animate-on-scroll opacity-0 translate-y-8 transition-all duration-700"
+              >
+                <div
+                  class="w-28 h-28 md:w-36 md:h-36 rounded-full bg-brand-primary border-[6px] border-white shadow-2xl flex flex-col items-center justify-center text-white mb-3 transform transition-transform duration-300 group-hover:-translate-y-2 group-hover:shadow-brand-primary/30"
                 >
-                <span class="breadcrumb-separator">/</span>
-                <a href="news.html" class="text-blue-600 hover:underline"
-                  >ព័ត៌មាន</a
-                >
-                <span class="breadcrumb-separator">/</span>
-                <span class="text-gray-800 font-medium">ចុះឈ្មោះ</span>
-              </nav>
-
-              <div class="article-meta">
-                <div class="meta-item">
-                  <i class="far fa-calendar-alt"></i>
-                  <span>ថ្ងៃទី ០៦ ខែតុលា ឆ្នាំ២០២៣</span>
-                </div>
-                <div class="meta-item">
-                  <i class="far fa-clock"></i>
-                  <span>អានរយៈពេល ៥ នាទី</span>
-                </div>
-                <div class="meta-item">
-                  <i class="far fa-eye"></i>
-                  <span>ចំនួនមើល ១,២៣៤</span>
-                </div>
-                <div class="meta-item">
-                  <i class="fas fa-tag"></i>
+                  <span class="text-2xl md:text-3xl font-bold font-sans"
+                    >1,403</span
+                  >
                   <span
-                    class="px-2 py-1 bg-blue-100 text-blue-700 rounded text-xs font-medium"
-                    >ចុះឈ្មោះ</span
+                    class="text-xs text-teal-200 mt-1 font-medium uppercase tracking-wider"
+                    >Students</span
                   >
                 </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Professional Image Gallery -->
-          <div class="mb-10">
-            <div class="image-gallery-container">
-              <div class="main-image-wrapper">
-                <img id="main-image" src="img/cost01.jpg" alt="Article Image" />
-                <div class="image-counter">
-                  <span id="current-index">1</span> /
-                  <span id="total-images">7</span>
-                </div>
-                <button
-                  onclick="prevImage()"
-                  class="gallery-nav-btn prev"
-                  aria-label="Previous image"
+                <h3
+                  class="text-brand-primary font-bold text-base md:text-lg group-hover:text-brand-hover transition-colors"
                 >
-                  <i class="fas fa-chevron-left"></i>
-                </button>
-                <button
-                  onclick="nextImage()"
-                  class="gallery-nav-btn next"
-                  aria-label="Next image"
-                >
-                  <i class="fas fa-chevron-right"></i>
-                </button>
+                  Active Learners
+                </h3>
               </div>
-            </div>
 
-            <!-- Thumbnail Gallery -->
-            <div class="thumbnail-gallery">
-              <div class="thumbnail-item active" onclick="changeImage(0)">
-                <img src="img/cost01.jpg" alt="Thumbnail 1" />
-              </div>
-              <div class="thumbnail-item" onclick="changeImage(1)">
-                <img src="img/cost10.jpg" alt="Thumbnail 2" />
-              </div>
-              <div class="thumbnail-item" onclick="changeImage(2)">
-                <img src="img/cost11.jpg" alt="Thumbnail 3" />
-              </div>
-              <div class="thumbnail-item" onclick="changeImage(3)">
-                <img src="img/cost12.jpg" alt="Thumbnail 4" />
-              </div>
-              <div class="thumbnail-item" onclick="changeImage(4)">
-                <img src="img/cost13.jpg" alt="Thumbnail 5" />
-              </div>
-              <div class="thumbnail-item" onclick="changeImage(5)">
-                <img src="img/cost08.jpg" alt="Thumbnail 6" />
-              </div>
-              <div class="thumbnail-item" onclick="changeImage(6)">
-                <img src="img/cost09.jpg" alt="Thumbnail 7" />
-              </div>
-            </div>
-          </div>
-
-          <!-- Article Content -->
-          <div class="article-content text-gray-700 mb-10">
-            <p>
-              សាកលវិទ្យាល័យរំដួលបច្ចេកវិទ្យា
-              សូមជម្រាបជូនដំណឹងដល់សិស្សានុសិស្សទាំងអស់ដែលទើបបញ្ចប់ការសិក្សាថ្នាក់វិទ្យាល័យ
-              និងបេក្ខជនចាស់ៗ ឱ្យបានជ្រាបថា
-              សាកលវិទ្យាល័យនឹងចាប់ផ្តើមទទួលពាក្យចុះឈ្មោះចូលរៀនសម្រាប់ថ្នាក់បរិញ្ញាបត្រជំនាន់ទី
-              ១០ ចាប់ពីថ្ងៃទី ១ ខែវិច្ឆិកា ឆ្នាំ ២០២៤ តទៅ។
-              នេះជាឱកាសដ៏ល្អសម្រាប់យុវជនដែលចង់បន្តការសិក្សាកម្រិតខ្ពស់
-              និងអភិវឌ្ឍជំនាញក្នុងផ្នែកបច្ចេកវិទ្យាទំនើប។
-            </p>
-
-            <!-- Info Card (Upgraded) -->
-            <div
-              class="bg-[#0d47a1] text-white rounded-2xl shadow-xl p-6 transition transform hover:-translate-y-2 hover:shadow-2xl"
-            >
-              <h3
-                class="text-2xl font-bold mb-5 flex items-center gap-3 border-b border-white/30 pb-3"
+              <div
+                class="group flex flex-col items-center cursor-default animate-on-scroll opacity-0 translate-y-8 transition-all duration-700 delay-100"
               >
-                <i class="fas fa-graduation-cap text-yellow-300 text-3xl"></i>
-                ជំនាញដែលមានផ្តល់ជូន
-              </h3>
-              <ul class="space-y-3">
-                <li
-                  class="flex items-start gap-3 hover:text-yellow-300 transition"
+                <div
+                  class="w-28 h-28 md:w-36 md:h-36 rounded-full bg-brand-primary border-[6px] border-white shadow-2xl flex flex-col items-center justify-center text-white mb-3 transform transition-transform duration-300 group-hover:-translate-y-2 group-hover:shadow-brand-primary/30"
                 >
-                  <i class="fas fa-check-circle mt-1 text-green-300"></i>
-                  <span>វិទ្យាសាស្ត្រកុំព្យូទ័រ (Computer Science)</span>
+                  <span class="text-2xl md:text-3xl font-bold font-sans"
+                    >120+</span
+                  >
+                  <span
+                    class="text-xs text-teal-200 mt-1 font-medium uppercase tracking-wider"
+                    >Faculty</span
+                  >
+                </div>
+                <h3
+                  class="text-brand-primary font-bold text-base md:text-lg group-hover:text-brand-hover transition-colors"
+                >
+                  Expert Professors
+                </h3>
+              </div>
+
+              <div
+                class="group flex flex-col items-center cursor-default animate-on-scroll opacity-0 translate-y-8 transition-all duration-700 delay-200"
+              >
+                <div
+                  class="w-28 h-28 md:w-36 md:h-36 rounded-full bg-brand-primary border-[6px] border-white shadow-2xl flex flex-col items-center justify-center text-white mb-3 transform transition-transform duration-300 group-hover:-translate-y-2 group-hover:shadow-brand-primary/30"
+                >
+                  <span class="text-2xl md:text-3xl font-bold font-sans"
+                    >50+</span
+                  >
+                  <span
+                    class="text-xs text-teal-200 mt-1 font-medium uppercase tracking-wider"
+                    >Programs</span
+                  >
+                </div>
+                <h3
+                  class="text-brand-primary font-bold text-base md:text-lg group-hover:text-brand-hover transition-colors"
+                >
+                  Degree Options
+                </h3>
+              </div>
+
+              <div
+                class="group flex flex-col items-center cursor-default animate-on-scroll opacity-0 translate-y-8 transition-all duration-700 delay-300"
+              >
+                <div
+                  class="w-28 h-28 md:w-36 md:h-36 rounded-full bg-brand-primary border-[6px] border-white shadow-2xl flex flex-col items-center justify-center text-white mb-3 transform transition-transform duration-300 group-hover:-translate-y-2 group-hover:shadow-brand-primary/30"
+                >
+                  <span class="text-2xl md:text-3xl font-bold font-sans"
+                    >95%</span
+                  >
+                  <span
+                    class="text-xs text-teal-200 mt-1 font-medium uppercase tracking-wider"
+                    >Rate</span
+                  >
+                </div>
+                <h3
+                  class="text-brand-primary font-bold text-base md:text-lg group-hover:text-brand-hover transition-colors"
+                >
+                  Job Placement
+                </h3>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Why Choose Us -->
+        <section
+          class="py-20 bg-gray-50 animate-on-scroll opacity-0 translate-y-8 transition-all duration-700"
+        >
+          <div class="container mx-auto px-4 md:px-8">
+            <div class="text-center mb-16">
+              <h2
+                class="text-3xl md:text-4xl lg:text-5xl font-bold text-brand-primary mb-4"
+              >
+                Why Choose Romdoul Tech?
+              </h2>
+              <p
+                class="text-gray-600 text-lg max-w-3xl mx-auto leading-relaxed"
+              >
+                We provide a world-class educational ecosystem designed to
+                nurture talent, foster innovation, and launch successful careers
+                in the digital age.
+              </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+              <!-- Feature 1 -->
+              <div
+                class="text-center p-8 bg-white rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-gray-100"
+              >
+                <div
+                  class="w-20 h-20 rounded-2xl flex items-center justify-center mx-auto mb-6 bg-blue-50 text-blue-600 transition-transform duration-500 hover:rotate-6"
+                >
+                  <i class="fas fa-award text-3xl"></i>
+                </div>
+                <h3 class="text-xl font-bold text-gray-800 mb-3">
+                  Accredited Programs
+                </h3>
+                <p class="text-gray-600 text-sm leading-relaxed">
+                  Internationally recognized degrees and certifications approved
+                  by the Ministry of Education.
+                </p>
+              </div>
+
+              <!-- Feature 2 -->
+              <div
+                class="text-center p-8 bg-white rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-gray-100"
+              >
+                <div
+                  class="w-20 h-20 rounded-2xl flex items-center justify-center mx-auto mb-6 bg-green-50 text-green-600 transition-transform duration-500 hover:rotate-6"
+                >
+                  <i class="fas fa-chalkboard-teacher text-3xl"></i>
+                </div>
+                <h3 class="text-xl font-bold text-gray-800 mb-3">
+                  Expert Faculty
+                </h3>
+                <p class="text-gray-600 text-sm leading-relaxed">
+                  Learn directly from industry professionals and PhD holders
+                  with decades of real-world experience.
+                </p>
+              </div>
+
+              <!-- Feature 3 -->
+              <div
+                class="text-center p-8 bg-white rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-gray-100"
+              >
+                <div
+                  class="w-20 h-20 rounded-2xl flex items-center justify-center mx-auto mb-6 bg-purple-50 text-purple-600 transition-transform duration-500 hover:rotate-6"
+                >
+                  <i class="fas fa-laptop-code text-3xl"></i>
+                </div>
+                <h3 class="text-xl font-bold text-gray-800 mb-3">
+                  Modern Facilities
+                </h3>
+                <p class="text-gray-600 text-sm leading-relaxed">
+                  Access state-of-the-art laboratories, digital libraries, and
+                  collaborative learning spaces.
+                </p>
+              </div>
+
+              <!-- Feature 4 -->
+              <div
+                class="text-center p-8 bg-white rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-gray-100"
+              >
+                <div
+                  class="w-20 h-20 rounded-2xl flex items-center justify-center mx-auto mb-6 bg-orange-50 text-orange-600 transition-transform duration-500 hover:rotate-6"
+                >
+                  <i class="fas fa-briefcase text-3xl"></i>
+                </div>
+                <h3 class="text-xl font-bold text-gray-800 mb-3">
+                  Career Support
+                </h3>
+                <p class="text-gray-600 text-sm leading-relaxed">
+                  Benefit from our 95% employment rate within 6 months, backed
+                  by dedicated career counseling.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Programs Section -->
+        <section
+          id="programs"
+          class="py-20 bg-white animate-on-scroll opacity-0 translate-y-8 transition-all duration-700"
+        >
+          <div class="container mx-auto px-4 md:px-8">
+            <div class="text-center mb-16">
+              <h2
+                class="text-3xl md:text-4xl lg:text-5xl font-bold text-brand-primary mb-4"
+              >
+                Featured Programs
+              </h2>
+              <p class="text-gray-600 text-lg max-w-3xl mx-auto">
+                Explore our most sought-after undergraduate and graduate
+                programs, meticulously designed to meet the evolving demands of
+                the future workforce.
+              </p>
+            </div>
+
+            <div
+              class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto"
+            >
+              <!-- Program 1 -->
+              <div
+                class="bg-white rounded-2xl shadow-lg overflow-hidden border border-gray-100 hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 group"
+              >
+                <div
+                  class="h-52 bg-gradient-to-br from-blue-500 to-blue-700 flex items-center justify-center relative overflow-hidden"
+                >
+                  <i
+                    class="fas fa-laptop-code text-white text-8xl opacity-20 absolute transform group-hover:scale-110 transition-transform duration-500"
+                  ></i>
+                  <i
+                    class="fas fa-laptop-code text-white text-6xl relative z-10"
+                  ></i>
+                  <div
+                    class="absolute top-4 right-4 bg-white/20 backdrop-blur-sm px-3 py-1 rounded-full text-white text-xs font-semibold shadow-sm"
+                  >
+                    Most Popular
+                  </div>
+                </div>
+                <div class="p-6">
+                  <span
+                    class="bg-blue-100 text-blue-800 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wide"
+                  >
+                    Bachelor's Degree
+                  </span>
+                  <h3
+                    class="text-2xl font-bold text-gray-800 mt-4 mb-3 group-hover:text-brand-primary transition-colors"
+                  >
+                    Computer Science
+                  </h3>
+                  <p
+                    class="text-gray-600 text-sm mb-6 leading-relaxed line-clamp-3"
+                  >
+                    Master programming, AI, and machine learning with hands-on
+                    projects and industry partnerships.
+                  </p>
+                  <div
+                    class="flex items-center justify-between text-sm text-gray-500 mb-6 pb-6 border-b border-gray-100"
+                  >
+                    <span class="flex items-center gap-2 font-medium">
+                      <i class="fas fa-clock text-blue-600"></i> 4 Years
+                    </span>
+                    <span class="flex items-center gap-2 font-medium">
+                      <i class="fas fa-users text-blue-600"></i> 120 Students
+                    </span>
+                  </div>
+                  <a
+                    href="#"
+                    class="block text-center bg-brand-primary text-white py-3.5 rounded-xl font-semibold hover:bg-brand-hover transition shadow-md hover:shadow-lg flex items-center justify-center gap-2"
+                  >
+                    Learn More <i class="fas fa-arrow-right text-xs"></i>
+                  </a>
+                </div>
+              </div>
+
+              <!-- Program 2 -->
+              <div
+                class="bg-white rounded-2xl shadow-lg overflow-hidden border border-gray-100 hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 group"
+              >
+                <div
+                  class="h-52 bg-gradient-to-br from-purple-500 to-purple-700 flex items-center justify-center relative overflow-hidden"
+                >
+                  <i
+                    class="fas fa-cogs text-white text-8xl opacity-20 absolute transform group-hover:scale-110 transition-transform duration-500"
+                  ></i>
+                  <i class="fas fa-cogs text-white text-6xl relative z-10"></i>
+                </div>
+                <div class="p-6">
+                  <span
+                    class="bg-purple-100 text-purple-800 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wide"
+                  >
+                    Bachelor's Degree
+                  </span>
+                  <h3
+                    class="text-2xl font-bold text-gray-800 mt-4 mb-3 group-hover:text-brand-primary transition-colors"
+                  >
+                    Mechanical Engineering
+                  </h3>
+                  <p
+                    class="text-gray-600 text-sm mb-6 leading-relaxed line-clamp-3"
+                  >
+                    Design and innovate with cutting-edge engineering
+                    principles, robotics, and industrial applications.
+                  </p>
+                  <div
+                    class="flex items-center justify-between text-sm text-gray-500 mb-6 pb-6 border-b border-gray-100"
+                  >
+                    <span class="flex items-center gap-2 font-medium">
+                      <i class="fas fa-clock text-purple-600"></i> 4 Years
+                    </span>
+                    <span class="flex items-center gap-2 font-medium">
+                      <i class="fas fa-users text-purple-600"></i> 95 Students
+                    </span>
+                  </div>
+                  <a
+                    href="#"
+                    class="block text-center bg-brand-primary text-white py-3.5 rounded-xl font-semibold hover:bg-brand-hover transition shadow-md hover:shadow-lg flex items-center justify-center gap-2"
+                  >
+                    Learn More <i class="fas fa-arrow-right text-xs"></i>
+                  </a>
+                </div>
+              </div>
+
+              <!-- Program 3 -->
+              <div
+                class="bg-white rounded-2xl shadow-lg overflow-hidden border border-gray-100 hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 group"
+              >
+                <div
+                  class="h-52 bg-gradient-to-br from-green-500 to-green-700 flex items-center justify-center relative overflow-hidden"
+                >
+                  <i
+                    class="fas fa-chart-line text-white text-8xl opacity-20 absolute transform group-hover:scale-110 transition-transform duration-500"
+                  ></i>
+                  <i
+                    class="fas fa-chart-line text-white text-6xl relative z-10"
+                  ></i>
+                </div>
+                <div class="p-6">
+                  <span
+                    class="bg-green-100 text-green-800 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wide"
+                  >
+                    Bachelor's Degree
+                  </span>
+                  <h3
+                    class="text-2xl font-bold text-gray-800 mt-4 mb-3 group-hover:text-brand-primary transition-colors"
+                  >
+                    Business Administration
+                  </h3>
+                  <p
+                    class="text-gray-600 text-sm mb-6 leading-relaxed line-clamp-3"
+                  >
+                    Develop leadership skills, strategic thinking, and business
+                    acumen for the global marketplace.
+                  </p>
+                  <div
+                    class="flex items-center justify-between text-sm text-gray-500 mb-6 pb-6 border-b border-gray-100"
+                  >
+                    <span class="flex items-center gap-2 font-medium">
+                      <i class="fas fa-clock text-green-600"></i> 4 Years
+                    </span>
+                    <span class="flex items-center gap-2 font-medium">
+                      <i class="fas fa-users text-green-600"></i> 150 Students
+                    </span>
+                  </div>
+                  <a
+                    href="#"
+                    class="block text-center bg-brand-primary text-white py-3.5 rounded-xl font-semibold hover:bg-brand-hover transition shadow-md hover:shadow-lg flex items-center justify-center gap-2"
+                  >
+                    Learn More <i class="fas fa-arrow-right text-xs"></i>
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <div class="text-center mt-12">
+              <a
+                href="#all-programs"
+                class="inline-flex items-center justify-center border-2 border-brand-primary text-brand-primary px-8 py-3 rounded-full font-bold hover:bg-brand-primary hover:text-white transition-all duration-300 group"
+              >
+                View All Programs
+                <i
+                  class="fas fa-arrow-right ml-2 transform group-hover:translate-x-1 transition-transform"
+                ></i>
+              </a>
+            </div>
+          </div>
+        </section>
+
+        <!-- Categories Section -->
+        <section
+          id="academics"
+          class="py-20 bg-gray-50 animate-on-scroll opacity-0 translate-y-8 transition-all duration-700"
+        >
+          <div class="container mx-auto px-4 md:px-8">
+            <div
+              class="flex flex-col lg:flex-row gap-12 max-w-7xl mx-auto items-start"
+            >
+              <!-- Left Side: Content -->
+              <div class="lg:w-1/3 lg:sticky lg:top-24">
+                <span
+                  class="text-brand-primary font-bold tracking-wider text-sm uppercase mb-2 block"
+                  >Academic Excellence</span
+                >
+                <h2
+                  class="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-6 leading-tight"
+                >
+                  Faculties of <br class="hidden lg:block" />
+                  <span class="text-brand-primary">Distinction</span>
+                </h2>
+                <p class="text-gray-600 text-lg mb-8 leading-relaxed">
+                  Discover your potential within our diverse range of highly
+                  accredited faculties. Whether you aspire to engineer the
+                  future, decode the digital world, or lead global enterprises,
+                  our comprehensive curriculum paves the way for your success.
+                </p>
+
+                <button
+                  id="toggle-categories-btn"
+                  class="inline-flex items-center bg-brand-primary text-white px-8 py-4 rounded-full font-bold shadow-lg hover:bg-brand-hover hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 group"
+                >
+                  Explore More Faculties
+                  <i
+                    class="fas fa-arrow-right ml-3 transition-transform group-hover:translate-x-1"
+                  ></i>
+                </button>
+              </div>
+
+              <!-- Right Side: Grid -->
+              <div class="lg:w-2/3 w-full">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                  <!-- Card 1 (Active Style) -->
+                  <div
+                    class="bg-brand-primary rounded-2xl p-8 text-center shadow-2xl transform hover:scale-105 transition-all duration-300 cursor-pointer group relative overflow-hidden"
+                  >
+                    <div
+                      class="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-bl-full -mr-10 -mt-10 transition-transform group-hover:scale-150 duration-700"
+                    ></div>
+                    <div class="flex justify-center mb-6 relative z-10">
+                      <div class="relative">
+                        <i
+                          class="fas fa-cogs text-6xl text-orange-400 drop-shadow-md"
+                        ></i>
+                        <i
+                          class="fas fa-cog text-3xl text-blue-300 absolute -bottom-2 -right-2 animate-spin-slow"
+                        ></i>
+                      </div>
+                    </div>
+                    <h3
+                      class="text-white text-2xl font-bold mb-2 relative z-10"
+                    >
+                      Engineering
+                    </h3>
+                    <p
+                      class="text-teal-200 text-sm mb-4 font-medium relative z-10"
+                    >
+                      8 Semesters / 4 Years
+                    </p>
+                    <p class="text-teal-100 text-xs relative z-10 opacity-90">
+                      Mechanical, Civil, Electrical & More
+                    </p>
+                  </div>
+
+                  <!-- Card 2 -->
+                  <div
+                    class="bg-white rounded-2xl p-8 text-center border-2 border-dashed border-gray-200 hover:border-brand-primary hover:border-solid hover:shadow-xl transition-all duration-300 hover:-translate-y-1 cursor-pointer group"
+                  >
+                    <div class="flex justify-center mb-6">
+                      <div
+                        class="relative group-hover:scale-110 transition-transform duration-300"
+                      >
+                        <i class="fas fa-code text-5xl text-blue-500"></i>
+                        <i
+                          class="fas fa-terminal text-2xl text-gray-700 absolute -bottom-1 -right-3"
+                        ></i>
+                      </div>
+                    </div>
+                    <h3
+                      class="text-brand-primary text-2xl font-bold mb-2 group-hover:text-brand-hover"
+                    >
+                      IT & Software
+                    </h3>
+                    <p class="text-gray-500 text-sm mb-4 font-medium">
+                      6 Semesters / 3 Years
+                    </p>
+                    <p class="text-gray-600 text-xs">
+                      Programming, Networking, Cybersecurity
+                    </p>
+                  </div>
+
+                  <!-- Card 3 -->
+                  <div
+                    class="bg-white rounded-2xl p-8 text-center border-2 border-dashed border-gray-200 hover:border-brand-primary hover:border-solid hover:shadow-xl transition-all duration-300 hover:-translate-y-1 cursor-pointer group"
+                  >
+                    <div class="flex justify-center mb-6">
+                      <div
+                        class="relative group-hover:scale-110 transition-transform duration-300"
+                      >
+                        <i class="fas fa-flask text-5xl text-purple-500"></i>
+                        <i
+                          class="fas fa-atom text-2xl text-blue-400 absolute -top-2 -right-3 animate-pulse"
+                        ></i>
+                      </div>
+                    </div>
+                    <h3
+                      class="text-brand-primary text-2xl font-bold mb-2 group-hover:text-brand-hover"
+                    >
+                      Chemistry
+                    </h3>
+                    <p class="text-gray-500 text-sm mb-4 font-medium">
+                      8 Semesters / 4 Years
+                    </p>
+                    <p class="text-gray-600 text-xs">
+                      Organic, Inorganic, Biochemistry
+                    </p>
+                  </div>
+
+                  <!-- Card 4 -->
+                  <div
+                    class="bg-white rounded-2xl p-8 text-center border-2 border-dashed border-gray-200 hover:border-brand-primary hover:border-solid hover:shadow-xl transition-all duration-300 hover:-translate-y-1 cursor-pointer group"
+                  >
+                    <div class="flex justify-center mb-6">
+                      <div
+                        class="relative group-hover:scale-110 transition-transform duration-300"
+                      >
+                        <i class="fas fa-chart-line text-5xl text-red-500"></i>
+                        <i
+                          class="fas fa-briefcase text-2xl text-orange-400 absolute -bottom-1 -right-3"
+                        ></i>
+                      </div>
+                    </div>
+                    <h3
+                      class="text-brand-primary text-2xl font-bold mb-2 group-hover:text-brand-hover"
+                    >
+                      Management
+                    </h3>
+                    <p class="text-gray-500 text-sm mb-4 font-medium">
+                      8 Semesters / 4 Years
+                    </p>
+                    <p class="text-gray-600 text-xs">
+                      Business, Marketing, Finance
+                    </p>
+                  </div>
+
+                  <!-- Card 5 (Hidden Initially) -->
+                  <div
+                    class="hidden-category hidden bg-white rounded-2xl p-8 text-center border-2 border-dashed border-gray-200 hover:border-brand-primary hover:border-solid hover:shadow-xl transition-all duration-300 hover:-translate-y-1 cursor-pointer group"
+                  >
+                    <div class="flex justify-center mb-6">
+                      <div
+                        class="relative group-hover:scale-110 transition-transform duration-300"
+                      >
+                        <i
+                          class="fas fa-drafting-compass text-5xl text-indigo-500"
+                        ></i>
+                        <i
+                          class="fas fa-building text-2xl text-pink-400 absolute -bottom-1 -right-3"
+                        ></i>
+                      </div>
+                    </div>
+                    <h3
+                      class="text-brand-primary text-2xl font-bold mb-2 group-hover:text-brand-hover"
+                    >
+                      Architecture
+                    </h3>
+                    <p class="text-gray-500 text-sm mb-4 font-medium">
+                      10 Semesters / 5 Years
+                    </p>
+                    <p class="text-gray-600 text-xs">
+                      Urban Planning & Sustainable Design
+                    </p>
+                  </div>
+
+                  <!-- Card 6 (Hidden Initially) -->
+                  <div
+                    class="hidden-category hidden bg-white rounded-2xl p-8 text-center border-2 border-dashed border-gray-200 hover:border-brand-primary hover:border-solid hover:shadow-xl transition-all duration-300 hover:-translate-y-1 cursor-pointer group"
+                  >
+                    <div class="flex justify-center mb-6">
+                      <div
+                        class="relative group-hover:scale-110 transition-transform duration-300"
+                      >
+                        <i
+                          class="fas fa-heartbeat text-5xl text-emerald-500"
+                        ></i>
+                        <i
+                          class="fas fa-user-md text-2xl text-red-400 absolute -bottom-1 -right-3"
+                        ></i>
+                      </div>
+                    </div>
+                    <h3
+                      class="text-brand-primary text-2xl font-bold mb-2 group-hover:text-brand-hover"
+                    >
+                      Health Sciences
+                    </h3>
+                    <p class="text-gray-500 text-sm mb-4 font-medium">
+                      8 Semesters / 4 Years
+                    </p>
+                    <p class="text-gray-600 text-xs">
+                      Advanced Nursing & Public Health
+                    </p>
+                  </div>
+
+                  <!-- Card 7 (Hidden Initially) -->
+                  <div
+                    class="hidden-category hidden bg-white rounded-2xl p-8 text-center border-2 border-dashed border-gray-200 hover:border-brand-primary hover:border-solid hover:shadow-xl transition-all duration-300 hover:-translate-y-1 cursor-pointer group"
+                  >
+                    <div class="flex justify-center mb-6">
+                      <div
+                        class="relative group-hover:scale-110 transition-transform duration-300"
+                      >
+                        <i
+                          class="fas fa-balance-scale text-5xl text-amber-600"
+                        ></i>
+                        <i
+                          class="fas fa-gavel text-2xl text-gray-600 absolute -bottom-1 -right-3"
+                        ></i>
+                      </div>
+                    </div>
+                    <h3
+                      class="text-brand-primary text-2xl font-bold mb-2 group-hover:text-brand-hover"
+                    >
+                      Law & Politics
+                    </h3>
+                    <p class="text-gray-500 text-sm mb-4 font-medium">
+                      8 Semesters / 4 Years
+                    </p>
+                    <p class="text-gray-600 text-xs">
+                      International Relations & Policy
+                    </p>
+                  </div>
+
+                  <!-- Card 8 (Hidden Initially) -->
+                  <div
+                    class="hidden-category hidden bg-white rounded-2xl p-8 text-center border-2 border-dashed border-gray-200 hover:border-brand-primary hover:border-solid hover:shadow-xl transition-all duration-300 hover:-translate-y-1 cursor-pointer group"
+                  >
+                    <div class="flex justify-center mb-6">
+                      <div
+                        class="relative group-hover:scale-110 transition-transform duration-300"
+                      >
+                        <i class="fas fa-seedling text-5xl text-lime-600"></i>
+                        <i
+                          class="fas fa-leaf text-2xl text-green-400 absolute -bottom-1 -right-3"
+                        ></i>
+                      </div>
+                    </div>
+                    <h3
+                      class="text-brand-primary text-2xl font-bold mb-2 group-hover:text-brand-hover"
+                    >
+                      Agri-Tech
+                    </h3>
+                    <p class="text-gray-500 text-sm mb-4 font-medium">
+                      8 Semesters / 4 Years
+                    </p>
+                    <p class="text-gray-600 text-xs">
+                      Smart Agriculture & Bio-Systems
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Testimonials Section -->
+        <section
+          class="py-24 bg-gradient-to-br from-brand-primary to-teal-900 text-white relative overflow-hidden animate-on-scroll opacity-0 translate-y-8 transition-all duration-700"
+        >
+          <div class="container mx-auto px-4 md:px-8 relative z-10">
+            <div class="text-center mb-16">
+              <h2 class="text-3xl md:text-4xl lg:text-5xl font-bold mb-4">
+                Student Voices
+              </h2>
+              <p class="text-teal-100 text-lg max-w-3xl mx-auto">
+                Hear from our distinguished graduates about their transformative
+                educational experiences and career achievements.
+              </p>
+            </div>
+
+            <div
+              class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-7xl mx-auto"
+            >
+              <!-- Testimonial 1 -->
+              <div
+                class="bg-white/10 backdrop-blur-md rounded-3xl p-8 border border-white/10 hover:bg-white/15 transition-all duration-300 hover:-translate-y-2"
+              >
+                <div class="flex items-center mb-6">
+                  <img
+                    src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop"
+                    alt="Sopheak Chan"
+                    class="w-16 h-16 rounded-full object-cover mr-4 border-2 border-white/30 shadow-md"
+                  />
+                  <div>
+                    <h4 class="font-bold text-lg">Sopheak Chan</h4>
+                    <p
+                      class="text-xs text-teal-200 font-medium uppercase tracking-wide"
+                    >
+                      Computer Science, 2024
+                    </p>
+                  </div>
+                </div>
+                <div class="mb-6 relative">
+                  <i
+                    class="fas fa-quote-left text-teal-400/40 text-4xl absolute -top-4 -left-2"
+                  ></i>
+                  <p class="text-teal-50 leading-relaxed relative z-10 italic">
+                    "The hands-on projects and industry connections helped me
+                    land my dream job at a leading tech company even before
+                    graduation! The faculty truly cares about student success."
+                  </p>
+                </div>
+                <div class="flex gap-1 text-yellow-400 text-sm">
+                  <i class="fas fa-star"></i><i class="fas fa-star"></i
+                  ><i class="fas fa-star"></i><i class="fas fa-star"></i
+                  ><i class="fas fa-star"></i>
+                </div>
+              </div>
+
+              <!-- Testimonial 2 -->
+              <div
+                class="bg-white/10 backdrop-blur-md rounded-3xl p-8 border border-white/10 hover:bg-white/15 transition-all duration-300 hover:-translate-y-2"
+              >
+                <div class="flex items-center mb-6">
+                  <img
+                    src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&h=150&fit=crop"
+                    alt="Sreymom Pov"
+                    class="w-16 h-16 rounded-full object-cover mr-4 border-2 border-white/30 shadow-md"
+                  />
+                  <div>
+                    <h4 class="font-bold text-lg">Sreymom Pov</h4>
+                    <p
+                      class="text-xs text-teal-200 font-medium uppercase tracking-wide"
+                    >
+                      Business Admin, 2023
+                    </p>
+                  </div>
+                </div>
+                <div class="mb-6 relative">
+                  <i
+                    class="fas fa-quote-left text-teal-400/40 text-4xl absolute -top-4 -left-2"
+                  ></i>
+                  <p class="text-teal-50 leading-relaxed relative z-10 italic">
+                    "The faculty's expertise and mentorship transformed my
+                    understanding of business. I now run my own successful
+                    startup with confidence thanks to what I learned here!"
+                  </p>
+                </div>
+                <div class="flex gap-1 text-yellow-400 text-sm">
+                  <i class="fas fa-star"></i><i class="fas fa-star"></i
+                  ><i class="fas fa-star"></i><i class="fas fa-star"></i
+                  ><i class="fas fa-star"></i>
+                </div>
+              </div>
+
+              <!-- Testimonial 3 -->
+              <div
+                class="bg-white/10 backdrop-blur-md rounded-3xl p-8 border border-white/10 hover:bg-white/15 transition-all duration-300 hover:-translate-y-2"
+              >
+                <div class="flex items-center mb-6">
+                  <img
+                    src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&h=150&fit=crop"
+                    alt="Dara Kim"
+                    class="w-16 h-16 rounded-full object-cover mr-4 border-2 border-white/30 shadow-md"
+                  />
+                  <div>
+                    <h4 class="font-bold text-lg">Dara Kim</h4>
+                    <p
+                      class="text-xs text-teal-200 font-medium uppercase tracking-wide"
+                    >
+                      Engineering, 2024
+                    </p>
+                  </div>
+                </div>
+                <div class="mb-6 relative">
+                  <i
+                    class="fas fa-quote-left text-teal-400/40 text-4xl absolute -top-4 -left-2"
+                  ></i>
+                  <p class="text-teal-50 leading-relaxed relative z-10 italic">
+                    "State-of-the-art labs and supportive professors made my
+                    engineering journey both challenging and incredibly
+                    rewarding. The best decision I ever made!"
+                  </p>
+                </div>
+                <div class="flex gap-1 text-yellow-400 text-sm">
+                  <i class="fas fa-star"></i><i class="fas fa-star"></i
+                  ><i class="fas fa-star"></i><i class="fas fa-star"></i
+                  ><i class="fas fa-star"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Background Decoration -->
+          <div
+            class="absolute top-0 right-0 w-[500px] h-[500px] bg-white/5 rounded-full blur-3xl -mr-32 -mt-32 pointer-events-none"
+          ></div>
+          <div
+            class="absolute bottom-0 left-0 w-[400px] h-[400px] bg-teal-500/20 rounded-full blur-3xl -ml-32 -mb-32 pointer-events-none"
+          ></div>
+        </section>
+
+        <!-- News Section -->
+        <section
+          id="news"
+          class="py-20 bg-white animate-on-scroll opacity-0 translate-y-8 transition-all duration-700"
+        >
+          <div class="container mx-auto px-4 md:px-8">
+            <div
+              class="flex flex-col md:flex-row justify-between items-end mb-12 gap-4"
+            >
+              <div class="md:w-2/3">
+                <h2
+                  class="text-3xl md:text-4xl lg:text-5xl font-bold text-brand-primary mb-3"
+                >
+                  Latest News & Events
+                </h2>
+                <p class="text-gray-600 text-lg">
+                  Stay connected with the vibrant academic and social life on
+                  campus.
+                </p>
+              </div>
+              <a
+                href="#all-news"
+                class="text-brand-primary font-bold hover:text-teal-700 flex items-center gap-2 text-lg transition group"
+              >
+                View All Updates
+                <i
+                  class="fas fa-arrow-right transform group-hover:translate-x-1 transition-transform"
+                ></i>
+              </a>
+            </div>
+
+            <div
+              class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto"
+            >
+              <!-- News 1 -->
+              <div
+                class="bg-white rounded-2xl overflow-hidden shadow-lg border border-gray-100 hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 group h-full flex flex-col"
+              >
+                <div class="relative h-60 overflow-hidden">
+                  <img
+                    src="https://images.unsplash.com/photo-1523580494863-6f3031224c94?w=600&h=400&fit=crop"
+                    alt="Tech Summit Event"
+                    class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700"
+                  />
+                  <div
+                    class="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors"
+                  ></div>
+                  <div
+                    class="absolute top-4 left-4 bg-red-500 text-white px-4 py-1.5 rounded-full text-xs font-bold shadow-md uppercase tracking-wider"
+                  >
+                    Event
+                  </div>
+                </div>
+                <div class="p-8 flex-1 flex flex-col">
+                  <div
+                    class="flex items-center text-sm text-gray-500 mb-4 font-medium"
+                  >
+                    <i class="fas fa-calendar-alt text-brand-primary mr-2"></i>
+                    <span>December 15-17, 2025</span>
+                  </div>
+                  <h3
+                    class="text-xl font-bold text-gray-900 mb-3 leading-tight group-hover:text-brand-primary transition-colors"
+                  >
+                    Annual Tech Summit 2025
+                  </h3>
+                  <p class="text-gray-600 text-sm mb-6 leading-relaxed flex-1">
+                    Join us for three days of innovation, networking, and
+                    knowledge sharing with industry leaders from around the
+                    globe.
+                  </p>
+                  <a
+                    href="#"
+                    class="text-brand-primary font-bold hover:text-teal-700 text-sm flex items-center gap-2 mt-auto"
+                  >
+                    Read Full Story
+                    <i class="fas fa-long-arrow-alt-right"></i>
+                  </a>
+                </div>
+              </div>
+
+              <!-- News 2 -->
+              <div
+                class="bg-white rounded-2xl overflow-hidden shadow-lg border border-gray-100 hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 group h-full flex flex-col"
+              >
+                <div class="relative h-60 overflow-hidden">
+                  <img
+                    src="https://images.unsplash.com/photo-1541339907198-e08756dedf3f?w=600&h=400&fit=crop"
+                    alt="AI Research"
+                    class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700"
+                  />
+                  <div
+                    class="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors"
+                  ></div>
+                  <div
+                    class="absolute top-4 left-4 bg-blue-500 text-white px-4 py-1.5 rounded-full text-xs font-bold shadow-md uppercase tracking-wider"
+                  >
+                    Research
+                  </div>
+                </div>
+                <div class="p-8 flex-1 flex flex-col">
+                  <div
+                    class="flex items-center text-sm text-gray-500 mb-4 font-medium"
+                  >
+                    <i class="fas fa-calendar-alt text-brand-primary mr-2"></i>
+                    <span>November 20, 2025</span>
+                  </div>
+                  <h3
+                    class="text-xl font-bold text-gray-900 mb-3 leading-tight group-hover:text-brand-primary transition-colors"
+                  >
+                    Breakthrough in AI Research
+                  </h3>
+                  <p class="text-gray-600 text-sm mb-6 leading-relaxed flex-1">
+                    Our Computer Science department publishes groundbreaking
+                    research in machine learning and neural networks.
+                  </p>
+                  <a
+                    href="#"
+                    class="text-brand-primary font-bold hover:text-teal-700 text-sm flex items-center gap-2 mt-auto"
+                  >
+                    Read Full Story
+                    <i class="fas fa-long-arrow-alt-right"></i>
+                  </a>
+                </div>
+              </div>
+
+              <!-- News 3 -->
+              <div
+                class="bg-white rounded-2xl overflow-hidden shadow-lg border border-gray-100 hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 group h-full flex flex-col"
+              >
+                <div class="relative h-60 overflow-hidden">
+                  <img
+                    src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=600&h=400&fit=crop"
+                    alt="Student Achievement"
+                    class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700"
+                  />
+                  <div
+                    class="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors"
+                  ></div>
+                  <div
+                    class="absolute top-4 left-4 bg-green-500 text-white px-4 py-1.5 rounded-full text-xs font-bold shadow-md uppercase tracking-wider"
+                  >
+                    Achievement
+                  </div>
+                </div>
+                <div class="p-8 flex-1 flex flex-col">
+                  <div
+                    class="flex items-center text-sm text-gray-500 mb-4 font-medium"
+                  >
+                    <i class="fas fa-calendar-alt text-brand-primary mr-2"></i>
+                    <span>November 18, 2025</span>
+                  </div>
+                  <h3
+                    class="text-xl font-bold text-gray-900 mb-3 leading-tight group-hover:text-brand-primary transition-colors"
+                  >
+                    Students Win National Competition
+                  </h3>
+                  <p class="text-gray-600 text-sm mb-6 leading-relaxed flex-1">
+                    Engineering team takes first place in the National
+                    Innovation Challenge with their sustainable energy project.
+                  </p>
+                  <a
+                    href="#"
+                    class="text-brand-primary font-bold hover:text-teal-700 text-sm flex items-center gap-2 mt-auto"
+                  >
+                    Read Full Story
+                    <i class="fas fa-long-arrow-alt-right"></i>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section
+          class="py-24 bg-gradient-to-r from-brand-primary to-teal-700 text-white relative overflow-hidden animate-on-scroll opacity-0 translate-y-8 transition-all duration-700"
+        >
+          <div
+            class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10"
+          ></div>
+          <div class="container mx-auto px-4 md:px-8 text-center relative z-10">
+            <h2
+              class="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 leading-tight"
+            >
+              Ready to Define Your Future?
+            </h2>
+            <p class="text-teal-100 text-lg max-w-2xl mx-auto mb-12 font-light">
+              Join a community of innovators and leaders. Applications for the
+              Academic Year 2026 are now open. Take the first step towards
+              excellence.
+            </p>
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+              <a
+                href="#apply"
+                class="bg-white text-brand-primary px-10 py-4 rounded-full font-bold text-lg shadow-xl hover:bg-gray-100 hover:scale-105 transition-all duration-300 flex items-center justify-center gap-2"
+              >
+                Start Application <i class="fas fa-arrow-right"></i>
+              </a>
+              <a
+                href="#schedule-visit"
+                class="border-2 border-white text-white px-10 py-4 rounded-full font-bold text-lg hover:bg-white hover:text-brand-primary transition-all duration-300 flex items-center justify-center gap-2 backdrop-blur-sm"
+              >
+                Schedule Visit <i class="fas fa-calendar-check"></i>
+              </a>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <!-- Footer -->
+      <footer class="bg-gray-900 text-gray-300 font-sans">
+        <!-- Main Footer Content -->
+        <div class="container mx-auto px-4 md:px-8 py-16">
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
+            <!-- About University -->
+            <div>
+              <div class="flex items-center gap-3 mb-6">
+                <div
+                  class="w-10 h-10 bg-brand-primary rounded-full flex items-center justify-center shadow-lg"
+                >
+                  <i class="fas fa-graduation-cap text-white text-sm"></i>
+                </div>
+                <div>
+                  <h3 class="text-white text-lg font-bold tracking-wide">
+                    Romdoul Tech
+                  </h3>
+                  <p class="text-xs text-gray-400">Excellence in Education</p>
+                </div>
+              </div>
+              <p class="text-sm text-gray-400 leading-relaxed mb-6">
+                <span class="font-khmer">សាកលវិទ្យាល័យរំដួលបច្ចេកវិទ្យា</span
+                ><br />
+                Leading the way in innovative education and research, preparing
+                students for global success in technology and business.
+              </p>
+              <div class="flex gap-3">
+                <a
+                  href="#"
+                  class="w-9 h-9 bg-gray-800 rounded-full flex items-center justify-center hover:bg-brand-primary hover:text-white transition-all duration-300 text-sm"
+                  aria-label="Facebook"
+                >
+                  <i class="fab fa-facebook-f"></i>
+                </a>
+                <a
+                  href="#"
+                  class="w-9 h-9 bg-gray-800 rounded-full flex items-center justify-center hover:bg-brand-primary hover:text-white transition-all duration-300 text-sm"
+                  aria-label="Twitter"
+                >
+                  <i class="fab fa-twitter"></i>
+                </a>
+                <a
+                  href="#"
+                  class="w-9 h-9 bg-gray-800 rounded-full flex items-center justify-center hover:bg-brand-primary hover:text-white transition-all duration-300 text-sm"
+                  aria-label="LinkedIn"
+                >
+                  <i class="fab fa-linkedin-in"></i>
+                </a>
+                <a
+                  href="#"
+                  class="w-9 h-9 bg-gray-800 rounded-full flex items-center justify-center hover:bg-brand-primary hover:text-white transition-all duration-300 text-sm"
+                  aria-label="YouTube"
+                >
+                  <i class="fab fa-youtube"></i>
+                </a>
+                <a
+                  href="#"
+                  class="w-9 h-9 bg-gray-800 rounded-full flex items-center justify-center hover:bg-brand-primary hover:text-white transition-all duration-300 text-sm"
+                  aria-label="Instagram"
+                >
+                  <i class="fab fa-instagram"></i>
+                </a>
+              </div>
+            </div>
+
+            <!-- Quick Links -->
+            <div>
+              <h4
+                class="text-white text-lg font-bold mb-6 relative inline-block pb-2"
+              >
+                Quick Links
+                <span
+                  class="absolute bottom-0 left-0 w-12 h-0.5 bg-brand-primary rounded-full"
+                ></span>
+              </h4>
+              <ul class="space-y-3 text-sm">
+                <li>
+                  <a
+                    href="#"
+                    class="hover:text-brand-primary transition-colors flex items-center gap-2 group"
+                  >
+                    <i
+                      class="fas fa-chevron-right text-[10px] text-gray-600 group-hover:text-brand-primary transition-colors"
+                    ></i>
+                    About University
+                  </a>
                 </li>
-                <li
-                  class="flex items-start gap-3 hover:text-yellow-300 transition"
-                >
-                  <i class="fas fa-check-circle mt-1 text-green-300"></i>
-                  <span>បច្ចេកវិទ្យាព័ត៌មាន (Information Technology)</span>
+                <li>
+                  <a
+                    href="#"
+                    class="hover:text-brand-primary transition-colors flex items-center gap-2 group"
+                  >
+                    <i
+                      class="fas fa-chevron-right text-[10px] text-gray-600 group-hover:text-brand-primary transition-colors"
+                    ></i>
+                    Academic Programs
+                  </a>
                 </li>
-                <li
-                  class="flex items-start gap-3 hover:text-yellow-300 transition"
-                >
-                  <i class="fas fa-check-circle mt-1 text-green-300"></i>
-                  <span>វិស្វកម្មសំណង់ស៊ីវិល (Civil Engineering)</span>
+                <li>
+                  <a
+                    href="#"
+                    class="hover:text-brand-primary transition-colors flex items-center gap-2 group"
+                  >
+                    <i
+                      class="fas fa-chevron-right text-[10px] text-gray-600 group-hover:text-brand-primary transition-colors"
+                    ></i>
+                    Admissions
+                  </a>
                 </li>
-                <li
-                  class="flex items-start gap-3 hover:text-yellow-300 transition"
-                >
-                  <i class="fas fa-check-circle mt-1 text-green-300"></i>
-                  <span>គ្រប់គ្រងពាណិជ្ជកម្ម (Business Management)</span>
+                <li>
+                  <a
+                    href="#"
+                    class="hover:text-brand-primary transition-colors flex items-center gap-2 group"
+                  >
+                    <i
+                      class="fas fa-chevron-right text-[10px] text-gray-600 group-hover:text-brand-primary transition-colors"
+                    ></i>
+                    Student Life
+                  </a>
                 </li>
-                <li
-                  class="flex items-start gap-3 hover:text-yellow-300 transition"
-                >
-                  <i class="fas fa-check-circle mt-1 text-green-300"></i>
-                  <span>ច្បាប់អន្តរជាតិ (International Law)</span>
+                <li>
+                  <a
+                    href="#"
+                    class="hover:text-brand-primary transition-colors flex items-center gap-2 group"
+                  >
+                    <i
+                      class="fas fa-chevron-right text-[10px] text-gray-600 group-hover:text-brand-primary transition-colors"
+                    ></i>
+                    Research & Innovation
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="#"
+                    class="hover:text-brand-primary transition-colors flex items-center gap-2 group"
+                  >
+                    <i
+                      class="fas fa-chevron-right text-[10px] text-gray-600 group-hover:text-brand-primary transition-colors"
+                    ></i>
+                    Alumni Network
+                  </a>
                 </li>
               </ul>
             </div>
 
-            <p>
-              យើងខ្ញុំមានកម្មវិធីសិក្សាដែលទាន់សម័យ
-              និងត្រូវបានរៀបចំឡើងដោយគណៈប្រឹក្សាសាស្ត្រាចារ្យជំនាញ
-              ដែលមានបទពិសោធន៍យូរឆ្នាំក្នុងការបង្រៀន
-              និងស្រាវជ្រាវផ្នែកបច្ចេកវិទ្យា។
-              ការសិក្សានៅសាកលវិទ្យាល័យរបស់យើងមិនត្រឹមតែផ្តល់ចំណេះដឹងទ្រឹស្តីប៉ុណ្ណោះទេ
-              ប៉ុន្តែក៏ផ្តោតលើការអនុវត្តជាក់ស្តែងតាមរយៈគម្រោងផ្សេងៗ
-              ដើម្បីរៀបចំនិស្សិតឱ្យត្រៀមខ្លួនសម្រាប់ការងារនៅពេលអនាគត។
-            </p>
-
-            <p>
-              ការចុះឈ្មោះមានកំណត់ចំនួន ដោយសារតែយើងចង់រក្សាគុណភាពនៃការបង្រៀន
-              និងធានាថានិស្សិតម្នាក់ៗទទួលបានការយកចិត្តទុកដាក់គ្រប់គ្រាន់ពីសាស្ត្រាចារ្យ។
-              ដូច្នេះសូមប្រញាប់រួសរាន់ចុះឈ្មោះមុនពេលកន្លែងពេញ!
-            </p>
-
-        <!-- Info Card Gold (Upgraded Version) -->
-<div class="bg-gradient-to-r from-yellow-400 via-yellow-500 to-amber-500 text-gray-900 rounded-2xl shadow-xl p-6 border border-yellow-300/50 hover:shadow-2xl hover:-translate-y-1 transition transform duration-300">
-  <h3 class="text-2xl font-extrabold mb-6 flex items-center gap-3 border-b border-yellow-300/40 pb-3">
-    <i class="fas fa-gift text-amber-700 bg-yellow-200 p-2 rounded-full shadow-sm"></i>
-    អត្ថប្រយោជន៍សម្រាប់និស្សិតថ្មី
-  </h3>
-
-  <div class="grid sm:grid-cols-2 gap-5">
-    <div class="bg-white/40 backdrop-blur-md rounded-xl p-4 hover:bg-white/60 transition duration-300">
-      <p class="font-semibold mb-2 flex items-center text-lg text-amber-800">
-        <i class="fas fa-arrow-right mr-2 text-amber-700"></i>ការបញ្ចុះតម្លៃពិសេស
-      </p>
-      <p class="text-sm text-gray-800">
-        ការបញ្ចុះតម្លៃ ១០% សម្រាប់និស្សិតដែលចុះឈ្មោះមុនខែធ្នូ
-      </p>
-    </div>
-
-    <div class="bg-white/40 backdrop-blur-md rounded-xl p-4 hover:bg-white/60 transition duration-300">
-      <p class="font-semibold mb-2 flex items-center text-lg text-amber-800">
-        <i class="fas fa-arrow-right mr-2 text-amber-700"></i>អាហារូបករណ៍
-      </p>
-      <p class="text-sm text-gray-800">
-        មានអាហារូបករណ៍សម្រាប់និស្សិតដែលមានសមត្ថភាពល្អ
-      </p>
-    </div>
-
-    <div class="bg-white/40 backdrop-blur-md rounded-xl p-4 hover:bg-white/60 transition duration-300">
-      <p class="font-semibold mb-2 flex items-center text-lg text-amber-800">
-        <i class="fas fa-arrow-right mr-2 text-amber-700"></i>បណ្ណាល័យទំនើប
-      </p>
-      <p class="text-sm text-gray-800">
-        បណ្ណាល័យជាមួយសៀវភៅ និងធនធានឌីជីថលជាង ៥០,០០០ ចំណង
-      </p>
-    </div>
-
-    <div class="bg-white/40 backdrop-blur-md rounded-xl p-4 hover:bg-white/60 transition duration-300">
-      <p class="font-semibold mb-2 flex items-center text-lg text-amber-800">
-        <i class="fas fa-arrow-right mr-2 text-amber-700"></i>បរិក្ខារទំនើប
-      </p>
-      <p class="text-sm text-gray-800">
-        បន្ទប់មេរៀន និងមន្ទីរពិសោធន៍ដែលមានបរិក្ខារទំនើបបំផុត
-      </p>
-    </div>
-  </div>
-</div>
-
-
-            <p>
-              សម្រាប់ព័ត៌មានលម្អិតបន្ថែម សូមទំនាក់ទំនងមកកាន់ការិយាល័យសិក្សា
-              ឬទាញយកឯកសារលម្អិតនៅត្រង់ផ្ទាំងឯកសារ។
-              យើងខ្ញុំរង់ចាំការចូលរួមរបស់អ្នកដើម្បីក្លាយជាផ្នែកមួយនៃគ្រួសាររំដួលបច្ចេកវិទ្យា!
-              សូមអរគុណ!
-            </p>
-
-          <!-- Call to Action -->
-<div
-  class="mt-8 p-6 bg-gradient-to-r from-blue-50 to-blue-100 rounded-xl border-l-4 border-[#0d47a1] shadow-lg"
->
-  <h4 class="text-lg font-bold text-gray-900 mb-3">
-    <i class="fas fa-info-circle text-[#0d47a1] mr-2"></i>ព័ត៌មានសំខាន់
-  </h4>
-  <div class="space-y-2 text-sm text-gray-700">
-    <p>
-      <strong>ថ្ងៃចាប់ផ្តើម:</strong> ថ្ងៃទី ១ ខែវិច្ឆិកា ឆ្នាំ ២០២៤
-    </p>
-    <p><strong>ថ្ងៃបញ្ចប់:</strong> ថ្ងៃទី ៣១ ខែធ្នូ ឆ្នាំ ២០២៤</p>
-    <p>
-      <strong>ទីតាំង:</strong> អគារ R-T, ផ្លូវជាតិលេខ ៦, ក្រុងសៀមរាប
-    </p>
-    <p>
-      <strong>ទំនាក់ទំនង:</strong> 099 55 55 4444 ឬ
-      info@romdoult-tech.edu.km
-    </p>
-  </div>
-  <div class="mt-4 flex gap-3 flex-wrap">
-    <a
-      href="documents.html"
-      class="inline-flex items-center gap-2 bg-[#0d47a1] text-white px-6 py-3 rounded-lg font-medium hover:bg-[#0a3878] transition-all duration-300 shadow-md hover:shadow-xl"
-    >
-      <i class="fas fa-download"></i>
-      ទាញយកទម្រង់
-    </a><a
-      href="contact.html"
-      class="inline-flex items-center gap-2 bg-white text-[#0d47a1] px-6 py-3 rounded-lg font-medium border-2 border-[#0d47a1] hover:bg-[#0d47a1] hover:text-white transition-all duration-300 shadow-md hover:shadow-xl"
-    >
-      <i class="fas fa-phone"></i>
-      ទំនាក់ទំនង
-    </a>
-  </div>
-</div>
-
-          <!-- Professional Share Section -->
-          <div class="share-container mb-12">
-            <span class="text-gray-700 font-semibold">ចែករំលែក:</span>
-            <a href="#" class="share-btn share-btn-facebook">
-              <i class="fab fa-facebook-f"></i>
-              <span>Facebook</span>
-            </a>
-            <a href="#" class="share-btn share-btn-telegram">
-              <i class="fab fa-telegram-plane"></i>
-              <span>Telegram</span>
-            </a>
-            <button onclick="window.print()" class="share-btn share-btn-print">
-              <i class="fas fa-print"></i>
-              <span>បោះពុម្ព</span>
-            </button>
-          </div>
-
-          <!-- Related Articles Section -->
-          <div class="mb-12">
-            <div class="flex items-center gap-3 mb-6">
-              <h3 class="text-2xl font-bold text-gray-900">
-                ព័ត៌មានដែលពាក់ព័ន្ធ
-              </h3>
-              <div
-                class="flex-1 h-1 bg-gradient-to-r from-blue-600 to-transparent rounded"
-              ></div>
-            </div>
-
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              <!-- Related Article 1 -->
-              <div class="related-article-card">
-                <div class="related-article-image">
-                  <img src="img/cost07.jpg" alt="News" />
-                  <div class="related-article-overlay">
-                    <span class="text-xs font-semibold">សេចក្តីប្រកាស</span>
-                  </div>
-                </div>
-                <div class="related-article-content">
-                  <div class="related-article-date">
-                    <i class="far fa-calendar"></i>
-                    <span>២៨ កញ្ញា ២០២៣</span>
-                  </div>
-                  <h4 class="related-article-title">
-                    កិច្ចប្រជុំស្តីពីការរៀបចំកម្មវិធីសិក្សាថ្មី
-                  </h4>
-                </div>
-              </div>
-
-              <!-- Related Article 2 -->
-              <div class="related-article-card">
-                <div class="related-article-image">
-                  <img src="img/cost02.jpg" alt="News" />
-                  <div class="related-article-overlay">
-                    <span class="text-xs font-semibold">ព្រឹត្តិការណ៍</span>
-                  </div>
-                </div>
-                <div class="related-article-content">
-                  <div class="related-article-date">
-                    <i class="far fa-calendar"></i>
-                    <span>២៥ កញ្ញា ២០២៣</span>
-                  </div>
-                  <h4 class="related-article-title">
-                    ពិធីជួបសំណេះសំណាលជាមួយនិស្សិតឆ្នើមប្រចាំឆ្នាំ
-                  </h4>
-                </div>
-              </div>
-
-              <!-- Related Article 3 -->
-              <div class="related-article-card">
-                <div class="related-article-image">
-                  <img src="img/cost04.jpg" alt="News" />
-                  <div class="related-article-overlay">
-                    <span class="text-xs font-semibold">ព័ត៌មាន</span>
-                  </div>
-                </div>
-                <div class="related-article-content">
-                  <div class="related-article-date">
-                    <i class="far fa-calendar"></i>
-                    <span>២០ កញ្ញា ២០២៣</span>
-                  </div>
-                  <h4 class="related-article-title">
-                    ពិធីប្រគល់សញ្ញាបត្រដល់និស្សិតជ័យលាភីឆ្នាំ ២០២៣
-                  </h4>
-                </div>
-              </div>
-
-              <!-- Related Article 4 -->
-              <div class="related-article-card">
-                <div class="related-article-image">
-                  <img src="img/cost05.jpg" alt="News" />
-                  <div class="related-article-overlay">
-                    <span class="text-xs font-semibold">សេចក្តីប្រកាស</span>
-                  </div>
-                </div>
-                <div class="related-article-content">
-                  <div class="related-article-date">
-                    <i class="far fa-calendar"></i>
-                    <span>១៨ កញ្ញា ២០២៣</span>
-                  </div>
-                  <h4 class="related-article-title">
-                    សេចក្តីជូនដំណឹងស្តីពីលទ្ធផលអាហារូបករណ៍
-                  </h4>
-                </div>
-              </div>
-
-              <!-- Related Article 5 -->
-              <div class="related-article-card">
-                <div class="related-article-image">
-                  <img src="img/cost06.jpg" alt="News" />
-                  <div class="related-article-overlay">
-                    <span class="text-xs font-semibold">សិក្ខាសាលា</span>
-                  </div>
-                </div>
-                <div class="related-article-content">
-                  <div class="related-article-date">
-                    <i class="far fa-calendar"></i>
-                    <span>១៥ កញ្ញា ២០២៣</span>
-                  </div>
-                  <h4 class="related-article-title">
-                    សិក្ខាសាលាស្តីពី AI និងការងារនាពេលអនាគត
-                  </h4>
-                </div>
-              </div>
-
-              <!-- Related Article 6 -->
-              <div class="related-article-card">
-                <div class="related-article-image">
-                  <img src="img/cost08.jpg" alt="News" />
-                  <div class="related-article-overlay">
-                    <span class="text-xs font-semibold">ព្រឹត្តិការណ៍</span>
-                  </div>
-                </div>
-                <div class="related-article-content">
-                  <div class="related-article-date">
-                    <i class="far fa-calendar"></i>
-                    <span>១២ កញ្ញា ២០២៣</span>
-                  </div>
-                  <h4 class="related-article-title">
-                    កម្មវិធីផ្លាស់ប្តូរវប្បធម៌ជាមួយសាកលវិទ្យាល័យអន្តរជាតិ
-                  </h4>
-                </div>
-              </div>
-            </div>
-          </div>
-        </article>
-      </main>
-
-      <!-- Footer -->
-      <footer class="footer-bg bg-[#0d47a1]">
-        <div
-          class="p-6 sm:p-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8"
-        >
-          <div>
-            <h4
-              class="text-lg sm:text-xl font-bold text-white mb-4 khmer-os-siemreap-font"
-            >
-              សាកលវិទ្យាល័យរំដួលបច្ចេកវិទ្យា
-            </h4>
-            <p class="text-xs sm:text-sm mb-4">
-              សាកលវិទ្យាល័យបច្ចេកវិទ្យានាំមុខគេក្នុងការអប់រំ និងស្រាវជ្រាវ។
-            </p>
-            <div class="space-y-2 text-xs sm:text-sm">
-              <p class="flex items-start space-x-2">
-                <i class="fas fa-map-marker-alt text-[#fbc02d] mt-1"></i>
-                <span
-                  >អាសយដ្ឋាន៖ អគារ R-T, ផ្លូវជាតិលេខ ៦, ក្រុងសៀមរាប,
-                  កម្ពុជា</span
-                >
-              </p>
-              <p class="flex items-center space-x-2">
-                <i class="fas fa-phone-alt text-[#fbc02d]"></i>
-                <span>ទូរស័ព្ទ៖ 099 55 55 4444</span>
-              </p>
-              <p class="flex items-start space-x-2">
-                <i class="fas fa-envelope text-[#fbc02d] mt-1"></i>
-                <span class="break-all"
-                  >អ៊ីម៉ែល៖ info@romdoult-tech.edu.km</span
-                >
-              </p>
-            </div>
-          </div>
-          <div>
-            <h4 class="text-base sm:text-lg font-bold text-white mb-4">
-              ផែនទីគេហទំព័រ
-            </h4>
-            <ul class="space-y-2 text-xs sm:text-sm">
-              <li><a href="index.html" class="footer-link">ទំព័រដើម</a></li>
-              <li><a href="about.html" class="footer-link">អំពីយើង</a></li>
-              <li><a href="news.html" class="footer-link">ព័ត៌មាន</a></li>
-              <li><a href="documents.html" class="footer-link">ឯកសារ</a></li>
-              <li>
-                <a href="publication.html" class="footer-link">ផ្សព្វផ្សាយ</a>
-              </li>
-            </ul>
-          </div>
-          <div>
-            <h4 class="text-base sm:text-lg font-bold text-white mb-4">
-              ជំនួយ និង លក្ខខណ្ឌ
-            </h4>
-            <ul class="space-y-2 text-xs sm:text-sm">
-              <li><a href="contact.html" class="footer-link">ទំនាក់ទំនង</a></li>
-              <li><a href="#" class="footer-link">សំនួរញឹកញាប់</a></li>
-              <li><a href="#" class="footer-link">គោលការណ៍ឯកជនភាព</a></li>
-              <li><a href="#" class="footer-link">លក្ខខណ្ឌប្រើប្រាស់</a></li>
-              <li><a href="#" class="footer-link">ការកំណត់ខូគី</a></li>
-            </ul>
-          </div>
-          <div>
-            <h4 class="text-base sm:text-lg font-bold text-white mb-4">
-              តាមដានយើង
-            </h4>
-            <div class="flex space-x-3 mb-6">
-              <a
-                href="#"
-                class="text-xl sm:text-2xl hover:text-[#3b5998] transition-colors"
-                ><i class="fab fa-facebook-square"></i
-              ></a>
-              <a
-                href="#"
-                class="text-xl sm:text-2xl hover:text-[#00acee] transition-colors"
-                ><i class="fab fa-twitter-square"></i
-              ></a>
-              <a
-                href="#"
-                class="text-xl sm:text-2xl hover:text-[#FF0000] transition-colors"
-                ><i class="fab fa-youtube-square"></i
-              ></a>
-              <a
-                href="#"
-                class="text-xl sm:text-2xl hover:text-[#0088cc] transition-colors"
-                ><i class="fab fa-telegram"></i
-              ></a>
-            </div>
-            <h4 class="text-base sm:text-lg font-bold text-white mb-2">
-              ព្រឹត្តិបត្រព័ត៌មាន
-            </h4>
-            <form class="flex">
-              <input
-                type="email"
-                placeholder="អ៊ីម៉ែលរបស់អ្នក..."
-                class="p-2 text-xs sm:text-sm text-gray-900 rounded-l-md w-full focus:outline-none"
-              />
-              <button
-                class="bg-[#fbc02d] text-gray-900 px-3 py-2 text-xs sm:text-sm rounded-r-md hover:bg-[#e6a200] transition-colors whitespace-nowrap"
+            <!-- Resources -->
+            <div>
+              <h4
+                class="text-white text-lg font-bold mb-6 relative inline-block pb-2"
               >
-                ចុះឈ្មោះ
-              </button>
-            </form>
+                Resources
+                <span
+                  class="absolute bottom-0 left-0 w-12 h-0.5 bg-brand-primary rounded-full"
+                ></span>
+              </h4>
+              <ul class="space-y-3 text-sm">
+                <li>
+                  <a
+                    href="#"
+                    class="hover:text-brand-primary transition-colors flex items-center gap-2 group"
+                  >
+                    <i
+                      class="fas fa-chevron-right text-[10px] text-gray-600 group-hover:text-brand-primary transition-colors"
+                    ></i>
+                    Student Portal
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="#"
+                    class="hover:text-brand-primary transition-colors flex items-center gap-2 group"
+                  >
+                    <i
+                      class="fas fa-chevron-right text-[10px] text-gray-600 group-hover:text-brand-primary transition-colors"
+                    ></i>
+                    Faculty Portal
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="#"
+                    class="hover:text-brand-primary transition-colors flex items-center gap-2 group"
+                  >
+                    <i
+                      class="fas fa-chevron-right text-[10px] text-gray-600 group-hover:text-brand-primary transition-colors"
+                    ></i>
+                    Documents
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="#"
+                    class="hover:text-brand-primary transition-colors flex items-center gap-2 group"
+                  >
+                    <i
+                      class="fas fa-chevron-right text-[10px] text-gray-600 group-hover:text-brand-primary transition-colors"
+                    ></i>
+                    Online Learning
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="#"
+                    class="hover:text-brand-primary transition-colors flex items-center gap-2 group"
+                  >
+                    <i
+                      class="fas fa-chevron-right text-[10px] text-gray-600 group-hover:text-brand-primary transition-colors"
+                    ></i>
+                    Campus Map
+                  </a>
+                </li>
+              </ul>
+            </div>
+
+            <!-- Contact Info -->
+            <div>
+              <h4
+                class="text-white text-lg font-bold mb-6 relative inline-block pb-2"
+              >
+                Contact Us
+                <span
+                  class="absolute bottom-0 left-0 w-12 h-0.5 bg-brand-primary rounded-full"
+                ></span>
+              </h4>
+              <ul class="space-y-4 text-sm">
+                <li class="flex items-start gap-3">
+                  <div class="mt-1 w-5 flex justify-center">
+                    <i class="fas fa-map-marker-alt text-brand-primary"></i>
+                  </div>
+                  <span class="leading-relaxed text-gray-400"
+                    >Building R-T, National Road #6<br />Siem Reap City,
+                    Cambodia</span
+                  >
+                </li>
+                <li class="flex items-center gap-3">
+                  <div class="w-5 flex justify-center">
+                    <i class="fas fa-phone-alt text-brand-primary"></i>
+                  </div>
+                  <a
+                    href="tel:+85599555444"
+                    class="hover:text-brand-primary transition-colors text-gray-400"
+                    >+855 99 55 55 4444</a
+                  >
+                </li>
+                <li class="flex items-center gap-3">
+                  <div class="w-5 flex justify-center">
+                    <i class="fas fa-envelope text-brand-primary"></i>
+                  </div>
+                  <a
+                    href="mailto:info@romdoult-tech.edu.km"
+                    class="hover:text-brand-primary transition-colors text-gray-400"
+                    >info@romdoult-tech.edu.km</a
+                  >
+                </li>
+                <li class="flex items-center gap-3">
+                  <div class="w-5 flex justify-center">
+                    <i class="fas fa-globe text-brand-primary"></i>
+                  </div>
+                  <span class="text-gray-400">www.romdoult-tech.edu.km</span>
+                </li>
+              </ul>
+
+              <!-- Newsletter -->
+              <div class="mt-8">
+                <h5 class="text-white font-semibold mb-3 text-sm">
+                  Subscribe to Newsletter
+                </h5>
+                <form class="flex" onsubmit="event.preventDefault()">
+                  <input
+                    type="email"
+                    placeholder="Your email address..."
+                    required
+                    class="flex-1 px-4 py-2.5 text-sm bg-gray-800 border border-gray-700 rounded-l-lg focus:outline-none focus:border-brand-primary text-white placeholder-gray-500 transition-colors"
+                  />
+                  <button
+                    type="submit"
+                    class="px-4 py-2.5 bg-brand-primary text-white rounded-r-lg hover:bg-brand-hover transition-colors"
+                  >
+                    <i class="fas fa-paper-plane"></i>
+                  </button>
+                </form>
+              </div>
+            </div>
           </div>
         </div>
-        <div
-          class="p-4 text-center text-xs border-t border-gray-700 bg-gray-900 text-gray-400"
-        >
-          © 2025 សាកលវិទ្យាល័យរំដួលបច្ចេកវិទ្យា (Romdoul Tech University) |
-          រក្សាសិទ្ធិគ្រប់យ៉ាង
+
+        <!-- Help & Partners Bar -->
+        <div class="border-t border-gray-800 bg-gray-950">
+          <div class="container mx-auto px-4 md:px-8 py-8">
+            <div class="text-center mb-6">
+              <h5
+                class="text-gray-500 text-xs font-bold mb-4 uppercase tracking-widest"
+              >
+                Accredited & Recognized By
+              </h5>
+            </div>
+            <div
+              class="flex flex-wrap justify-center items-center gap-8 lg:gap-16 text-gray-600"
+            >
+              <div
+                class="flex items-center gap-2 hover:text-gray-400 transition-colors cursor-default"
+              >
+                <i class="fas fa-certificate text-xl"></i>
+                <span class="text-xs font-semibold">Ministry of Education</span>
+              </div>
+              <div
+                class="flex items-center gap-2 hover:text-gray-400 transition-colors cursor-default"
+              >
+                <i class="fas fa-university text-xl"></i>
+                <span class="text-xs font-semibold"
+                  >ASEAN University Network</span
+                >
+              </div>
+              <div
+                class="flex items-center gap-2 hover:text-gray-400 transition-colors cursor-default"
+              >
+                <i class="fas fa-globe-asia text-xl"></i>
+                <span class="text-xs font-semibold">UNESCO</span>
+              </div>
+              <div
+                class="flex items-center gap-2 hover:text-gray-400 transition-colors cursor-default"
+              >
+                <i class="fas fa-handshake text-xl"></i>
+                <span class="text-xs font-semibold">World Bank Partner</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bottom Footer -->
+        <div class="border-t border-gray-800 bg-black">
+          <div class="container mx-auto px-4 md:px-8 py-6">
+            <div
+              class="flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-gray-600"
+            >
+              <p>
+                © 2025
+                <span class="font-khmer">សាកលវិទ្យាល័យរំដួលបច្ចេកវិទ្យា</span>
+                (Romdoul Tech). All Rights Reserved.
+              </p>
+              <div class="flex flex-wrap justify-center gap-6">
+                <a href="#" class="hover:text-brand-primary transition-colors"
+                  >Privacy Policy</a
+                >
+                <a href="#" class="hover:text-brand-primary transition-colors"
+                  >Terms of Service</a
+                >
+                <a href="#" class="hover:text-brand-primary transition-colors"
+                  >Cookie Policy</a
+                >
+                <a href="#" class="hover:text-brand-primary transition-colors"
+                  >Accessibility</a
+                >
+              </div>
+            </div>
+          </div>
         </div>
       </footer>
     </div>
+    <!-- End Main Wrapper -->
+
+    <!-- Scroll to Top Button -->
+    <button
+      id="scroll-to-top"
+      class="fixed bottom-8 right-8 w-12 h-12 bg-brand-primary text-white rounded-full shadow-lg hover-brand-primary transition-all opacity-0 invisible z-50 flex items-center justify-center"
+      aria-label="Scroll to top"
+    >
+      <i class="fas fa-arrow-up"></i>
+    </button>
 
     <script>
-      // Enhanced Image Gallery
-      const images = [
-        "img/cost01.jpg",
-        "img/cost10.jpg",
-        "img/cost11.jpg",
-        "img/cost12.jpg",
-        "img/cost13.jpg",
-        "img/cost08.jpg",
-        "img/cost09.jpg",
-      ];
-      let currentIndex = 0;
-
-      function changeImage(index) {
-        currentIndex = index;
-        const mainImage = document.getElementById("main-image");
-        mainImage.style.opacity = "0.5";
-
-        setTimeout(() => {
-          mainImage.src = images[index];
-          mainImage.style.opacity = "1";
-        }, 150);
-
-        document.getElementById("current-index").textContent = index + 1;
-        document.getElementById("total-images").textContent = images.length;
-
-        document.querySelectorAll(".thumbnail-item").forEach((t, i) => {
-          t.classList.toggle("active", i === index);
-        });
-      }
-
-      function prevImage() {
-        currentIndex = (currentIndex - 1 + images.length) % images.length;
-        changeImage(currentIndex);
-      }
-
-      function nextImage() {
-        currentIndex = (currentIndex + 1) % images.length;
-        changeImage(currentIndex);
-      }
-
-      // Keyboard navigation
-      document.addEventListener("keydown", (e) => {
-        if (e.key === "ArrowLeft") prevImage();
-        if (e.key === "ArrowRight") nextImage();
-      });
-
       // Mobile Menu Logic
-      const mobileMenuBtn = document.getElementById("mobile-menu-btn");
-      const closeMenuBtn = document.getElementById("close-menu-btn");
+      const menuBtn = document.getElementById("mobile-menu-btn");
       const mobileMenu = document.getElementById("mobile-menu");
-      const mobileOverlay = document.getElementById("mobile-overlay");
+      let isMenuOpen = false;
 
-      function openMobileMenu() {
-        mobileMenu.classList.add("active");
-        mobileOverlay.classList.add("active");
-        document.body.style.overflow = "hidden";
-      }
-
-      function closeMobileMenu() {
-        mobileMenu.classList.remove("active");
-        mobileOverlay.classList.remove("active");
-        document.body.style.overflow = "";
-      }
-
-      mobileMenuBtn.addEventListener("click", openMobileMenu);
-      closeMenuBtn.addEventListener("click", closeMobileMenu);
-      mobileOverlay.addEventListener("click", closeMobileMenu);
-
-      // Mobile Dropdown Toggles
-      const aboutToggle = document.getElementById("about-toggle");
-      const aboutDropdown = document.getElementById("about-dropdown");
-      const newsToggle = document.getElementById("news-toggle");
-      const newsDropdown = document.getElementById("news-dropdown");
-      const facultyToggle = document.getElementById("faculty-toggle");
-      const facultyDropdown = document.getElementById("faculty-dropdown");
-
-      function toggleDropdown(toggleElement, dropdownElement) {
-        dropdownElement.classList.toggle("active");
-        const icon = toggleElement.querySelector("i");
-        if (icon.classList.contains("fa-chevron-down")) {
-          icon.classList.remove("fa-chevron-down");
-          icon.classList.add("fa-chevron-up");
+      menuBtn.addEventListener("click", () => {
+        isMenuOpen = !isMenuOpen;
+        if (isMenuOpen) {
+          mobileMenu.classList.remove("translate-x-full");
+          menuBtn.innerHTML = '<i class="fas fa-times"></i>';
+          document.body.style.overflow = "hidden";
         } else {
-          icon.classList.remove("fa-chevron-up");
-          icon.classList.add("fa-chevron-down");
-        }
-      }
-
-      aboutToggle.addEventListener("click", (e) => {
-        e.preventDefault();
-        toggleDropdown(aboutToggle, aboutDropdown);
-      });
-
-      newsToggle.addEventListener("click", (e) => {
-        e.preventDefault();
-        toggleDropdown(newsToggle, newsDropdown);
-      });
-
-      facultyToggle.addEventListener("click", (e) => {
-        e.preventDefault();
-        toggleDropdown(facultyToggle, facultyDropdown);
-      });
-
-      window.addEventListener("resize", () => {
-        if (window.innerWidth >= 1024) {
-          closeMobileMenu();
+          mobileMenu.classList.add("translate-x-full");
+          menuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+          document.body.style.overflow = "auto";
         }
       });
 
-      // Smooth scroll for anchor links
-      document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
-        anchor.addEventListener("click", function (e) {
-          e.preventDefault();
-          const target = document.querySelector(this.getAttribute("href"));
-          if (target) {
-            target.scrollIntoView({
-              behavior: "smooth",
-              block: "start",
-            });
+      // Close menu when clicking links
+      const mobileLinks = document.querySelectorAll(".mobile-link");
+      mobileLinks.forEach((link) => {
+        link.addEventListener("click", () => {
+          mobileMenu.classList.add("translate-x-full");
+          menuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+          document.body.style.overflow = "auto";
+          isMenuOpen = false;
+        });
+      });
+
+      // Category Toggle Logic
+      const toggleCategoriesBtn = document.getElementById(
+        "toggle-categories-btn"
+      );
+      const hiddenCategories = document.querySelectorAll(".hidden-category");
+      let categoriesVisible = false;
+
+      toggleCategoriesBtn.addEventListener("click", () => {
+        categoriesVisible = !categoriesVisible;
+
+        hiddenCategories.forEach((cat) => {
+          if (categoriesVisible) {
+            cat.classList.remove("hidden");
+          } else {
+            cat.classList.add("hidden");
           }
         });
+
+        if (categoriesVisible) {
+          toggleCategoriesBtn.innerHTML =
+            'Show Less Faculties <i class="fas fa-chevron-up ml-3"></i>';
+        } else {
+          toggleCategoriesBtn.innerHTML =
+            'Explore More Faculties <i class="fas fa-arrow-right ml-3 transition-transform group-hover:translate-x-1"></i>';
+        }
       });
 
-      // Initialize
-      document.addEventListener("DOMContentLoaded", () => {
-        document.getElementById("current-index").textContent = currentIndex + 1;
-        document.getElementById("total-images").textContent = images.length;
+      // Scroll to Top & Scroll Animations
+      const scrollToTopBtn = document.getElementById("scroll-to-top");
+
+      const observerOptions = {
+        threshold: 0.1,
+        rootMargin: "0px 0px -50px 0px",
+      };
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.remove("opacity-0", "translate-y-8");
+            entry.target.classList.add("opacity-100", "translate-y-0");
+          }
+        });
+      }, observerOptions);
+
+      document.querySelectorAll(".animate-on-scroll").forEach((section) => {
+        observer.observe(section);
+      });
+
+      window.addEventListener("scroll", () => {
+        if (window.pageYOffset > 300) {
+          scrollToTopBtn.classList.remove("opacity-0", "invisible");
+          scrollToTopBtn.classList.add("opacity-100", "visible");
+        } else {
+          scrollToTopBtn.classList.add("opacity-0", "invisible");
+          scrollToTopBtn.classList.remove("opacity-100", "visible");
+        }
+      });
+
+      scrollToTopBtn.addEventListener("click", () => {
+        window.scrollTo({
+          top: 0,
+          behavior: "smooth",
+        });
       });
     </script>
   </body>
