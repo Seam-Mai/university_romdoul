@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>បុគ្គលិក និង សាស្ត្រាចារ្យ - សាកលវិទ្យាល័យរំដួលបច្ចេកវិទ្យា</title>
+    <title>កម្មវិធីសិក្សា - Academic Programs | Romdoul Tech</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link
       rel="stylesheet"
@@ -21,6 +21,7 @@
               brand: {
                 primary: "#00695c",
                 hover: "#004d40",
+                light: "#b2dfdb",
               },
             },
             fontFamily: {
@@ -64,48 +65,31 @@
         transition: transform 0.3s ease-in-out;
       }
 
-      /* Staff Card & Images */
-      .staff-card {
+      /* Program Card Styles */
+      .program-card {
         transition: transform 0.3s ease, box-shadow 0.3s ease;
       }
-      .staff-card:hover {
+      .program-card:hover {
         transform: translateY(-5px);
-        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
-      }
-      .staff-photo {
-        width: 100%;
-        height: 220px;
-        object-fit: cover;
-        object-position: top center;
-      }
-
-      /* Department Header */
-      .department-header {
-        background: linear-gradient(135deg, #00695c 0%, #004d40 100%);
-        color: white;
-        padding: 20px;
-        border-radius: 8px;
-        margin-bottom: 30px;
-        animation: fadeInUp 0.8s ease-out;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
       }
 
       /* Filter Buttons */
       .filter-btn {
-        padding: 8px 20px;
-        border: 2px solid #00695c;
-        background: white;
-        color: #00695c;
-        border-radius: 25px;
+        padding: 8px 24px;
+        border: 1px solid #e2e8f0;
+        border-radius: 9999px;
         font-weight: 500;
         transition: all 0.3s ease;
-        cursor: pointer;
-        font-size: 0.9rem;
+        background: white;
+        color: #4a5568;
       }
       .filter-btn:hover,
       .filter-btn.active {
         background: #00695c;
         color: white;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        border-color: #00695c;
+        box-shadow: 0 4px 6px -1px rgba(0, 105, 92, 0.3);
       }
     </style>
   </head>
@@ -116,10 +100,7 @@
     <div
       class="mx-auto max-w-[1320px] bg-white shadow-2xl overflow-hidden min-h-screen relative"
     >
-       <div class="block px-4 py-2.5 text-gray-700 hover:bg-gray-50 hover:text-brand-primary transition text-sm"
-                   
-                    >
-      <!-- Top Bar -->
+      <!-- Top Bar (Matched Template) -->
       <div class="bg-gray-900 text-gray-300 text-xs py-2.5">
         <div class="container mx-auto px-4 md:px-8">
           <div class="flex flex-wrap justify-between items-center gap-3">
@@ -140,28 +121,16 @@
               </a>
             </div>
             <div class="flex items-center gap-4">
-              <a
-                href="#"
-                class="hover:text-white transition"
-                aria-label="Facebook"
+              <a href="#" class="hover:text-white transition"
                 ><i class="fab fa-facebook-f"></i
               ></a>
-              <a
-                href="#"
-                class="hover:text-white transition"
-                aria-label="Twitter"
+              <a href="#" class="hover:text-white transition"
                 ><i class="fab fa-twitter"></i
               ></a>
-              <a
-                href="#"
-                class="hover:text-white transition"
-                aria-label="LinkedIn"
+              <a href="#" class="hover:text-white transition"
                 ><i class="fab fa-linkedin-in"></i
               ></a>
-              <a
-                href="#"
-                class="hover:text-white transition"
-                aria-label="YouTube"
+              <a href="#" class="hover:text-white transition"
                 ><i class="fab fa-youtube"></i
               ></a>
             </div>
@@ -169,12 +138,12 @@
         </div>
       </div>
 
-      <!-- Navigation -->
+      <!-- Navigation (Matched Template) -->
       <header class="bg-white shadow-md sticky top-0 z-50">
         <div class="container mx-auto px-4 md:px-8">
           <nav class="flex justify-between items-center py-4">
             <!-- Logo -->
-            <a href="#" class="flex items-center gap-3 z-50">
+            <a href="index.html" class="flex items-center gap-3 z-50">
               <div
                 class="w-12 h-12 bg-brand-primary rounded-full flex items-center justify-center shadow-lg"
               >
@@ -196,7 +165,7 @@
             >
               <a
                 href="index.html"
-                class="transition"
+                class="text-gray-700 hover:text-brand-primary transition"
                 >Home</a
               >
 
@@ -225,20 +194,13 @@
                       class="block px-4 py-2.5 text-gray-700 hover:bg-gray-50 hover:text-brand-primary transition text-sm"
                       >Mission & Vision</a
                     >
-                    <a
-                      href="#"
-                      <a
-                      href="#"
-                      class="block px-4 py-2.5 text-gray-700 hover:bg-gray-50 hover:text-brand-primary transition text-sm"
-                      >Help</a
-                    >
                   </div>
                 </div>
               </div>
 
               <div class="relative group">
                 <button
-                  class="text-gray-700 hover:text-brand-primary transition flex items-center gap-1 cursor-pointer py-2"
+                  class="text-brand-primary font-bold transition flex items-center gap-1 cursor-pointer py-2 border-brand-primary border-b-2 pb-1"
                 >
                   Academics
                   <i
@@ -252,36 +214,26 @@
                     class="bg-white shadow-xl rounded-lg py-2 border border-gray-100"
                   >
                     <a
-                      href="#programs"
-                      class="block px-4 py-2.5 text-gray-700 hover:bg-gray-50 hover:text-brand-primary transition text-sm"
+                      href="programs.html"
+                      class="block px-4 py-2.5 text-brand-primary bg-gray-50 font-semibold transition text-sm"
                       >Programs</a
                     >
                     <a
-                      href="#academics"
+                      href="#"
                       class="block px-4 py-2.5 text-gray-700 hover:bg-gray-50 hover:text-brand-primary transition text-sm"
                       >Faculties</a
-                    >
-                    <a
-                      href="#"
-                      class="block px-4 py-2.5 text-gray-700 hover:bg-gray-50 hover:text-brand-primary transition text-sm"
-                      >Research</a
-                    >
-                    <a
-                      href="#"
-                      class="block px-4 py-2.5 text-gray-700 hover:bg-gray-50 hover:text-brand-primary transition text-sm"
-                      >Documents</a
                     >
                   </div>
                 </div>
               </div>
 
               <a
-                href="professor.html"
-                class="​​ text-brand-primary border-brand-primary border-b-2  pb-1 ​ font-bold text-gray-700 hover:text-brand-primary transition"
+                href="admissions.html"
+                class="text-gray-700 hover:text-brand-primary transition"
                 >Admissions</a
               >
               <a
-                href="CampusLife.html
+                href="#"
                 class="text-gray-700 hover:text-brand-primary transition"
                 >Campus Life</a
               >
@@ -343,17 +295,17 @@
               >About</a
             >
             <a
-              href="#academics"
-              class="mobile-link text-gray-700 hover:text-brand-primary transition text-xl"
+              href="programs.html"
+              class="mobile-link text-brand-primary transition text-xl"
               >Academics</a
             >
             <a
-              href="professor.html"
+              href="admissions.html"
               class="mobile-link text-gray-700 hover:text-brand-primary transition text-xl"
               >Admissions</a
             >
             <a
-              href="CampusLife.html
+              href="#"
               class="mobile-link text-gray-700 hover:text-brand-primary transition text-xl"
               >Campus Life</a
             >
@@ -363,7 +315,7 @@
               >News</a
             >
             <a
-              href="#contact"
+              href="contact.html"
               class="mobile-link text-gray-700 hover:text-brand-primary transition text-xl"
               >Contact</a
             >
@@ -378,29 +330,29 @@
       </header>
 
       <!-- Main Content -->
-      <main class="p-8 lg:p-10 animate-fade-in-up">
-        <!-- Page Title -->
-         <section class="bg-brand-primary relative py-16 overflow-hidden">
+      <main class="animate-fade-in-up">
+        <!-- Hero Section -->
+        <section class="bg-brand-primary relative py-16 overflow-hidden">
           <div class="container mx-auto px-4 md:px-8 text-center relative z-10">
-            <h1
-              class="text-3xl md:text-4xl font-bold text-white mb-4 animate-fade-in-up"
-            >
-              ទំនាក់ទំនងមកកាន់យើង
+            <h1 class="text-3xl md:text-4xl font-bold text-white mb-4">
+              កម្មវិធីសិក្សា
             </h1>
+            <p class="text-teal-100 text-lg mb-6">Academic Programs</p>
             <div
-              class="flex justify-center items-center gap-2 text-teal-100 text-sm font-medium animate-fade-in-up"
-              style="animation-delay: 0.1s"
+              class="flex justify-center items-center gap-2 text-teal-100 text-sm font-medium"
             >
               <a href="index.html" class="hover:text-white transition"
                 >ទំព័រដើម</a
               >
               <i class="fas fa-chevron-right text-xs"></i>
-              <span class="text-white">លោកគ្រូអ្នកគ្រូ</span>
+              <a href="#" class="hover:text-white transition">Academics</a>
+              <i class="fas fa-chevron-right text-xs"></i>
+              <span class="text-white">Programs</span>
             </div>
           </div>
           <!-- Background Pattern -->
           <div
-            class="absolute top-0 left-0 w-full h-full opacity-10 pointer-events-none overflow-hidden"
+            class="absolute top-0 left-0 w-full h-full opacity-10 pointer-events-none"
           >
             <div
               class="absolute -bottom-10 -right-10 w-64 h-64 border-4 border-white rounded-full"
@@ -410,385 +362,388 @@
             ></div>
           </div>
         </section>
-        <div class="mb-8 border-b pb-4">
-          <h1 class="text-3xl font-bold text-gray-800 mb-2 leading-relaxed">
-            បុគ្គលិក និង សាស្ត្រាចារ្យ
-          </h1>
-          <p class="text-sm text-gray-500">
-            <a href="index.html" class="text-brand-primary hover:underline"
-              >ទំព័រដើម</a
-            >
-            <span class="mx-1">/</span>
-            <span>អំពីយើង</span>
-            <span class="mx-1">/</span>
-            <span>បុគ្គលិក និង សាស្ត្រាចារ្យ</span>
-          </p>
-        </div>
 
-        <!-- Introduction -->
-        <div
-          class="mb-10 bg-teal-50 p-6 rounded-lg border-l-4 border-brand-primary"
-        >
-          <p class="text-gray-700 leading-relaxed">
-            សាកលវិទ្យាល័យរំដួលបច្ចេកវិទ្យា មានសាស្ត្រាចារ្យ
-            និងបុគ្គលិកដែលមានជំនាញខ្ពស់ និងបទពិសោធន៍ជាច្រើនឆ្នាំក្នុងការបង្រៀន
-            ស្រាវជ្រាវ និងបម្រើសង្គម។
-            ក្រុមការងាររបស់យើងមានការប្តេជ្ញាចិត្តខ្ពស់ក្នុងការផ្តល់គុណភាពអប់រំល្អបំផុតដល់និស្សិតរបស់យើង។
-          </p>
-        </div>
-
-        <!-- Filter Buttons -->
-        <div class="flex flex-wrap gap-3 mb-10 justify-center">
-          <button class="filter-btn active" onclick="filterStaff('all', this)">
-            ទាំងអស់
-          </button>
-          <button class="filter-btn" onclick="filterStaff('leadership', this)">
-            ថ្នាក់ដឹកនាំ
-          </button>
-          <button class="filter-btn" onclick="filterStaff('it', this)">
-            មហាវិទ្យាល័យ IT
-          </button>
-          <button class="filter-btn" onclick="filterStaff('ir', this)">
-            មហាវិទ្យាល័យ IR
-          </button>
-          <button class="filter-btn" onclick="filterStaff('law', this)">
-            មហាវិទ្យាល័យ LAW
-          </button>
-          <button class="filter-btn" onclick="filterStaff('bm', this)">
-            មហាវិទ្យាល័យ BM
-          </button>
-          <button class="filter-btn" onclick="filterStaff('admin', this)">
-            រដ្ឋបាល
-          </button>
-        </div>
-
-        <!-- Leadership Section -->
-        <div class="department-header" data-category="leadership">
-          <h2 class="text-2xl font-bold mb-1">ថ្នាក់ដឹកនាំសាកលវិទ្យាល័យ</h2>
-          <p class="text-teal-100 text-sm">University Leadership</p>
-        </div>
-
-        <div
-          class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12"
-          data-category="leadership"
-        >
-          <!-- President -->
-          <div class="staff-card bg-white rounded-lg shadow-lg overflow-hidden">
-            <div class="relative">
-              <img
-                src="https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=400&h=220&fit=crop"
-                alt="President"
-                class="staff-photo"
-              />
-              <div
-                class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent p-4"
+        <div class="py-12 px-4 md:px-8 bg-gray-50">
+          <div class="container mx-auto">
+            <!-- Filters -->
+            <div class="flex flex-wrap justify-center gap-3 mb-12">
+              <button
+                class="filter-btn active"
+                onclick="filterPrograms('all', this)"
               >
-                <span class="text-white text-sm font-semibold"
-                  >ប្រធានសាកលវិទ្យាល័យ</span
-                >
-              </div>
-            </div>
-            <div class="p-5">
-              <h3 class="text-xl font-bold text-gray-800 mb-1">
-                ឯកឧត្តម សុខ សំណាង
-              </h3>
-              <p class="text-sm text-brand-primary mb-3">President</p>
-              <p class="text-sm text-gray-600 mb-3">
-                បណ្ឌិត Ph.D វិទ្យាសាស្ត្រកុំព្យូទ័រ
-              </p>
-              <div
-                class="flex items-center space-x-2 text-sm text-gray-500 mb-2"
+                All Programs
+              </button>
+              <button
+                class="filter-btn"
+                onclick="filterPrograms('bachelor', this)"
               >
-                <i class="fas fa-envelope text-brand-primary"></i>
-                <span>soksomnang@romdoult-tech.edu.km</span>
-              </div>
-            </div>
-          </div>
-
-          <!-- Vice President Academic -->
-          <div class="staff-card bg-white rounded-lg shadow-lg overflow-hidden">
-            <div class="relative">
-              <img
-                src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=400&h=220&fit=crop"
-                alt="VP Academic"
-                class="staff-photo"
-              />
-              <div
-                class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent p-4"
+                Bachelor
+              </button>
+              <button
+                class="filter-btn"
+                onclick="filterPrograms('associate', this)"
               >
-                <span class="text-white text-sm font-semibold"
-                  >អនុប្រធានផ្នែកសិក្សា</span
-                >
-              </div>
-            </div>
-            <div class="p-5">
-              <h3 class="text-xl font-bold text-gray-800 mb-1">
-                លោកស្រី ចន្ទ មករា
-              </h3>
-              <p class="text-sm text-brand-primary mb-3">
-                VP for Academic Affairs
-              </p>
-              <p class="text-sm text-gray-600 mb-3">បណ្ឌិត Ph.D អប់រំ</p>
-              <div
-                class="flex items-center space-x-2 text-sm text-gray-500 mb-2"
+                Associate
+              </button>
+              <button
+                class="filter-btn"
+                onclick="filterPrograms('master', this)"
               >
-                <i class="fas fa-envelope text-brand-primary"></i>
-                <span>chanmakara@romdoult-tech.edu.km</span>
-              </div>
-            </div>
-          </div>
-
-          <!-- Vice President Administration -->
-          <div class="staff-card bg-white rounded-lg shadow-lg overflow-hidden">
-            <div class="relative">
-              <img
-                src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?q=80&w=400&h=220&fit=crop"
-                alt="VP Admin"
-                class="staff-photo"
-              />
-              <div
-                class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent p-4"
+                Master's
+              </button>
+              <button
+                class="filter-btn"
+                onclick="filterPrograms('short', this)"
               >
-                <span class="text-white text-sm font-semibold"
-                  >អនុប្រធានផ្នែករដ្ឋបាល</span
-                >
-              </div>
+                Short Courses
+              </button>
             </div>
-            <div class="p-5">
-              <h3 class="text-xl font-bold text-gray-800 mb-1">
-                លោក វិរៈ ពិសិដ្ឋ
-              </h3>
-              <p class="text-sm text-brand-primary mb-3">
-                VP for Administration
-              </p>
-              <p class="text-sm text-gray-600 mb-3">
-                បណ្ឌិត MBA គ្រប់គ្រងពាណិជ្ជកម្ម
-              </p>
-              <div
-                class="flex items-center space-x-2 text-sm text-gray-500 mb-2"
-              >
-                <i class="fas fa-envelope text-brand-primary"></i>
-                <span>virakpiseth@romdoult-tech.edu.km</span>
-              </div>
-            </div>
-          </div>
-        </div>
 
-        <!-- IT Faculty Section -->
-        <div class="department-header" data-category="it">
-          <h2 class="text-2xl font-bold mb-1">
-            មហាវិទ្យាល័យបច្ចេកវិទ្យាព័ត៌មាន
-          </h2>
-          <p class="text-teal-100 text-sm">Faculty of Information Technology</p>
-        </div>
-
-        <div
-          class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-4 mb-12"
-          data-category="it"
-        >
-          <!-- IT Dean -->
-          <div class="staff-card bg-white rounded-lg shadow-lg overflow-hidden">
-            <img
-              src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=400&h=220&fit=crop"
-              alt="Dean"
-              class="staff-photo"
-            />
-            <div class="p-4">
-              <h3 class="text-lg font-bold text-gray-800 mb-1">
-                លោក ស៊ុន សុភាព
-              </h3>
-              <p class="text-sm text-brand-primary mb-2">Dean - IT Faculty</p>
-              <p class="text-xs text-gray-600 mb-2">Ph.D Computer Science</p>
-            </div>
-          </div>
-
-          <!-- IT Professor -->
-          <div class="staff-card bg-white rounded-lg shadow-lg overflow-hidden">
-            <img
-              src="https://images.unsplash.com/photo-1580489944761-15a19d654956?q=80&w=400&h=220&fit=crop"
-              alt="Professor"
-              class="staff-photo"
-            />
-            <div class="p-4">
-              <h3 class="text-lg font-bold text-gray-800 mb-1">
-                លោកស្រី លីម សុផល្លា
-              </h3>
-              <p class="text-sm text-brand-primary mb-2">Professor</p>
-              <p class="text-xs text-gray-600 mb-2">
-                Ph.D Software Engineering
-              </p>
-            </div>
-          </div>
-
-          <!-- IT Senior Lecturer -->
-          <div class="staff-card bg-white rounded-lg shadow-lg overflow-hidden">
-            <img
-              src="https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?q=80&w=400&h=220&fit=crop"
-              alt="Lecturer"
-              class="staff-photo"
-            />
-            <div class="p-4">
-              <h3 class="text-lg font-bold text-gray-800 mb-1">លោក រ៉ា សុខា</h3>
-              <p class="text-sm text-brand-primary mb-2">Senior Lecturer</p>
-              <p class="text-xs text-gray-600 mb-2">M.Sc Data Science</p>
-            </div>
-          </div>
-
-          <!-- IT Lecturer -->
-          <div class="staff-card bg-white rounded-lg shadow-lg overflow-hidden">
-            <img
-              src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=400&h=220&fit=crop"
-              alt="Lecturer"
-              class="staff-photo"
-            />
-            <div class="p-4">
-              <h3 class="text-lg font-bold text-gray-800 mb-1">
-                លោក ចាន់ វឌ្ឍនៈ
-              </h3>
-              <p class="text-sm text-brand-primary mb-2">Lecturer</p>
-              <p class="text-xs text-gray-600 mb-2">M.Sc AI & Robotics</p>
-            </div>
-          </div>
-        </div>
-
-        <!-- Business Management (BM) -->
-        <div class="department-header" data-category="bm">
-          <h2 class="text-2xl font-bold mb-1">
-            មហាវិទ្យាល័យគ្រប់គ្រងពាណិជ្ជកម្ម
-          </h2>
-          <p class="text-teal-100 text-sm">Faculty of Business Management</p>
-        </div>
-
-        <div
-          class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-4 mb-12"
-          data-category="bm"
-        >
-          <!-- BM Dean -->
-          <div class="staff-card bg-white rounded-lg shadow-lg overflow-hidden">
-            <img
-              src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=400&h=220&fit=crop"
-              alt="Dean"
-              class="staff-photo"
-            />
-            <div class="p-4">
-              <h3 class="text-lg font-bold text-gray-800 mb-1">
-                បណ្ឌិត ម៉ៅ បូរី
-              </h3>
-              <p class="text-sm text-brand-primary mb-2">Dean - BM Faculty</p>
-              <p class="text-xs text-gray-600 mb-2">Ph.D Business Admin</p>
-            </div>
-          </div>
-
-          <!-- BM Assoc Prof -->
-          <div class="staff-card bg-white rounded-lg shadow-lg overflow-hidden">
-            <img
-              src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=400&h=220&fit=crop"
-              alt="Professor"
-              class="staff-photo"
-            />
-            <div class="p-4">
-              <h3 class="text-lg font-bold text-gray-800 mb-1">
-                លោកស្រី នុត សុខលី
-              </h3>
-              <p class="text-sm text-brand-primary mb-2">Associate Professor</p>
-              <p class="text-xs text-gray-600 mb-2">Ph.D Finance</p>
-            </div>
-          </div>
-        </div>
-
-        <!-- Administrative Staff -->
-        <div class="department-header" data-category="admin">
-          <h2 class="text-2xl font-bold mb-1">បុគ្គលិករដ្ឋបាល</h2>
-          <p class="text-teal-100 text-sm">Administrative Staff</p>
-        </div>
-
-        <div
-          class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-4 mb-12"
-          data-category="admin"
-        >
-          <!-- Registrar -->
-          <div class="staff-card bg-white rounded-lg shadow-lg overflow-hidden">
-            <img
-              src="https://images.unsplash.com/photo-1594744803329-e58b31de8bf5?q=80&w=400&h=220&fit=crop"
-              alt="Registrar"
-              class="staff-photo"
-            />
-            <div class="p-4">
-              <h3 class="text-lg font-bold text-gray-800 mb-1">
-                លោកស្រី សុខ ពេជ្រ
-              </h3>
-              <p class="text-sm text-brand-primary mb-2">Registrar</p>
-              <p class="text-xs text-gray-600 mb-2">M.Ed Administration</p>
-            </div>
-          </div>
-
-          <!-- Librarian -->
-          <div class="staff-card bg-white rounded-lg shadow-lg overflow-hidden">
-            <img
-              src="https://images.unsplash.com/photo-1530268729831-4b0b9e170218?q=80&w=400&h=220&fit=crop"
-              alt="Librarian"
-              class="staff-photo"
-            />
-            <div class="p-4">
-              <h3 class="text-lg font-bold text-gray-800 mb-1">
-                លោក ស៊ុយ ដារ៉ា
-              </h3>
-              <p class="text-sm text-brand-primary mb-2">Head Librarian</p>
-              <p class="text-xs text-gray-600 mb-2">M.L.I.S Documents Science</p>
-            </div>
-          </div>
-
-          <!-- HR -->
-          <div class="staff-card bg-white rounded-lg shadow-lg overflow-hidden">
-            <img
-              src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=400&h=220&fit=crop"
-              alt="HR"
-              class="staff-photo"
-            />
-            <div class="p-4">
-              <h3 class="text-lg font-bold text-gray-800 mb-1">លោក ធី វិបុល</h3>
-              <p class="text-sm text-brand-primary mb-2">HR Manager</p>
-              <p class="text-xs text-gray-600 mb-2">M.A Human Resources</p>
-            </div>
-          </div>
-        </div>
-
-        <!-- Contact Section -->
-        <div
-          class="bg-gradient-to-r from-teal-50 to-teal-100 p-8 rounded-lg mt-12 text-center border border-teal-200"
-        >
-          <h3 class="text-2xl font-bold text-brand-primary mb-4">
-            ទាក់ទងបុគ្គលិក និង សាស្ត្រាចារ្យ
-          </h3>
-          <p class="text-gray-700 mb-6 max-w-2xl mx-auto">
-            ប្រសិនបើអ្នកត្រូវការទំនាក់ទំនងបុគ្គលិក ឬសាស្ត្រាចារ្យណាមួយ
-            សូមទាក់ទងតាមរយៈអ៊ីមែល ឬលេខទូរស័ព្ទដែលបានផ្តល់ឱ្យខាងលើ។
-          </p>
-          <div class="flex flex-wrap justify-center gap-4">
+            <!-- Program Grid -->
             <div
-              class="flex items-center space-x-3 bg-white px-6 py-3 rounded-lg shadow-sm hover:shadow-md transition"
+              class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8"
             >
-              <i class="fas fa-phone-alt text-2xl text-brand-primary"></i>
-              <div>
-                <p class="text-xs text-gray-500 uppercase">ទូរស័ព្ទទូទៅ</p>
-                <p class="font-bold text-gray-800">099 55 55 4444</p>
+              <!-- Card 1: IT -->
+              <div
+                class="program-card bg-white rounded-xl overflow-hidden shadow-md group"
+                data-category="bachelor"
+              >
+                <div class="relative h-48 overflow-hidden">
+                  <img
+                    src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?q=80&w=800&h=400&fit=crop"
+                    alt="IT"
+                    class="w-full h-full object-cover transition transform group-hover:scale-110 duration-500"
+                  />
+                  <div
+                    class="absolute top-4 left-4 bg-brand-primary text-white text-xs font-bold px-3 py-1 rounded-full uppercase"
+                  >
+                    Bachelor
+                  </div>
+                </div>
+                <div class="p-6">
+                  <div
+                    class="flex items-center gap-2 mb-3 text-xs text-gray-500 font-medium uppercase tracking-wide"
+                  >
+                    <i class="fas fa-laptop-code text-brand-primary"></i>
+                    Faculty of IT
+                  </div>
+                  <h3
+                    class="text-xl font-bold text-gray-800 mb-3 group-hover:text-brand-primary transition"
+                  >
+                    Computer Science
+                  </h3>
+                  <p class="text-gray-600 text-sm mb-4 line-clamp-3">
+                    រៀនអំពីការសរសេរកូដ បង្កើតកម្មវិធីកុំព្យូទ័រ
+                    និងប្រព័ន្ធបច្ចេកវិទ្យាទំនើប។
+                  </p>
+                  <div
+                    class="border-t pt-4 flex justify-between items-center text-sm text-gray-500"
+                  >
+                    <span class="flex items-center gap-1"
+                      ><i class="far fa-clock"></i> 4 Years</span
+                    >
+                    <span class="flex items-center gap-1"
+                      ><i class="fas fa-book-open"></i> 140 Credits</span
+                    >
+                  </div>
+                  <a
+                    href="#"
+                    class="block mt-4 text-center bg-gray-50 hover:bg-brand-primary hover:text-white text-brand-primary font-semibold py-2 rounded-lg transition border border-gray-200 hover:border-brand-primary"
+                  >
+                    View Details
+                  </a>
+                </div>
+              </div>
+
+              <!-- Card 2: Business -->
+              <div
+                class="program-card bg-white rounded-xl overflow-hidden shadow-md group"
+                data-category="bachelor"
+              >
+                <div class="relative h-48 overflow-hidden">
+                  <img
+                    src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?q=80&w=800&h=400&fit=crop"
+                    alt="Business"
+                    class="w-full h-full object-cover transition transform group-hover:scale-110 duration-500"
+                  />
+                  <div
+                    class="absolute top-4 left-4 bg-brand-primary text-white text-xs font-bold px-3 py-1 rounded-full uppercase"
+                  >
+                    Bachelor
+                  </div>
+                </div>
+                <div class="p-6">
+                  <div
+                    class="flex items-center gap-2 mb-3 text-xs text-gray-500 font-medium uppercase tracking-wide"
+                  >
+                    <i class="fas fa-chart-line text-brand-primary"></i>
+                    Business Faculty
+                  </div>
+                  <h3
+                    class="text-xl font-bold text-gray-800 mb-3 group-hover:text-brand-primary transition"
+                  >
+                    Business Management
+                  </h3>
+                  <p class="text-gray-600 text-sm mb-4 line-clamp-3">
+                    អភិវឌ្ឍជំនាញដឹកនាំ
+                    និងគ្រប់គ្រងអាជីវកម្មក្នុងបរិបទសេដ្ឋកិច្ចឌីជីថល។
+                  </p>
+                  <div
+                    class="border-t pt-4 flex justify-between items-center text-sm text-gray-500"
+                  >
+                    <span class="flex items-center gap-1"
+                      ><i class="far fa-clock"></i> 4 Years</span
+                    >
+                    <span class="flex items-center gap-1"
+                      ><i class="fas fa-book-open"></i> 120 Credits</span
+                    >
+                  </div>
+                  <a
+                    href="#"
+                    class="block mt-4 text-center bg-gray-50 hover:bg-brand-primary hover:text-white text-brand-primary font-semibold py-2 rounded-lg transition border border-gray-200 hover:border-brand-primary"
+                  >
+                    View Details
+                  </a>
+                </div>
+              </div>
+
+              <!-- Card 3: Law -->
+              <div
+                class="program-card bg-white rounded-xl overflow-hidden shadow-md group"
+                data-category="bachelor"
+              >
+                <div class="relative h-48 overflow-hidden">
+                  <img
+                    src="https://images.unsplash.com/photo-1589829085413-56de8ae18c73?q=80&w=800&h=400&fit=crop"
+                    alt="Law"
+                    class="w-full h-full object-cover transition transform group-hover:scale-110 duration-500"
+                  />
+                  <div
+                    class="absolute top-4 left-4 bg-brand-primary text-white text-xs font-bold px-3 py-1 rounded-full uppercase"
+                  >
+                    Bachelor
+                  </div>
+                </div>
+                <div class="p-6">
+                  <div
+                    class="flex items-center gap-2 mb-3 text-xs text-gray-500 font-medium uppercase tracking-wide"
+                  >
+                    <i class="fas fa-balance-scale text-brand-primary"></i>
+                    Faculty of Law
+                  </div>
+                  <h3
+                    class="text-xl font-bold text-gray-800 mb-3 group-hover:text-brand-primary transition"
+                  >
+                    Law & Public Affairs
+                  </h3>
+                  <p class="text-gray-600 text-sm mb-4 line-clamp-3">
+                    សិក្សាអំពីច្បាប់រដ្ឋប្បវេណី ព្រហ្មទណ្ឌ និងកិច្ចការសាធារណៈ។
+                  </p>
+                  <div
+                    class="border-t pt-4 flex justify-between items-center text-sm text-gray-500"
+                  >
+                    <span class="flex items-center gap-1"
+                      ><i class="far fa-clock"></i> 4 Years</span
+                    >
+                    <span class="flex items-center gap-1"
+                      ><i class="fas fa-book-open"></i> 130 Credits</span
+                    >
+                  </div>
+                  <a
+                    href="#"
+                    class="block mt-4 text-center bg-gray-50 hover:bg-brand-primary hover:text-white text-brand-primary font-semibold py-2 rounded-lg transition border border-gray-200 hover:border-brand-primary"
+                  >
+                    View Details
+                  </a>
+                </div>
+              </div>
+
+              <!-- Card 4: English Lit -->
+              <div
+                class="program-card bg-white rounded-xl overflow-hidden shadow-md group"
+                data-category="associate"
+              >
+                <div class="relative h-48 overflow-hidden">
+                  <img
+                    src="https://images.unsplash.com/photo-1543269865-cbf427effbad?q=80&w=800&h=400&fit=crop"
+                    alt="English"
+                    class="w-full h-full object-cover transition transform group-hover:scale-110 duration-500"
+                  />
+                  <div
+                    class="absolute top-4 left-4 bg-orange-500 text-white text-xs font-bold px-3 py-1 rounded-full uppercase"
+                  >
+                    Associate
+                  </div>
+                </div>
+                <div class="p-6">
+                  <div
+                    class="flex items-center gap-2 mb-3 text-xs text-gray-500 font-medium uppercase tracking-wide"
+                  >
+                    <i class="fas fa-language text-brand-primary"></i> Institute
+                    of FL
+                  </div>
+                  <h3
+                    class="text-xl font-bold text-gray-800 mb-3 group-hover:text-brand-primary transition"
+                  >
+                    English Literature
+                  </h3>
+                  <p class="text-gray-600 text-sm mb-4 line-clamp-3">
+                    ពង្រឹងសមត្ថភាពភាសាអង់គ្លេសសម្រាប់ការទំនាក់ទំនង និងការបង្រៀន។
+                  </p>
+                  <div
+                    class="border-t pt-4 flex justify-between items-center text-sm text-gray-500"
+                  >
+                    <span class="flex items-center gap-1"
+                      ><i class="far fa-clock"></i> 2 Years</span
+                    >
+                    <span class="flex items-center gap-1"
+                      ><i class="fas fa-book-open"></i> 60 Credits</span
+                    >
+                  </div>
+                  <a
+                    href="#"
+                    class="block mt-4 text-center bg-gray-50 hover:bg-brand-primary hover:text-white text-brand-primary font-semibold py-2 rounded-lg transition border border-gray-200 hover:border-brand-primary"
+                  >
+                    View Details
+                  </a>
+                </div>
+              </div>
+
+              <!-- Card 5: MBA -->
+              <div
+                class="program-card bg-white rounded-xl overflow-hidden shadow-md group"
+                data-category="master"
+              >
+                <div class="relative h-48 overflow-hidden">
+                  <img
+                    src="https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=800&h=400&fit=crop"
+                    alt="MBA"
+                    class="w-full h-full object-cover transition transform group-hover:scale-110 duration-500"
+                  />
+                  <div
+                    class="absolute top-4 left-4 bg-gray-800 text-white text-xs font-bold px-3 py-1 rounded-full uppercase"
+                  >
+                    Master's
+                  </div>
+                </div>
+                <div class="p-6">
+                  <div
+                    class="flex items-center gap-2 mb-3 text-xs text-gray-500 font-medium uppercase tracking-wide"
+                  >
+                    <i class="fas fa-briefcase text-brand-primary"></i> Grad
+                    School
+                  </div>
+                  <h3
+                    class="text-xl font-bold text-gray-800 mb-3 group-hover:text-brand-primary transition"
+                  >
+                    MBA (Management)
+                  </h3>
+                  <p class="text-gray-600 text-sm mb-4 line-clamp-3">
+                    កម្មវិធីអនុបណ្ឌិតសម្រាប់អ្នកដឹកនាំ
+                    និងអ្នកគ្រប់គ្រងជាន់ខ្ពស់។
+                  </p>
+                  <div
+                    class="border-t pt-4 flex justify-between items-center text-sm text-gray-500"
+                  >
+                    <span class="flex items-center gap-1"
+                      ><i class="far fa-clock"></i> 2 Years</span
+                    >
+                    <span class="flex items-center gap-1"
+                      ><i class="fas fa-book-open"></i> 48 Credits</span
+                    >
+                  </div>
+                  <a
+                    href="#"
+                    class="block mt-4 text-center bg-gray-50 hover:bg-brand-primary hover:text-white text-brand-primary font-semibold py-2 rounded-lg transition border border-gray-200 hover:border-brand-primary"
+                  >
+                    View Details
+                  </a>
+                </div>
+              </div>
+
+              <!-- Card 6: Design -->
+              <div
+                class="program-card bg-white rounded-xl overflow-hidden shadow-md group"
+                data-category="short"
+              >
+                <div class="relative h-48 overflow-hidden">
+                  <img
+                    src="https://images.unsplash.com/photo-1561070791-2526d30994b5?q=80&w=800&h=400&fit=crop"
+                    alt="Design"
+                    class="w-full h-full object-cover transition transform group-hover:scale-110 duration-500"
+                  />
+                  <div
+                    class="absolute top-4 left-4 bg-teal-500 text-white text-xs font-bold px-3 py-1 rounded-full uppercase"
+                  >
+                    Short Course
+                  </div>
+                </div>
+                <div class="p-6">
+                  <div
+                    class="flex items-center gap-2 mb-3 text-xs text-gray-500 font-medium uppercase tracking-wide"
+                  >
+                    <i class="fas fa-palette text-brand-primary"></i> Creative
+                    Arts
+                  </div>
+                  <h3
+                    class="text-xl font-bold text-gray-800 mb-3 group-hover:text-brand-primary transition"
+                  >
+                    Graphic Design
+                  </h3>
+                  <p class="text-gray-600 text-sm mb-4 line-clamp-3">
+                    វគ្គសិក្សារយៈពេលខ្លីលើ Adobe Photoshop, Illustrator និង
+                    InDesign.
+                  </p>
+                  <div
+                    class="border-t pt-4 flex justify-between items-center text-sm text-gray-500"
+                  >
+                    <span class="flex items-center gap-1"
+                      ><i class="far fa-clock"></i> 3 Months</span
+                    >
+                    <span class="flex items-center gap-1"
+                      ><i class="fas fa-certificate"></i> Cert</span
+                    >
+                  </div>
+                  <a
+                    href="#"
+                    class="block mt-4 text-center bg-gray-50 hover:bg-brand-primary hover:text-white text-brand-primary font-semibold py-2 rounded-lg transition border border-gray-200 hover:border-brand-primary"
+                  >
+                    View Details
+                  </a>
+                </div>
               </div>
             </div>
-            <div
-              class="flex items-center space-x-3 bg-white px-6 py-3 rounded-lg shadow-sm hover:shadow-md transition"
-            >
-              <i class="fas fa-envelope text-2xl text-brand-primary"></i>
-              <div>
-                <p class="text-xs text-gray-500 uppercase">អ៊ីមែលទូទៅ</p>
-                <p class="font-bold text-gray-800">hr@romdoult-tech.edu.km</p>
+
+            <!-- CTA Section -->
+            <div class="mt-20 bg-gray-900 rounded-2xl overflow-hidden relative">
+              <div class="absolute inset-0 opacity-20">
+                <img
+                  src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?q=80&w=1600&fit=crop"
+                  alt="Background"
+                  class="w-full h-full object-cover"
+                />
+              </div>
+              <div class="relative z-10 p-10 md:p-16 text-center text-white">
+                <h2 class="text-3xl font-bold mb-4">
+                  Ready to start your journey?
+                </h2>
+                <p class="text-gray-400 max-w-2xl mx-auto mb-8">
+                  ដាក់ពាក្យថ្ងៃនេះដើម្បីទទួលបានអាហារូបករណ៍រហូតដល់ ៥០%
+                  សម្រាប់ឆ្នាំសិក្សាថ្មី។
+                </p>
+                <a
+                  href="applystudent.html"
+                  class="inline-block bg-brand-primary text-white px-8 py-3 rounded-full font-bold hover:bg-brand-hover transition shadow-lg transform hover:-translate-y-1"
+                >
+                  Apply Online Now
+                </a>
               </div>
             </div>
           </div>
         </div>
       </main>
 
-      <!-- Footer -->
-      <!-- Footer -->
+      <!-- Footer (Matched Template) -->
       <footer class="bg-gray-900 text-gray-300 font-sans">
         <!-- Main Footer Content -->
         <div class="container mx-auto px-4 md:px-8 py-16">
@@ -842,13 +797,6 @@
                   aria-label="YouTube"
                 >
                   <i class="fab fa-youtube"></i>
-                </a>
-                <a
-                  href="#"
-                  class="w-9 h-9 bg-gray-800 rounded-full flex items-center justify-center hover:bg-brand-primary hover:text-white transition-all duration-300 text-sm"
-                  aria-label="Instagram"
-                >
-                  <i class="fab fa-instagram"></i>
                 </a>
               </div>
             </div>
@@ -988,17 +936,6 @@
                     Online Learning
                   </a>
                 </li>
-                <li>
-                  <a
-                    href="#"
-                    class="hover:text-brand-primary transition-colors flex items-center gap-2 group"
-                  >
-                    <i
-                      class="fas fa-chevron-right text-[10px] text-gray-600 group-hover:text-brand-primary transition-colors"
-                    ></i>
-                    Campus Map
-                  </a>
-                </li>
               </ul>
             </div>
 
@@ -1041,12 +978,6 @@
                     class="hover:text-brand-primary transition-colors text-gray-400"
                     >info@romdoult-tech.edu.km</a
                   >
-                </li>
-                <li class="flex items-center gap-3">
-                  <div class="w-5 flex justify-center">
-                    <i class="fas fa-globe text-brand-primary"></i>
-                  </div>
-                  <span class="text-gray-400">www.romdoult-tech.edu.km</span>
                 </li>
               </ul>
 
@@ -1107,12 +1038,6 @@
                 <i class="fas fa-globe-asia text-xl"></i>
                 <span class="text-xs font-semibold">UNESCO</span>
               </div>
-              <div
-                class="flex items-center gap-2 hover:text-gray-400 transition-colors cursor-default"
-              >
-                <i class="fas fa-handshake text-xl"></i>
-                <span class="text-xs font-semibold">World Bank Partner</span>
-              </div>
             </div>
           </div>
         </div>
@@ -1147,7 +1072,6 @@
         </div>
       </footer>
     </div>
-    <!-- End Main Wrapper -->
 
     <!-- Scroll to Top Button -->
     <button
@@ -1158,7 +1082,6 @@
       <i class="fas fa-arrow-up"></i>
     </button>
 
-    <!-- Main Script -->
     <script>
       // 1. Mobile Menu Logic
       const menuBtn = document.getElementById("mobile-menu-btn");
@@ -1188,28 +1111,24 @@
         });
       });
 
-      // 2. Staff Filter Logic
-      function filterStaff(category, clickedButton) {
-        // Update button states
+      // 2. Program Filtering Logic
+      function filterPrograms(category, clickedButton) {
+        // Update active button
         const buttons = document.querySelectorAll(".filter-btn");
         buttons.forEach((btn) => btn.classList.remove("active"));
         clickedButton.classList.add("active");
 
-        // Filter content
-        const sections = document.querySelectorAll(
-          ".department-header, [data-category]:not(.department-header)"
-        );
-        sections.forEach((section) => {
-          // If section is a header or a grid container
-          if (section.hasAttribute("data-category")) {
-            if (category === "all") {
-              section.style.display = ""; // Show all
+        // Filter cards
+        const cards = document.querySelectorAll(".program-card");
+        cards.forEach((card) => {
+          if (category === "all") {
+            card.style.display = "block";
+          } else {
+            const cardCategory = card.getAttribute("data-category");
+            if (cardCategory === category) {
+              card.style.display = "block";
             } else {
-              if (section.getAttribute("data-category") === category) {
-                section.style.display = "";
-              } else {
-                section.style.display = "none";
-              }
+              card.style.display = "none";
             }
           }
         });
