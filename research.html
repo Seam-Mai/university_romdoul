@@ -1,0 +1,1171 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Research Portal - Romdoul Technology University</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Noto+Sans+Khmer:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              brand: {
+                primary: "#00695c",
+                hover: "#004d40",
+              },
+            },
+            fontFamily: {
+              sans: ["Poppins", "Noto Sans Khmer", "sans-serif"],
+              khmer: ["Noto Sans Khmer", "sans-serif"],
+            },
+            animation: {
+              "fade-in-up": "fadeInUp 0.8s ease-out",
+              "slide-in-left": "slideInLeft 0.8s ease-out",
+              "spin-slow": "spin 3s linear infinite",
+            },
+            keyframes: {
+              fadeInUp: {
+                "0%": { opacity: "0", transform: "translateY(30px)" },
+                "100%": { opacity: "1", transform: "translateY(0)" },
+              },
+              slideInLeft: {
+                "0%": { opacity: "0", transform: "translateX(-50px)" },
+                "100%": { opacity: "1", transform: "translateX(0)" },
+              },
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      html {
+        scroll-behavior: smooth;
+      }
+      /* Custom Scrollbar */
+      ::-webkit-scrollbar {
+        width: 10px;
+      }
+      ::-webkit-scrollbar-track {
+        background: #f1f1f1;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #00695c;
+        border-radius: 5px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: #004d40;
+      }
+
+      .active-lang {
+        @apply font-bold text-yellow-500;
+      }
+      .lang-item:hover {
+        @apply text-yellow-400;
+      }
+
+      /* Search Loader */
+      .loader {
+        border: 3px solid #f3f3f3;
+        border-radius: 50%;
+        border-top: 3px solid #00695c;
+        width: 24px;
+        height: 24px;
+        animation: spin 1s linear infinite;
+      }
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+    </style>
+  </head>
+
+  <body class="font-sans text-gray-800 bg-gray-100 overflow-x-hidden">
+    <div
+      class="mx-auto max-w-[1320px] bg-white shadow-2xl overflow-hidden min-h-screen relative flex flex-col"
+    >
+       <div class="block px-4 py-2.5 text-gray-700 hover:bg-gray-50 hover:text-brand-primary transition text-sm"
+                   
+                    >
+
+      <!-- Top Bar -->
+      <div class="bg-gray-900 text-gray-300 text-xs py-2.5">
+        <div class="container mx-auto px-4 md:px-8">
+          <div class="flex flex-wrap justify-between items-center gap-3">
+            <div class="flex flex-wrap items-center gap-4">
+              <a
+                href="tel:+85599555444"
+                class="flex items-center gap-2 hover:text-white transition"
+              >
+                <i class="fas fa-phone-alt"></i><span>+855 99 55 55 4444</span>
+              </a>
+              <a
+                href="mailto:info@romdoult-tech.edu.km"
+                class="flex items-center gap-2 hover:text-white transition"
+              >
+                <i class="fas fa-envelope"></i
+                ><span>info@romdoult-tech.edu.km</span>
+              </a>
+            </div>
+            <div class="flex items-center gap-4">
+              <div class="flex gap-3 cursor-pointer" id="lang-switch">
+                <span id="kh" class="lang-item">KH</span>
+                <span id="en" class="lang-item text-yellow-500 font-bold"
+                  >EN</span
+                >
+              </div>
+              <a href="#" class="hover:text-white transition"
+                ><i class="fab fa-facebook-f"></i
+              ></a>
+              <a href="#" class="hover:text-white transition"
+                ><i class="fab fa-twitter"></i
+              ></a>
+              <a href="#" class="hover:text-white transition"
+                ><i class="fab fa-linkedin-in"></i
+              ></a>
+              <a href="#" class="hover:text-white transition"
+                ><i class="fab fa-youtube"></i
+              ></a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Navigation -->
+      <header class="bg-white shadow-md sticky top-0 z-50">
+        <div class="container mx-auto px-4 md:px-8">
+          <nav class="flex justify-between items-center py-4">
+            <!-- Logo -->
+            <a href="index.html" class="flex items-center gap-3 z-50">
+              <div
+                class="w-12 h-12 bg-brand-primary rounded-full flex items-center justify-center shadow-lg"
+              >
+                <i class="fas fa-graduation-cap text-white text-xl"></i>
+              </div>
+              <div>
+                <h1 class="text-xl font-bold text-brand-primary tracking-wide">
+                  Romdoul Tech
+                </h1>
+                <p class="text-xs text-gray-600 font-medium">
+                  Excellence in Education
+                </p>
+              </div>
+            </a>
+
+            <!-- Desktop Menu -->
+            <div
+              class="hidden lg:flex items-center space-x-8 text-sm font-medium"
+            >
+              <a
+                href="index.html"
+                class="text-gray-700 hover:text-brand-primary transition"
+                >Home</a
+              >
+
+              <div class="relative group">
+                <button
+                  class="text-gray-700 hover:text-brand-primary transition flex items-center gap-1 cursor-pointer py-2"
+                >
+                  About
+                  <i
+                    class="fas fa-chevron-down text-xs transition-transform group-hover:rotate-180"
+                  ></i>
+                </button>
+                <div
+                  class="absolute left-0 top-full pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform translate-y-2 group-hover:translate-y-0 w-48"
+                >
+                  <div
+                    class="bg-white shadow-xl rounded-lg py-2 border border-gray-100"
+                  >
+                    <a
+                      href="about.html"
+                      class="block px-4 py-2.5 text-gray-700 hover:bg-gray-50 hover:text-brand-primary transition text-sm"
+                      >Our History</a
+                    >
+                    <a
+                      href="missionVision.html"
+                      class="block px-4 py-2.5 text-gray-700 hover:bg-gray-50 hover:text-brand-primary transition text-sm"
+                      >Mission & Vision</a
+                    >
+                    <a
+                      href="help.html"
+                      class="block px-4 py-2.5 text-gray-700 hover:bg-gray-50 hover:text-brand-primary transition text-sm"
+                      >Help</a
+                    >
+                  </div>
+                </div>
+              </div>
+
+              <div class="relative group">
+                <button
+                  class="text-gray-700 hover:text-brand-primary transition flex items-center gap-1 cursor-pointer py-2"
+                >
+                  Academics
+                  <i
+                    class="fas fa-chevron-down text-xs transition-transform group-hover:rotate-180"
+                  ></i>
+                </button>
+                <div
+                  class="absolute left-0 top-full pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform translate-y-2 group-hover:translate-y-0 w-48"
+                >
+                  <div
+                    class="bg-white shadow-xl rounded-lg py-2 border border-gray-100"
+                  >
+                    <a
+                      href="index.html#programs"
+                      class="block px-4 py-2.5 text-gray-700 hover:bg-gray-50 hover:text-brand-primary transition text-sm"
+                      >Programs</a
+                    >
+                    <a
+                      href="index.html#academics"
+                      class="block px-4 py-2.5 text-gray-700 hover:bg-gray-50 hover:text-brand-primary transition text-sm"
+                      >Faculties</a
+                    >
+                    <a
+                      href="research.html"
+                      class="block px-4 py-2.5 text-brand-primary bg-gray-50 font-bold transition text-sm"
+                      >Research</a
+                    >
+                    <a
+                      href="documents.html"
+                      class="block px-4 py-2.5 text-gray-700 hover:bg-gray-50 hover:text-brand-primary transition text-sm"
+                      >Documents</a
+                    >
+                  </div>
+                </div>
+              </div>
+
+              <a
+                href="professor.html"
+                class="text-gray-700 hover:text-brand-primary transition"
+                >Admissions</a
+              >
+              <a
+                href="campusLife.html"
+                class="text-gray-700 hover:text-brand-primary transition"
+                >Campus Life</a
+              >
+              <a
+                href="news.html"
+                class="text-gray-700 hover:text-brand-primary transition"
+                >News</a
+              >
+              <a
+                href="contact.html"
+                class="text-gray-700 hover:text-brand-primary transition"
+                >Contact</a
+              >
+            </div>
+
+            <!-- Right Actions -->
+            <div class="hidden lg:flex items-center space-x-4 z-50">
+              <!-- Active Search Button (Since we are on search page) -->
+              <a
+                href="research.html"
+                class="text-brand-primary bg-gray-100 text-lg w-10 h-10 rounded-full flex items-center justify-center cursor-default"
+                aria-label="Search"
+              >
+                <i class="fas fa-search"></i>
+              </a>
+              <a
+                href="applystudent.html"
+                class="bg-brand-primary text-white px-6 py-2.5 rounded-full font-semibold hover:bg-brand-hover transition shadow-md hover:shadow-lg transform hover:-translate-y-0.5 duration-200"
+              >
+                Apply Now
+              </a>
+            </div>
+
+            <!-- Mobile Menu Button -->
+            <button
+              id="mobile-menu-btn"
+              class="lg:hidden text-brand-primary text-2xl z-50 focus:outline-none w-10 h-10 flex items-center justify-center"
+            >
+              <i class="fas fa-bars"></i>
+            </button>
+          </nav>
+        </div>
+
+        <!-- Mobile Menu Overlay -->
+        <div
+          id="mobile-menu"
+          class="fixed inset-0 bg-white z-40 transform translate-x-full mobile-menu-overlay lg:hidden overflow-y-auto"
+        >
+          <div
+            class="flex flex-col items-center justify-center min-h-screen space-y-6 text-lg font-semibold py-20"
+          >
+            <a
+              href="index.html"
+              class="mobile-link text-gray-700 hover:text-brand-primary transition text-xl"
+              >Home</a
+            >
+            <a
+              href="about.html"
+              class="mobile-link text-gray-700 hover:text-brand-primary transition text-xl"
+              >About</a
+            >
+            <a
+              href="research.html"
+              class="mobile-link text-brand-primary font-bold transition text-xl"
+              >Research & Search</a
+            >
+            <a
+              href="professor.html"
+              class="mobile-link text-gray-700 hover:text-brand-primary transition text-xl"
+              >Admissions</a
+            >
+            <a
+              href="contact.html"
+              class="mobile-link text-gray-700 hover:text-brand-primary transition text-xl"
+              >Contact</a
+            >
+            <a
+              href="applystudent.html"
+              class="mobile-link bg-brand-primary text-white px-10 py-3 rounded-full font-semibold hover:bg-brand-hover transition shadow-md mt-4"
+              >Apply Now</a
+            >
+          </div>
+        </div>
+      </header>
+
+      <!-- ============================================ -->
+      <!-- MAIN CONTENT (Research & Search Logic) -->
+      <!-- ============================================ -->
+      <main class="flex-grow">
+        <!-- Search Hero Section -->
+        <section
+          class="bg-brand-primary py-16 lg:py-24 relative overflow-hidden"
+        >
+          <div class="container mx-auto px-4 md:px-8 relative z-10 text-center">
+            <div
+              class="inline-block bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-4 py-1.5 text-xs font-semibold text-teal-100 mb-6 animate-fade-in-up"
+            >
+              <i class="fas fa-search text-yellow-400 mr-2"></i> Global Search &
+              Research Portal
+            </div>
+            <h1
+              class="text-3xl md:text-5xl lg:text-6xl font-bold text-white mb-6 animate-fade-in-up font-sans"
+            >
+              Discover <span class="text-teal-200">Knowledge</span>
+            </h1>
+            <p
+              class="text-teal-50 text-base md:text-lg max-w-2xl mx-auto mb-10 animate-fade-in-up"
+              style="animation-delay: 0.1s"
+            >
+              Search across our entire website for academic programs, research
+              papers, faculty profiles, news, and campus resources.
+            </p>
+
+            <!-- Search Input Wrapper -->
+            <div
+              class="max-w-3xl mx-auto relative animate-fade-in-up"
+              style="animation-delay: 0.2s"
+            >
+              <div class="relative group">
+                <i
+                  class="fas fa-search absolute left-6 top-1/2 transform -translate-y-1/2 text-gray-400 text-xl group-focus-within:text-brand-primary transition-colors"
+                ></i>
+                <input
+                  type="text"
+                  id="search-input"
+                  placeholder="Search for 'Computer Science', 'Admission', or 'Research'..."
+                  class="w-full pl-16 pr-12 py-5 rounded-full text-lg shadow-2xl focus:outline-none focus:ring-4 focus:ring-teal-300 text-gray-700 transition-all placeholder-gray-400"
+                  autofocus
+                />
+                <button
+                  onclick="clearSearch()"
+                  id="clear-btn"
+                  class="hidden absolute right-6 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-red-500 transition p-2"
+                >
+                  <i class="fas fa-times text-lg"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Background Pattern (Matching Index) -->
+          <div
+            class="absolute top-0 left-0 w-full h-full opacity-5 pointer-events-none overflow-hidden"
+          >
+            <div
+              class="absolute top-10 left-10 w-64 h-64 border-4 border-white rounded-full opacity-50"
+            ></div>
+            <div
+              class="absolute bottom-10 right-10 w-96 h-96 border-4 border-white rounded-full opacity-50"
+            ></div>
+            <div
+              class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-white/10 to-transparent"
+            ></div>
+          </div>
+        </section>
+
+        <!-- Main Search Content -->
+        <section class="py-12 bg-gray-50 min-h-[600px]">
+          <div class="container mx-auto px-4 md:px-8">
+            <div class="flex flex-col lg:flex-row gap-8 max-w-7xl mx-auto">
+              <!-- Sidebar: Filters -->
+              <div class="lg:w-1/4 animate-slide-in-left">
+                <div
+                  class="bg-white p-6 rounded-2xl shadow-lg border border-gray-100 sticky top-28"
+                >
+                  <div
+                    class="flex items-center justify-between mb-4 border-b border-gray-100 pb-3"
+                  >
+                    <h3 class="font-bold text-lg text-gray-800">Filter By</h3>
+                    <i class="fas fa-filter text-brand-primary"></i>
+                  </div>
+
+                  <div class="space-y-2">
+                    <label
+                      class="flex items-center space-x-3 cursor-pointer p-2 hover:bg-gray-50 rounded-lg transition group"
+                    >
+                      <input
+                        type="radio"
+                        name="category"
+                        value="all"
+                        checked
+                        onchange="filterResults()"
+                        class="form-radio text-brand-primary focus:ring-brand-primary h-4 w-4"
+                      />
+                      <span
+                        class="text-gray-700 group-hover:text-brand-primary font-medium text-sm"
+                        >All Results</span
+                      >
+                    </label>
+                    <label
+                      class="flex items-center space-x-3 cursor-pointer p-2 hover:bg-gray-50 rounded-lg transition group"
+                    >
+                      <input
+                        type="radio"
+                        name="category"
+                        value="academic"
+                        onchange="filterResults()"
+                        class="form-radio text-brand-primary h-4 w-4"
+                      />
+                      <span
+                        class="text-gray-700 group-hover:text-brand-primary text-sm"
+                        >Academics & Programs</span
+                      >
+                    </label>
+                    <label
+                      class="flex items-center space-x-3 cursor-pointer p-2 hover:bg-gray-50 rounded-lg transition group"
+                    >
+                      <input
+                        type="radio"
+                        name="category"
+                        value="research"
+                        onchange="filterResults()"
+                        class="form-radio text-brand-primary h-4 w-4"
+                      />
+                      <span
+                        class="text-gray-700 group-hover:text-brand-primary text-sm"
+                        >Research Papers</span
+                      >
+                    </label>
+                    <label
+                      class="flex items-center space-x-3 cursor-pointer p-2 hover:bg-gray-50 rounded-lg transition group"
+                    >
+                      <input
+                        type="radio"
+                        name="category"
+                        value="news"
+                        onchange="filterResults()"
+                        class="form-radio text-brand-primary h-4 w-4"
+                      />
+                      <span
+                        class="text-gray-700 group-hover:text-brand-primary text-sm"
+                        >News & Events</span
+                      >
+                    </label>
+                    <label
+                      class="flex items-center space-x-3 cursor-pointer p-2 hover:bg-gray-50 rounded-lg transition group"
+                    >
+                      <input
+                        type="radio"
+                        name="category"
+                        value="general"
+                        onchange="filterResults()"
+                        class="form-radio text-brand-primary h-4 w-4"
+                      />
+                      <span
+                        class="text-gray-700 group-hover:text-brand-primary text-sm"
+                        >General Info</span
+                      >
+                    </label>
+                  </div>
+
+                  <div class="mt-8 pt-6 border-t border-gray-100">
+                    <p
+                      class="text-xs text-gray-500 mb-3 font-bold uppercase tracking-wide"
+                    >
+                      Popular Searches
+                    </p>
+                    <div class="flex flex-wrap gap-2">
+                      <button
+                        onclick="setSearch('Engineering')"
+                        class="px-3 py-1 bg-gray-100 text-gray-600 hover:bg-brand-primary hover:text-white rounded-full text-xs transition font-medium"
+                      >
+                        Engineering
+                      </button>
+                      <button
+                        onclick="setSearch('Scholarship')"
+                        class="px-3 py-1 bg-gray-100 text-gray-600 hover:bg-brand-primary hover:text-white rounded-full text-xs transition font-medium"
+                      >
+                        Scholarship
+                      </button>
+                      <button
+                        onclick="setSearch('AI')"
+                        class="px-3 py-1 bg-gray-100 text-gray-600 hover:bg-brand-primary hover:text-white rounded-full text-xs transition font-medium"
+                      >
+                        AI
+                      </button>
+                      <button
+                        onclick="setSearch('Library')"
+                        class="px-3 py-1 bg-gray-100 text-gray-600 hover:bg-brand-primary hover:text-white rounded-full text-xs transition font-medium"
+                      >
+                        Library
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Right Side: Results -->
+              <div class="lg:w-3/4">
+                <div class="flex justify-between items-center mb-6 px-2">
+                  <h2 class="text-xl font-bold text-gray-800">
+                    <span id="results-count" class="text-brand-primary">0</span>
+                    Results Found
+                  </h2>
+                  <div id="loading-spinner" class="loader hidden"></div>
+                </div>
+
+                <!-- Results Grid -->
+                <div id="results-container" class="space-y-4">
+                  <!-- Results injected by JS -->
+                </div>
+
+                <!-- Load More / Pagination -->
+                <div id="pagination" class="mt-12 flex justify-center hidden">
+                  <button
+                    class="flex items-center gap-2 px-6 py-2 border-2 border-brand-primary text-brand-primary rounded-full font-bold hover:bg-brand-primary hover:text-white transition-all"
+                  >
+                    Load More Results <i class="fas fa-chevron-down"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <!-- ============================================ -->
+      <!-- FOOTER SECTION (Exact Match to Template) -->
+      <!-- ============================================ -->
+      <footer class="bg-gray-900 text-gray-300 font-sans mt-auto">
+        <!-- Main Footer Content -->
+        <div class="container mx-auto px-4 md:px-8 py-16">
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
+            <!-- About University -->
+            <div>
+              <div class="flex items-center gap-3 mb-6">
+                <div
+                  class="w-10 h-10 bg-brand-primary rounded-full flex items-center justify-center shadow-lg"
+                >
+                  <i class="fas fa-graduation-cap text-white text-sm"></i>
+                </div>
+                <div>
+                  <h3 class="text-white text-lg font-bold tracking-wide">
+                    Romdoul Tech
+                  </h3>
+                  <p class="text-xs text-gray-400">Excellence in Education</p>
+                </div>
+              </div>
+              <p class="text-sm text-gray-400 leading-relaxed mb-6">
+                <span class="font-khmer">សាកលវិទ្យាល័យរំដួលបច្ចេកវិទ្យា</span
+                ><br />
+                Leading the way in innovative education and research, preparing
+                students for global success in technology and business.
+              </p>
+              <div class="flex gap-3">
+                <a
+                  href="#"
+                  class="w-9 h-9 bg-gray-800 rounded-full flex items-center justify-center hover:bg-brand-primary hover:text-white transition-all duration-300 text-sm"
+                  ><i class="fab fa-facebook-f"></i
+                ></a>
+                <a
+                  href="#"
+                  class="w-9 h-9 bg-gray-800 rounded-full flex items-center justify-center hover:bg-brand-primary hover:text-white transition-all duration-300 text-sm"
+                  ><i class="fab fa-twitter"></i
+                ></a>
+                <a
+                  href="#"
+                  class="w-9 h-9 bg-gray-800 rounded-full flex items-center justify-center hover:bg-brand-primary hover:text-white transition-all duration-300 text-sm"
+                  ><i class="fab fa-linkedin-in"></i
+                ></a>
+                <a
+                  href="#"
+                  class="w-9 h-9 bg-gray-800 rounded-full flex items-center justify-center hover:bg-brand-primary hover:text-white transition-all duration-300 text-sm"
+                  ><i class="fab fa-youtube"></i
+                ></a>
+              </div>
+            </div>
+
+            <!-- Quick Links -->
+            <div>
+              <h4
+                class="text-white text-lg font-bold mb-6 relative inline-block pb-2"
+              >
+                Quick Links
+                <span
+                  class="absolute bottom-0 left-0 w-12 h-0.5 bg-brand-primary rounded-full"
+                ></span>
+              </h4>
+              <ul class="space-y-3 text-sm">
+                <li>
+                  <a
+                    href="about.html"
+                    class="hover:text-brand-primary transition-colors flex items-center gap-2 group"
+                    ><i
+                      class="fas fa-chevron-right text-[10px] text-gray-600 group-hover:text-brand-primary transition-colors"
+                    ></i>
+                    About University</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="index.html#programs"
+                    class="hover:text-brand-primary transition-colors flex items-center gap-2 group"
+                    ><i
+                      class="fas fa-chevron-right text-[10px] text-gray-600 group-hover:text-brand-primary transition-colors"
+                    ></i>
+                    Academic Programs</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="professor.html"
+                    class="hover:text-brand-primary transition-colors flex items-center gap-2 group"
+                    ><i
+                      class="fas fa-chevron-right text-[10px] text-gray-600 group-hover:text-brand-primary transition-colors"
+                    ></i>
+                    Admissions</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="campusLife.html"
+                    class="hover:text-brand-primary transition-colors flex items-center gap-2 group"
+                    ><i
+                      class="fas fa-chevron-right text-[10px] text-gray-600 group-hover:text-brand-primary transition-colors"
+                    ></i>
+                    Student Life</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="research.html"
+                    class="hover:text-brand-primary transition-colors flex items-center gap-2 group"
+                    ><i
+                      class="fas fa-chevron-right text-[10px] text-gray-600 group-hover:text-brand-primary transition-colors"
+                    ></i>
+                    Research & Innovation</a
+                  >
+                </li>
+              </ul>
+            </div>
+
+            <!-- Resources -->
+            <div>
+              <h4
+                class="text-white text-lg font-bold mb-6 relative inline-block pb-2"
+              >
+                Resources
+                <span
+                  class="absolute bottom-0 left-0 w-12 h-0.5 bg-brand-primary rounded-full"
+                ></span>
+              </h4>
+              <ul class="space-y-3 text-sm">
+                <li>
+                  <a
+                    href="#"
+                    class="hover:text-brand-primary transition-colors flex items-center gap-2 group"
+                    ><i
+                      class="fas fa-chevron-right text-[10px] text-gray-600 group-hover:text-brand-primary transition-colors"
+                    ></i>
+                    Student Portal</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="#"
+                    class="hover:text-brand-primary transition-colors flex items-center gap-2 group"
+                    ><i
+                      class="fas fa-chevron-right text-[10px] text-gray-600 group-hover:text-brand-primary transition-colors"
+                    ></i>
+                    Faculty Portal</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="documents.html"
+                    class="hover:text-brand-primary transition-colors flex items-center gap-2 group"
+                    ><i
+                      class="fas fa-chevron-right text-[10px] text-gray-600 group-hover:text-brand-primary transition-colors"
+                    ></i>
+                    Documents</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="#"
+                    class="hover:text-brand-primary transition-colors flex items-center gap-2 group"
+                    ><i
+                      class="fas fa-chevron-right text-[10px] text-gray-600 group-hover:text-brand-primary transition-colors"
+                    ></i>
+                    Online Learning</a
+                  >
+                </li>
+              </ul>
+            </div>
+
+            <!-- Contact Info -->
+            <div>
+              <h4
+                class="text-white text-lg font-bold mb-6 relative inline-block pb-2"
+              >
+                Contact Us
+                <span
+                  class="absolute bottom-0 left-0 w-12 h-0.5 bg-brand-primary rounded-full"
+                ></span>
+              </h4>
+              <ul class="space-y-4 text-sm">
+                <li class="flex items-start gap-3">
+                  <div class="mt-1 w-5 flex justify-center">
+                    <i class="fas fa-map-marker-alt text-brand-primary"></i>
+                  </div>
+                  <span class="leading-relaxed text-gray-400"
+                    >Building R-T, National Road #6<br />Siem Reap City,
+                    Cambodia</span
+                  >
+                </li>
+                <li class="flex items-center gap-3">
+                  <div class="w-5 flex justify-center">
+                    <i class="fas fa-phone-alt text-brand-primary"></i>
+                  </div>
+                  <a
+                    href="tel:+85599555444"
+                    class="hover:text-brand-primary transition-colors text-gray-400"
+                    >+855 99 55 55 4444</a
+                  >
+                </li>
+                <li class="flex items-center gap-3">
+                  <div class="w-5 flex justify-center">
+                    <i class="fas fa-envelope text-brand-primary"></i>
+                  </div>
+                  <a
+                    href="mailto:info@romdoult-tech.edu.km"
+                    class="hover:text-brand-primary transition-colors text-gray-400"
+                    >info@romdoult-tech.edu.km</a
+                  >
+                </li>
+              </ul>
+
+              <!-- Newsletter -->
+              <div class="mt-8">
+                <h5 class="text-white font-semibold mb-3 text-sm">
+                  Subscribe to Newsletter
+                </h5>
+                <form class="flex" onsubmit="event.preventDefault()">
+                  <input
+                    type="email"
+                    placeholder="Your email..."
+                    required
+                    class="flex-1 px-4 py-2.5 text-sm bg-gray-800 border border-gray-700 rounded-l-lg focus:outline-none focus:border-brand-primary text-white placeholder-gray-500 transition-colors"
+                  />
+                  <button
+                    type="submit"
+                    class="px-4 py-2.5 bg-brand-primary text-white rounded-r-lg hover:bg-brand-hover transition-colors"
+                  >
+                    <i class="fas fa-paper-plane"></i>
+                  </button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Help & Partners Bar -->
+        <div class="border-t border-gray-800 bg-gray-950">
+          <div class="container mx-auto px-4 md:px-8 py-8">
+            <div class="text-center mb-6">
+              <h5
+                class="text-gray-500 text-xs font-bold mb-4 uppercase tracking-widest"
+              >
+                Accredited & Recognized By
+              </h5>
+            </div>
+            <div
+              class="flex flex-wrap justify-center items-center gap-8 lg:gap-16 text-gray-600"
+            >
+              <div
+                class="flex items-center gap-2 hover:text-gray-400 transition-colors cursor-default"
+              >
+                <i class="fas fa-certificate text-xl"></i
+                ><span class="text-xs font-semibold"
+                  >Ministry of Education</span
+                >
+              </div>
+              <div
+                class="flex items-center gap-2 hover:text-gray-400 transition-colors cursor-default"
+              >
+                <i class="fas fa-university text-xl"></i
+                ><span class="text-xs font-semibold"
+                  >ASEAN University Network</span
+                >
+              </div>
+              <div
+                class="flex items-center gap-2 hover:text-gray-400 transition-colors cursor-default"
+              >
+                <i class="fas fa-globe-asia text-xl"></i
+                ><span class="text-xs font-semibold">UNESCO</span>
+              </div>
+              <div
+                class="flex items-center gap-2 hover:text-gray-400 transition-colors cursor-default"
+              >
+                <i class="fas fa-handshake text-xl"></i
+                ><span class="text-xs font-semibold">World Bank Partner</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bottom Footer -->
+        <div class="border-t border-gray-800 bg-black">
+          <div class="container mx-auto px-4 md:px-8 py-6">
+            <div
+              class="flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-gray-600"
+            >
+              <p>
+                © 2025
+                <span class="font-khmer">សាកលវិទ្យាល័យរំដួលបច្ចេកវិទ្យា</span>
+                (Romdoul Tech). All Rights Reserved.
+              </p>
+              <div class="flex flex-wrap justify-center gap-6">
+                <a href="#" class="hover:text-brand-primary transition-colors"
+                  >Privacy Policy</a
+                >
+                <a href="#" class="hover:text-brand-primary transition-colors"
+                  >Terms of Service</a
+                >
+                <a href="#" class="hover:text-brand-primary transition-colors"
+                  >Cookie Policy</a
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </footer>
+    </div>
+
+    <!-- Scroll to Top Button -->
+    <button
+      id="scroll-to-top"
+      class="fixed bottom-8 right-8 w-12 h-12 bg-brand-primary text-white rounded-full shadow-lg hover-brand-primary transition-all opacity-0 invisible z-50 flex items-center justify-center"
+      aria-label="Scroll to top"
+    >
+      <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- Scripts: Mobile Menu & Search Engine Logic -->
+    <script>
+      // 1. Mobile Menu Logic (Copied from Index)
+      const menuBtn = document.getElementById("mobile-menu-btn");
+      const mobileMenu = document.getElementById("mobile-menu");
+      let isMenuOpen = false;
+
+      menuBtn.addEventListener("click", () => {
+        isMenuOpen = !isMenuOpen;
+        if (isMenuOpen) {
+          mobileMenu.classList.remove("translate-x-full");
+          menuBtn.innerHTML = '<i class="fas fa-times"></i>';
+          document.body.style.overflow = "hidden";
+        } else {
+          mobileMenu.classList.add("translate-x-full");
+          menuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+          document.body.style.overflow = "auto";
+        }
+      });
+
+      const mobileLinks = document.querySelectorAll(".mobile-link");
+      mobileLinks.forEach((link) => {
+        link.addEventListener("click", () => {
+          mobileMenu.classList.add("translate-x-full");
+          menuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+          document.body.style.overflow = "auto";
+          isMenuOpen = false;
+        });
+      });
+
+      // 2. Scroll to Top Logic
+      const scrollToTopBtn = document.getElementById("scroll-to-top");
+      window.addEventListener("scroll", () => {
+        if (window.pageYOffset > 300) {
+          scrollToTopBtn.classList.remove("opacity-0", "invisible");
+          scrollToTopBtn.classList.add("opacity-100", "visible");
+        } else {
+          scrollToTopBtn.classList.add("opacity-0", "invisible");
+          scrollToTopBtn.classList.remove("opacity-100", "visible");
+        }
+      });
+      scrollToTopBtn.addEventListener("click", () => {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      });
+
+      // 3. Search Engine Logic
+
+      // Mock Data (The "Database")
+      const siteData = [
+        {
+          title: "Bachelor of Science in Computer Science",
+          description:
+            "Our CS program covers AI, Machine Learning, Web Development, and Cybersecurity. 4-Year program accredited by the Ministry.",
+          category: "academic",
+          url: "index.html#programs",
+          date: "Updated: Aug 2025",
+        },
+        {
+          title: "Mechanical Engineering Department",
+          description:
+            "Explore the world of robotics and mechanics. State-of-the-art labs available for students.",
+          category: "academic",
+          url: "index.html#academics",
+          date: "Updated: Sep 2025",
+        },
+        {
+          title: "Admissions & Application Process",
+          description:
+            "Step-by-step guide to applying for Romdoul Tech. Learn about requirements, deadlines, and scholarships.",
+          category: "general",
+          url: "professor.html",
+          date: "Ongoing",
+        },
+        {
+          title: "Scholarship Opportunities 2026",
+          description:
+            "Full and partial scholarships available for outstanding students in Engineering and IT fields.",
+          category: "general",
+          url: "applystudent.html",
+          date: "Deadline: Dec 2025",
+        },
+        {
+          title: "Research Paper: AI in Cambodian Agriculture",
+          description:
+            "Prof. Sopheak's groundbreaking research on using Neural Networks to predict crop yields in local climates.",
+          category: "research",
+          url: "#",
+          date: "Nov 20, 2025",
+        },
+        {
+          title: "Annual Tech Summit 2025",
+          description:
+            "Join us for the biggest technology conference in Siem Reap. Guest speakers from Google and Tesla.",
+          category: "news",
+          url: "news.html",
+          date: "Event: Dec 15, 2025",
+        },
+        {
+          title: "Business Administration Degree",
+          description:
+            "Prepare for leadership roles with our BBA program focusing on Entrepreneurship and Finance.",
+          category: "academic",
+          url: "index.html#programs",
+          date: "Updated: Aug 2025",
+        },
+        {
+          title: "Digital Library Access",
+          description:
+            "Students can access IEEE Xplore, JSTOR, and thousands of e-books via the student portal.",
+          category: "research",
+          url: "documents.html",
+          date: "Resource",
+        },
+        {
+          title: "Campus Life & Student Clubs",
+          description:
+            "Join the Robotics Club, Coding Society, or Sports teams. Experience vibrant campus life.",
+          category: "general",
+          url: "campusLife.html",
+          date: "Updated: Oct 2025",
+        },
+        {
+          title: "Sustainable Urban Planning",
+          description:
+            "A research initiative by the Civil Engineering faculty focusing on smart city development in ASEAN.",
+          category: "research",
+          url: "#",
+          date: "Oct 10, 2025",
+        },
+      ];
+
+      const searchInput = document.getElementById("search-input");
+      const resultsContainer = document.getElementById("results-container");
+      const resultsCount = document.getElementById("results-count");
+      const loadingSpinner = document.getElementById("loading-spinner");
+      const clearBtn = document.getElementById("clear-btn");
+      const pagination = document.getElementById("pagination");
+
+      function performSearch() {
+        const query = searchInput.value.toLowerCase().trim();
+        const selectedCategory = document.querySelector(
+          'input[name="category"]:checked'
+        ).value;
+
+        // UI Updates
+        loadingSpinner.classList.remove("hidden");
+        resultsContainer.innerHTML = "";
+
+        if (query.length > 0) {
+          clearBtn.classList.remove("hidden");
+        } else {
+          clearBtn.classList.add("hidden");
+        }
+
+        // Simulate Network Delay (300ms)
+        setTimeout(() => {
+          const filteredData = siteData.filter((item) => {
+            const categoryMatch =
+              selectedCategory === "all" || item.category === selectedCategory;
+            const textMatch =
+              item.title.toLowerCase().includes(query) ||
+              item.description.toLowerCase().includes(query);
+            return categoryMatch && textMatch;
+          });
+
+          renderResults(filteredData);
+          loadingSpinner.classList.add("hidden");
+        }, 300);
+      }
+
+      function renderResults(results) {
+        resultsCount.textContent = results.length;
+
+        if (results.length === 0) {
+          resultsContainer.innerHTML = `
+            <div class="text-center py-16 bg-white rounded-2xl border border-dashed border-gray-300">
+              <div class="bg-gray-100 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4">
+                <i class="fas fa-search text-gray-400 text-3xl"></i>
+              </div>
+              <h3 class="text-xl font-bold text-gray-700">No results found</h3>
+              <p class="text-gray-500 mt-2">Try adjusting your search terms or filters.</p>
+            </div>
+          `;
+          pagination.classList.add("hidden");
+          return;
+        }
+
+        results.forEach((item) => {
+          // Style badges based on category
+          let badgeClass = "bg-gray-100 text-gray-600";
+          let icon = "fa-file-alt";
+
+          if (item.category === "academic") {
+            badgeClass = "bg-blue-100 text-blue-700";
+            icon = "fa-graduation-cap";
+          }
+          if (item.category === "news") {
+            badgeClass = "bg-red-100 text-red-700";
+            icon = "fa-newspaper";
+          }
+          if (item.category === "research") {
+            badgeClass = "bg-teal-100 text-teal-700";
+            icon = "fa-flask";
+          }
+
+          const html = `
+            <div class="bg-white p-6 rounded-xl border border-gray-100 shadow-sm hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 group">
+              <div class="flex justify-between items-start mb-3">
+                <span class="${badgeClass} text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider flex items-center gap-2">
+                   <i class="fas ${icon}"></i> ${item.category}
+                </span>
+                <span class="text-xs text-gray-400 font-medium">${
+                  item.date
+                }</span>
+              </div>
+              <h3 class="text-xl font-bold text-gray-800 mb-2 group-hover:text-brand-primary transition-colors">
+                <a href="${item.url}">${item.title}</a>
+              </h3>
+              <p class="text-gray-600 text-sm mb-4 leading-relaxed">
+                ${highlightTerm(item.description, searchInput.value)}
+              </p>
+              <a href="${
+                item.url
+              }" class="inline-flex items-center text-brand-primary text-sm font-bold hover:underline">
+                View Details <i class="fas fa-arrow-right ml-2 text-xs"></i>
+              </a>
+            </div>
+          `;
+          resultsContainer.innerHTML += html;
+        });
+
+        // Show Load More if many results (Visual only)
+        if (results.length > 5) {
+          pagination.classList.remove("hidden");
+        } else {
+          pagination.classList.add("hidden");
+        }
+      }
+
+      function highlightTerm(text, term) {
+        if (!term) return text;
+        const regex = new RegExp(`(${term})`, "gi");
+        return text.replace(
+          regex,
+          '<span class="bg-yellow-200 text-gray-900 px-0.5 rounded">$1</span>'
+        );
+      }
+
+      function clearSearch() {
+        searchInput.value = "";
+        performSearch();
+      }
+
+      function setSearch(term) {
+        searchInput.value = term;
+        performSearch();
+      }
+
+      function filterResults() {
+        performSearch();
+      }
+
+      searchInput.addEventListener("input", performSearch);
+
+      // Initial Load
+      performSearch();
+
+      // Lang Switch Logic
+      const kh = document.getElementById("kh");
+      const en = document.getElementById("en");
+      function setLang(active) {
+        kh.classList.remove("active-lang");
+        en.classList.remove("active-lang");
+        if (active === "kh") kh.classList.add("active-lang");
+        if (active === "en") en.classList.add("active-lang");
+      }
+      kh.onclick = () => setLang("kh");
+      en.onclick = () => setLang("en");
+    </script>
+  </body>
+</html>
