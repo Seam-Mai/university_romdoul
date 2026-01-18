@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Student Dashboard - University Portal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap");
+
+      body {
+        font-family: "Inter", sans-serif;
+        transition: background-color 0.3s, color 0.3s;
+      }
+
+      /* Dark Mode */
+      body.dark-mode {
+        background-color: #111827;
+        color: #f3f4f6;
+      }
+      body.dark-mode .bg-white {
+        background-color: #1f2937;
+        color: #f3f4f6;
+        border-color: #374151;
+      }
+      body.dark-mode .bg-gray-50 {
+        background-color: #111827;
+      }
+      body.dark-mode .bg-gray-100 {
+        background-color: #374151;
+        color: #e5e7eb;
+      }
+      body.dark-mode .text-gray-800 {
+        color: #f9fafb;
+      }
+      body.dark-mode .text-gray-700 {
+        color: #e5e7eb;
+      }
+      body.dark-mode .text-gray-600 {
+        color: #d1d5db;
+      }
+      body.dark-mode .text-gray-500 {
+        color: #9ca3af;
+      }
+      body.dark-mode .border-gray-100,
+      body.dark-mode .border-gray-200,
+      body.dark-mode .border-gray-300 {
+        border-color: #374151;
+      }
+      body.dark-mode nav {
+        background-color: #1f2937;
+        border-color: #374151;
+      }
+      body.dark-mode input,
+      body.dark-mode textarea,
+      body.dark-mode select {
+        background-color: #374151;
+        border-color: #4b5563;
+        color: white;
+      }
+      body.dark-mode .card-hover:hover {
+        box-shadow: 0 12px 24px rgba(0, 0, 0, 0.5);
+      }
+
+      .card-hover {
+        transition: all 0.3s ease;
+      }
+      .card-hover:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+      }
+      .sidebar-item {
+        transition: all 0.2s ease;
+        cursor: pointer;
+      }
+      .sidebar-item:hover {
+        background: rgba(99, 102, 241, 0.1);
+        border-left: 4px solid #6366f1;
+      }
+      .sidebar-item.active {
+        background: rgba(99, 102, 241, 0.15);
+        border-left: 4px solid #6366f1;
+        font-weight: 600;
+      }
+      .fade-in {
+        animation: fadeIn 0.4s ease-in-out;
+      }
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .modal {
+        display: none;
+        position: fixed;
+        z-index: 100;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        backdrop-filter: blur(4px);
+        animation: fadeIn 0.3s;
+      }
+      .modal.show {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      ::-webkit-scrollbar {
+        width: 6px;
+      }
+      ::-webkit-scrollbar-track {
+        background: transparent;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #cbd5e1;
+        border-radius: 3px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: #94a3b8;
+      }
+    </style>
+  </head>
+  <body class="bg-gray-50 text-gray-800">
+    <!-- Navigation Bar -->
+    <nav
+      class="bg-white shadow-sm border-b border-gray-200 fixed w-full top-0 z-50 transition-colors duration-300"
+    >
+      <div class="px-6 py-4">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center space-x-4">
+            <button
+              id="sidebarToggle"
+              class="lg:hidden text-gray-600 hover:text-gray-900"
+            >
+              <i class="fas fa-bars text-xl"></i>
+            </button>
+            <div class="flex items-center space-x-3">
+              <div class="bg-indigo-600 p-2 rounded-lg">
+                <i class="fas fa-user-graduate text-white text-xl"></i>
+              </div>
+              <div>
+                <h1 class="text-xl font-bold">UniPortal</h1>
+                <p class="text-xs text-gray-500">Student Dashboard</p>
+              </div>
+            </div>
+          </div>
+          <div class="flex items-center space-x-4">
+            <button class="relative text-gray-600 hover:text-gray-900">
+              <i class="fas fa-bell text-xl"></i
+              ><span
+                class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center"
+                >2</span
+              >
+            </button>
+            <div class="flex items-center space-x-3 border-l pl-4">
+              <!-- PROFILE SECTION -->
+              <img
+                id="profile-img"
+                src="https://ui-avatars.com/api/?name=Alex+Doe&background=indigo&color=fff"
+                class="w-10 h-10 rounded-full border-2 border-indigo-100"
+                alt="Profile"
+              />
+              <div class="hidden md:block">
+                <p class="text-sm font-semibold" id="profile-name">
+                  Loading...
+                </p>
+                <p class="text-xs text-gray-500" id="profile-role">Student</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <div class="flex pt-16 h-screen">
+      <!-- Sidebar -->
+      <aside
+        id="sidebar"
+        class="fixed lg:static inset-y-0 left-0 w-64 bg-white shadow-lg transform -translate-x-full lg:translate-x-0 transition-transform duration-300 z-40 mt-16 overflow-y-auto pb-20"
+      >
+        <div class="p-6 space-y-2">
+          <!-- Note: onclick events modified to use window.switchView -->
+          <div
+            onclick="window.switchView('dashboard')"
+            class="sidebar-item active flex items-center space-x-3 px-4 py-3 rounded-lg"
+            data-target="dashboard"
+          >
+            <i class="fas fa-home text-indigo-600"></i><span>Dashboard</span>
+          </div>
+          <div
+            onclick="window.switchView('courses')"
+            class="sidebar-item flex items-center space-x-3 px-4 py-3 rounded-lg"
+            data-target="courses"
+          >
+            <i class="fas fa-book text-gray-400"></i><span>My Courses</span>
+          </div>
+          <div
+            onclick="window.switchView('students')"
+            class="sidebar-item flex items-center space-x-3 px-4 py-3 rounded-lg"
+            data-target="students"
+          >
+            <i class="fas fa-users text-gray-400"></i><span>Classmates</span>
+          </div>
+          <div
+            onclick="window.switchView('assignments')"
+            class="sidebar-item flex items-center space-x-3 px-4 py-3 rounded-lg"
+            data-target="assignments"
+          >
+            <i class="fas fa-tasks text-gray-400"></i><span>Assignments</span>
+          </div>
+          <div
+            onclick="window.switchView('grades')"
+            class="sidebar-item flex items-center space-x-3 px-4 py-3 rounded-lg"
+            data-target="grades"
+          >
+            <i class="fas fa-file-invoice text-gray-400"></i><span>Grades</span>
+          </div>
+          <div
+            onclick="window.switchView('schedule')"
+            class="sidebar-item flex items-center space-x-3 px-4 py-3 rounded-lg"
+            data-target="schedule"
+          >
+            <i class="fas fa-calendar-alt text-gray-400"></i
+            ><span>Schedule</span>
+          </div>
+          <div
+            onclick="window.switchView('attendance')"
+            class="sidebar-item flex items-center space-x-3 px-4 py-3 rounded-lg"
+            data-target="attendance"
+          >
+            <i class="fas fa-user-check text-gray-400"></i
+            ><span>Attendance</span>
+          </div>
+          <div
+            onclick="window.switchView('feedback')"
+            class="sidebar-item flex items-center space-x-3 px-4 py-3 rounded-lg"
+            data-target="feedback"
+          >
+            <i class="fas fa-comment-dots text-gray-400"></i
+            ><span>Feedback</span>
+          </div>
+          <div
+            onclick="window.switchView('analytics')"
+            class="sidebar-item flex items-center space-x-3 px-4 py-3 rounded-lg"
+            data-target="analytics"
+          >
+            <i class="fas fa-chart-pie text-gray-400"></i><span>Analytics</span>
+          </div>
+          <div
+            onclick="window.switchView('messages')"
+            class="sidebar-item flex items-center space-x-3 px-4 py-3 rounded-lg"
+            data-target="messages"
+          >
+            <i class="fas fa-envelope text-gray-400"></i><span>Messages</span>
+          </div>
+          <div
+            onclick="window.switchView('payments')"
+            class="sidebar-item flex items-center space-x-3 px-4 py-3 rounded-lg"
+            data-target="payments"
+          >
+            <i class="fas fa-hand-holding-usd text-gray-400"></i>
+
+            <span>Payments</span>
+          </div>
+          <div
+            onclick="window.switchView('settings')"
+            class="sidebar-item flex items-center space-x-3 px-4 py-3 rounded-lg"
+            data-target="settings"
+          >
+            <i class="fas fa-cog text-gray-400"></i><span>Settings</span>
+          </div>
+
+          <!-- ADDED LOGOUT BUTTON -->
+          <div
+            onclick="logout()"
+            class="sidebar-item flex items-center space-x-3 px-4 py-3 rounded-lg text-red-500 hover:text-red-600"
+          >
+            <i class="fas fa-sign-out-alt w-5"></i><span>Logout</span>
+          </div>
+        </div>
+      </aside>
+
+      <!-- Main Content Area -->
+      <main
+        id="mainContent"
+        class="flex-1 p-6 lg:ml-0 fade-in overflow-y-auto h-full pb-24"
+      >
+        <!-- Content injects here via JS -->
+      </main>
+    </div>
+
+    <!-- GLOBAL MODALS CONTAINER -->
+    <div id="modal-container"></div>
+
+    <!-- MAIN LOGIC -->
+    <script type="module">
+      import { API } from "./api.js";
+
+      // ==========================================
+      // AUTHENTICATION CHECK
+      // ==========================================
+      const token = localStorage.getItem("token");
+      const userStr = localStorage.getItem("user");
+
+      if (!token || !userStr) {
+        window.location.href = "../../login.html"; // Go back to login
+      }
+
+      const currentUser = JSON.parse(userStr);
+
+      // ==========================================
+      // 1. GLOBAL HELPERS
+      // ==========================================
+      window.closeModal = function (id) {
+        const m = document.getElementById(id);
+        if (m) {
+          m.classList.remove("show");
+          setTimeout(() => m.remove(), 300);
+        }
+      };
+
+      window.logout = function () {
+        if (confirm("Are you sure you want to logout?")) {
+          localStorage.clear();
+          window.location.href = "../../login.html";
+        }
+      };
+
+      window.showModal = function (html) {
+        const container = document.getElementById("modal-container");
+        container.innerHTML = html;
+        const modal = container.querySelector(".modal");
+        modal.style.display = "flex";
+        setTimeout(() => modal.classList.add("show"), 10);
+      };
+
+      // ==========================================
+      // 2. DYNAMIC VIEW RENDERERS
+      // ==========================================
+
+      // --- DASHBOARD ---
+      const renderDashboard = async () => {
+        const data = await API.getDashboardData();
+
+        return `
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
+          <div class="bg-white rounded-xl shadow-sm p-6 card-hover border border-gray-100">
+            <div class="flex items-center justify-between">
+              <div><p class="text-sm text-gray-500 font-medium">Current GPA</p><h3 class="text-3xl font-bold mt-2">${
+                data.gpa || 3.8
+              }</h3></div>
+              <div class="bg-indigo-100 p-4 rounded-xl"><i class="fas fa-star text-indigo-600 text-2xl"></i></div>
+            </div>
+          </div>
+          <div class="bg-white rounded-xl shadow-sm p-6 card-hover border border-gray-100">
+             <div class="flex items-center justify-between">
+              <div><p class="text-sm text-gray-500 font-medium">Attendance</p><h3 class="text-3xl font-bold mt-2">${
+                data.attendancePct
+              }</h3></div>
+              <div class="bg-green-100 p-4 rounded-xl"><i class="fas fa-user-clock text-green-600 text-2xl"></i></div>
+            </div>
+          </div>
+           <div class="bg-white rounded-xl shadow-sm p-6 card-hover border border-gray-100">
+             <div class="flex items-center justify-between">
+              <div><p class="text-sm text-gray-500 font-medium">Active Assignments</p><h3 class="text-3xl font-bold mt-2">${
+                data.assignmentsCount
+              }</h3></div>
+              <div class="bg-orange-100 p-4 rounded-xl"><i class="fas fa-book text-orange-600 text-2xl"></i></div>
+            </div>
+          </div>
+           <div class="bg-white rounded-xl shadow-sm p-6 card-hover border border-gray-100">
+             <div class="flex items-center justify-between">
+              <div><p class="text-sm text-gray-500 font-medium">Active Courses</p><h3 class="text-3xl font-bold mt-2">${
+                data.coursesCount
+              }</h3></div>
+              <div class="bg-blue-100 p-4 rounded-xl"><i class="fas fa-graduation-cap text-blue-600 text-2xl"></i></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div class="lg:col-span-2 bg-white rounded-xl shadow-sm border border-gray-100">
+            <div class="p-6 border-b border-gray-100"><h2 class="text-xl font-bold text-gray-800">My Classes</h2></div>
+            <div class="p-6 space-y-4">
+              ${data.courses
+                .map(
+                  (c, i) => `
+              <div class="flex items-start space-x-4 p-4 border border-gray-100 rounded-lg bg-${
+                c.color || "indigo"
+              }-50 hover:shadow-md transition">
+                <div class="bg-white rounded-lg p-3 text-center min-w-[70px] shadow-sm"><p class="text-xs text-indigo-600 font-bold">0${
+                  9 + i
+                }:00</p><p class="text-xs text-gray-500">AM</p></div>
+                <div class="flex-1"><h4 class="font-bold text-gray-800">${
+                  c.name
+                }</h4><p class="text-sm text-gray-600">${
+                    c.code
+                  } • Room 30${i}</p></div>
+              </div>`
+                )
+                .join("")}
+            </div>
+          </div>
+        </div>
+      `;
+      };
+
+      // ... (KEEP THE REST OF YOUR RENDER FUNCTIONS UNCHANGED) ...
+      // renderCourses, renderStudents, renderAssignments, etc.
+
+      const renderCourses = async () => {
+        const courses = await API.getCourses();
+        return `
+        <div class="mb-8"><h2 class="text-3xl font-bold mb-2">My Curriculum</h2><p class="text-gray-500">Enrolled courses for the academic year.</p></div>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            ${courses
+              .map(
+                (c) => `
+            <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6 card-hover border-t-4 border-${
+              c.color || "indigo"
+            }-500">
+                <div class="flex items-center space-x-4 mb-4"><div class="bg-${
+                  c.color || "indigo"
+                }-100 p-3 rounded-lg"><i class="fas ${
+                  c.img || "fa-book"
+                } text-${
+                  c.color || "indigo"
+                }-600 text-xl"></i></div><div><h3 class="font-bold">${
+                  c.name
+                }</h3><p class="text-xs text-gray-500">${c.code}</p></div></div>
+                <div class="mt-4"><div class="flex justify-between text-xs text-gray-500 mb-1"><span>Students</span><span>${
+                  c.students
+                }</span></div><div class="w-full bg-gray-100 rounded-full h-2"><div class="bg-${
+                  c.color || "indigo"
+                }-600 h-2 rounded-full" style="width: 65%"></div></div></div>
+                <button class="mt-4 w-full py-2 bg-gray-50 hover:bg-gray-100 text-indigo-600 text-sm font-semibold rounded-lg transition">Enter Classroom</button>
+            </div>`
+              )
+              .join("")}
+        </div>`;
+      };
+
+      const renderStudents = async () => {
+        const students = await API.getClassmates();
+        return `
+        <div class="mb-6 flex justify-between items-center"><h2 class="text-2xl font-bold">Class Directory</h2></div>
+        <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+             <div class="p-4 border-b border-gray-100 bg-gray-50 font-semibold text-gray-700">All Classmates</div>
+             <div class="overflow-x-auto">
+                <table class="w-full text-left">
+                    <thead class="bg-gray-50 text-xs uppercase text-gray-500"><tr><th class="p-4">Name</th><th class="p-4">ID</th><th class="p-4">Email</th></tr></thead>
+                    <tbody class="divide-y divide-gray-100">
+                    ${students
+                      .map(
+                        (s) => `
+                        <tr class="hover:bg-gray-50">
+                             <td class="p-4 flex items-center gap-3"><img src="https://ui-avatars.com/api/?name=${
+                               s.name
+                             }&background=random" class="w-8 h-8 rounded-full"><span class="font-bold text-gray-700">${
+                          s.name
+                        }</span></td>
+                             <td class="p-4 text-sm text-gray-500">${s.id}</td>
+                             <td class="p-4 text-sm text-gray-500">${
+                               s.email || "N/A"
+                             }</td>
+                        </tr>`
+                      )
+                      .join("")}
+                    </tbody>
+                </table>
+             </div>
+        </div>
+      `;
+      };
+
+      const renderAssignments = async () => {
+        const assignments = await API.getAssignments();
+        return `
+        <div class="mb-6 flex justify-between items-center"><div><h2 class="text-2xl font-bold text-gray-800">My Assignments</h2><p class="text-gray-500">Track deadlines.</p></div></div>
+        <div class="space-y-4">
+            ${
+              assignments.length === 0
+                ? '<p class="text-gray-500">No active assignments.</p>'
+                : ""
+            }
+            ${assignments
+              .map(
+                (a) => `
+            <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-5 flex flex-col md:flex-row items-center justify-between card-hover border-l-4 border-l-red-500">
+                <div class="flex items-start space-x-4 mb-4 md:mb-0 w-full md:w-auto">
+                    <div class="bg-red-50 p-3 rounded-lg"><i class="fas fa-exclamation-circle text-red-500 text-xl"></i></div>
+                    <div><h3 class="font-bold text-gray-800">${
+                      a.title
+                    }</h3><p class="text-sm text-gray-500">${
+                  a.description || "No description"
+                }</p><div class="mt-2 text-xs flex items-center space-x-3"><span class="text-red-600 font-semibold">Due: ${
+                  a.dueDate || "TBA"
+                }</span></div></div>
+                </div>
+                <div class="flex items-center space-x-3 w-full md:w-auto justify-end">
+                    <button class="bg-indigo-600 text-white px-5 py-2 rounded-lg text-sm hover:bg-indigo-700 transition shadow btn-submit-assign">Submit Work</button>
+                </div>
+            </div>`
+              )
+              .join("")}
+        </div>
+      `;
+      };
+
+      const renderGrades = async () => {
+        const grades = await API.getGrades();
+        return `
+        <div class="mb-6"><h2 class="text-2xl font-bold text-gray-800">My Academic Report</h2></div>
+        <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+                <div class="overflow-x-auto">
+                    <table class="w-full text-sm text-left">
+                        <thead class="text-xs text-gray-700 uppercase bg-gray-50"><tr><th class="px-6 py-3">Student Name</th><th class="px-6 py-3 text-center">Points</th><th class="px-6 py-3 text-center">Grade</th></tr></thead>
+                        <tbody class="divide-y divide-gray-100">
+                            ${grades
+                              .map(
+                                (g) => `
+                            <tr class="bg-white hover:bg-gray-50">
+                                <td class="px-6 py-4 font-medium text-gray-900">${
+                                  g.studentName || "Unknown"
+                                }</td>
+                                <td class="px-6 py-4 text-center font-semibold">${
+                                  g.points || 0
+                                }</td>
+                                <td class="px-6 py-4 text-center"><span class="bg-green-100 text-green-800 text-xs font-semibold px-2.5 py-0.5 rounded">${
+                                  g.grade || "F"
+                                }</span></td>
+                            </tr>`
+                              )
+                              .join("")}
+                        </tbody>
+                    </table>
+                </div>
+        </div>
+      `;
+      };
+
+      const renderAttendance = async () => {
+        const attendance = await API.getAttendance();
+        return `
+        <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+             <div class="p-5 border-b border-gray-100 flex justify-between items-center bg-white"><h3 class="font-bold text-gray-800 text-lg">Attendance History</h3></div>
+             <div class="overflow-x-auto"><table class="w-full text-left text-sm"><thead class="bg-gray-50 text-gray-600 uppercase text-xs font-bold border-b"><tr><th class="px-6 py-4">Student ID</th><th class="px-6 py-4">Date</th><th class="px-6 py-4">Status</th><th class="px-6 py-4">Time</th></tr></thead>
+             <tbody class="divide-y divide-gray-100 bg-white">
+                ${attendance
+                  .map(
+                    (a) => `
+                <tr>
+                    <td class="px-6 py-4 text-gray-500">${a.studentId}</td>
+                    <td class="px-6 py-4 text-gray-800">${a.attendanceDate}</td>
+                    <td class="px-6 py-4"><span class="px-2 py-1 rounded text-xs font-bold ${
+                      a.status === "Present"
+                        ? "bg-green-100 text-green-700"
+                        : "bg-red-100 text-red-700"
+                    }">${a.status}</span></td>
+                    <td class="px-6 py-4 text-gray-500">${
+                      a.checkInTime || "-"
+                    }</td>
+                </tr>`
+                  )
+                  .join("")}
+             </tbody></table></div>
+        </div>
+          `;
+      };
+
+      const renderMessages = async () => {
+        return `
+        <div class="h-[calc(100vh-140px)] flex bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200">
+            <div class="w-1/3 border-r border-gray-200 flex flex-col bg-gray-50">
+                <div class="p-4 border-b border-gray-200 bg-white"><input type="text" placeholder="Search..." class="w-full bg-gray-100 border-none rounded-lg px-4 py-2 text-sm focus:ring-2 focus:ring-indigo-500"></div>
+                <div class="overflow-y-auto flex-1">
+                    <div class="p-4 border-b border-gray-100 hover:bg-white cursor-pointer bg-white border-l-4 border-l-indigo-600"><div class="flex justify-between mb-1"><span class="font-bold text-gray-800">Dr. Sarah Smith</span><span class="text-xs text-gray-500">10:36 AM</span></div><p class="text-sm text-gray-500 truncate">Great. Let me know if you need help.</p></div>
+                </div>
+            </div>
+            <div class="flex-1 flex flex-col bg-white">
+                <div class="p-4 border-b border-gray-200 flex justify-between items-center bg-gray-50"><div class="flex items-center space-x-3"><div class="relative"><img src="https://ui-avatars.com/api/?name=Sarah+Smith&background=random" class="w-10 h-10 rounded-full"><span class="absolute bottom-0 right-0 w-3 h-3 bg-green-500 border-2 border-white rounded-full"></span></div><div><h3 class="font-bold text-gray-800">Dr. Sarah Smith</h3><p class="text-xs text-green-600">Online</p></div></div></div>
+                <div id="chatBox" class="flex-1 p-6 overflow-y-auto space-y-4 bg-gray-50/50"></div>
+                <div class="p-4 border-t border-gray-200 bg-white">
+                    <div class="flex items-center gap-2"><button class="text-gray-400 hover:text-gray-600 p-2"><i class="fas fa-paperclip"></i></button><input type="text" id="chatInput" placeholder="Write a message..." class="flex-1 border border-gray-300 rounded-full px-4 py-2 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500"><button id="sendBtn" class="bg-indigo-600 text-white w-10 h-10 rounded-full hover:bg-indigo-700 transition flex items-center justify-center shadow"><i class="fas fa-paper-plane"></i></button></div>
+                </div>
+            </div>
+        </div>
+      `;
+      };
+
+      const settingsView = `
+        <div class="max-w-3xl">
+            <h2 class="text-2xl font-bold mb-6 text-gray-800">Settings</h2>
+            <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6 mb-6">
+                <h3 class="text-lg font-bold mb-4 border-b pb-2 text-gray-800">Appearance</h3>
+                <div class="flex items-center justify-between py-4"><div><p class="font-medium text-gray-800">Dark Mode</p><p class="text-sm text-gray-500">Switch between light and dark themes</p></div><button id="themeToggle" class="bg-gray-200 relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:ring-offset-2"><span aria-hidden="true" class="translate-x-0 pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out"></span></button></div>
+            </div>
+        </div>`;
+
+      // ==========================================
+      // 3. LOGIC & EVENTS
+      // ==========================================
+
+      function attachAssignmentEvents() {
+        const btns = document.querySelectorAll(".btn-submit-assign");
+        btns.forEach((btn) => {
+          btn.addEventListener("click", () => {
+            const modalHtml = `
+                    <div id="submitModal" class="modal">
+                        <div class="bg-white rounded-xl shadow-2xl p-6 w-full max-w-lg mx-4">
+                            <h3 class="text-xl font-bold mb-4">Submit Assignment</h3>
+                            <form id="submissionForm" class="space-y-4">
+                                <input required type="text" class="w-full border rounded p-2" placeholder="Submission Title">
+                                <div class="flex justify-end space-x-3 mt-6">
+                                    <button type="button" onclick="closeModal('submitModal')" class="px-4 py-2 bg-gray-200 rounded">Cancel</button>
+                                    <button type="submit" class="px-6 py-2 bg-indigo-600 text-white rounded">Submit</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>`;
+            showModal(modalHtml);
+            document
+              .getElementById("submissionForm")
+              .addEventListener("submit", (e) => {
+                e.preventDefault();
+                alert("Assignment Submitted!");
+                closeModal("submitModal");
+              });
+          });
+        });
+      }
+
+      async function attachMessageEvents() {
+        const input = document.getElementById("chatInput");
+        const btn = document.getElementById("sendBtn");
+        const box = document.getElementById("chatBox");
+
+        // LOAD MESSAGES
+        const messages = await API.getMessages();
+
+        if (box) {
+          box.innerHTML = messages
+            .map(
+              (m) => `
+                <div class="flex ${
+                  m.type === "sent" ? "justify-end" : "justify-start"
+                }">
+                    <div class="${
+                      m.type === "sent"
+                        ? "bg-indigo-600 text-white"
+                        : "bg-white border text-gray-800"
+                    } p-3 rounded-2xl shadow-sm max-w-xs text-sm">
+                        <p>${
+                          m.text
+                        }</p><p class="text-[10px] mt-1 text-right">${
+                m.time
+              }</p>
+                    </div>
+                </div>`
+            )
+            .join("");
+          box.scrollTop = box.scrollHeight;
+        }
+
+        const send = () => {
+          if (!input.value.trim()) return;
+          box.innerHTML += `<div class="flex justify-end fade-in"><div class="bg-indigo-600 text-white p-3 rounded-2xl shadow-sm max-w-xs text-sm"><p>${input.value}</p></div></div>`;
+          box.scrollTop = box.scrollHeight;
+          input.value = "";
+        };
+
+        if (btn && input) {
+          btn.addEventListener("click", send);
+          input.addEventListener("keypress", (e) => {
+            if (e.key === "Enter") send();
+          });
+        }
+      }
+
+      function attachSettingsEvents() {
+        const btn = document.getElementById("themeToggle");
+        if (btn) {
+          btn.addEventListener("click", () => {
+            document.body.classList.toggle("dark-mode");
+            // Visual toggle logic...
+          });
+        }
+      }
+
+      // ==========================================
+      // 4. ROUTER
+      // ==========================================
+
+      window.switchView = async function (viewName) {
+        const main = document.getElementById("mainContent");
+        main.innerHTML = `<div class="flex justify-center items-center h-64"><div class="animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-600"></div></div>`;
+
+        // Update Sidebar
+        document.querySelectorAll(".sidebar-item").forEach((item) => {
+          item.classList.remove("active");
+          item
+            .querySelector("i")
+            .classList.replace("text-indigo-600", "text-gray-400");
+        });
+        const active = document.querySelector(`[data-target="${viewName}"]`);
+        if (active) {
+          active.classList.add("active");
+          active
+            .querySelector("i")
+            .classList.replace("text-gray-400", "text-indigo-600");
+        }
+
+        // Render Content
+        let html = "";
+        switch (viewName) {
+          case "dashboard":
+            html = await renderDashboard();
+            break;
+          case "courses":
+            html = await renderCourses();
+            break;
+          case "students":
+            html = await renderStudents();
+            break;
+          case "assignments":
+            html = await renderAssignments();
+            break;
+          case "grades":
+            html = await renderGrades();
+            break;
+          case "attendance":
+            html = await renderAttendance();
+            break;
+          case "messages":
+            html = await renderMessages();
+            break;
+          case "settings":
+            html = settingsView;
+            break;
+          case "schedule":
+            html = '<h2 class="text-2xl">Schedule (Coming Soon)</h2>';
+            break;
+          case "payments":
+            html = '<h2 class="text-2xl">Payments (See main UI)</h2>';
+            break;
+          // Note: I simplified payments for this logic, paste your long Payment HTML here if needed,
+          // but usually Payments is static UI in your example.
+          default:
+            html = "<h2>Page not found</h2>";
+        }
+
+        main.innerHTML = html;
+
+        // Attach Events after render
+        if (viewName === "messages") attachMessageEvents();
+        if (viewName === "settings") attachSettingsEvents();
+        if (viewName === "assignments") attachAssignmentEvents();
+      };
+
+      document.addEventListener("DOMContentLoaded", async () => {
+        console.log("Current User Data:", currentUser);
+
+        const nameEl = document.getElementById("profile-name");
+        const roleEl = document.getElementById("profile-role");
+        const imgEl = document.getElementById("profile-img");
+
+        // ប្រើ fullName ឬ fallback ទៅ 'User'
+        const displayName = currentUser.fullName || currentUser.email || "User";
+
+        if (nameEl) nameEl.textContent = displayName;
+        if (roleEl && currentUser.role) roleEl.textContent = currentUser.role;
+
+        if (imgEl) {
+          // បង្កើត Avatar តាមឈ្មោះ
+          imgEl.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(
+            displayName
+          )}&background=6366f1&color=fff`;
+        }
+
+        appData = await API.getAllData();
+
+        // 2. Start Router (Teacher Dashboard ប្រើឈ្មោះ router)
+        window.router("dashboard");
+
+        // Mobile Sidebar Toggle
+        document
+          .getElementById("sidebarToggle")
+          .addEventListener("click", () => {
+            document
+              .getElementById("sidebar")
+              .classList.toggle("-translate-x-full");
+          });
+      });
+    </script>
+  </body>
+</html>

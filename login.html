@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="km">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ចូលប្រើប្រាស់ - សាកលវិទ្យាល័យរំដួលបច្ចេកវិទ្យា</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Noto+Sans+Khmer:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              brand: { primary: "#00695c", hover: "#004d40" },
+            },
+            fontFamily: {
+              sans: ["Poppins", "Noto Sans Khmer", "sans-serif"],
+            },
+          },
+        },
+      };
+    </script>
+  </head>
+  <body
+    class="font-sans text-gray-800 bg-gray-100 overflow-x-hidden font-khmer"
+  >
+    <!-- (Your Header Code Here...) -->
+
+    <main class="flex-grow bg-gray-50 relative">
+      <section class="bg-brand-primary py-12 relative overflow-hidden">
+        <div class="container mx-auto px-4 md:px-8 text-center relative z-10">
+          <h1 class="text-3xl font-bold text-white mb-2">
+            ចូលប្រើប្រាស់ប្រព័ន្ធ
+          </h1>
+        </div>
+      </section>
+
+      <section class="container mx-auto px-4 md:px-8 py-16">
+        <div
+          class="max-w-md mx-auto bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100"
+        >
+          <div class="p-8">
+            <div class="text-center mb-8">
+              <h2 class="text-2xl font-bold text-gray-800">
+                ស្វាគមន៍មកកាន់ការត្រឡប់មកវិញ
+              </h2>
+              <p class="text-sm text-gray-500 mt-2">
+                សូមបញ្ចូលព័ត៌មានដើម្បីចូលប្រើប្រាស់
+              </p>
+            </div>
+
+            <!-- FORM START -->
+            <form id="loginForm" class="space-y-5">
+              <!-- Email Input -->
+              <div>
+                <label
+                  for="email"
+                  class="block text-sm font-medium text-gray-700 mb-1"
+                  >អ៊ីមែល</label
+                >
+                <input
+                  type="email"
+                  id="email"
+                  required
+                  class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-brand-primary"
+                  placeholder="example@romdoult.edu.km"
+                />
+              </div>
+
+              <!-- Password Input -->
+              <div>
+                <label
+                  for="password"
+                  class="block text-sm font-medium text-gray-700"
+                  >ពាក្យសម្ងាត់</label
+                >
+                <input
+                  type="password"
+                  id="password"
+                  required
+                  class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-brand-primary"
+                  placeholder="••••••••"
+                />
+              </div>
+
+              <!-- Submit Button -->
+              <button
+                type="submit"
+                class="w-full bg-brand-primary text-white py-3 px-4 rounded-lg font-bold hover:bg-brand-hover transition duration-300 shadow-md transform hover:-translate-y-0.5"
+              >
+                ចូលប្រើប្រាស់
+              </button>
+            </form>
+            <!-- FORM END -->
+
+            <div class="mt-8 text-center border-t border-gray-100 pt-6">
+              <p class="text-sm text-gray-600">
+                មិនទាន់មានគណនី?
+                <a
+                  href="register.html"
+                  class="font-semibold text-brand-primary hover:underline"
+                  >ចុះឈ្មោះនៅទីនេះ</a
+                >
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- (Your Footer Code Here...) -->
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script type="module">
+      import { AuthService } from "./js/auth.js";
+
+      document
+        .getElementById("loginForm")
+        .addEventListener("submit", async (e) => {
+          e.preventDefault();
+
+          const email = document.getElementById("email").value;
+          const password = document.getElementById("password").value;
+
+          try {
+            // 1. Call Backend
+            const data = await AuthService.login(email, password);
+
+            // 2. Save Token in Browser
+            localStorage.setItem("token", data.token);
+            localStorage.setItem("user", JSON.stringify(data));
+
+            alert("ចូលប្រើប្រាស់ជោគជ័យ! (Login Successful)");
+
+            if (data.role === "TEACHER") {
+              window.location.href =
+                "./Dashboard/TeacherDashboard/teacherDashBoard.html";
+            } else if (data.role === "STUDENT") {
+              window.location.href =
+                "./Dashboard/StudentDashboard/StudentDashboard.html";
+            }
+          } catch (error) {
+            alert("មានបញ្ហាក្នុងការចូលប្រើប្រាស់: " + error.message);
+          }
+        });
+    </script>
+  </body>
+</html>

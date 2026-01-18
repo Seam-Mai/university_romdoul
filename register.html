@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="km">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ចុះឈ្មោះ - សាកលវិទ្យាល័យរំដួលបច្ចេកវិទ្យា</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Noto+Sans+Khmer:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              brand: { primary: "#00695c", hover: "#004d40" },
+            },
+            fontFamily: {
+              sans: ["Poppins", "Noto Sans Khmer", "sans-serif"],
+            },
+          },
+        },
+      };
+    </script>
+  </head>
+  <body
+    class="font-sans text-gray-800 bg-gray-100 overflow-x-hidden font-khmer"
+  >
+    <!-- (Your Header Code Here... Keep it as is) -->
+
+    <main class="flex-grow bg-gray-50 relative">
+      <section class="bg-brand-primary py-12 relative overflow-hidden">
+        <div class="container mx-auto px-4 md:px-8 text-center relative z-10">
+          <h1 class="text-3xl font-bold text-white mb-2">បង្កើតគណនីថ្មី</h1>
+        </div>
+      </section>
+
+      <section class="container mx-auto px-4 md:px-8 py-16">
+        <div
+          class="max-w-lg mx-auto bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100"
+        >
+          <div class="p-8">
+            <div class="text-center mb-8">
+              <h2 class="text-2xl font-bold text-gray-800">ចុះឈ្មោះ</h2>
+              <p class="text-sm text-gray-500 mt-2">បំពេញព័ត៌មានខាងក្រោម</p>
+            </div>
+
+            <!-- FORM START -->
+            <form id="registerForm" class="space-y-4">
+              <!-- Full Name -->
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1"
+                  >ឈ្មោះពេញ</label
+                >
+                <input
+                  type="text"
+                  id="fullname"
+                  required
+                  class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-brand-primary"
+                  placeholder="ឈ្មោះពេញរបស់អ្នក"
+                />
+              </div>
+
+              <!-- Role Selector (ADDED FOR BACKEND LOGIC) -->
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1"
+                  >តួនាទី (Role)</label
+                >
+                <select
+                  id="role"
+                  class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-brand-primary bg-white"
+                >
+                  <option value="STUDENT">និស្សិត (Student)</option>
+                  <option value="TEACHER">គ្រូបង្រៀន (Teacher)</option>
+                </select>
+              </div>
+
+              <!-- Phone -->
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1"
+                  >លេខទូរស័ព្ទ</label
+                >
+                <input
+                  type="tel"
+                  id="phone"
+                  class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-brand-primary"
+                  placeholder="012 345 678"
+                />
+              </div>
+
+              <!-- Email -->
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1"
+                  >អ៊ីមែល</label
+                >
+                <input
+                  type="email"
+                  id="email"
+                  required
+                  class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-brand-primary"
+                  placeholder="email@example.com"
+                />
+              </div>
+
+              <!-- Password -->
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1"
+                  >ពាក្យសម្ងាត់</label
+                >
+                <input
+                  type="password"
+                  id="password"
+                  required
+                  class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-brand-primary"
+                  placeholder="••••••••"
+                />
+              </div>
+
+              <!-- Submit -->
+              <button
+                type="submit"
+                class="w-full bg-brand-primary text-white py-3 px-4 rounded-lg font-bold hover:bg-brand-hover transition duration-300 shadow-md mt-2"
+              >
+                ចុះឈ្មោះ
+              </button>
+            </form>
+            <!-- FORM END -->
+
+            <div class="mt-8 text-center border-t border-gray-100 pt-6">
+              <p class="text-sm text-gray-600">
+                មានគណនីរួចហើយ?
+                <a
+                  href="login.html"
+                  class="font-semibold text-brand-primary hover:underline"
+                  >ចូលប្រើប្រាស់</a
+                >
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- (Your Footer Code Here...) -->
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script type="module">
+      import { AuthService } from "./js/auth.js";
+
+      document
+        .getElementById("registerForm")
+        .addEventListener("submit", async (e) => {
+          e.preventDefault();
+
+          // 1. Get Values
+          const fullName = document.getElementById("fullname").value;
+          const email = document.getElementById("email").value;
+          const password = document.getElementById("password").value;
+          const role = document.getElementById("role").value; // STUDENT or TEACHER
+
+          // 2. Prepare Payload
+          const userData = {
+            fullName: fullName,
+            email: email,
+            password: password,
+            role: role,
+          };
+
+          // 3. Call Backend
+          try {
+            const data = await AuthService.register(userData);
+            alert("ចុះឈ្មោះជោគជ័យ! (Registration Successful)");
+
+            // Save Token and Redirect
+            localStorage.setItem("token", data.token);
+            localStorage.setItem("user", JSON.stringify(data));
+
+            if (data.role === "TEACHER") {
+              window.location.href =
+                "Dashboard/TeacherDashboard/teacherDashBoard.html";
+            } else {
+              window.location.href = "student-dashboard.html"; // Or your student page
+            }
+          } catch (error) {
+            alert("បរាជ័យក្នុងការចុះឈ្មោះ! (Registration Failed)");
+          }
+        });
+    </script>
+  </body>
+</html>

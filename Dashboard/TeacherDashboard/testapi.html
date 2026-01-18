@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Backend Connection Test</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+      }
+      .container {
+        background: white;
+        border-radius: 20px;
+        padding: 40px;
+        max-width: 800px;
+        width: 100%;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      }
+      h1 {
+        color: #667eea;
+        margin-bottom: 10px;
+        font-size: 32px;
+      }
+      p {
+        color: #666;
+        margin-bottom: 30px;
+      }
+      button {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        border: none;
+        padding: 15px 30px;
+        border-radius: 10px;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: transform 0.2s;
+        margin-right: 10px;
+        margin-bottom: 10px;
+      }
+      button:hover {
+        transform: translateY(-2px);
+      }
+      button:active {
+        transform: translateY(0);
+      }
+      #results {
+        margin-top: 30px;
+        padding: 20px;
+        background: #f7fafc;
+        border-radius: 10px;
+        border-left: 4px solid #667eea;
+      }
+      .log {
+        font-family: "Courier New", monospace;
+        font-size: 14px;
+        padding: 8px 0;
+        border-bottom: 1px solid #e2e8f0;
+      }
+      .log:last-child {
+        border-bottom: none;
+      }
+      .success {
+        color: #48bb78;
+      }
+      .error {
+        color: #f56565;
+      }
+      .info {
+        color: #4299e1;
+      }
+      .warning {
+        color: #ed8936;
+      }
+      pre {
+        background: #2d3748;
+        color: #e2e8f0;
+        padding: 15px;
+        border-radius: 8px;
+        overflow-x: auto;
+        margin-top: 10px;
+        font-size: 13px;
+      }
+      .status-badge {
+        display: inline-block;
+        padding: 5px 10px;
+        border-radius: 5px;
+        font-size: 12px;
+        font-weight: bold;
+        margin-left: 10px;
+      }
+      .status-success {
+        background: #c6f6d5;
+        color: #22543d;
+      }
+      .status-error {
+        background: #fed7d7;
+        color: #742a2a;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>🔧 Backend Connection Test</h1>
+      <p>
+        Test your Spring Boot backend connection before running the main
+        application.
+      </p>
+
+      <div>
+        <button onclick="testCourses()">📚 Test Courses API</button>
+        <button onclick="testStudents()">👨‍🎓 Test Students API</button>
+        <button onclick="testAssignments()">📝 Test Assignments API</button>
+        <button onclick="testAll()">🚀 Test All Endpoints</button>
+        <button onclick="clearResults()">🗑️ Clear</button>
+      </div>
+
+      <div id="results"></div>
+    </div>
+
+    <script>
+      const API_BASE = "http://localhost:8080/api";
+      let resultsDiv = document.getElementById("results");
+
+      function log(message, type = "info") {
+        const logEntry = document.createElement("div");
+        logEntry.className = `log ${type}`;
+        logEntry.textContent = message;
+        resultsDiv.appendChild(logEntry);
+        resultsDiv.scrollTop = resultsDiv.scrollHeight;
+      }
+
+      function clearResults() {
+        resultsDiv.innerHTML = "";
+      }
+
+      async function testEndpoint(name, url) {
+        log(`🔄 Testing ${name}...`, "info");
+
+        try {
+          const startTime = Date.now();
+          const response = await fetch(url, {
+            method: "GET",
+            mode: "cors",
+            headers: {
+              Accept: "application/json",
+            },
+          });
+
+          const endTime = Date.now();
+          const duration = endTime - startTime;
+
+          if (response.ok) {
+            const data = await response.json();
+            log(
+              `✅ ${name} - SUCCESS (${response.status}) - ${duration}ms`,
+              "success"
+            );
+
+            // Show data preview
+            const preview = document.createElement("pre");
+            preview.textContent = JSON.stringify(data, null, 2).substring(
+              0,
+              500
+            );
+            if (JSON.stringify(data).length > 500) {
+              preview.textContent += "\n... (truncated)";
+            }
+            resultsDiv.appendChild(preview);
+
+            return { success: true, data };
+          } else {
+            const errorText = await response.text();
+            log(`❌ ${name} - FAILED (${response.status})`, "error");
+            log(`   Error: ${errorText.substring(0, 200)}`, "error");
+            return { success: false, error: errorText };
+          }
+        } catch (error) {
+          log(`❌ ${name} - NETWORK ERROR`, "error");
+          log(`   ${error.message}`, "error");
+
+          if (error.message.includes("Failed to fetch")) {
+            log(`⚠️ Possible causes:`, "warning");
+            log(`   1. Backend is not running on port 8080`, "warning");
+            log(`   2. CORS is not configured properly`, "warning");
+            log(
+              `   3. You're accessing via file:// instead of http://`,
+              "warning"
+            );
+          }
+
+          return { success: false, error: error.message };
+        }
+      }
+
+      async function testCourses() {
+        clearResults();
+        log("📚 COURSES API TEST", "info");
+        log("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━", "info");
+        await testEndpoint("GET /api/courses/", `${API_BASE}/courses/getAll`);
+      }
+
+      async function testStudents() {
+        clearResults();
+        log("👨‍🎓 STUDENTS API TEST", "info");
+        log("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━", "info");
+        await testEndpoint(
+          "GET /api/v1/student-grades",
+          `${API_BASE}/v1/student-grades`
+        );
+      }
+
+      async function testAssignments() {
+        clearResults();
+        log("📝 ASSIGNMENTS API TEST", "info");
+        log("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━", "info");
+        await testEndpoint(
+          "GET /api/v1/assignments",
+          `${API_BASE}/v1/assignments`
+        );
+      }
+
+      async function testAll() {
+        clearResults();
+        log("🚀 TESTING ALL ENDPOINTS", "info");
+        log("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━", "info");
+        log("", "info");
+
+        const tests = [
+          { name: "Courses", url: `${API_BASE}/courses/getAll` },
+          { name: "Students", url: `${API_BASE}/v1/student-grades` },
+          { name: "Assignments", url: `${API_BASE}/v1/assignments` },
+          { name: "Attendance", url: `${API_BASE}/attendance/all` },
+          { name: "Teachers", url: `${API_BASE}/teachers` },
+        ];
+
+        let successCount = 0;
+        let failCount = 0;
+
+        for (const test of tests) {
+          const result = await testEndpoint(test.name, test.url);
+          if (result.success) {
+            successCount++;
+          } else {
+            failCount++;
+          }
+          log("", "info");
+        }
+
+        log("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━", "info");
+        log(
+          `📊 SUMMARY: ${successCount} passed, ${failCount} failed`,
+          successCount === tests.length ? "success" : "error"
+        );
+
+        if (successCount === tests.length) {
+          log("🎉 All tests passed! Your backend is ready!", "success");
+        } else {
+          log("⚠️ Some tests failed. Check the errors above.", "warning");
+        }
+      }
+
+      // Auto-test on load
+      window.addEventListener("load", () => {
+        setTimeout(() => {
+          log(
+            "👋 Welcome! Click a button to test your backend connection.",
+            "info"
+          );
+          log(
+            "⚡ Make sure your Spring Boot backend is running on port 8080.",
+            "warning"
+          );
+          log("", "info");
+        }, 500);
+      });
+    </script>
+  </body>
+</html>

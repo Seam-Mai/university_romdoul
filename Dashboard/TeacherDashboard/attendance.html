@@ -1,0 +1,1120 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Daily Student Check-in - University Portal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap");
+
+      body {
+        font-family: "Inter", sans-serif;
+      }
+
+      .card-hover {
+        transition: all 0.3s ease;
+      }
+
+      .card-hover:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+      }
+
+      .status-present {
+        background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+      }
+
+      .status-absent {
+        background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+      }
+
+      .status-late {
+        background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+      }
+
+      .status-excused {
+        background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+      }
+
+      .checkbox-custom {
+        appearance: none;
+        width: 24px;
+        height: 24px;
+        border: 2px solid #d1d5db;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: all 0.3s;
+      }
+
+      .checkbox-custom:checked {
+        background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+        border-color: #10b981;
+      }
+
+      .checkbox-custom:checked::after {
+        content: "✓";
+        display: block;
+        text-align: center;
+        color: white;
+        font-weight: bold;
+        line-height: 20px;
+      }
+
+      .search-highlight {
+        background-color: #fef08a;
+        padding: 2px 4px;
+        border-radius: 3px;
+      }
+
+      .fade-in {
+        animation: fadeIn 0.5s ease-in;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .stats-card {
+        position: relative;
+        overflow: hidden;
+      }
+
+      .stats-card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 100px;
+        height: 100px;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 50%;
+        transform: translate(30%, -30%);
+      }
+
+      .modal {
+        display: none;
+        position: fixed;
+        z-index: 100;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        animation: fadeIn 0.3s;
+      }
+
+      .modal.show {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .modal-content {
+        animation: slideUp 0.3s;
+      }
+
+      @keyframes slideUp {
+        from {
+          transform: translateY(50px);
+          opacity: 0;
+        }
+        to {
+          transform: translateY(0);
+          opacity: 1;
+        }
+      }
+
+      .qr-scanner {
+        border: 3px dashed #6366f1;
+        animation: pulse-border 2s infinite;
+      }
+
+      @keyframes pulse-border {
+        0%,
+        100% {
+          border-color: #6366f1;
+        }
+        50% {
+          border-color: #8b5cf6;
+        }
+      }
+    </style>
+  </head>
+  <body class="bg-gray-50">
+    <!-- Navigation Bar -->
+    <nav
+      class="bg-white shadow-md border-b border-gray-200 fixed w-full top-0 z-50"
+    >
+      <div class="px-6 py-4">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center space-x-4">
+            <div class="flex items-center space-x-3">
+              <div
+                class="bg-gradient-to-br from-indigo-600 to-purple-600 p-2 rounded-lg shadow-lg"
+              >
+                <i class="fas fa-clipboard-check text-white text-xl"></i>
+              </div>
+              <div>
+                <h1
+                  class="text-xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent"
+                >
+                  Daily Student Check
+                </h1>
+                <p class="text-xs text-gray-500">
+                  Attendance Management System
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="flex items-center space-x-4">
+            <div
+              class="hidden md:flex items-center space-x-2 bg-gray-100 px-4 py-2 rounded-lg"
+            >
+              <i class="far fa-calendar text-indigo-600"></i>
+              <span
+                class="text-sm font-semibold text-gray-700"
+                id="currentDate"
+              ></span>
+            </div>
+
+            <div
+              class="hidden md:flex items-center space-x-2 bg-gray-100 px-4 py-2 rounded-lg"
+            >
+              <i class="far fa-clock text-indigo-600"></i>
+              <span
+                class="text-sm font-semibold text-gray-700"
+                id="currentTime"
+              ></span>
+            </div>
+
+            <div class="flex items-center space-x-3 border-l pl-4">
+              <img
+                src="https://ui-avatars.com/api/?name=Dr+Smith&background=6366f1&color=fff"
+                class="w-10 h-10 rounded-full ring-2 ring-indigo-100"
+                alt="Profile"
+              />
+              <div class="hidden md:block">
+                <p class="text-sm font-semibold text-gray-800">
+                  Dr. Sarah Smith
+                </p>
+                <p class="text-xs text-gray-500">CS Department</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <div class="pt-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto pb-8">
+      <!-- Course Selection & Quick Actions -->
+      <div
+        class="mb-6 bg-gradient-to-r from-indigo-600 to-purple-600 rounded-2xl shadow-xl p-6 text-white"
+      >
+        <div
+          class="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4"
+        >
+          <div class="flex-1">
+            <h2 class="text-2xl font-bold mb-2">Today's Attendance</h2>
+            <p class="text-indigo-100 text-sm">
+              Track and manage student attendance efficiently
+            </p>
+          </div>
+          <div class="flex flex-wrap gap-3">
+            <select
+              id="courseSelect"
+              class="bg-white text-gray-800 px-4 py-2 rounded-lg font-medium focus:ring-2 focus:ring-white focus:outline-none"
+            >
+              <option value="cs301">
+                Data Structures & Algorithms (CS301)
+              </option>
+              <option value="cs402">Database Management Systems (CS402)</option>
+              <option value="cs501">Artificial Intelligence (CS501)</option>
+              <option value="cs203">Web Development (CS203)</option>
+            </select>
+            <button
+              id="qrScanBtn"
+              class="bg-white text-indigo-600 px-6 py-2 rounded-lg font-semibold hover:bg-indigo-50 transition-all flex items-center space-x-2"
+            >
+              <i class="fas fa-qrcode"></i>
+              <span>QR Scan</span>
+            </button>
+            <button
+              id="exportBtn"
+              class="bg-white/20 backdrop-blur-sm text-white px-6 py-2 rounded-lg font-semibold hover:bg-white/30 transition-all flex items-center space-x-2"
+            >
+              <i class="fas fa-download"></i>
+              <span>Export</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Stats Cards -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
+        <div
+          class="stats-card bg-white rounded-xl shadow-lg p-6 border-l-4 border-green-500"
+        >
+          <div class="flex items-center justify-between">
+            <div>
+              <p class="text-sm text-gray-500 font-medium mb-1">
+                Present Today
+              </p>
+              <h3 class="text-3xl font-bold text-gray-800">
+                <span id="presentCount">0</span>/45
+              </h3>
+              <p class="text-xs text-green-600 mt-2 flex items-center">
+                <i class="fas fa-arrow-up mr-1"></i>
+                <span id="presentPercent">0</span>%
+              </p>
+            </div>
+            <div
+              class="bg-gradient-to-br from-green-500 to-green-600 p-4 rounded-xl shadow-lg"
+            >
+              <i class="fas fa-user-check text-white text-2xl"></i>
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="stats-card bg-white rounded-xl shadow-lg p-6 border-l-4 border-red-500"
+        >
+          <div class="flex items-center justify-between">
+            <div>
+              <p class="text-sm text-gray-500 font-medium mb-1">Absent</p>
+              <h3 class="text-3xl font-bold text-gray-800">
+                <span id="absentCount">0</span>
+              </h3>
+              <p class="text-xs text-red-600 mt-2 flex items-center">
+                <i class="fas fa-exclamation-circle mr-1"></i> Needs attention
+              </p>
+            </div>
+            <div
+              class="bg-gradient-to-br from-red-500 to-red-600 p-4 rounded-xl shadow-lg"
+            >
+              <i class="fas fa-user-times text-white text-2xl"></i>
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="stats-card bg-white rounded-xl shadow-lg p-6 border-l-4 border-orange-500"
+        >
+          <div class="flex items-center justify-between">
+            <div>
+              <p class="text-sm text-gray-500 font-medium mb-1">Late Arrival</p>
+              <h3 class="text-3xl font-bold text-gray-800">
+                <span id="lateCount">0</span>
+              </h3>
+              <p class="text-xs text-orange-600 mt-2 flex items-center">
+                <i class="far fa-clock mr-1"></i> After 10:15 AM
+              </p>
+            </div>
+            <div
+              class="bg-gradient-to-br from-orange-500 to-orange-600 p-4 rounded-xl shadow-lg"
+            >
+              <i class="fas fa-clock text-white text-2xl"></i>
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="stats-card bg-white rounded-xl shadow-lg p-6 border-l-4 border-blue-500"
+        >
+          <div class="flex items-center justify-between">
+            <div>
+              <p class="text-sm text-gray-500 font-medium mb-1">Excused</p>
+              <h3 class="text-3xl font-bold text-gray-800">
+                <span id="excusedCount">0</span>
+              </h3>
+              <p class="text-xs text-blue-600 mt-2 flex items-center">
+                <i class="fas fa-file-medical mr-1"></i> With reason
+              </p>
+            </div>
+            <div
+              class="bg-gradient-to-br from-blue-500 to-blue-600 p-4 rounded-xl shadow-lg"
+            >
+              <i class="fas fa-clipboard-list text-white text-2xl"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Search and Filters -->
+      <div class="bg-white rounded-xl shadow-md p-6 mb-6">
+        <div class="flex flex-col lg:flex-row gap-4">
+          <div class="flex-1 relative">
+            <input
+              type="text"
+              id="searchInput"
+              placeholder="Search by name, ID, or email..."
+              class="w-full pl-12 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+            />
+            <i class="fas fa-search absolute left-4 top-4 text-gray-400"></i>
+          </div>
+          <div class="flex flex-wrap gap-2">
+            <button
+              class="filter-btn active px-6 py-3 rounded-lg font-medium transition-all"
+              data-filter="all"
+            >
+              All Students
+            </button>
+            <button
+              class="filter-btn px-6 py-3 rounded-lg font-medium transition-all"
+              data-filter="present"
+            >
+              <i class="fas fa-check-circle mr-1"></i> Present
+            </button>
+            <button
+              class="filter-btn px-6 py-3 rounded-lg font-medium transition-all"
+              data-filter="absent"
+            >
+              <i class="fas fa-times-circle mr-1"></i> Absent
+            </button>
+            <button
+              class="filter-btn px-6 py-3 rounded-lg font-medium transition-all"
+              data-filter="late"
+            >
+              <i class="fas fa-clock mr-1"></i> Late
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Student List -->
+      <div class="bg-white rounded-xl shadow-md overflow-hidden">
+        <div
+          class="p-6 border-b border-gray-200 flex items-center justify-between"
+        >
+          <div>
+            <h2 class="text-xl font-bold text-gray-800">Student Roster</h2>
+            <p class="text-sm text-gray-500 mt-1">
+              Mark attendance for today's class
+            </p>
+          </div>
+          <div class="flex items-center space-x-3">
+            <button
+              id="markAllPresentBtn"
+              class="bg-green-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-green-700 transition-colors"
+            >
+              <i class="fas fa-check-double mr-2"></i>Mark All Present
+            </button>
+            <button
+              id="saveAttendanceBtn"
+              class="bg-indigo-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-indigo-700 transition-colors"
+            >
+              <i class="fas fa-save mr-2"></i>Save Attendance
+            </button>
+          </div>
+        </div>
+
+        <div class="overflow-x-auto">
+          <table class="w-full">
+            <thead class="bg-gray-50 border-b border-gray-200">
+              <tr>
+                <th
+                  class="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase"
+                >
+                  <input
+                    type="checkbox"
+                    id="selectAll"
+                    class="checkbox-custom"
+                  />
+                </th>
+                <th
+                  class="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase"
+                >
+                  Student
+                </th>
+                <th
+                  class="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase"
+                >
+                  Student ID
+                </th>
+                <th
+                  class="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase"
+                >
+                  Status
+                </th>
+                <th
+                  class="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase"
+                >
+                  Check-in Time
+                </th>
+                <th
+                  class="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase"
+                >
+                  Actions
+                </th>
+              </tr>
+            </thead>
+            <tbody id="studentTableBody" class="divide-y divide-gray-200">
+              <!-- Students will be populated here by JavaScript -->
+            </tbody>
+          </table>
+        </div>
+
+        <div
+          class="p-4 border-t border-gray-200 flex items-center justify-between bg-gray-50"
+        >
+          <p class="text-sm text-gray-600">
+            Showing <span id="showingCount">45</span> students
+          </p>
+          <div class="text-sm text-gray-600">
+            Last saved: <span class="font-semibold text-indigo-600">Never</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- QR Scanner Modal -->
+    <div id="qrModal" class="modal">
+      <div
+        class="modal-content bg-white rounded-2xl shadow-2xl max-w-lg w-full mx-4"
+      >
+        <div
+          class="bg-gradient-to-r from-indigo-600 to-purple-600 p-6 rounded-t-2xl"
+        >
+          <div class="flex items-center justify-between">
+            <h3 class="text-2xl font-bold text-white">QR Code Scanner</h3>
+            <button
+              class="closeModal text-white hover:bg-white/20 rounded-lg p-2 transition-colors"
+            >
+              <i class="fas fa-times text-xl"></i>
+            </button>
+          </div>
+        </div>
+        <div class="p-8">
+          <div
+            class="qr-scanner bg-gray-100 rounded-xl p-8 mb-4 flex flex-col items-center justify-center"
+            style="min-height: 300px"
+          >
+            <i class="fas fa-qrcode text-indigo-600 text-6xl mb-4"></i>
+            <p class="text-gray-600 text-center mb-2">
+              Position QR code within the frame
+            </p>
+            <div
+              class="w-48 h-48 border-4 border-indigo-600 rounded-lg relative"
+            >
+              <div
+                class="absolute top-0 left-0 w-8 h-8 border-t-4 border-l-4 border-indigo-600 rounded-tl-lg"
+              ></div>
+              <div
+                class="absolute top-0 right-0 w-8 h-8 border-t-4 border-r-4 border-indigo-600 rounded-tr-lg"
+              ></div>
+              <div
+                class="absolute bottom-0 left-0 w-8 h-8 border-b-4 border-l-4 border-indigo-600 rounded-bl-lg"
+              ></div>
+              <div
+                class="absolute bottom-0 right-0 w-8 h-8 border-b-4 border-r-4 border-indigo-600 rounded-br-lg"
+              ></div>
+            </div>
+          </div>
+          <div class="text-center">
+            <button
+              id="simulateScanBtn"
+              class="bg-indigo-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-indigo-700 transition-colors"
+            >
+              <i class="fas fa-camera mr-2"></i>Simulate Scan (Demo)
+            </button>
+            <p class="text-xs text-gray-500 mt-2">
+              Click to simulate a student check-in
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Student Details Modal -->
+    <div id="detailsModal" class="modal">
+      <div
+        class="modal-content bg-white rounded-2xl shadow-2xl max-w-2xl w-full mx-4"
+      >
+        <div
+          class="bg-gradient-to-r from-indigo-600 to-purple-600 p-6 rounded-t-2xl"
+        >
+          <div class="flex items-center justify-between">
+            <h3 class="text-2xl font-bold text-white">Student Details</h3>
+            <button
+              class="closeModal text-white hover:bg-white/20 rounded-lg p-2 transition-colors"
+            >
+              <i class="fas fa-times text-xl"></i>
+            </button>
+          </div>
+        </div>
+        <div class="p-6">
+          <div class="flex items-start space-x-6 mb-6">
+            <img
+              id="detailsPhoto"
+              src=""
+              class="w-24 h-24 rounded-full ring-4 ring-indigo-100"
+              alt="Student"
+            />
+            <div class="flex-1">
+              <h4
+                id="detailsName"
+                class="text-2xl font-bold text-gray-800 mb-1"
+              ></h4>
+              <p id="detailsId" class="text-gray-600 mb-2"></p>
+              <p id="detailsEmail" class="text-gray-600 text-sm"></p>
+            </div>
+          </div>
+
+          <div class="space-y-4 mb-6">
+            <div
+              class="flex items-center justify-between p-4 bg-gray-50 rounded-lg"
+            >
+              <span class="text-sm font-medium text-gray-700"
+                >Attendance Rate</span
+              >
+              <span id="detailsRate" class="text-lg font-bold text-indigo-600"
+                >0%</span
+              >
+            </div>
+            <div
+              class="flex items-center justify-between p-4 bg-gray-50 rounded-lg"
+            >
+              <span class="text-sm font-medium text-gray-700"
+                >Total Classes</span
+              >
+              <span id="detailsTotal" class="text-lg font-bold text-gray-800"
+                >0</span
+              >
+            </div>
+            <div
+              class="flex items-center justify-between p-4 bg-gray-50 rounded-lg"
+            >
+              <span class="text-sm font-medium text-gray-700"
+                >Classes Attended</span
+              >
+              <span
+                id="detailsAttended"
+                class="text-lg font-bold text-green-600"
+                >0</span
+              >
+            </div>
+          </div>
+
+          <div class="mb-6">
+            <label class="block text-sm font-semibold text-gray-700 mb-2"
+              >Add Note</label
+            >
+            <textarea
+              id="detailsNote"
+              rows="3"
+              class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+              placeholder="Add notes about this student..."
+            ></textarea>
+          </div>
+
+          <div class="flex space-x-3">
+            <button
+              class="flex-1 bg-indigo-600 text-white py-3 rounded-lg font-semibold hover:bg-indigo-700 transition-colors"
+            >
+              <i class="fas fa-save mr-2"></i>Save Note
+            </button>
+            <button
+              class="closeModal flex-1 bg-gray-200 text-gray-700 py-3 rounded-lg font-semibold hover:bg-gray-300 transition-colors"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Sample student data
+      const students = [
+        {
+          id: "CS2024001",
+          name: "Emily Johnson",
+          email: "emily.j@university.edu",
+          status: "present",
+          time: "10:05 AM",
+          rate: 95,
+        },
+        {
+          id: "CS2024002",
+          name: "Michael Chen",
+          email: "michael.c@university.edu",
+          status: "present",
+          time: "10:03 AM",
+          rate: 92,
+        },
+        {
+          id: "CS2024003",
+          name: "Sarah Williams",
+          email: "sarah.w@university.edu",
+          status: "late",
+          time: "10:18 AM",
+          rate: 88,
+        },
+        {
+          id: "CS2024004",
+          name: "David Brown",
+          email: "david.b@university.edu",
+          status: "present",
+          time: "10:01 AM",
+          rate: 97,
+        },
+        {
+          id: "CS2024005",
+          name: "Jessica Lee",
+          email: "jessica.l@university.edu",
+          status: "present",
+          time: "10:07 AM",
+          rate: 90,
+        },
+        {
+          id: "CS2024006",
+          name: "Alex Turner",
+          email: "alex.t@university.edu",
+          status: "absent",
+          time: "-",
+          rate: 65,
+        },
+        {
+          id: "CS2024007",
+          name: "Maria Garcia",
+          email: "maria.g@university.edu",
+          status: "excused",
+          time: "-",
+          rate: 80,
+        },
+        {
+          id: "CS2024008",
+          name: "James Wilson",
+          email: "james.w@university.edu",
+          status: "present",
+          time: "10:12 AM",
+          rate: 85,
+        },
+        {
+          id: "CS2024009",
+          name: "Emma Davis",
+          email: "emma.d@university.edu",
+          status: "present",
+          time: "10:04 AM",
+          rate: 93,
+        },
+        {
+          id: "CS2024010",
+          name: "Daniel Martinez",
+          email: "daniel.m@university.edu",
+          status: "present",
+          time: "10:09 AM",
+          rate: 89,
+        },
+        {
+          id: "CS2024011",
+          name: "Olivia Taylor",
+          email: "olivia.t@university.edu",
+          status: "late",
+          time: "10:22 AM",
+          rate: 82,
+        },
+        {
+          id: "CS2024012",
+          name: "Ryan Anderson",
+          email: "ryan.a@university.edu",
+          status: "present",
+          time: "10:06 AM",
+          rate: 94,
+        },
+        {
+          id: "CS2024013",
+          name: "Sophia White",
+          email: "sophia.w@university.edu",
+          status: "absent",
+          time: "-",
+          rate: 70,
+        },
+        {
+          id: "CS2024014",
+          name: "Andrew Thomas",
+          email: "andrew.t@university.edu",
+          status: "present",
+          time: "10:08 AM",
+          rate: 91,
+        },
+        {
+          id: "CS2024015",
+          name: "Isabella Moore",
+          email: "isabella.m@university.edu",
+          status: "present",
+          time: "10:02 AM",
+          rate: 96,
+        },
+      ];
+
+      let currentFilter = "all";
+      let searchTerm = "";
+
+      // Update date and time
+      function updateDateTime() {
+        const now = new Date();
+        document.getElementById("currentDate").textContent =
+          now.toLocaleDateString("en-US", {
+            weekday: "long",
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+          });
+        document.getElementById("currentTime").textContent =
+          now.toLocaleTimeString("en-US", {
+            hour: "2-digit",
+            minute: "2-digit",
+          });
+      }
+      updateDateTime();
+      setInterval(updateDateTime, 60000);
+
+      // Update statistics
+      function updateStats() {
+        const present = students.filter((s) => s.status === "present").length;
+        const absent = students.filter((s) => s.status === "absent").length;
+        const late = students.filter((s) => s.status === "late").length;
+        const excused = students.filter((s) => s.status === "excused").length;
+        const total = students.length;
+
+        document.getElementById("presentCount").textContent = present + late;
+        document.getElementById("absentCount").textContent = absent;
+        document.getElementById("lateCount").textContent = late;
+        document.getElementById("excusedCount").textContent = excused;
+        document.getElementById("presentPercent").textContent = Math.round(
+          ((present + late) / total) * 100
+        );
+      }
+
+      // Get status badge HTML
+      function getStatusBadge(status) {
+        const badges = {
+          present:
+            '<span class="status-present px-3 py-1 rounded-full text-white text-xs font-semibold shadow-sm">Present</span>',
+          absent:
+            '<span class="status-absent px-3 py-1 rounded-full text-white text-xs font-semibold shadow-sm">Absent</span>',
+          late: '<span class="status-late px-3 py-1 rounded-full text-white text-xs font-semibold shadow-sm">Late</span>',
+          excused:
+            '<span class="status-excused px-3 py-1 rounded-full text-white text-xs font-semibold shadow-sm">Excused</span>',
+        };
+        return badges[status] || badges.absent;
+      }
+
+      // Render student table
+      function renderStudents() {
+        const tbody = document.getElementById("studentTableBody");
+        let filteredStudents = students.filter((student) => {
+          const matchesFilter =
+            currentFilter === "all" || student.status === currentFilter;
+          const matchesSearch =
+            student.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            student.id.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            student.email.toLowerCase().includes(searchTerm.toLowerCase());
+          return matchesFilter && matchesSearch;
+        });
+
+        tbody.innerHTML = filteredStudents
+          .map(
+            (student) => `
+                <tr class="hover:bg-gray-50 transition-colors fade-in" data-student-id="${
+                  student.id
+                }">
+                    <td class="px-6 py-4">
+                        <input type="checkbox" class="checkbox-custom student-checkbox" data-id="${
+                          student.id
+                        }" ${student.status !== "absent" ? "checked" : ""}>
+                    </td>
+                    <td class="px-6 py-4">
+                        <div class="flex items-center space-x-3">
+                            <img src="https://ui-avatars.com/api/?name=${encodeURIComponent(
+                              student.name
+                            )}&background=random" 
+                                 class="w-10 h-10 rounded-full" alt="${
+                                   student.name
+                                 }">
+                            <div>
+                                <p class="font-semibold text-gray-800">${
+                                  student.name
+                                }</p>
+                                <p class="text-xs text-gray-500">${
+                                  student.email
+                                }</p>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="px-6 py-4">
+                        <span class="font-medium text-gray-700">${
+                          student.id
+                        }</span>
+                    </td>
+                    <td class="px-6 py-4">
+                        ${getStatusBadge(student.status)}
+                    </td>
+                    <td class="px-6 py-4">
+                        <span class="text-sm ${
+                          student.time === "-"
+                            ? "text-gray-400"
+                            : "text-gray-700"
+                        }">${student.time}</span>
+                    </td>
+                    <td class="px-6 py-4">
+                        <div class="flex items-center space-x-2">
+                            <select class="status-select border border-gray-300 rounded-lg px-3 py-1.5 text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none" data-id="${
+                              student.id
+                            }">
+                                <option value="present" ${
+                                  student.status === "present" ? "selected" : ""
+                                }>Present</option>
+                                <option value="absent" ${
+                                  student.status === "absent" ? "selected" : ""
+                                }>Absent</option>
+                                <option value="late" ${
+                                  student.status === "late" ? "selected" : ""
+                                }>Late</option>
+                                <option value="excused" ${
+                                  student.status === "excused" ? "selected" : ""
+                                }>Excused</option>
+                            </select>
+                            <button class="view-details bg-indigo-100 text-indigo-600 p-2 rounded-lg hover:bg-indigo-200 transition-colors" data-id="${
+                              student.id
+                            }">
+                                <i class="fas fa-info-circle"></i>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            `
+          )
+          .join("");
+
+        document.getElementById("showingCount").textContent =
+          filteredStudents.length;
+
+        // Add event listeners
+        document.querySelectorAll(".student-checkbox").forEach((checkbox) => {
+          checkbox.addEventListener("change", handleCheckboxChange);
+        });
+
+        document.querySelectorAll(".status-select").forEach((select) => {
+          select.addEventListener("change", handleStatusChange);
+        });
+
+        document.querySelectorAll(".view-details").forEach((btn) => {
+          btn.addEventListener("click", handleViewDetails);
+        });
+
+        updateStats();
+      }
+
+      // Handle checkbox change
+      function handleCheckboxChange(e) {
+        const studentId = e.target.dataset.id;
+        const student = students.find((s) => s.id === studentId);
+        if (student) {
+          student.status = e.target.checked ? "present" : "absent";
+          student.time = e.target.checked
+            ? new Date().toLocaleTimeString("en-US", {
+                hour: "2-digit",
+                minute: "2-digit",
+              })
+            : "-";
+          renderStudents();
+        }
+      }
+
+      // Handle status change
+      function handleStatusChange(e) {
+        const studentId = e.target.dataset.id;
+        const student = students.find((s) => s.id === studentId);
+        if (student) {
+          student.status = e.target.value;
+          student.time =
+            e.target.value === "absent"
+              ? "-"
+              : new Date().toLocaleTimeString("en-US", {
+                  hour: "2-digit",
+                  minute: "2-digit",
+                });
+          renderStudents();
+        }
+      }
+
+      // Handle view details
+      function handleViewDetails(e) {
+        const studentId = e.currentTarget.dataset.id;
+        const student = students.find((s) => s.id === studentId);
+        if (student) {
+          document.getElementById(
+            "detailsPhoto"
+          ).src = `https://ui-avatars.com/api/?name=${encodeURIComponent(
+            student.name
+          )}&background=random&size=128`;
+          document.getElementById("detailsName").textContent = student.name;
+          document.getElementById("detailsId").textContent = student.id;
+          document.getElementById("detailsEmail").textContent = student.email;
+          document.getElementById("detailsRate").textContent =
+            student.rate + "%";
+          document.getElementById("detailsTotal").textContent = "30 classes";
+          document.getElementById("detailsAttended").textContent =
+            Math.round((30 * student.rate) / 100) + " classes";
+          document.getElementById("detailsModal").classList.add("show");
+        }
+      }
+
+      // Filter buttons
+      document.querySelectorAll(".filter-btn").forEach((btn) => {
+        btn.addEventListener("click", function () {
+          document.querySelectorAll(".filter-btn").forEach((b) => {
+            b.classList.remove("active", "bg-indigo-600", "text-white");
+            b.classList.add("bg-gray-100", "text-gray-700");
+          });
+          this.classList.add("active", "bg-indigo-600", "text-white");
+          this.classList.remove("bg-gray-100", "text-gray-700");
+          currentFilter = this.dataset.filter;
+          renderStudents();
+        });
+      });
+
+      // Search functionality
+      document
+        .getElementById("searchInput")
+        .addEventListener("input", function (e) {
+          searchTerm = e.target.value;
+          renderStudents();
+        });
+
+      // Select all checkbox
+      document
+        .getElementById("selectAll")
+        .addEventListener("change", function (e) {
+          document.querySelectorAll(".student-checkbox").forEach((checkbox) => {
+            checkbox.checked = e.target.checked;
+            const event = new Event("change");
+            checkbox.dispatchEvent(event);
+          });
+        });
+
+      // Mark all present
+      document
+        .getElementById("markAllPresentBtn")
+        .addEventListener("click", function () {
+          students.forEach((student) => {
+            student.status = "present";
+            student.time = new Date().toLocaleTimeString("en-US", {
+              hour: "2-digit",
+              minute: "2-digit",
+            });
+          });
+          renderStudents();
+        });
+
+      // Save attendance
+      document
+        .getElementById("saveAttendanceBtn")
+        .addEventListener("click", function () {
+          alert("Attendance saved successfully!");
+        });
+
+      // Export functionality
+      document
+        .getElementById("exportBtn")
+        .addEventListener("click", function () {
+          let csvContent = "Student ID,Name,Email,Status,Check-in Time\n";
+          students.forEach((student) => {
+            csvContent += `${student.id},${student.name},${student.email},${student.status},${student.time}\n`;
+          });
+
+          const blob = new Blob([csvContent], { type: "text/csv" });
+          const url = window.URL.createObjectURL(blob);
+          const a = document.createElement("a");
+          a.href = url;
+          a.download = `attendance_${
+            new Date().toISOString().split("T")[0]
+          }.csv`;
+          a.click();
+        });
+
+      // Modal functionality
+      const qrModal = document.getElementById("qrModal");
+      const detailsModal = document.getElementById("detailsModal");
+      const qrScanBtn = document.getElementById("qrScanBtn");
+      const closeModalBtns = document.querySelectorAll(".closeModal");
+
+      qrScanBtn.addEventListener("click", () => {
+        qrModal.classList.add("show");
+      });
+
+      closeModalBtns.forEach((btn) => {
+        btn.addEventListener("click", function () {
+          this.closest(".modal").classList.remove("show");
+        });
+      });
+
+      document.querySelectorAll(".modal").forEach((modal) => {
+        modal.addEventListener("click", function (e) {
+          if (e.target === this) {
+            this.classList.remove("show");
+          }
+        });
+      });
+
+      // Simulate QR scan
+      document
+        .getElementById("simulateScanBtn")
+        .addEventListener("click", function () {
+          const absentStudents = students.filter((s) => s.status === "absent");
+          if (absentStudents.length > 0) {
+            const randomStudent =
+              absentStudents[Math.floor(Math.random() * absentStudents.length)];
+            randomStudent.status = "present";
+            randomStudent.time = new Date().toLocaleTimeString("en-US", {
+              hour: "2-digit",
+              minute: "2-digit",
+            });
+            renderStudents();
+            qrModal.classList.remove("show");
+
+            // Show success notification
+            const notification = document.createElement("div");
+            notification.className =
+              "fixed top-24 right-6 bg-green-500 text-white px-6 py-4 rounded-lg shadow-lg z-50 flex items-center space-x-3 fade-in";
+            notification.innerHTML = `
+                    <i class="fas fa-check-circle text-2xl"></i>
+                    <div>
+                        <p class="font-semibold">${randomStudent.name}</p>
+                        <p class="text-sm">Checked in successfully!</p>
+                    </div>
+                `;
+            document.body.appendChild(notification);
+            setTimeout(() => notification.remove(), 3000);
+          } else {
+            alert("All students are already marked present!");
+          }
+        });
+
+      // Initial render
+      renderStudents();
+
+      // Apply active state to first filter button
+      document
+        .querySelector('.filter-btn[data-filter="all"]')
+        .classList.add("bg-indigo-600", "text-white");
+      document
+        .querySelector('.filter-btn[data-filter="all"]')
+        .classList.remove("bg-gray-100", "text-gray-700");
+    </script>
+  </body>
+</html>
