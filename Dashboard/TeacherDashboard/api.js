@@ -1,5 +1,5 @@
 // api.js
-const API_BASE_URL = "http://localhost:8080/api";
+const API_BASE_URL = "https://api.romdoul.com/api";
 
 // 1. Helper for Fetching
 async function fetchWithErrorHandling(url, options = {}) {
@@ -224,7 +224,7 @@ export const API = {
       // Map for Teacher Dashboard
       const mappedStudents = grades.map((s) => ({
         id: s.id, // DB ID
-        studentId: s.studentId, 
+        studentId: s.studentId,
         name: s.studentName,
         courseId: s.courseId,
         grade: s.points || 0,

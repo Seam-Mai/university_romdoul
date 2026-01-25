@@ -1,4 +1,4 @@
-const API_BASE_URL = "http://localhost:8080/api";
+const API_BASE_URL = "https://api.romdoul.com/api";
 const PAYMENT_BASE_URL = "http://localhost:8080";
 
 async function fetchWithErrorHandling(url, options = {}) {

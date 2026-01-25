@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -130,7 +130,7 @@
     </div>
 
     <script>
-      const API_BASE = "http://localhost:8080/api";
+      const API_BASE = "https://api.romdoul.com/api";
       let resultsDiv = document.getElementById("results");
 
       function log(message, type = "info") {
@@ -165,14 +165,14 @@
             const data = await response.json();
             log(
               `✅ ${name} - SUCCESS (${response.status}) - ${duration}ms`,
-              "success"
+              "success",
             );
 
             // Show data preview
             const preview = document.createElement("pre");
             preview.textContent = JSON.stringify(data, null, 2).substring(
               0,
-              500
+              500,
             );
             if (JSON.stringify(data).length > 500) {
               preview.textContent += "\n... (truncated)";
@@ -196,7 +196,7 @@
             log(`   2. CORS is not configured properly`, "warning");
             log(
               `   3. You're accessing via file:// instead of http://`,
-              "warning"
+              "warning",
             );
           }
 
@@ -217,7 +217,7 @@
         log("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━", "info");
         await testEndpoint(
           "GET /api/v1/student-grades",
-          `${API_BASE}/v1/student-grades`
+          `${API_BASE}/v1/student-grades`,
         );
       }
 
@@ -227,7 +227,7 @@
         log("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━", "info");
         await testEndpoint(
           "GET /api/v1/assignments",
-          `${API_BASE}/v1/assignments`
+          `${API_BASE}/v1/assignments`,
         );
       }
 
@@ -261,7 +261,7 @@
         log("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━", "info");
         log(
           `📊 SUMMARY: ${successCount} passed, ${failCount} failed`,
-          successCount === tests.length ? "success" : "error"
+          successCount === tests.length ? "success" : "error",
         );
 
         if (successCount === tests.length) {
@@ -276,11 +276,11 @@
         setTimeout(() => {
           log(
             "👋 Welcome! Click a button to test your backend connection.",
-            "info"
+            "info",
           );
           log(
             "⚡ Make sure your Spring Boot backend is running on port 8080.",
-            "warning"
+            "warning",
           );
           log("", "info");
         }, 500);
