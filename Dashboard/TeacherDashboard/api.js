@@ -58,7 +58,7 @@ export const API = {
   async getAllCourses() {
     try {
       const data = await fetchWithErrorHandling(
-        `${API_BASE_URL}/courses/getAll`
+        `${API_BASE_URL}/courses/getAll`,
       );
       return data || [];
     } catch (e) {
@@ -84,20 +84,20 @@ export const API = {
     if (courseId) params.append("courseId", courseId);
     if (search) params.append("search", search);
     return await fetchWithErrorHandling(
-      `${API_BASE_URL}/students?${params.toString()}`
+      `${API_BASE_URL}/students?${params.toString()}`,
     );
   },
 
   async getStudentsByCourse(courseId) {
     return await fetchWithErrorHandling(
-      `${API_BASE_URL}/students?courseId=${courseId}&size=100`
+      `${API_BASE_URL}/students?courseId=${courseId}&size=100`,
     );
   },
 
   // Alias for Student Dashboard
   async getClassmates() {
     const data = await fetchWithErrorHandling(
-      `${API_BASE_URL}/students?size=50`
+      `${API_BASE_URL}/students?size=50`,
     );
     return data ? data.content : [];
   },
@@ -124,7 +124,7 @@ export const API = {
   async getAllAssignments() {
     try {
       const data = await fetchWithErrorHandling(
-        `${API_BASE_URL}/v1/assignments`
+        `${API_BASE_URL}/v1/assignments`,
       );
       return data || [];
     } catch (e) {
@@ -148,7 +148,7 @@ export const API = {
   async getAllStudentGrades() {
     try {
       const data = await fetchWithErrorHandling(
-        `${API_BASE_URL}/v1/student-grades`
+        `${API_BASE_URL}/v1/student-grades`,
       );
       return data || [];
     } catch (e) {
@@ -164,7 +164,7 @@ export const API = {
   async updateStudentGrade(id, gradeValue) {
     // 1. Get current data
     const currentData = await fetchWithErrorHandling(
-      `${API_BASE_URL}/v1/student-grades/${id}`
+      `${API_BASE_URL}/v1/student-grades/${id}`,
     );
     if (!currentData) return;
 
@@ -177,7 +177,7 @@ export const API = {
           ...currentData,
           points: gradeValue,
         }),
-      }
+      },
     );
   },
 
@@ -224,7 +224,7 @@ export const API = {
       // Map for Teacher Dashboard
       const mappedStudents = grades.map((s) => ({
         id: s.id, // DB ID
-        studentId: s.studentId, // String ID
+        studentId: s.studentId, 
         name: s.studentName,
         courseId: s.courseId,
         grade: s.points || 0,
@@ -263,6 +263,27 @@ export const API = {
     }
   },
 
+  // New method for monthly attendance overview
+  async getMonthlyAttendanceOverview(courseId, year, month) {
+    const url = `${API_BASE_URL}/attendance/monthly-overview?courseId=${courseId}&year=${year}&month=${month}`;
+    console.log("🔍 Calling API:", url);
+
+    try {
+      const data = await fetchWithErrorHandling(url);
+      console.log("✅ API Response:", data);
+      console.log("📊 Number of students:", data?.length || 0);
+
+      if (data && data.length > 0) {
+        console.log("👤 First student sample:", data[0]);
+      }
+
+      return data || [];
+    } catch (e) {
+      console.error("❌ API Error:", e);
+      return [];
+    }
+  },
+
   // --- DASHBOARD DATA LOADER (STUDENT) ---
   async getDashboardData() {
     const [courses, assignments, grades, attendance] = await Promise.all([
@@ -292,3 +313,7 @@ window.toBase64 = (file) =>
     reader.onload = () => resolve(reader.result);
     reader.onerror = (error) => reject(error);
   });
+
+// In api.js, add this method to the API object
+
+export default API;

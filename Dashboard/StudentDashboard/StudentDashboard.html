@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -9,6 +9,8 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
       rel="stylesheet"
     />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.6.1/sockjs.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <style>
@@ -16,7 +18,9 @@
 
       body {
         font-family: "Inter", sans-serif;
-        transition: background-color 0.3s, color 0.3s;
+        transition:
+          background-color 0.3s,
+          color 0.3s;
       }
 
       /* Dark Mode */
@@ -307,7 +311,7 @@
 
     <!-- MAIN LOGIC -->
     <script type="module">
-      import { API } from "./api.js";
+      import { API } from "./api.js?v=6"; // Updated Version to force reload
 
       // ==========================================
       // AUTHENTICATION CHECK
@@ -315,11 +319,9 @@
       const token = localStorage.getItem("token");
       const userStr = localStorage.getItem("user");
 
-      if (!token || !userStr) {
-        window.location.href = "../../login.html"; // Go back to login
-      }
-
-      const currentUser = JSON.parse(userStr);
+      const currentUser = userStr
+        ? JSON.parse(userStr)
+        : { fullName: "Alex Doe", role: "Student" };
 
       // ==========================================
       // 1. GLOBAL HELPERS
@@ -355,71 +357,48 @@
       const renderDashboard = async () => {
         const data = await API.getDashboardData();
 
+        const safeData = data || {
+          gpa: 3.8,
+          attendancePct: "95%",
+          assignmentsCount: 4,
+          coursesCount: 6,
+          courses: [],
+        };
+
         return `
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
           <div class="bg-white rounded-xl shadow-sm p-6 card-hover border border-gray-100">
             <div class="flex items-center justify-between">
-              <div><p class="text-sm text-gray-500 font-medium">Current GPA</p><h3 class="text-3xl font-bold mt-2">${
-                data.gpa || 3.8
-              }</h3></div>
+              <div><p class="text-sm text-gray-500 font-medium">Current GPA</p><h3 class="text-3xl font-bold mt-2">${safeData.gpa}</h3></div>
               <div class="bg-indigo-100 p-4 rounded-xl"><i class="fas fa-star text-indigo-600 text-2xl"></i></div>
             </div>
           </div>
           <div class="bg-white rounded-xl shadow-sm p-6 card-hover border border-gray-100">
              <div class="flex items-center justify-between">
-              <div><p class="text-sm text-gray-500 font-medium">Attendance</p><h3 class="text-3xl font-bold mt-2">${
-                data.attendancePct
-              }</h3></div>
+              <div><p class="text-sm text-gray-500 font-medium">Attendance</p><h3 class="text-3xl font-bold mt-2">${safeData.attendancePct}</h3></div>
               <div class="bg-green-100 p-4 rounded-xl"><i class="fas fa-user-clock text-green-600 text-2xl"></i></div>
             </div>
           </div>
            <div class="bg-white rounded-xl shadow-sm p-6 card-hover border border-gray-100">
              <div class="flex items-center justify-between">
-              <div><p class="text-sm text-gray-500 font-medium">Active Assignments</p><h3 class="text-3xl font-bold mt-2">${
-                data.assignmentsCount
-              }</h3></div>
+              <div><p class="text-sm text-gray-500 font-medium">Active Assignments</p><h3 class="text-3xl font-bold mt-2">${safeData.assignmentsCount}</h3></div>
               <div class="bg-orange-100 p-4 rounded-xl"><i class="fas fa-book text-orange-600 text-2xl"></i></div>
             </div>
           </div>
            <div class="bg-white rounded-xl shadow-sm p-6 card-hover border border-gray-100">
              <div class="flex items-center justify-between">
-              <div><p class="text-sm text-gray-500 font-medium">Active Courses</p><h3 class="text-3xl font-bold mt-2">${
-                data.coursesCount
-              }</h3></div>
-              <div class="bg-blue-100 p-4 rounded-xl"><i class="fas fa-graduation-cap text-blue-600 text-2xl"></i></div>
+              <div><p class="text-sm text-gray-500 font-medium">Outstanding Fees</p><h3 class="text-3xl font-bold mt-2 text-red-600">$450.00</h3></div>
+              <div class="bg-red-100 p-4 rounded-xl"><i class="fas fa-wallet text-red-600 text-2xl"></i></div>
             </div>
           </div>
         </div>
-
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          <div class="lg:col-span-2 bg-white rounded-xl shadow-sm border border-gray-100">
-            <div class="p-6 border-b border-gray-100"><h2 class="text-xl font-bold text-gray-800">My Classes</h2></div>
-            <div class="p-6 space-y-4">
-              ${data.courses
-                .map(
-                  (c, i) => `
-              <div class="flex items-start space-x-4 p-4 border border-gray-100 rounded-lg bg-${
-                c.color || "indigo"
-              }-50 hover:shadow-md transition">
-                <div class="bg-white rounded-lg p-3 text-center min-w-[70px] shadow-sm"><p class="text-xs text-indigo-600 font-bold">0${
-                  9 + i
-                }:00</p><p class="text-xs text-gray-500">AM</p></div>
-                <div class="flex-1"><h4 class="font-bold text-gray-800">${
-                  c.name
-                }</h4><p class="text-sm text-gray-600">${
-                    c.code
-                  } • Room 30${i}</p></div>
-              </div>`
-                )
-                .join("")}
-            </div>
-          </div>
+        
+        <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-8 text-center">
+            <h2 class="text-xl font-bold text-gray-400">Welcome to your dashboard</h2>
+            <p class="text-gray-500 mt-2">Select an item from the sidebar to get started.</p>
         </div>
       `;
       };
-
-      // ... (KEEP THE REST OF YOUR RENDER FUNCTIONS UNCHANGED) ...
-      // renderCourses, renderStudents, renderAssignments, etc.
 
       const renderCourses = async () => {
         const courses = await API.getCourses();
@@ -429,25 +408,11 @@
             ${courses
               .map(
                 (c) => `
-            <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6 card-hover border-t-4 border-${
-              c.color || "indigo"
-            }-500">
-                <div class="flex items-center space-x-4 mb-4"><div class="bg-${
-                  c.color || "indigo"
-                }-100 p-3 rounded-lg"><i class="fas ${
-                  c.img || "fa-book"
-                } text-${
-                  c.color || "indigo"
-                }-600 text-xl"></i></div><div><h3 class="font-bold">${
-                  c.name
-                }</h3><p class="text-xs text-gray-500">${c.code}</p></div></div>
-                <div class="mt-4"><div class="flex justify-between text-xs text-gray-500 mb-1"><span>Students</span><span>${
-                  c.students
-                }</span></div><div class="w-full bg-gray-100 rounded-full h-2"><div class="bg-${
-                  c.color || "indigo"
-                }-600 h-2 rounded-full" style="width: 65%"></div></div></div>
+            <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6 card-hover border-t-4 border-${c.color || "indigo"}-500">
+                <div class="flex items-center space-x-4 mb-4"><div class="bg-${c.color || "indigo"}-100 p-3 rounded-lg"><i class="fas ${c.img || "fa-book"} text-${c.color || "indigo"}-600 text-xl"></i></div><div><h3 class="font-bold">${c.name}</h3><p class="text-xs text-gray-500">${c.code}</p></div></div>
+                <div class="mt-4"><div class="flex justify-between text-xs text-gray-500 mb-1"><span>Students</span><span>${c.students}</span></div><div class="w-full bg-gray-100 rounded-full h-2"><div class="bg-${c.color || "indigo"}-600 h-2 rounded-full" style="width: 65%"></div></div></div>
                 <button class="mt-4 w-full py-2 bg-gray-50 hover:bg-gray-100 text-indigo-600 text-sm font-semibold rounded-lg transition">Enter Classroom</button>
-            </div>`
+            </div>`,
               )
               .join("")}
         </div>`;
@@ -467,23 +432,16 @@
                       .map(
                         (s) => `
                         <tr class="hover:bg-gray-50">
-                             <td class="p-4 flex items-center gap-3"><img src="https://ui-avatars.com/api/?name=${
-                               s.name
-                             }&background=random" class="w-8 h-8 rounded-full"><span class="font-bold text-gray-700">${
-                          s.name
-                        }</span></td>
+                             <td class="p-4 flex items-center gap-3"><img src="https://ui-avatars.com/api/?name=${s.name}&background=random" class="w-8 h-8 rounded-full"><span class="font-bold text-gray-700">${s.name}</span></td>
                              <td class="p-4 text-sm text-gray-500">${s.id}</td>
-                             <td class="p-4 text-sm text-gray-500">${
-                               s.email || "N/A"
-                             }</td>
-                        </tr>`
+                             <td class="p-4 text-sm text-gray-500">${s.email || "N/A"}</td>
+                        </tr>`,
                       )
                       .join("")}
                     </tbody>
                 </table>
              </div>
-        </div>
-      `;
+        </div>`;
       };
 
       const renderAssignments = async () => {
@@ -491,33 +449,22 @@
         return `
         <div class="mb-6 flex justify-between items-center"><div><h2 class="text-2xl font-bold text-gray-800">My Assignments</h2><p class="text-gray-500">Track deadlines.</p></div></div>
         <div class="space-y-4">
-            ${
-              assignments.length === 0
-                ? '<p class="text-gray-500">No active assignments.</p>'
-                : ""
-            }
+            ${assignments.length === 0 ? '<p class="text-gray-500">No active assignments.</p>' : ""}
             ${assignments
               .map(
                 (a) => `
             <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-5 flex flex-col md:flex-row items-center justify-between card-hover border-l-4 border-l-red-500">
                 <div class="flex items-start space-x-4 mb-4 md:mb-0 w-full md:w-auto">
                     <div class="bg-red-50 p-3 rounded-lg"><i class="fas fa-exclamation-circle text-red-500 text-xl"></i></div>
-                    <div><h3 class="font-bold text-gray-800">${
-                      a.title
-                    }</h3><p class="text-sm text-gray-500">${
-                  a.description || "No description"
-                }</p><div class="mt-2 text-xs flex items-center space-x-3"><span class="text-red-600 font-semibold">Due: ${
-                  a.dueDate || "TBA"
-                }</span></div></div>
+                    <div><h3 class="font-bold text-gray-800">${a.title}</h3><p class="text-sm text-gray-500">${a.description || "No description"}</p><div class="mt-2 text-xs flex items-center space-x-3"><span class="text-red-600 font-semibold">Due: ${a.dueDate || "TBA"}</span></div></div>
                 </div>
                 <div class="flex items-center space-x-3 w-full md:w-auto justify-end">
                     <button class="bg-indigo-600 text-white px-5 py-2 rounded-lg text-sm hover:bg-indigo-700 transition shadow btn-submit-assign">Submit Work</button>
                 </div>
-            </div>`
+            </div>`,
               )
               .join("")}
-        </div>
-      `;
+        </div>`;
       };
 
       const renderGrades = async () => {
@@ -533,23 +480,16 @@
                               .map(
                                 (g) => `
                             <tr class="bg-white hover:bg-gray-50">
-                                <td class="px-6 py-4 font-medium text-gray-900">${
-                                  g.studentName || "Unknown"
-                                }</td>
-                                <td class="px-6 py-4 text-center font-semibold">${
-                                  g.points || 0
-                                }</td>
-                                <td class="px-6 py-4 text-center"><span class="bg-green-100 text-green-800 text-xs font-semibold px-2.5 py-0.5 rounded">${
-                                  g.grade || "F"
-                                }</span></td>
-                            </tr>`
+                                <td class="px-6 py-4 font-medium text-gray-900">${g.studentName || "Unknown"}</td>
+                                <td class="px-6 py-4 text-center font-semibold">${g.points || 0}</td>
+                                <td class="px-6 py-4 text-center"><span class="bg-green-100 text-green-800 text-xs font-semibold px-2.5 py-0.5 rounded">${g.grade || "F"}</span></td>
+                            </tr>`,
                               )
                               .join("")}
                         </tbody>
                     </table>
                 </div>
-        </div>
-      `;
+        </div>`;
       };
 
       const renderAttendance = async () => {
@@ -565,20 +505,13 @@
                 <tr>
                     <td class="px-6 py-4 text-gray-500">${a.studentId}</td>
                     <td class="px-6 py-4 text-gray-800">${a.attendanceDate}</td>
-                    <td class="px-6 py-4"><span class="px-2 py-1 rounded text-xs font-bold ${
-                      a.status === "Present"
-                        ? "bg-green-100 text-green-700"
-                        : "bg-red-100 text-red-700"
-                    }">${a.status}</span></td>
-                    <td class="px-6 py-4 text-gray-500">${
-                      a.checkInTime || "-"
-                    }</td>
-                </tr>`
+                    <td class="px-6 py-4"><span class="px-2 py-1 rounded text-xs font-bold ${a.status === "Present" ? "bg-green-100 text-green-700" : "bg-red-100 text-red-700"}">${a.status}</span></td>
+                    <td class="px-6 py-4 text-gray-500">${a.checkInTime || "-"}</td>
+                </tr>`,
                   )
                   .join("")}
              </tbody></table></div>
-        </div>
-          `;
+        </div>`;
       };
 
       const renderMessages = async () => {
@@ -597,8 +530,509 @@
                     <div class="flex items-center gap-2"><button class="text-gray-400 hover:text-gray-600 p-2"><i class="fas fa-paperclip"></i></button><input type="text" id="chatInput" placeholder="Write a message..." class="flex-1 border border-gray-300 rounded-full px-4 py-2 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500"><button id="sendBtn" class="bg-indigo-600 text-white w-10 h-10 rounded-full hover:bg-indigo-700 transition flex items-center justify-center shadow"><i class="fas fa-paper-plane"></i></button></div>
                 </div>
             </div>
+        </div>`;
+      };
+
+      // --- WEBSOCKET SETUP ---
+      let stompClient = null;
+
+      function connectWebSocket() {
+        const socket = new SockJS("http://localhost:8080/ws");
+        stompClient = Stomp.over(socket);
+        stompClient.debug = null;
+        stompClient.connect({}, function (frame) {
+          console.log("Connected to Payment WebSocket");
+          stompClient.subscribe("/topic/payments", function (paymentUpdate) {
+            const payment = JSON.parse(paymentUpdate.body);
+            handlePaymentUpdate(payment);
+          });
+        });
+      }
+
+      function handlePaymentUpdate(payment) {
+        const modal = document.getElementById("khqrModal");
+        if (
+          modal &&
+          modal.dataset.paymentId == payment.id &&
+          payment.status === "PAID"
+        ) {
+          showSuccessModal();
+        }
+        const currentView = document.querySelector(".sidebar-item.active")
+          .dataset.target;
+        if (currentView === "payments") {
+          window.switchView("payments");
+        }
+      }
+
+      connectWebSocket();
+
+      // --- PAYMENT RENDERER ---
+      const renderPayments = async () => {
+        // 1. Fetch History
+        const history = await API.getUserPayments();
+        const myPayments = history || [];
+        const unpaid = myPayments.filter((p) => p.status === "PENDING");
+        const pendingBalance = unpaid.reduce(
+          (sum, p) => sum + (p.amount || 0),
+          0,
+        );
+
+        // 2. Fetch Tuition Data
+        let tuitionData = { totalAmount: 0, courseCount: 0, breakdown: [] };
+
+        try {
+          const token = localStorage.getItem("token");
+          const response = await fetch(
+            "http://localhost:8080/payments/my-invoice",
+            {
+              method: "GET",
+              headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/json",
+              },
+            },
+          );
+
+          if (response.ok) {
+            tuitionData = await response.json();
+            if (!tuitionData.breakdown) {
+              tuitionData.breakdown = [];
+            }
+          }
+        } catch (e) {
+          console.error("Tuition Invoice Error", e);
+        }
+
+        // --- PAYMENT STATUS LOGIC ---
+        const totalAmount = tuitionData.totalAmount || 0;
+        const hasCourses = (tuitionData.courseCount || 0) > 0;
+
+        // Is Payable? (Must be > 0)
+        const isPayable = totalAmount > 0;
+
+        // Is Fully Paid? (Has courses but amount is 0)
+        const isFullyPaid = hasCourses && totalAmount === 0;
+
+        // --- NEW LOGIC: Check for Existing Pending Transaction ---
+        // Look for a transaction that is PENDING and matches the exact Tuition Amount
+        const existingPendingTx = myPayments.find(
+          (p) =>
+            p.status === "PENDING" && Math.abs(p.amount - totalAmount) < 0.01, // Safety check for float comparison
+        );
+
+        // Determine Button Style & Text
+        let btnClass = "bg-gray-200 text-gray-400 cursor-not-allowed";
+        let btnText = "No Balance";
+        let btnIcon = "fa-ban";
+        let btnAction = ""; // We will store the onclick function here
+
+        if (isFullyPaid) {
+          // CASE 1: PAID
+          btnClass = "bg-green-600 text-white cursor-default opacity-90";
+          btnText = "Paid";
+          btnIcon = "fa-check-double";
+          btnAction = ""; // No action
+        } else if (existingPendingTx) {
+          // CASE 2: PENDING (Prevent new generation, show existing)
+          btnClass =
+            "bg-orange-500 hover:bg-orange-600 text-white shadow-lg transform active:scale-95 cursor-pointer";
+          btnText = "View Pending QR";
+          btnIcon = "fa-eye";
+          // Open the existing QR code instead of making a new one
+          btnAction = `window.viewExistingQR('${existingPendingTx.qrCode}', '${existingPendingTx.amount}', ${existingPendingTx.id})`;
+        } else if (isPayable) {
+          // CASE 3: PAYABLE (Generate new)
+          btnClass =
+            "bg-indigo-600 hover:bg-indigo-700 text-white shadow-lg transform active:scale-95 cursor-pointer";
+          btnText = "Pay Tuition";
+          btnIcon = "fa-qrcode";
+          btnAction = `window.initCustomKHQR(${totalAmount})`;
+        }
+
+        return `
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
+        
+        <!-- TUITION INVOICE CARD -->
+        <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden flex flex-col h-full">
+            <div class="p-5 border-b border-gray-100 bg-indigo-50">
+                <h3 class="font-bold text-indigo-900">Tuition Invoice</h3>
+                <p class="text-xs text-indigo-600">You are enrolled in ${tuitionData.courseCount || 0} courses</p>
+            </div>
+            
+            <!-- List of Courses -->
+            <div class="p-5 flex-1 overflow-y-auto max-h-64">
+                <div class="space-y-3">
+                    ${
+                      tuitionData.breakdown.length === 0
+                        ? `<div class="flex flex-col items-center justify-center h-full py-4 text-gray-400">
+                             <i class="fas fa-clipboard-check text-3xl mb-2 opacity-20"></i>
+                             <p class="text-sm">No pending tuition fees.</p>
+                           </div>`
+                        : ""
+                    }
+                    ${tuitionData.breakdown
+                      .map(
+                        (item) => `
+                        <div class="flex justify-between items-center text-sm border-b border-gray-50 pb-2 last:border-0">
+                            <div>
+                                <span class="text-gray-700 font-medium block">${item.courseName || "Course Fee"}</span>
+                                <span class="text-gray-400 text-xs">${item.courseCode || ""}</span>
+                            </div>
+                            <span class="font-bold text-gray-800">$${(item.price || 0).toFixed(2)}</span>
+                        </div>
+                    `,
+                      )
+                      .join("")}
+                </div>
+            </div>
+
+            <!-- Footer: Total & Action -->
+            <div class="p-5 border-t border-gray-100 bg-gray-50">
+                
+                <!-- Success Message if Paid -->
+                ${
+                  isFullyPaid
+                    ? `
+                <div class="mb-4 bg-green-100 border border-green-200 text-green-700 px-4 py-3 rounded-lg flex items-center gap-3 animate-pulse">
+                    <i class="fas fa-check-circle text-xl"></i>
+                    <div>
+                        <p class="font-bold text-sm">Tuition Fully Paid</p>
+                        <p class="text-[10px] uppercase font-bold tracking-wide">No Further Actions</p>
+                    </div>
+                </div>`
+                    : ""
+                }
+
+                <!-- Warning Message if Pending -->
+                ${
+                  existingPendingTx && !isFullyPaid
+                    ? `
+                <div class="mb-4 bg-orange-50 border border-orange-100 text-orange-700 px-4 py-2 rounded-lg flex items-center gap-3">
+                    <i class="fas fa-exclamation-circle"></i>
+                    <p class="text-xs">Payment pending. Scan existing QR.</p>
+                </div>`
+                    : ""
+                }
+
+                <div class="flex justify-between items-center mb-4">
+                    <span class="font-bold text-gray-700">Total Due</span>
+                    <span class="font-bold text-3xl ${isPayable ? "text-indigo-600" : isFullyPaid ? "text-green-600" : "text-gray-400"}">
+                        $${totalAmount.toFixed(2)}
+                    </span>
+                </div>
+
+                <button 
+                    onclick="${btnAction}" 
+                    ${!isPayable && !existingPendingTx && !isFullyPaid ? "disabled" : ""}
+                    class="w-full font-bold py-3 rounded-xl transition flex items-center justify-center gap-2 ${btnClass}">
+                    <i class="fas ${btnIcon}"></i> ${btnText}
+                </button>
+            </div>
         </div>
-      `;
+
+        <!-- RIGHT COLUMN: Custom Pay & History (Unchanged) -->
+        <div class="lg:col-span-2 space-y-6">
+            
+            <!-- Quick Actions -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                <!-- Outstanding Summary -->
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 border-l-4 border-l-red-500">
+                    <p class="text-gray-500 text-sm font-medium">Pending Payments</p>
+                    <div class="flex items-end justify-between mt-2">
+                        <h2 class="text-4xl font-bold text-gray-800">$${pendingBalance.toFixed(2)}</h2>
+                        <span class="bg-red-100 text-red-600 text-xs px-2 py-1 rounded-lg font-bold">Unpaid</span>
+                    </div>
+                </div>
+
+                <!-- Custom Amount -->
+                <div class="bg-gradient-to-br from-indigo-900 to-indigo-800 rounded-xl shadow-lg p-6 text-white flex flex-col justify-center relative overflow-hidden">
+                    <div class="absolute right-0 top-0 w-32 h-32 bg-white opacity-5 rounded-full -mr-10 -mt-10"></div>
+                    <h2 class="text-lg font-bold mb-1 relative z-10">Other Fees?</h2>
+                    <p class="text-indigo-200 text-xs mb-4 relative z-10">Library fines, gym fees, etc.</p>
+                    <div class="flex gap-2 relative z-10">
+                        <div class="relative w-full">
+                            <span class="absolute left-3 top-2 text-indigo-300">$</span>
+                            <input type="number" id="customAmount" placeholder="0.00" class="w-full bg-white/10 border border-white/20 text-white pl-6 pr-3 py-2 rounded-lg focus:outline-none focus:bg-white/20 transition">
+                        </div>
+                        <button onclick="window.initCustomKHQR()" class="bg-white text-indigo-900 font-bold px-4 py-2 rounded-lg hover:bg-indigo-50 transition shadow">
+                            Pay
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- History Table -->
+            <div>
+                <h3 class="text-lg font-bold text-gray-800 mb-4">Transaction History</h3>
+                <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+                    ${myPayments.length === 0 ? '<p class="p-8 text-center text-gray-400">No payment history available.</p>' : ""}
+                    ${myPayments
+                      .map(
+                        (p) => `
+                    <div class="p-4 border-b border-gray-100 last:border-0 flex flex-col sm:flex-row items-center justify-between gap-4 hover:bg-gray-50 transition group">
+                        <div class="flex items-center gap-4 w-full sm:w-auto">
+                            <div class="w-12 h-12 rounded-full flex items-center justify-center ${p.status === "PAID" ? "bg-green-100 text-green-600" : "bg-orange-100 text-orange-600"}">
+                                <i class="fas ${p.status === "PAID" ? "fa-check" : "fa-clock"} text-lg"></i>
+                            </div>
+                            <div>
+                                <p class="text-sm font-bold text-gray-800">${p.description || "General Payment"}</p>
+                                <div class="flex items-center gap-2 text-xs text-gray-500">
+                                    <span><i class="far fa-calendar-alt"></i> ${new Date(p.createdAt).toLocaleDateString()}</span>
+                                    <span class="px-2 py-0.5 rounded-full text-[10px] font-bold ${p.status === "PAID" ? "bg-green-100 text-green-700" : "bg-orange-100 text-orange-700"}">${p.status}</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-center gap-4 w-full sm:w-auto justify-end">
+                            <span class="font-bold text-gray-800 text-lg">$${(p.amount || 0).toFixed(2)}</span>
+                            ${
+                              p.status === "PENDING"
+                                ? `<button onclick="window.viewExistingQR('${p.qrCode}', '${p.amount}', ${p.id})" class="bg-white border border-indigo-200 text-indigo-600 hover:bg-indigo-50 px-4 py-2 rounded-lg text-xs font-bold transition">
+                                    QR Code
+                                </button>`
+                                : ""
+                            }
+                        </div>
+                    </div>
+                    `,
+                      )
+                      .join("")}
+                </div>
+            </div>
+        </div>
+    </div>
+    `;
+      };
+      // --- CONSOLIDATED INIT KHQR FUNCTION ---
+      window.initCustomKHQR = async function (specificAmount = null) {
+        let amount;
+        let desc = "Tuition Fee Payment";
+
+        // 1. Determine Amount
+        if (specificAmount) {
+          amount = specificAmount;
+        } else {
+          const amountInput = document.getElementById("customAmount");
+          amount = amountInput ? parseFloat(amountInput.value) : 0;
+          desc = "Custom Payment";
+        }
+
+        if (!amount || amount <= 0) {
+          alert("Please enter a valid amount");
+          return;
+        }
+
+        // --- NEW: DUPLICATE CHECK ---
+        // Before creating, check if we already have a PENDING payment for this amount
+        try {
+          const history = await API.getUserPayments();
+          const existingPayment = history.find(
+            (p) => p.status === "PENDING" && Math.abs(p.amount - amount) < 0.01, // Compare amounts safely
+          );
+
+          if (existingPayment) {
+            // STOP! Don't create new. Open the existing one.
+            console.log("Pending payment found. Opening existing QR.");
+            window.viewExistingQR(
+              existingPayment.qrCode,
+              existingPayment.amount,
+              existingPayment.id,
+            );
+
+            // Show a small notification toast (optional)
+            const container = document.getElementById("modal-container");
+            const toast = document.createElement("div");
+            toast.className =
+              "fixed top-5 left-1/2 transform -translate-x-1/2 bg-orange-500 text-white px-6 py-3 rounded-full shadow-xl z-[100] fade-in flex items-center gap-2";
+            toast.innerHTML =
+              '<i class="fas fa-info-circle"></i> <span>Opened existing pending bill</span>';
+            container.appendChild(toast);
+            setTimeout(() => toast.remove(), 3000);
+
+            return; // <--- EXIT FUNCTION HERE
+          }
+        } catch (e) {
+          console.error("Could not check payment history", e);
+        }
+        // ---------------------------
+
+        showModal(
+          `<div class="modal show"><div class="bg-white p-8 rounded-xl text-center"><i class="fas fa-circle-notch fa-spin text-4xl text-indigo-600 mb-4"></i><p class="font-semibold text-gray-700">Connecting to Bakong...</p></div></div>`,
+        );
+
+        try {
+          // Proceed to create ONLY if no duplicate was found
+          const response = await API.createPayment(amount, desc);
+
+          if (response && response.success) {
+            const qrString =
+              response.qr || response.payment?.qrCode || response.qrCode;
+            const paymentId =
+              response.paymentId || response.payment?.id || response.id;
+            const md5 =
+              response.md5 || response.payment?.md5Hash || response.md5Hash;
+
+            if (qrString) {
+              const qrImage = await API.fetchQRImage(qrString);
+              displayQRModal(qrImage, amount, paymentId, md5);
+            } else {
+              closeModal("modal-container");
+              alert("Error: QR Data missing.");
+            }
+          } else {
+            closeModal("modal-container");
+            alert("Failed: " + (response.error || "Unknown error"));
+          }
+        } catch (e) {
+          console.error(e);
+          closeModal("modal-container");
+        }
+      };
+      // --- CONSOLIDATED INIT KHQR FUNCTION ---
+      // This handles both the Tuition Button (specificAmount) and the Custom Input (null)
+      window.initCustomKHQR = async function (specificAmount = null) {
+        let amount;
+        let desc = "Tuition Fee Payment";
+
+        if (specificAmount) {
+          amount = specificAmount;
+        } else {
+          const amountInput = document.getElementById("customAmount");
+          amount = amountInput ? amountInput.value : 0;
+          desc = "Custom Payment";
+        }
+
+        if (!amount || amount <= 0) {
+          alert("Please enter a valid amount");
+          return;
+        }
+
+        showModal(
+          `<div class="modal show"><div class="bg-white p-8 rounded-xl text-center"><i class="fas fa-circle-notch fa-spin text-4xl text-indigo-600 mb-4"></i><p class="font-semibold text-gray-700">Connecting to Bakong...</p></div></div>`,
+        );
+
+        try {
+          const response = await API.createPayment(amount, desc);
+
+          if (response && response.success) {
+            const qrString =
+              response.qr ||
+              (response.payment && response.payment.qrCode) ||
+              response.qrCode;
+            const paymentId =
+              response.paymentId ||
+              (response.payment && response.payment.id) ||
+              response.id;
+            const md5 =
+              response.md5 ||
+              (response.payment && response.payment.md5Hash) ||
+              response.md5Hash;
+
+            if (qrString) {
+              const qrImage = await API.fetchQRImage(qrString);
+              displayQRModal(qrImage, amount, paymentId, md5);
+            } else {
+              closeModal("modal-container");
+              alert("Error: QR Data missing.");
+            }
+          } else {
+            closeModal("modal-container");
+            alert("Failed: " + (response.error || "Unknown error"));
+          }
+        } catch (e) {
+          console.error(e);
+          closeModal("modal-container");
+        }
+      };
+
+      // ✅ View Existing QR logic
+      window.viewExistingQR = async function (qrString, amount, id) {
+        const qrImage = await API.fetchQRImage(qrString);
+        displayQRModal(qrImage, amount, id, null);
+      };
+
+      let pollingInterval = null;
+
+      function displayQRModal(imgSrc, amount, paymentId, md5) {
+        const html = `
+          <div id="khqrModal" class="modal" data-payment-id="${paymentId}">
+             <div class="bg-white rounded-2xl shadow-2xl w-full max-w-md mx-4 overflow-hidden animate-bounce-in relative">
+                <button onclick="closeModal('khqrModal')" class="absolute top-4 right-4 text-white hover:text-gray-200 z-10"><i class="fas fa-times text-xl"></i></button>
+                
+                <div class="bg-red-600 p-6 pt-10 text-center text-white relative">
+                     <img src="https://bakong.nbc.org.kh/images/logo.svg" class="h-12 mx-auto brightness-0 invert" alt="Bakong">
+                     <p class="mt-2 opacity-90">Scan to pay with any banking app</p>
+                </div>
+                
+                <div class="p-6 text-center">
+                    <h2 class="text-3xl font-bold text-gray-800 mb-1">$${Number(amount).toFixed(2)}</h2>
+                    <p class="text-xs text-gray-400 mb-6">Payment ID: ${paymentId}</p>
+
+                    <div class="mx-auto w-64 h-64 border-2 border-red-600 rounded-lg p-2 mb-6 relative flex items-center justify-center">
+                        <img src="${imgSrc}" class="w-full h-full object-contain">
+                    </div>
+
+                    <div class="flex items-center justify-center gap-2 mb-4">
+                        <div class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
+                        <p class="text-sm text-gray-600 font-medium">Checking payment status...</p>
+                    </div>
+                    
+                    <button onclick="checkStatusManual(${paymentId})" class="text-xs text-indigo-600 hover:underline">
+                        Check Now (Force)
+                    </button>
+                </div>
+             </div>
+          </div>`;
+
+        showModal(html);
+
+        // ✅ START POLLING: Check every 3 seconds
+        if (pollingInterval) clearInterval(pollingInterval);
+        pollingInterval = setInterval(async () => {
+          const res = await API.checkTransactionStatus(paymentId);
+          if (res && res.success && res.status === "PAID") {
+            clearInterval(pollingInterval);
+            showSuccessModal();
+          }
+        }, 3000);
+      }
+
+      // Modify closeModal to stop polling
+      const originalCloseModal = window.closeModal;
+      window.closeModal = function (id) {
+        if (id === "khqrModal" && pollingInterval) {
+          clearInterval(pollingInterval);
+          pollingInterval = null;
+        }
+        originalCloseModal(id);
+      };
+
+      // Manual Check
+      window.checkStatusManual = async function (id) {
+        const res = await API.checkTransactionStatus(id);
+        if (res && res.success && res.status === "PAID") {
+          showSuccessModal();
+        } else {
+          alert("Payment not received yet. Please scan and pay first.");
+        }
+      };
+
+      window.showSuccessModal = function () {
+        const modalContent = document.querySelector("#khqrModal > div");
+        if (modalContent) {
+          modalContent.innerHTML = `
+        <div class="p-8 text-center flex flex-col items-center justify-center h-full bg-white">
+            <div class="w-24 h-24 bg-green-100 rounded-full flex items-center justify-center mb-6 animate-pulse">
+                <i class="fas fa-check text-5xl text-green-600"></i>
+            </div>
+            <h3 class="text-2xl font-bold text-gray-800 mb-2">Payment Successful!</h3>
+            <p class="text-gray-500 mb-8">Thank you for your payment.</p>
+            <button onclick="closeModal('khqrModal'); window.switchView('payments')" class="w-full py-3 bg-indigo-600 text-white rounded-xl font-bold shadow-lg hover:bg-indigo-700 transition transform hover:-translate-y-1">
+                Close & Refresh
+            </button>
+        </div>`;
+        }
       };
 
       const settingsView = `
@@ -666,10 +1100,10 @@
                         <p>${
                           m.text
                         }</p><p class="text-[10px] mt-1 text-right">${
-                m.time
-              }</p>
+                          m.time
+                        }</p>
                     </div>
-                </div>`
+                </div>`,
             )
             .join("");
           box.scrollTop = box.scrollHeight;
@@ -706,9 +1140,10 @@
 
       window.switchView = async function (viewName) {
         const main = document.getElementById("mainContent");
+        // Show Loading Spinner
         main.innerHTML = `<div class="flex justify-center items-center h-64"><div class="animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-600"></div></div>`;
 
-        // Update Sidebar
+        // Sidebar Active State Logic...
         document.querySelectorAll(".sidebar-item").forEach((item) => {
           item.classList.remove("active");
           item
@@ -723,51 +1158,56 @@
             .classList.replace("text-gray-400", "text-indigo-600");
         }
 
-        // Render Content
-        let html = "";
-        switch (viewName) {
-          case "dashboard":
-            html = await renderDashboard();
-            break;
-          case "courses":
-            html = await renderCourses();
-            break;
-          case "students":
-            html = await renderStudents();
-            break;
-          case "assignments":
-            html = await renderAssignments();
-            break;
-          case "grades":
-            html = await renderGrades();
-            break;
-          case "attendance":
-            html = await renderAttendance();
-            break;
-          case "messages":
-            html = await renderMessages();
-            break;
-          case "settings":
-            html = settingsView;
-            break;
-          case "schedule":
-            html = '<h2 class="text-2xl">Schedule (Coming Soon)</h2>';
-            break;
-          case "payments":
-            html = '<h2 class="text-2xl">Payments (See main UI)</h2>';
-            break;
-          // Note: I simplified payments for this logic, paste your long Payment HTML here if needed,
-          // but usually Payments is static UI in your example.
-          default:
-            html = "<h2>Page not found</h2>";
+        // --- NEW ERROR HANDLING LOGIC ---
+        try {
+          let html = "";
+          switch (viewName) {
+            case "dashboard":
+              html = await renderDashboard();
+              break;
+            case "courses":
+              html = await renderCourses();
+              break;
+            case "students":
+              html = await renderStudents();
+              break;
+            case "assignments":
+              html = await renderAssignments();
+              break;
+            case "grades":
+              html = await renderGrades();
+              break;
+            case "attendance":
+              html = await renderAttendance();
+              break;
+            case "messages":
+              html = await renderMessages();
+              break;
+            case "settings":
+              html = settingsView;
+              break;
+            case "payments":
+              html = await renderPayments();
+              break;
+            default:
+              html = "<h2>Page not found</h2>";
+          }
+          main.innerHTML = html;
+
+          // Re-attach events
+          if (viewName === "messages") attachMessageEvents();
+          if (viewName === "settings") attachSettingsEvents();
+          if (viewName === "assignments") attachAssignmentEvents();
+        } catch (error) {
+          console.error("View Error:", error);
+          main.innerHTML = `
+            <div class="flex flex-col items-center justify-center h-64 text-red-500">
+                <i class="fas fa-exclamation-triangle text-4xl mb-4"></i>
+                <h3 class="text-xl font-bold">Something went wrong</h3>
+                <p class="text-sm text-gray-500 mt-2">${error.message}</p>
+                <button onclick="window.location.reload()" class="mt-4 px-4 py-2 bg-indigo-600 text-white rounded">Reload Page</button>
+            </div>`;
         }
-
-        main.innerHTML = html;
-
-        // Attach Events after render
-        if (viewName === "messages") attachMessageEvents();
-        if (viewName === "settings") attachSettingsEvents();
-        if (viewName === "assignments") attachAssignmentEvents();
       };
 
       document.addEventListener("DOMContentLoaded", async () => {
@@ -777,23 +1217,21 @@
         const roleEl = document.getElementById("profile-role");
         const imgEl = document.getElementById("profile-img");
 
-        // ប្រើ fullName ឬ fallback ទៅ 'User'
+        // Use fullName or fallback
         const displayName = currentUser.fullName || currentUser.email || "User";
 
         if (nameEl) nameEl.textContent = displayName;
         if (roleEl && currentUser.role) roleEl.textContent = currentUser.role;
 
         if (imgEl) {
-          // បង្កើត Avatar តាមឈ្មោះ
+          // Generate Avatar
           imgEl.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(
-            displayName
+            displayName,
           )}&background=6366f1&color=fff`;
         }
 
-        appData = await API.getAllData();
-
-        // 2. Start Router (Teacher Dashboard ប្រើឈ្មោះ router)
-        window.router("dashboard");
+        // Initialize Router
+        window.switchView("dashboard");
 
         // Mobile Sidebar Toggle
         document

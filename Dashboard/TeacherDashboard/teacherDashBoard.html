@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -27,7 +27,9 @@
 
       body {
         font-family: "Inter", sans-serif;
-        transition: background-color 0.3s, color 0.3s;
+        transition:
+          background-color 0.3s,
+          color 0.3s;
       }
 
       /* Dark Mode Styles */
@@ -358,379 +360,383 @@
       // ==========================================
 
       const renderDashboard = () => `
-        <div class="mb-6 bg-gradient-to-r from-indigo-600 to-purple-600 rounded-2xl shadow-lg p-8 text-white">
-          <h2 class="text-3xl font-bold mb-2">Welcome back, ${currentUser.fullName}! 👋</h2>
-          <p class="text-indigo-100">You have ${appData.courses.length} classes active.</p>
-        </div>
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-6">
-           <div class="bg-white rounded-xl shadow p-6 border-l-4 border-indigo-600 card-hover">
-             <p class="text-gray-500 text-sm">Total Students</p>
-             <h3 class="text-3xl font-bold text-gray-800">${appData.students.length}</h3>
-           </div>
-           <div class="bg-white rounded-xl shadow p-6 border-l-4 border-green-600 card-hover">
-             <p class="text-gray-500 text-sm">Active Courses</p>
-             <h3 class="text-3xl font-bold text-gray-800">${appData.courses.length}</h3>
-           </div>
-           <div class="bg-white rounded-xl shadow p-6 border-l-4 border-yellow-500 card-hover">
-             <p class="text-gray-500 text-sm">Assignments Pending</p>
-             <h3 class="text-3xl font-bold text-gray-800">17</h3>
-           </div>
-           <div class="bg-white rounded-xl shadow p-6 border-l-4 border-red-500 card-hover">
-             <p class="text-gray-500 text-sm">Avg Attendance</p>
-             <h3 class="text-3xl font-bold text-gray-800">88%</h3>
-           </div>
-        </div>
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            <div class="bg-white p-6 rounded-xl shadow"><canvas id="mainChart" height="250"></canvas></div>
-            <div class="bg-white p-6 rounded-xl shadow">
-                <h3 class="font-bold mb-4">Recent Activity</h3>
-                <ul class="space-y-3">
-                    <li class="flex items-center space-x-3 text-sm"><div class="w-2 h-2 bg-green-500 rounded-full"></div><span>Added new course "Advanced AI"</span></li>
-                    <li class="flex items-center space-x-3 text-sm"><div class="w-2 h-2 bg-blue-500 rounded-full"></div><span>Updated grades for ITE401</span></li>
-                </ul>
-            </div>
-        </div>
-      `;
+              <div class="mb-6 bg-gradient-to-r from-indigo-600 to-purple-600 rounded-2xl shadow-lg p-8 text-white">
+                <h2 class="text-3xl font-bold mb-2">Welcome back, ${currentUser.fullName}! 👋</h2>
+                <p class="text-indigo-100">You have ${appData.courses.length} classes active.</p>
+              </div>
+              <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-6">
+                 <div class="bg-white rounded-xl shadow p-6 border-l-4 border-indigo-600 card-hover">
+                   <p class="text-gray-500 text-sm">Total Students</p>
+                   <h3 class="text-3xl font-bold text-gray-800">${appData.students.length}</h3>
+                 </div>
+                 <div class="bg-white rounded-xl shadow p-6 border-l-4 border-green-600 card-hover">
+                   <p class="text-gray-500 text-sm">Active Courses</p>
+                   <h3 class="text-3xl font-bold text-gray-800">${appData.courses.length}</h3>
+                 </div>
+                 <div class="bg-white rounded-xl shadow p-6 border-l-4 border-yellow-500 card-hover">
+                   <p class="text-gray-500 text-sm">Assignments Pending</p>
+                   <h3 class="text-3xl font-bold text-gray-800">1</h3>
+                 </div>
+                 <div class="bg-white rounded-xl shadow p-6 border-l-4 border-red-500 card-hover">
+                   <p class="text-gray-500 text-sm">Avg Attendance</p>
+                   <h3 class="text-3xl font-bold text-gray-800">1%</h3>
+                 </div>
+              </div>
+              <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                  <div class="bg-white p-6 rounded-xl shadow"><canvas id="mainChart" height="250"></canvas></div>
+                  <div class="bg-white p-6 rounded-xl shadow">
+                      <h3 class="font-bold mb-4">Recent Activity</h3>
+                      <ul class="space-y-3">
+                          <li class="flex items-center space-x-3 text-sm"><div class="w-2 h-2 bg-green-500 rounded-full"></div><span>Added new course "Advanced AI"</span></li>
+                          <li class="flex items-center space-x-3 text-sm"><div class="w-2 h-2 bg-blue-500 rounded-full"></div><span>Updated grades for ITE401</span></li>
+                      </ul>
+                  </div>
+              </div>
+            `;
 
       // ... (KEEP ALL YOUR EXISTING RENDER FUNCTIONS HERE: renderCourses, renderStudents, renderAssignments, etc.) ...
 
       const renderCourses = () => `
-        <div class="flex justify-between items-center mb-6">
-            <h2 class="text-3xl font-bold text-gray-800">My Courses</h2>
-            <button id="btn-create-course" class="bg-indigo-600 text-white px-5 py-2 rounded-lg hover:bg-indigo-700 transition shadow">
-                <i class="fas fa-plus mr-2"></i>Create Course
-            </button>
-        </div>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="courses-grid">
-            ${appData.courses
-              .map(
-                (c) => `
-                <div class="bg-white rounded-xl shadow-md overflow-hidden card-hover border-t-4 border-${
-                  c.color
-                }-500">
-                    <div class="p-6">
-                        <div class="flex justify-between items-start mb-4">
-                            <div class="bg-${
-                              c.color
-                            }-100 p-3 rounded-xl"><i class="fas ${c.img} text-${
-                  c.color
-                }-600 text-xl"></i></div>
-                            <div class="relative group">
-                                <button class="text-gray-400 hover:text-gray-600"><i class="fas fa-ellipsis-v"></i></button>
-                                <div class="hidden group-hover:block absolute right-0 mt-2 w-32 bg-white border rounded shadow-lg z-10">
-                                    <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Edit</a>
-                                    <a href="#" class="block px-4 py-2 text-sm text-red-600 hover:bg-gray-100">Archive</a>
-                                </div>
-                            </div>
-                        </div>
-                        <h3 class="text-lg font-bold text-gray-800">${
-                          c.name
-                        }</h3>
-                        <p class="text-sm font-semibold text-indigo-600 mb-1">${
-                          c.code
-                        }</p>
-                        <p class="text-sm text-gray-500 mb-4">${
-                          c.students
-                        } Students • ${
-                  c.isFull
-                    ? '<span class="text-red-500 font-bold">Full</span>'
-                    : '<span class="text-green-500">Open</span>'
-                }</p>
-                        <div class="w-full bg-gray-100 rounded-full h-2 mb-2">
-                            <div class="bg-${
-                              c.color
-                            }-500 h-2 rounded-full" style="width: ${
-                  (c.students / c.max) * 100
-                }%"></div>
-                        </div>
-                        <div class="flex justify-between text-xs text-gray-400">
-                            <span>Progress</span><span>${Math.round(
-                              (c.students / c.max) * 100
-                            )}% Capacity</span>
-                        </div>
-                    </div>
-                </div>
-            `
-              )
-              .join("")}
-        </div>
-      `;
+              <div class="flex justify-between items-center mb-6">
+                  <h2 class="text-3xl font-bold text-gray-800">My Courses</h2>
+                  <button id="btn-create-course" class="bg-indigo-600 text-white px-5 py-2 rounded-lg hover:bg-indigo-700 transition shadow">
+                      <i class="fas fa-plus mr-2"></i>Create Course
+                  </button>
+              </div>
+              <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="courses-grid">
+                  ${appData.courses
+                    .map(
+                      (c) => `
+                      <div class="bg-white rounded-xl shadow-md overflow-hidden card-hover border-t-4 border-${
+                        c.color
+                      }-500">
+                          <div class="p-6">
+                              <div class="flex justify-between items-start mb-4">
+                                  <div class="bg-${
+                                    c.color
+                                  }-100 p-3 rounded-xl"><i class="fas ${c.img} text-${
+                                    c.color
+                                  }-600 text-xl"></i></div>
+                                  <div class="relative group">
+                                      <button class="text-gray-400 hover:text-gray-600"><i class="fas fa-ellipsis-v"></i></button>
+                                      <div class="hidden group-hover:block absolute right-0 mt-2 w-32 bg-white border rounded shadow-lg z-10">
+                                          <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Edit</a>
+                                          <a href="#" class="block px-4 py-2 text-sm text-red-600 hover:bg-gray-100">Archive</a>
+                                      </div>
+                                  </div>
+                              </div>
+                              <h3 class="text-lg font-bold text-gray-800">${
+                                c.name
+                              }</h3>
+                              <p class="text-sm font-semibold text-indigo-600 mb-1">${
+                                c.code
+                              }</p>
+                              <p class="text-sm text-gray-500 mb-4">${
+                                c.students
+                              } Students • ${
+                                c.isFull
+                                  ? '<span class="text-red-500 font-bold">Full</span>'
+                                  : '<span class="text-green-500">Open</span>'
+                              }</p>
+                              <div class="w-full bg-gray-100 rounded-full h-2 mb-2">
+                                  <div class="bg-${
+                                    c.color
+                                  }-500 h-2 rounded-full" style="width: ${
+                                    (c.students / c.max) * 100
+                                  }%"></div>
+                              </div>
+                              <div class="flex justify-between text-xs text-gray-400">
+                                  <span>Progress</span><span>${Math.round(
+                                    (c.students / c.max) * 100,
+                                  )}% Capacity</span>
+                              </div>
+                          </div>
+                      </div>
+                  `,
+                    )
+                    .join("")}
+              </div>
+            `;
 
       const renderStudents = () => `
-    <div class="mb-6 flex justify-between items-center">
-        <h2 class="text-3xl font-bold text-gray-800">Students Directory</h2>
-        <div class="flex gap-2">
-            <input type="text" placeholder="Search students..." 
-                   oninput="window.handleStudentSearch(this.value)"
-                   class="border p-2 rounded-lg shadow-sm w-64">
-            <select onchange="window.handleStudentFilter(this.value)" class="border p-2 rounded-lg shadow-sm">
-                 <option value="">All Courses</option>
-                 ${appData.courses
-                   .map((c) => `<option value="${c.id}">${c.name}</option>`)
-                   .join("")}
-            </select>
-        </div>
-    </div>
+          <div class="mb-6 flex justify-between items-center">
+              <h2 class="text-3xl font-bold text-gray-800">Students Directory</h2>
+              <div class="flex gap-2">
+                  <input type="text" placeholder="Search students..."
+                         oninput="window.handleStudentSearch(this.value)"
+                         class="border p-2 rounded-lg shadow-sm w-64">
+                  <select onchange="window.handleStudentFilter(this.value)" class="border p-2 rounded-lg shadow-sm">
+                       <option value="">All Courses</option>
+                       ${appData.courses
+                         .map(
+                           (c) => `<option value="${c.id}">${c.name}</option>`,
+                         )
+                         .join("")}
+                  </select>
+              </div>
+          </div>
 
-    <div class="bg-white rounded-xl shadow overflow-hidden">
-        <div class="overflow-x-auto">
-            <table class="w-full text-left border-collapse">
-                <thead class="bg-gray-100 text-gray-600 uppercase text-xs">
-                    <tr><th class="p-4">Student</th><th class="p-4">Course</th><th class="p-4">Email</th><th class="p-4">Status</th><th class="p-4 text-center">Action</th></tr>
-                </thead>
-                <tbody id="students-table-body" class="divide-y divide-gray-100">
-                    <!-- Populated by JS -->
-                </tbody>
-            </table>
-        </div>
-        <div class="p-4 bg-gray-50 border-t flex justify-between items-center">
-            <button id="btn-prev" class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50">Previous</button>
-            <span id="page-info" class="text-sm text-gray-700">Page 1</span>
-            <button id="btn-next" class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50">Next</button>
-        </div>
-    </div>
-`;
+          <div class="bg-white rounded-xl shadow overflow-hidden">
+              <div class="overflow-x-auto">
+                  <table class="w-full text-left border-collapse">
+                      <thead class="bg-gray-100 text-gray-600 uppercase text-xs">
+                          <tr><th class="p-4">Student</th><th class="p-4">Course</th><th class="p-4">Email</th><th class="p-4">Status</th><th class="p-4 text-center">Action</th></tr>
+                      </thead>
+                      <tbody id="students-table-body" class="divide-y divide-gray-100">
+                          <!-- Populated by JS -->
+                      </tbody>
+                  </table>
+              </div>
+              <div class="p-4 bg-gray-50 border-t flex justify-between items-center">
+                  <button id="btn-prev" class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50">Previous</button>
+                  <span id="page-info" class="text-sm text-gray-700">Page 1</span>
+                  <button id="btn-next" class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50">Next</button>
+              </div>
+          </div>
+      `;
 
       const renderAssignments = () => {
         const pendingCount = appData.students.filter(
-          (s) => s.assignmentStatus === "Pending"
+          (s) => s.assignmentStatus === "Pending",
         ).length;
         return `
-        ${
-          pendingCount > 0
-            ? `
-        <div class="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 mb-6 rounded-r shadow-sm flex justify-between items-center" role="alert">
-            <div><p class="font-bold">Attention Needed</p><p>${pendingCount} students have not completed their assignments yet.</p></div>
-            <i class="fas fa-exclamation-circle text-2xl opacity-50"></i>
-        </div>`
-            : ""
-        }
+              ${
+                pendingCount > 0
+                  ? `
+              <div class="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 mb-6 rounded-r shadow-sm flex justify-between items-center" role="alert">
+                  <div><p class="font-bold">Attention Needed</p><p>${pendingCount} students have not completed their assignments yet.</p></div>
+                  <i class="fas fa-exclamation-circle text-2xl opacity-50"></i>
+              </div>`
+                  : ""
+              }
 
-        <div class="flex justify-between items-center mb-6">
-            <h2 class="text-3xl font-bold text-gray-800">Assignments</h2>
-            <button id="btn-create-assign" class="bg-indigo-600 text-white px-5 py-2 rounded-lg hover:bg-indigo-700 transition shadow"><i class="fas fa-plus mr-2"></i>Create Assignment</button>
-        </div>
+              <div class="flex justify-between items-center mb-6">
+                  <h2 class="text-3xl font-bold text-gray-800">Assignments</h2>
+                  <button id="btn-create-assign" class="bg-indigo-600 text-white px-5 py-2 rounded-lg hover:bg-indigo-700 transition shadow"><i class="fas fa-plus mr-2"></i>Create Assignment</button>
+              </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            ${appData.assignments
-              .map((a) => {
-                const course = appData.courses.find((c) => c.id === a.courseId);
-                return `
-                <div class="bg-white rounded-xl shadow-md p-6 card-hover border-t-4 border-indigo-500 flex flex-col justify-between h-full">
-                    <div>
-                        <div class="flex justify-between mb-2">
-                            <span class="text-xs font-bold text-indigo-600 bg-indigo-50 px-2 py-1 rounded uppercase">${
-                              course ? course.code : "N/A"
-                            }</span>
-                            <span class="text-xs text-red-500 font-semibold">Due: ${
-                              a.dueDate
-                            }</span>
-                        </div>
-                        <h3 class="text-xl font-bold text-gray-800 mb-2">${
-                          a.title
-                        }</h3>
-                        <p class="text-gray-500 text-sm mb-4">Professional assignment designed to test core concepts.</p>
-                    </div>
-                    <div class="mt-4 pt-4 border-t border-gray-100 flex justify-between items-center">
-                        <span class="text-sm text-gray-600"><i class="fas fa-user-clock mr-1"></i> ${
-                          a.pending
-                        } Pending</span>
-                        <button class="text-indigo-600 font-medium text-sm hover:underline">View Submissions</button>
-                    </div>
-                </div>`;
-              })
-              .join("")}
-        </div>
-      `;
+              <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  ${appData.assignments
+                    .map((a) => {
+                      const course = appData.courses.find(
+                        (c) => c.id === a.courseId,
+                      );
+                      return `
+                      <div class="bg-white rounded-xl shadow-md p-6 card-hover border-t-4 border-indigo-500 flex flex-col justify-between h-full">
+                          <div>
+                              <div class="flex justify-between mb-2">
+                                  <span class="text-xs font-bold text-indigo-600 bg-indigo-50 px-2 py-1 rounded uppercase">${
+                                    course ? course.code : "N/A"
+                                  }</span>
+                                  <span class="text-xs text-red-500 font-semibold">Due: ${
+                                    a.dueDate
+                                  }</span>
+                              </div>
+                              <h3 class="text-xl font-bold text-gray-800 mb-2">${
+                                a.title
+                              }</h3>
+                              <p class="text-gray-500 text-sm mb-4">Professional assignment designed to test core concepts.</p>
+                          </div>
+                          <div class="mt-4 pt-4 border-t border-gray-100 flex justify-between items-center">
+                              <span class="text-sm text-gray-600"><i class="fas fa-user-clock mr-1"></i> ${
+                                a.pending
+                              } Pending</span>
+                              <button class="text-indigo-600 font-medium text-sm hover:underline">View Submissions</button>
+                          </div>
+                      </div>`;
+                    })
+                    .join("")}
+              </div>
+            `;
       };
 
       const renderSchedule = () => `
-        <h2 class="text-3xl font-bold text-gray-800 mb-6">Teaching Schedule</h2>
-        <div class="grid grid-cols-1 lg:grid-cols-5 gap-6">
-            <div class="col-span-1 space-y-6 mt-12 hidden lg:block text-right pr-4 text-gray-400 text-sm">
-                <div class="h-32">08:00 AM</div><div class="h-32">10:00 AM</div><div class="h-32">01:00 PM</div>
-            </div>
-            <div class="col-span-4 grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div class="space-y-4">
-                    <h3 class="font-bold text-gray-500 mb-2">Today (Monday)</h3>
-                    ${appData.courses
-                      .slice(0, 2)
-                      .map(
-                        (c, i) => `
-                        <div class="bg-white p-4 rounded-xl shadow-md border-l-4 border-${
-                          c.color
-                        }-500 h-32 flex flex-col justify-center">
-                            <div class="flex justify-between font-bold text-gray-800"><span>${
-                              c.name
-                            }</span><span>${
-                          i === 0 ? "08:00" : "10:00"
-                        }</span></div>
-                            <div class="text-sm text-gray-500 mt-1">${
-                              c.code
-                            } • Room 30${i + 1}</div>
-                            <div class="mt-3 flex -space-x-2">
-                                <img class="w-8 h-8 rounded-full border-2 border-white" src="https://ui-avatars.com/api/?name=A&background=random">
-                                <img class="w-8 h-8 rounded-full border-2 border-white" src="https://ui-avatars.com/api/?name=B&background=random">
-                                <div class="w-8 h-8 rounded-full border-2 border-white bg-gray-200 flex items-center justify-center text-xs text-gray-600">+${
-                                  c.students - 2
-                                }</div>
-                            </div>
-                        </div>`
-                      )
-                      .join("")}
-                </div>
-                <div class="space-y-4">
-                    <h3 class="font-bold text-gray-500 mb-2">Tomorrow (Tuesday)</h3>
-                     ${appData.courses
-                       .slice(2, 4)
-                       .map(
-                         (c, i) => `
-                        <div class="bg-white p-4 rounded-xl shadow-md border-l-4 border-${
-                          c.color
-                        }-500 h-32 flex flex-col justify-center opacity-75">
-                            <div class="flex justify-between font-bold text-gray-800"><span>${
-                              c.name
-                            }</span><span>${
-                           i === 0 ? "09:00" : "01:00"
-                         }</span></div>
-                            <div class="text-sm text-gray-500 mt-1">${
-                              c.code
-                            } • Lab 4</div>
-                        </div>`
-                       )
-                       .join("")}
-                </div>
-            </div>
-        </div>
-      `;
+              <h2 class="text-3xl font-bold text-gray-800 mb-6">Teaching Schedule</h2>
+              <div class="grid grid-cols-1 lg:grid-cols-5 gap-6">
+                  <div class="col-span-1 space-y-6 mt-12 hidden lg:block text-right pr-4 text-gray-400 text-sm">
+                      <div class="h-32">08:00 AM</div><div class="h-32">10:00 AM</div><div class="h-32">01:00 PM</div>
+                  </div>
+                  <div class="col-span-4 grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div class="space-y-4">
+                          <h3 class="font-bold text-gray-500 mb-2">Today (Monday)</h3>
+                          ${appData.courses
+                            .slice(0, 2)
+                            .map(
+                              (c, i) => `
+                              <div class="bg-white p-4 rounded-xl shadow-md border-l-4 border-${
+                                c.color
+                              }-500 h-32 flex flex-col justify-center">
+                                  <div class="flex justify-between font-bold text-gray-800"><span>${
+                                    c.name
+                                  }</span><span>${
+                                    i === 0 ? "08:00" : "10:00"
+                                  }</span></div>
+                                  <div class="text-sm text-gray-500 mt-1">${
+                                    c.code
+                                  } • Room 30${i + 1}</div>
+                                  <div class="mt-3 flex -space-x-2">
+                                      <img class="w-8 h-8 rounded-full border-2 border-white" src="https://ui-avatars.com/api/?name=A&background=random">
+                                      <img class="w-8 h-8 rounded-full border-2 border-white" src="https://ui-avatars.com/api/?name=B&background=random">
+                                      <div class="w-8 h-8 rounded-full border-2 border-white bg-gray-200 flex items-center justify-center text-xs text-gray-600">+${
+                                        c.students - 2
+                                      }</div>
+                                  </div>
+                              </div>`,
+                            )
+                            .join("")}
+                      </div>
+                      <div class="space-y-4">
+                          <h3 class="font-bold text-gray-500 mb-2">Tomorrow (Tuesday)</h3>
+                           ${appData.courses
+                             .slice(2, 4)
+                             .map(
+                               (c, i) => `
+                              <div class="bg-white p-4 rounded-xl shadow-md border-l-4 border-${
+                                c.color
+                              }-500 h-32 flex flex-col justify-center opacity-75">
+                                  <div class="flex justify-between font-bold text-gray-800"><span>${
+                                    c.name
+                                  }</span><span>${
+                                    i === 0 ? "09:00" : "01:00"
+                                  }</span></div>
+                                  <div class="text-sm text-gray-500 mt-1">${
+                                    c.code
+                                  } • Lab 4</div>
+                              </div>`,
+                             )
+                             .join("")}
+                      </div>
+                  </div>
+              </div>
+            `;
 
       const renderMessages = () => `
-        <div class="h-[calc(100vh-140px)] flex bg-white rounded-xl shadow-xl overflow-hidden">
-            <div class="w-1/3 border-r bg-gray-50 flex flex-col">
-                <div class="p-4 border-b bg-white"><input type="text" placeholder="Search..." class="w-full bg-gray-100 rounded-lg px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"></div>
-                <div class="overflow-y-auto flex-1">
-                    ${appData.messages
-                      .map(
-                        (m) => `
-                        <div class="p-4 border-b hover:bg-white cursor-pointer transition ${
-                          m.unread ? "bg-indigo-50" : ""
-                        }">
-                            <div class="flex justify-between items-center mb-1"><span class="font-bold text-gray-800">${
-                              m.from
-                            }</span><span class="text-xs text-gray-500">${
-                          m.time
-                        }</span></div>
-                            <p class="text-sm text-gray-600 truncate">${
-                              m.text
-                            }</p>
-                        </div>`
-                      )
-                      .join("")}
-                </div>
-            </div>
-            <div class="flex-1 flex flex-col">
-                <div class="p-4 border-b bg-white flex justify-between items-center"><h3 class="font-bold text-lg"><i class="fab fa-telegram text-blue-500 mr-2"></i>John Doe</h3><i class="fas fa-ellipsis-h text-gray-400 cursor-pointer"></i></div>
-                <div class="flex-1 bg-gray-100 p-6 overflow-y-auto space-y-4" id="chatContainer">
-                    <div class="flex justify-start"><div class="bg-white p-3 rounded-lg rounded-tl-none shadow-sm max-w-xs text-sm">Hello Professor, I have a question about the assignment.</div></div>
-                    <div class="flex justify-end"><div class="bg-indigo-600 text-white p-3 rounded-lg rounded-tr-none shadow-sm max-w-xs text-sm">Sure, go ahead.</div></div>
-                    <div class="flex justify-start"><div class="bg-white p-3 rounded-lg rounded-tl-none shadow-sm max-w-xs text-sm">I will be late today due to traffic.</div></div>
-                </div>
-                <div class="p-4 bg-white border-t">
-                    <form id="msgForm" class="flex gap-2"><input type="text" id="msgInput" placeholder="Write a message..." class="flex-1 border rounded-full px-4 py-2 focus:outline-none focus:border-indigo-500"><button type="submit" class="bg-indigo-600 text-white w-10 h-10 rounded-full hover:bg-indigo-700 transition"><i class="fas fa-paper-plane"></i></button></form>
-                </div>
-            </div>
-        </div>
-      `;
+              <div class="h-[calc(100vh-140px)] flex bg-white rounded-xl shadow-xl overflow-hidden">
+                  <div class="w-1/3 border-r bg-gray-50 flex flex-col">
+                      <div class="p-4 border-b bg-white"><input type="text" placeholder="Search..." class="w-full bg-gray-100 rounded-lg px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"></div>
+                      <div class="overflow-y-auto flex-1">
+                          ${appData.messages
+                            .map(
+                              (m) => `
+                              <div class="p-4 border-b hover:bg-white cursor-pointer transition ${
+                                m.unread ? "bg-indigo-50" : ""
+                              }">
+                                  <div class="flex justify-between items-center mb-1"><span class="font-bold text-gray-800">${
+                                    m.from
+                                  }</span><span class="text-xs text-gray-500">${
+                                    m.time
+                                  }</span></div>
+                                  <p class="text-sm text-gray-600 truncate">${
+                                    m.text
+                                  }</p>
+                              </div>`,
+                            )
+                            .join("")}
+                      </div>
+                  </div>
+                  <div class="flex-1 flex flex-col">
+                      <div class="p-4 border-b bg-white flex justify-between items-center"><h3 class="font-bold text-lg"><i class="fab fa-telegram text-blue-500 mr-2"></i>John Doe</h3><i class="fas fa-ellipsis-h text-gray-400 cursor-pointer"></i></div>
+                      <div class="flex-1 bg-gray-100 p-6 overflow-y-auto space-y-4" id="chatContainer">
+                          <div class="flex justify-start"><div class="bg-white p-3 rounded-lg rounded-tl-none shadow-sm max-w-xs text-sm">Hello Professor, I have a question about the assignment.</div></div>
+                          <div class="flex justify-end"><div class="bg-indigo-600 text-white p-3 rounded-lg rounded-tr-none shadow-sm max-w-xs text-sm">Sure, go ahead.</div></div>
+                          <div class="flex justify-start"><div class="bg-white p-3 rounded-lg rounded-tl-none shadow-sm max-w-xs text-sm">I will be late today due to traffic.</div></div>
+                      </div>
+                      <div class="p-4 bg-white border-t">
+                          <form id="msgForm" class="flex gap-2"><input type="text" id="msgInput" placeholder="Write a message..." class="flex-1 border rounded-full px-4 py-2 focus:outline-none focus:border-indigo-500"><button type="submit" class="bg-indigo-600 text-white w-10 h-10 rounded-full hover:bg-indigo-700 transition"><i class="fas fa-paper-plane"></i></button></form>
+                      </div>
+                  </div>
+              </div>
+            `;
 
       // Grade View Variables
       let isGradeTableView = false;
       const renderGrades = () => `
-        <div class="flex justify-between items-center mb-6">
-            <h2 class="text-3xl font-bold text-gray-800">Gradebook</h2>
-            <div class="flex items-center space-x-3 bg-white px-3 py-1 rounded-full shadow-sm border">
-                <span class="text-sm ${
-                  !isGradeTableView
-                    ? "font-bold text-indigo-600"
-                    : "text-gray-500"
-                }">Cards</span>
-                <label for="viewToggle" class="flex items-center cursor-pointer relative">
-                    <input type="checkbox" id="viewToggle" class="sr-only toggle-checkbox" ${
-                      isGradeTableView ? "checked" : ""
-                    }>
-                    <div class="w-10 h-6 bg-gray-200 rounded-full border border-gray-300 toggle-label transition duration-300"></div>
-                    <div class="dot absolute left-1 top-1 bg-white w-4 h-4 rounded-full transition transform duration-300 ${
-                      isGradeTableView
-                        ? "translate-x-full border-indigo-600"
-                        : ""
-                    }"></div>
-                </label>
-                <span class="text-sm ${
-                  isGradeTableView
-                    ? "font-bold text-indigo-600"
-                    : "text-gray-500"
-                }">Table</span>
-            </div>
-        </div>
-        ${
-          !isGradeTableView
-            ? `<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                ${appData.students
-                  .slice(0, 9)
-                  .map(
-                    (s) => `
-                    <div class="bg-white rounded-xl shadow border border-gray-100 p-5 relative overflow-hidden">
-                        <div class="absolute top-0 right-0 p-2"><i class="fas fa-pen text-gray-300 hover:text-indigo-600 cursor-pointer"></i></div>
-                        <div class="flex items-center space-x-3 mb-4"><img src="https://ui-avatars.com/api/?name=${
-                          s.name
-                        }&background=random" class="w-12 h-12 rounded-full"><div><h4 class="font-bold text-gray-800">${
-                      s.name
-                    }</h4><p class="text-xs text-gray-500">${
-                      s.id
-                    }</p></div></div>
-                        <div class="flex justify-between items-end"><div><p class="text-xs text-gray-500">Total Score</p><p class="text-2xl font-bold text-indigo-600">${
-                          s.grade
-                        }/100</p></div><div class="text-4xl font-black text-gray-100">${
-                      s.grade >= 90 ? "A" : s.grade >= 80 ? "B" : "C"
-                    }</div></div>
-                    </div>`
-                  )
-                  .join("")}
-             </div>`
-            : `<div class="bg-white rounded-xl shadow overflow-hidden">
-                <table class="w-full text-left">
-                    <thead class="bg-indigo-50 border-b"><tr><th class="p-4">Student</th><th class="p-4">ID</th><th class="p-4">Points (0-100)</th><th class="p-4">Grade</th><th class="p-4">Actions</th></tr></thead>
-                    <tbody class="divide-y divide-gray-100">
-                        ${appData.students
-                          .slice(0, 15)
-                          .map(
-                            (s) => `
-                            <tr><td class="p-3 font-medium text-gray-700">${
-                              s.name
-                            }</td><td class="p-3 text-gray-500">${
-                              s.id
-                            }</td><td class="p-3"><input type="number" value="${
-                              s.grade
-                            }" class="border rounded w-20 p-1 text-center grade-input" data-id="${
-                              s.id
-                            }"></td><td class="p-3 font-bold text-indigo-600" id="grade-letter-${
-                              s.id
-                            }">${
-                              s.grade >= 90
-                                ? "A"
-                                : s.grade >= 80
-                                ? "B"
-                                : s.grade >= 70
-                                ? "C"
-                                : "F"
-                            }</td><td class="p-3"><button class="text-blue-600 hover:underline">Save</button></td></tr>
-                        `
-                          )
-                          .join("")}
-                    </tbody>
-                </table>
-             </div>`
-        }
-      `;
+              <div class="flex justify-between items-center mb-6">
+                  <h2 class="text-3xl font-bold text-gray-800">Gradebook</h2>
+                  <div class="flex items-center space-x-3 bg-white px-3 py-1 rounded-full shadow-sm border">
+                      <span class="text-sm ${
+                        !isGradeTableView
+                          ? "font-bold text-indigo-600"
+                          : "text-gray-500"
+                      }">Cards</span>
+                      <label for="viewToggle" class="flex items-center cursor-pointer relative">
+                          <input type="checkbox" id="viewToggle" class="sr-only toggle-checkbox" ${
+                            isGradeTableView ? "checked" : ""
+                          }>
+                          <div class="w-10 h-6 bg-gray-200 rounded-full border border-gray-300 toggle-label transition duration-300"></div>
+                          <div class="dot absolute left-1 top-1 bg-white w-4 h-4 rounded-full transition transform duration-300 ${
+                            isGradeTableView
+                              ? "translate-x-full border-indigo-600"
+                              : ""
+                          }"></div>
+                      </label>
+                      <span class="text-sm ${
+                        isGradeTableView
+                          ? "font-bold text-indigo-600"
+                          : "text-gray-500"
+                      }">Table</span>
+                  </div>
+              </div>
+              ${
+                !isGradeTableView
+                  ? `<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                      ${appData.students
+                        .slice(0, 9)
+                        .map(
+                          (s) => `
+                          <div class="bg-white rounded-xl shadow border border-gray-100 p-5 relative overflow-hidden">
+                              <div class="absolute top-0 right-0 p-2"><i class="fas fa-pen text-gray-300 hover:text-indigo-600 cursor-pointer"></i></div>
+                              <div class="flex items-center space-x-3 mb-4"><img src="https://ui-avatars.com/api/?name=${
+                                s.name
+                              }&background=random" class="w-12 h-12 rounded-full"><div><h4 class="font-bold text-gray-800">${
+                                s.name
+                              }</h4><p class="text-xs text-gray-500">${
+                                s.id
+                              }</p></div></div>
+                              <div class="flex justify-between items-end"><div><p class="text-xs text-gray-500">Total Score</p><p class="text-2xl font-bold text-indigo-600">${
+                                s.grade
+                              }/100</p></div><div class="text-4xl font-black text-gray-100">${
+                                s.grade >= 90 ? "A" : s.grade >= 80 ? "B" : "C"
+                              }</div></div>
+                          </div>`,
+                        )
+                        .join("")}
+                   </div>`
+                  : `<div class="bg-white rounded-xl shadow overflow-hidden">
+                      <table class="w-full text-left">
+                          <thead class="bg-indigo-50 border-b"><tr><th class="p-4">Student</th><th class="p-4">ID</th><th class="p-4">Points (0-100)</th><th class="p-4">Grade</th><th class="p-4">Actions</th></tr></thead>
+                          <tbody class="divide-y divide-gray-100">
+                              ${appData.students
+                                .slice(0, 15)
+                                .map(
+                                  (s) => `
+                                  <tr><td class="p-3 font-medium text-gray-700">${
+                                    s.name
+                                  }</td><td class="p-3 text-gray-500">${
+                                    s.id
+                                  }</td><td class="p-3"><input type="number" value="${
+                                    s.grade
+                                  }" class="border rounded w-20 p-1 text-center grade-input" data-id="${
+                                    s.id
+                                  }"></td><td class="p-3 font-bold text-indigo-600" id="grade-letter-${
+                                    s.id
+                                  }">${
+                                    s.grade >= 90
+                                      ? "A"
+                                      : s.grade >= 80
+                                        ? "B"
+                                        : s.grade >= 70
+                                          ? "C"
+                                          : "F"
+                                  }</td><td class="p-3"><button class="text-blue-600 hover:underline">Save</button></td></tr>
+                              `,
+                                )
+                                .join("")}
+                          </tbody>
+                      </table>
+                   </div>`
+              }
+            `;
       let attendancePage = 1;
       let attendanceCourseFilter = 1;
       let attendanceSearchQuery = "";
@@ -771,75 +777,386 @@
       };
 
       const renderAttendance = () => `
-    <div class="mb-6 flex flex-col xl:flex-row justify-between items-start xl:items-center gap-4">
-      <h2 class="text-3xl font-bold text-gray-800">Attendance Manager</h2>
-      
-      <div class="flex flex-col md:flex-row gap-2 w-full md:w-auto">
-           <select id="attFilter" class="border p-2 rounded-lg shadow-sm bg-white cursor-pointer min-w-[200px]">
-             <!-- Populated by JS -->
-           </select>
+  <div class="mb-6 flex flex-col xl:flex-row justify-between items-start xl:items-center gap-4">
+    <h2 class="text-3xl font-bold text-gray-800">Attendance Manager</h2>
+    
+    <div class="flex flex-col md:flex-row gap-2 w-full md:w-auto">
+         <select id="attFilter" class="border p-2 rounded-lg shadow-sm bg-white cursor-pointer min-w-[200px]">
+           <!-- Populated by JS -->
+         </select>
 
-           <div class="flex gap-2">
-             <button id="btn-save-attendance" onclick="window.saveAttendance()" class="bg-gray-200 text-gray-500 px-4 py-2 rounded-lg hover:bg-gray-300 transition shadow-sm whitespace-nowrap">
-               <i class="fas fa-save mr-2"></i>Save
-             </button>
-             <button onclick="window.exportAttendanceCSV()" class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition shadow-sm whitespace-nowrap">
-               <i class="fas fa-file-export mr-2"></i>Export CSV
-             </button>
-           </div>
-      </div>
+         <div class="flex gap-2">
+           <button id="btn-save-attendance" onclick="window.saveAttendance()" class="bg-gray-200 text-gray-500 px-4 py-2 rounded-lg hover:bg-gray-300 transition shadow-sm whitespace-nowrap">
+             <i class="fas fa-save mr-2"></i>Save
+           </button>
+           <button onclick="window.exportAttendanceCSV()" class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition shadow-sm whitespace-nowrap">
+             <i class="fas fa-file-export mr-2"></i>Export CSV
+           </button>
+         </div>
     </div>
+  </div>
 
-    <div class="bg-white rounded-xl shadow overflow-hidden">
-       <table class="w-full text-left">
-          <thead class="bg-gray-100 text-xs uppercase text-gray-600">
-            <tr>
-              <th class="p-4">Student</th>
-              <th class="p-4">Current Status</th>
-              <th class="p-4">Time</th>
-              <th class="p-4">Mark Attendance</th>
-            </tr>
-          </thead>
-          <tbody id="attendance-table-body" class="divide-y divide-gray-100">
-             <tr><td colspan="4" class="p-8 text-center text-gray-400">Please select a course to begin taking attendance.</td></tr>
-          </tbody>
-       </table>
-    </div>
+  <div class="bg-white rounded-xl shadow overflow-hidden">
+     <table class="w-full text-left">
+        <thead class="bg-gray-100 text-xs uppercase text-gray-600">
+          <tr>
+            <th class="p-4">Student</th>
+            <th class="p-4">Current Status</th>
+            <th class="p-4">Time</th>
+            <th class="p-4">Mark Attendance</th>
+          </tr>
+        </thead>
+        <tbody id="attendance-table-body" class="divide-y divide-gray-100">
+           <tr><td colspan="4" class="p-8 text-center text-gray-400">Please select a course to begin taking attendance.</td></tr>
+        </tbody>
+     </table>
+  </div>
 `;
 
-      const renderAnalytics = () => `
-         <h2 class="text-3xl font-bold text-gray-800 mb-6">Performance Analytics</h2>
-         <div class="bg-white p-6 rounded-xl shadow mb-6"><h3 class="font-bold mb-4">Monthly Attendance Overview</h3><div class="overflow-x-auto"><table class="w-full text-center border-collapse text-sm"><thead><tr><th class="p-2 text-left">Student</th>${Array.from(
-           { length: 10 },
-           (_, i) => `<th class="p-2 border-l">Day ${i + 1}</th>`
-         ).join("")}</tr></thead><tbody>${appData.students
-        .slice(0, 5)
-        .map(
-          (s) =>
-            `<tr class="border-t"><td class="p-3 text-left font-bold">${
-              s.name
-            }</td>${Array.from({ length: 10 }, () =>
-              Math.random() > 0.1
-                ? '<td class="p-2 border-l text-green-500"><i class="fas fa-check"></i></td>'
-                : '<td class="p-2 border-l text-red-500"><i class="fas fa-times"></i></td>'
-            ).join("")}</tr>`
-        )
-        .join("")}</tbody></table></div></div>
+      const renderAnalytics = async () => {
+        console.log("🚀 Starting renderAnalytics...");
+
+        const currentYear = new Date().getFullYear();
+        const currentMonth = new Date().getMonth() + 1;
+
+        // Get selected course (from dropdown if exists, otherwise first course)
+        let selectedCourseId = document.getElementById(
+          "courseFilterAnalytics",
+        )?.value;
+        if (!selectedCourseId && appData.courses?.length > 0) {
+          selectedCourseId = appData.courses[0].id;
+        }
+
+        console.log("🎯 Selected Course ID:", selectedCourseId);
+
+        if (!selectedCourseId) {
+          return `
+      <div class="bg-white p-8 rounded-xl shadow text-center">
+        <i class="fas fa-exclamation-circle text-gray-400 text-5xl mb-4"></i>
+        <p class="text-gray-600">No courses available. Please create a course first.</p>
+      </div>
+    `;
+        }
+
+        // Fetch data
+        const attendanceData = await API.getMonthlyAttendanceOverview(
+          selectedCourseId,
+          currentYear,
+          currentMonth,
+        );
+
+        console.log("📦 Attendance data received:", attendanceData);
+
+        if (!attendanceData || attendanceData.length === 0) {
+          const courseOptions = appData.courses
+            .map(
+              (c) =>
+                `<option value="${c.id}" ${c.id == selectedCourseId ? "selected" : ""}>${c.name}</option>`,
+            )
+            .join("");
+
+          return `
+      <div class="max-w-7xl mx-auto">
+        <div class="flex justify-between items-center mb-6">
+          <h2 class="text-3xl font-bold text-gray-800">Performance Analytics</h2>
+          <div class="flex gap-4">
+            <select id="courseFilterAnalytics" class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500">
+              ${courseOptions}
+            </select>
+            <button onclick="window.router('analytics')" class="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition">
+              <i class="fas fa-sync-alt mr-2"></i>Refresh
+            </button>
+          </div>
+        </div>
+
+        <div class="bg-white p-8 rounded-xl shadow text-center">
+          <i class="fas fa-clipboard-list text-gray-400 text-5xl mb-4"></i>
+          <p class="text-gray-600">No attendance records found for this month.</p>
+          <p class="text-sm text-gray-500 mt-2">Start taking attendance to see analytics here.</p>
+        </div>
+      </div>
+    `;
+        }
+
+        // ──────────────────────────────────────────────
+        // Prepare all dynamic parts BEFORE the big template
+        // ──────────────────────────────────────────────
+
+        // 1. All unique dates
+        const allDates = new Set();
+        attendanceData.forEach((student) => {
+          if (student.attendanceData) {
+            Object.keys(student.attendanceData).forEach((date) =>
+              allDates.add(date),
+            );
+          }
+        });
+        const sortedDates = Array.from(allDates).sort();
+
+        const formatDate = (dateStr) => {
+          const date = new Date(dateStr);
+          return {
+            day: date.getDate(),
+            weekday: date.toLocaleDateString("en-US", { weekday: "short" }),
+          };
+        };
+
+        // 2. Date header cells
+        const dateHeaderCells = sortedDates
+          .map((date) => {
+            const f = formatDate(date);
+            return `
+        <th class="px-4 py-4 text-center border-l border-gray-200">
+          <div class="text-xs font-semibold text-gray-700">${f.weekday}</div>
+          <div class="text-lg font-bold text-gray-800">${f.day}</div>
+        </th>
       `;
+          })
+          .join("");
+
+        // 3. Calculate stats helper
+        const calculateStats = (student) => {
+          const attendance = student.attendanceData || {};
+          const statuses = Object.values(attendance);
+          const present = statuses.filter((s) => s === "PRESENT").length;
+          const late = statuses.filter((s) => s === "LATE").length;
+          const absent = statuses.filter((s) => s === "ABSENT").length;
+          const total = statuses.filter((s) => s !== "N/A").length;
+          const rate =
+            total > 0 ? (((present + late) / total) * 100).toFixed(1) : 0;
+          return { present, late, absent, total, attendanceRate: rate };
+        };
+
+        // 4. Status badge helper
+        const getStatusBadge = (status) => {
+          const map = {
+            PRESENT:
+              '<span class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-green-100 text-green-600"><i class="fas fa-check text-sm"></i></span>',
+            LATE: '<span class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-yellow-100 text-yellow-600"><i class="fas fa-clock text-sm"></i></span>',
+            ABSENT:
+              '<span class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-red-100 text-red-600"><i class="fas fa-times text-sm"></i></span>',
+          };
+          return (
+            map[status] ||
+            '<span class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-gray-100 text-gray-400"><i class="fas fa-minus text-sm"></i></span>'
+          );
+        };
+
+        // 5. Student rows
+        const studentRows = attendanceData
+          .map((student, index) => {
+            const stats = calculateStats(student);
+
+            const statusCells = sortedDates
+              .map((date) => {
+                const status = student.attendanceData?.[date] || "N/A";
+                return `<td class="px-4 py-4 text-center border-l border-gray-200">${getStatusBadge(status)}</td>`;
+              })
+              .join("");
+
+            return `
+        <tr class="hover:bg-gray-50 transition ${index % 2 === 0 ? "bg-white" : "bg-gray-50"}">
+          <td class="sticky left-0 ${index % 2 === 0 ? "bg-white" : "bg-gray-50"} px-6 py-4 whitespace-nowrap z-10">
+            <div class="flex items-center">
+              <div class="flex-shrink-0 h-10 w-10 bg-indigo-100 rounded-full flex items-center justify-center">
+                <span class="text-indigo-600 font-semibold text-sm">${(student.studentName || "??").substring(0, 2).toUpperCase()}</span>
+              </div>
+              <div class="ml-4">
+                <div class="text-sm font-medium text-gray-900">${student.studentName || "Unknown Student"}</div>
+                <div class="text-xs text-gray-500">ID: ${student.studentId || "—"}</div>
+              </div>
+            </div>
+          </td>
+          ${statusCells}
+          <td class="px-6 py-4 whitespace-nowrap border-l-2 border-gray-300">
+            <div class="text-center">
+              <div class="flex items-center justify-center gap-3 mb-2">
+                <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                  <i class="fas fa-check mr-1"></i>${stats.present}
+                </span>
+                <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
+                  <i class="fas fa-clock mr-1"></i>${stats.late}
+                </span>
+                <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-red-100 text-red-800">
+                  <i class="fas fa-times mr-1"></i>${stats.absent}
+                </span>
+              </div>
+              <div class="text-sm font-semibold ${
+                stats.attendanceRate >= 90
+                  ? "text-green-600"
+                  : stats.attendanceRate >= 75
+                    ? "text-yellow-600"
+                    : "text-red-600"
+              }">
+                ${stats.attendanceRate}% Attendance
+              </div>
+            </div>
+          </td>
+        </tr>
+      `;
+          })
+          .join("");
+
+        // ──────────────────────────────────────────────
+        // Final template — now safe and clean
+        // ──────────────────────────────────────────────
+
+        const selectedCourse = appData.courses.find(
+          (c) => c.id == selectedCourseId,
+        );
+        const monthName = new Date(
+          currentYear,
+          currentMonth - 1,
+        ).toLocaleDateString("en-US", { month: "long", year: "numeric" });
+
+        const avgAttendance =
+          attendanceData.length > 0
+            ? (
+                attendanceData.reduce(
+                  (sum, s) =>
+                    sum + parseFloat(calculateStats(s).attendanceRate),
+                  0,
+                ) / attendanceData.length
+              ).toFixed(1)
+            : "0.0";
+
+        const perfectCount = attendanceData.filter((s) => {
+          const st = calculateStats(s);
+          return st.absent === 0 && st.total > 0;
+        }).length;
+
+        return `
+    <div class="max-w-7xl mx-auto">
+      <!-- Header -->
+      <div class="flex justify-between items-center mb-6">
+        <div>
+          <h2 class="text-3xl font-bold text-gray-800">Performance Analytics</h2>
+          <p class="text-gray-600 mt-1">${selectedCourse?.name || "Selected Course"} — ${monthName}</p>
+        </div>
+        <div class="flex gap-4">
+          <select id="courseFilterAnalytics" class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500">
+            ${appData.courses
+              .map(
+                (c) =>
+                  `<option value="${c.id}" ${c.id == selectedCourseId ? "selected" : ""}>${c.name}</option>`,
+              )
+              .join("")}
+          </select>
+          <button onclick="window.router('analytics')" class="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition">
+            <i class="fas fa-sync-alt mr-2"></i>Refresh
+          </button>
+        </div>
+      </div>
+
+      <!-- Summary Cards -->
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+        <div class="bg-white p-4 rounded-xl shadow">
+          <div class="flex items-center justify-between">
+            <div>
+              <p class="text-sm text-gray-600">Total Students</p>
+              <p class="text-2xl font-bold text-gray-800">${attendanceData.length}</p>
+            </div>
+            <div class="bg-indigo-100 p-3 rounded-lg">
+              <i class="fas fa-users text-indigo-600 text-xl"></i>
+            </div>
+          </div>
+        </div>
+        <div class="bg-white p-4 rounded-xl shadow">
+          <div class="flex items-center justify-between">
+            <div>
+              <p class="text-sm text-gray-600">Class Days</p>
+              <p class="text-2xl font-bold text-gray-800">${sortedDates.length}</p>
+            </div>
+            <div class="bg-green-100 p-3 rounded-lg">
+              <i class="fas fa-calendar-check text-green-600 text-xl"></i>
+            </div>
+          </div>
+        </div>
+        <div class="bg-white p-4 rounded-xl shadow">
+          <div class="flex items-center justify-between">
+            <div>
+              <p class="text-sm text-gray-600">Avg. Attendance</p>
+              <p class="text-2xl font-bold text-gray-800">${avgAttendance}%</p>
+            </div>
+            <div class="bg-blue-100 p-3 rounded-lg">
+              <i class="fas fa-chart-line text-blue-600 text-xl"></i>
+            </div>
+          </div>
+        </div>
+        <div class="bg-white p-4 rounded-xl shadow">
+          <div class="flex items-center justify-between">
+            <div>
+              <p class="text-sm text-gray-600">Perfect Attendance</p>
+              <p class="text-2xl font-bold text-gray-800">${perfectCount}</p>
+            </div>
+            <div class="bg-yellow-100 p-3 rounded-lg">
+              <i class="fas fa-star text-yellow-600 text-xl"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Attendance Table -->
+      <div class="bg-white rounded-xl shadow overflow-hidden">
+        <div class="p-6 border-b border-gray-200">
+          <h3 class="text-xl font-bold text-gray-800">Monthly Attendance Overview</h3>
+          <p class="text-sm text-gray-600 mt-1">Track daily attendance status for all students</p>
+        </div>
+
+        <div class="overflow-x-auto">
+          <table class="w-full">
+            <thead class="bg-gray-50">
+              <tr>
+                <th class="sticky left-0 bg-gray-50 px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider z-10">
+                  Student
+                </th>
+                ${dateHeaderCells}
+                <th class="px-6 py-4 text-center text-xs font-semibold text-gray-700 uppercase tracking-wider border-l-2 border-gray-300">
+                  Stats
+                </th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-200">
+              ${studentRows}
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Legend -->
+        <div class="px-6 py-4 bg-gray-50 border-t border-gray-200">
+          <div class="flex items-center justify-center gap-6 text-sm flex-wrap">
+            <div class="flex items-center gap-2">
+              ${getStatusBadge("PRESENT")} <span class="text-gray-700">Present</span>
+            </div>
+            <div class="flex items-center gap-2">
+              ${getStatusBadge("LATE")} <span class="text-gray-700">Late</span>
+            </div>
+            <div class="flex items-center gap-2">
+              ${getStatusBadge("ABSENT")} <span class="text-gray-700">Absent</span>
+            </div>
+            <div class="flex items-center gap-2">
+              ${getStatusBadge("N/A")} <span class="text-gray-700">No Record</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+      };
 
       const renderSettings = () => `
-         <h2 class="text-3xl font-bold text-gray-800 mb-6">System Settings</h2>
-         <div class="max-w-2xl bg-white rounded-xl shadow p-8">
-            <div class="flex items-center justify-between mb-8 pb-8 border-b">
-                <div><h3 class="font-bold text-lg">Dark Mode</h3><p class="text-gray-500 text-sm">Switch between light and dark themes</p></div>
-                <button id="themeToggle" class="bg-gray-200 relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:ring-offset-2"><span aria-hidden="true" class="translate-x-0 pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out"></span></button>
-            </div>
-            <div class="space-y-6">
-                <div><h3 class="font-bold text-lg mb-4">School Profile</h3><div class="grid grid-cols-2 gap-4"><input type="text" value="University of Technology" class="border p-2 rounded"><input type="text" value="Academic Year 2025" class="border p-2 rounded"></div></div>
-                <div class="pt-4"><button class="bg-red-50 text-red-600 border border-red-200 px-4 py-2 rounded font-medium hover:bg-red-100">Reset System Data</button><button class="bg-indigo-600 text-white px-4 py-2 rounded font-medium ml-2 hover:bg-indigo-700">Save Changes</button></div>
-            </div>
-         </div>
-      `;
+               <h2 class="text-3xl font-bold text-gray-800 mb-6">System Settings</h2>
+               <div class="max-w-2xl bg-white rounded-xl shadow p-8">
+                  <div class="flex items-center justify-between mb-8 pb-8 border-b">
+                      <div><h3 class="font-bold text-lg">Dark Mode</h3><p class="text-gray-500 text-sm">Switch between light and dark themes</p></div>
+                      <button id="themeToggle" class="bg-gray-200 relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:ring-offset-2"><span aria-hidden="true" class="translate-x-0 pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out"></span></button>
+                  </div>
+                  <div class="space-y-6">
+                      <div><h3 class="font-bold text-lg mb-4">School Profile</h3><div class="grid grid-cols-2 gap-4"><input type="text" value="University of Technology" class="border p-2 rounded"><input type="text" value="Academic Year 2025" class="border p-2 rounded"></div></div>
+                      <div class="pt-4"><button class="bg-red-50 text-red-600 border border-red-200 px-4 py-2 rounded font-medium hover:bg-red-100">Reset System Data</button><button class="bg-indigo-600 text-white px-4 py-2 rounded font-medium ml-2 hover:bg-indigo-700">Save Changes</button></div>
+                  </div>
+               </div>
+            `;
 
       // ==========================================
       // EVENTS & LOGIC
@@ -870,57 +1187,57 @@
         btn.addEventListener("click", () => {
           // Modal HTML (UI exactly as requested)
           const modalHtml = `
-            <div id="courseModal" class="modal fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden">
-                <div class="bg-white rounded-xl shadow-2xl p-6 w-full max-w-md mx-4">
-                    <h3 class="text-xl font-bold mb-4">Create New Course</h3>
+                  <div id="courseModal" class="modal fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden">
+                      <div class="bg-white rounded-xl shadow-2xl p-6 w-full max-w-md mx-4">
+                          <h3 class="text-xl font-bold mb-4">Create New Course</h3>
 
-                    <form id="createCourseForm" class="space-y-4">
+                          <form id="createCourseForm" class="space-y-4">
 
-                        <!-- Course Name -->
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700">Course Name</label>
-                            <input required type="text" id="cName"
-                                class="w-full border rounded-lg p-2 focus:ring-2 focus:ring-indigo-500 focus:outline-none">
-                        </div>
+                              <!-- Course Name -->
+                              <div>
+                                  <label class="block text-sm font-medium text-gray-700">Course Name</label>
+                                  <input required type="text" id="cName"
+                                      class="w-full border rounded-lg p-2 focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+                              </div>
 
-                        <!-- Course Code -->
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700">Course Code</label>
-                            <input required type="text" id="cCode"
-                                class="w-full border rounded-lg p-2 focus:ring-2 focus:ring-indigo-500 focus:outline-none">
-                        </div>
+                              <!-- Course Code -->
+                              <div>
+                                  <label class="block text-sm font-medium text-gray-700">Course Code</label>
+                                  <input required type="text" id="cCode"
+                                      class="w-full border rounded-lg p-2 focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+                              </div>
 
-                        <!-- Course Image -->
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700">Course Image</label>
-                            <input type="file" id="cImage" accept="image/*"
-                                class="w-full border rounded-lg p-2 bg-gray-50">
-                        </div>
+                              <!-- Course Image -->
+                              <div>
+                                  <label class="block text-sm font-medium text-gray-700">Course Image</label>
+                                  <input type="file" id="cImage" accept="image/*"
+                                      class="w-full border rounded-lg p-2 bg-gray-50">
+                              </div>
 
-                        <!-- Course Color -->
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700">Course Color</label>
-                            <input type="color" id="cColor" value="#4F46E5"
-                                class="w-full h-10 border rounded-lg cursor-pointer">
-                        </div>
+                              <!-- Course Color -->
+                              <div>
+                                  <label class="block text-sm font-medium text-gray-700">Course Color</label>
+                                  <input type="color" id="cColor" value="#4F46E5"
+                                      class="w-full h-10 border rounded-lg cursor-pointer">
+                              </div>
 
-                        <!-- Actions -->
-                        <div class="flex justify-end space-x-2 mt-6">
-                            <button type="button"
-                                onclick="closeModal('courseModal')"
-                                class="bg-gray-200 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-300">
-                                Cancel
-                            </button>
+                              <!-- Actions -->
+                              <div class="flex justify-end space-x-2 mt-6">
+                                  <button type="button"
+                                      onclick="closeModal('courseModal')"
+                                      class="bg-gray-200 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-300">
+                                      Cancel
+                                  </button>
 
-                            <button type="submit"
-                                class="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700">
-                                Create
-                            </button>
-                        </div>
+                                  <button type="submit"
+                                      class="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700">
+                                      Create
+                                  </button>
+                              </div>
 
-                    </form>
-                </div>
-            </div>`;
+                          </form>
+                      </div>
+                  </div>`;
 
           showModal(modalHtml);
 
@@ -978,7 +1295,7 @@
               .map((c) => `<option value="${c.id}">${c.name}</option>`)
               .join("");
             showModal(
-              `<div id="assignModal" class="modal"><div class="bg-white rounded-xl p-6 w-full max-w-lg mx-4"><h3 class="text-xl font-bold mb-4">Create Assignment</h3><form id="assignForm" class="space-y-4"><div><label>Title</label><input required id="aTitle" class="w-full border p-2"></div><div class="grid grid-cols-2 gap-4"><div><label>Course</label><select id="aCourse" class="w-full border p-2">${options}</select></div><div><label>Date</label><input type="date" id="aDate" class="w-full border p-2"></div></div><div class="flex justify-end gap-2 mt-4"><button type="button" onclick="closeModal('assignModal')" class="bg-gray-200 p-2 rounded">Cancel</button><button type="submit" class="bg-indigo-600 text-white p-2 rounded">Assign</button></div></form></div></div>`
+              `<div id="assignModal" class="modal"><div class="bg-white rounded-xl p-6 w-full max-w-lg mx-4"><h3 class="text-xl font-bold mb-4">Create Assignment</h3><form id="assignForm" class="space-y-4"><div><label>Title</label><input required id="aTitle" class="w-full border p-2"></div><div class="grid grid-cols-2 gap-4"><div><label>Course</label><select id="aCourse" class="w-full border p-2">${options}</select></div><div><label>Date</label><input type="date" id="aDate" class="w-full border p-2"></div></div><div class="flex justify-end gap-2 mt-4"><button type="button" onclick="closeModal('assignModal')" class="bg-gray-200 p-2 rounded">Cancel</button><button type="submit" class="bg-indigo-600 text-white p-2 rounded">Assign</button></div></form></div></div>`,
             );
             document
               .getElementById("assignForm")
@@ -1072,7 +1389,23 @@
           }
         });
       }
+      //loand analytics view
+      window.loadAnalytics = async () => {
+        console.log("🔄 Reloading analytics...");
+        const main = document.getElementById("main-content");
+        if (main) {
+          main.innerHTML =
+            '<div id="analytics-content"><div class="flex justify-center items-center h-64"><i class="fas fa-spinner fa-spin text-4xl text-indigo-600"></i></div></div>';
+          const analyticsHTML = await renderAnalytics();
+          document.getElementById("analytics-content").innerHTML =
+            analyticsHTML;
 
+          const courseFilter = document.getElementById("courseFilterAnalytics");
+          if (courseFilter) {
+            courseFilter.addEventListener("change", window.loadAnalytics);
+          }
+        }
+      };
       // ==========================================
       // ROUTER
       // ==========================================
@@ -1130,7 +1463,18 @@
             attachMessageEvents();
             break;
           case "analytics":
-            main.innerHTML = renderAnalytics();
+            main.innerHTML =
+              '<div id="analytics-content"><div class="flex justify-center items-center h-64"><i class="fas fa-spinner fa-spin text-4xl text-indigo-600"></i></div></div>';
+            const analyticsHTML = await renderAnalytics();
+            document.getElementById("analytics-content").innerHTML =
+              analyticsHTML;
+
+            const courseFilter = document.getElementById(
+              "courseFilterAnalytics",
+            );
+            if (courseFilter) {
+              courseFilter.addEventListener("change", window.loadAnalytics);
+            }
             break;
           case "settings":
             main.innerHTML = renderSettings();
@@ -1161,7 +1505,7 @@
         if (imgEl) {
           // បង្កើត Avatar តាមឈ្មោះ
           imgEl.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(
-            displayName
+            displayName,
           )}&background=6366f1&color=fff`;
         }
 
