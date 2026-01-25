@@ -1,5 +1,5 @@
 // api.js
-const API_BASE_URL = "https://api.romdoul.com/api";
+const API_BASE_URL = "https://206.189.155.117/api/api";
 
 // 1. Helper for Fetching
 async function fetchWithErrorHandling(url, options = {}) {

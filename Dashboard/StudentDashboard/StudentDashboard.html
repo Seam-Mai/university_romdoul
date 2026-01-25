@@ -563,7 +563,7 @@
       let stompClient = null;
 
       function connectWebSocket() {
-        const socket = new SockJS("https://api.romdoul.com/ws");
+        const socket = new SockJS("https://206.189.155.117/api/ws");
         stompClient = Stomp.over(socket);
         stompClient.debug = null;
         stompClient.connect({}, function (frame) {
@@ -610,7 +610,7 @@
         try {
           const token = localStorage.getItem("token");
           const response = await fetch(
-            "https://api.romdoul.com/payments/my-invoice",
+            "https://206.189.155.117/api/payments/my-invoice",
             {
               method: "GET",
               headers: {

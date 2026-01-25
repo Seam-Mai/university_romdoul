@@ -1,5 +1,5 @@
 // js/auth.js
-const API_BASE_URL = "https://api.romdoul.com/api/auth";
+const API_BASE_URL = "https://206.189.155.117/api/api/auth";
 
 export const AuthService = {
   // 1. REGISTER
