@@ -1,4 +1,4 @@
-const API_BASE_URL = "http://206.189.155.117:8080/api/api";
+const API_BASE_URL = "http://206.189.94.76/api/api";
 const PAYMENT_BASE_URL = "http://localhost:8080";
 
 async function fetchWithErrorHandling(url, options = {}) {
