@@ -1,5 +1,5 @@
 const API_BASE_URL = "http://206.189.94.76:8080";
-const PAYMENT_BASE_URL = "http://206.189.94.76";
+const PAYMENT_BASE_URL = "http://206.189.94.76:8080";
 
 async function fetchWithErrorHandling(url, options = {}) {
   const token = localStorage.getItem("token");
@@ -43,7 +43,7 @@ export const API = {
   },
   async getAllCourses() {
     return (
-      (await fetchWithErrorHandling(`${API_BASE_URL}api/courses/getAll`)) || []
+      (await fetchWithErrorHandling(`${API_BASE_URL}/api/courses/getAll`)) || []
     );
   },
   async getCourses() {
@@ -62,7 +62,8 @@ export const API = {
   },
   async getGrades() {
     return (
-      (await fetchWithErrorHandling(`${API_BASE_URL}/api/v1/student-grades`)) || []
+      (await fetchWithErrorHandling(`${API_BASE_URL}/api/v1/student-grades`)) ||
+      []
     );
   },
   async getAttendance() {
@@ -109,7 +110,9 @@ export const API = {
   },
 
   async getUserPayments() {
-    const data = await fetchWithErrorHandling(`${PAYMENT_BASE_URL}/`);
+    const data = await fetchWithErrorHandling(
+      `${PAYMENT_BASE_URL}/payments/all`,
+    );
     return Array.isArray(data) ? data : [];
   },
 
@@ -135,7 +138,7 @@ export const API = {
     const user = JSON.parse(localStorage.getItem("user"));
     if (!user || !user.email) return null;
     return await fetchWithErrorHandling(
-      `${PAYMENT_BASE_URL}:8080/payments/my-tuition?email=${user.email}`,
+      `${PAYMENT_BASE_URL}/payments/my-invoice`,
     );
   },
 };
