@@ -94,7 +94,7 @@ export const API = {
     };
 
     return await fetchWithErrorHandling(
-      `${PAYMENT_BASE_URL}/user-payment/create-payment`,
+      `${PAYMENT_BASE_URL}:8080/user-payment/create-payment`,
       {
         method: "POST",
         body: JSON.stringify({
