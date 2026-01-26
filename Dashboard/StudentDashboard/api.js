@@ -1,5 +1,5 @@
-const API_BASE_URL = "http://206.189.94.76/api";
-const PAYMENT_BASE_URL = "http://206.189.94.76";
+const API_BASE_URL = "http://206.189.94.76:8080/api";
+const PAYMENT_BASE_URL = "http://206.189.94.76:8080";
 
 async function fetchWithErrorHandling(url, options = {}) {
   const token = localStorage.getItem("token");
