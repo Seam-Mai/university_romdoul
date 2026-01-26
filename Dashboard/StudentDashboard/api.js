@@ -110,7 +110,7 @@ export const API = {
 
   async getUserPayments() {
     const data = await fetchWithErrorHandling(
-      `${PAYMENT_BASE_URL}/payments/all`,
+      `${PAYMENT_BASE_URL}api/payments/all`,
     );
     return Array.isArray(data) ? data : [];
   },
