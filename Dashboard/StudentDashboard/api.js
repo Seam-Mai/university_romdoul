@@ -35,7 +35,7 @@ export const API = {
   // --- Existing Methods ---
   async checkTransactionStatus(paymentId) {
     return await fetchWithErrorHandling(
-      `${PAYMENT_BASE_URL}/payments/check/${paymentId}`,
+      `${PAYMENT_BASE_URL}:8080/payments/check/${paymentId}`,
       {
         method: "POST",
       },
@@ -43,7 +43,7 @@ export const API = {
   },
   async getAllCourses() {
     return (
-      (await fetchWithErrorHandling(`${API_BASE_URL}/courses/getAll`)) || []
+      (await fetchWithErrorHandling(`${API_BASE_URL}api/courses/getAll`)) || []
     );
   },
   async getCourses() {
@@ -51,23 +51,23 @@ export const API = {
   },
   async getClassmates() {
     return (
-      (await fetchWithErrorHandling(`${API_BASE_URL}/students?size=50`))
+      (await fetchWithErrorHandling(`${API_BASE_URL}/api/students?size=50`))
         ?.content || []
     );
   },
   async getAssignments() {
     return (
-      (await fetchWithErrorHandling(`${API_BASE_URL}/v1/assignments`)) || []
+      (await fetchWithErrorHandling(`${API_BASE_URL}/api/v1/assignments`)) || []
     );
   },
   async getGrades() {
     return (
-      (await fetchWithErrorHandling(`${API_BASE_URL}/v1/student-grades`)) || []
+      (await fetchWithErrorHandling(`${API_BASE_URL}/api/v1/student-grades`)) || []
     );
   },
   async getAttendance() {
     return (
-      (await fetchWithErrorHandling(`${API_BASE_URL}/attendance/all`)) || []
+      (await fetchWithErrorHandling(`${API_BASE_URL}/api/attendance/all`)) || []
     );
   },
   async getDashboardData() {
@@ -109,14 +109,14 @@ export const API = {
   },
 
   async getUserPayments() {
-    const data = await fetchWithErrorHandling(`${PAYMENT_BASE_URL}:8080/`);
+    const data = await fetchWithErrorHandling(`${PAYMENT_BASE_URL}/`);
     return Array.isArray(data) ? data : [];
   },
 
   // ✅ Secure Image Fetching
   async fetchQRImage(qrString) {
     if (!qrString) return null;
-    const url = `${PAYMENT_BASE_URL}/khqr/generate/image?qr=${encodeURIComponent(qrString)}&format=png`;
+    const url = `${PAYMENT_BASE_URL}:8080/khqr/generate/image?qr=${encodeURIComponent(qrString)}&format=png`;
     const token = localStorage.getItem("token");
     try {
       const res = await fetch(url, {
@@ -135,7 +135,7 @@ export const API = {
     const user = JSON.parse(localStorage.getItem("user"));
     if (!user || !user.email) return null;
     return await fetchWithErrorHandling(
-      `${PAYMENT_BASE_URL}/payments/my-tuition?email=${user.email}`,
+      `${PAYMENT_BASE_URL}:8080/payments/my-tuition?email=${user.email}`,
     );
   },
 };
