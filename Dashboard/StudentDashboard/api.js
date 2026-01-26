@@ -1,5 +1,5 @@
 const API_BASE_URL = "http://206.189.94.76:8080/api";
-const PAYMENT_BASE_URL = "http://206.189.94.76:8080";
+const PAYMENT_BASE_URL = "http://206.189.94.76";
 
 async function fetchWithErrorHandling(url, options = {}) {
   const token = localStorage.getItem("token");
@@ -94,7 +94,7 @@ export const API = {
     };
 
     return await fetchWithErrorHandling(
-      `${PAYMENT_BASE_URL}/user-payment/create-payment`,
+      `${PAYMENT_BASE_URL}:8080/user-payment/create-payment`,
       {
         method: "POST",
         body: JSON.stringify({
@@ -110,7 +110,7 @@ export const API = {
 
   async getUserPayments() {
     const data = await fetchWithErrorHandling(
-      `${PAYMENT_BASE_URL}/api/payments/all`,
+      `${PAYMENT_BASE_URL}:8080/api/payments/all`,
     );
     return Array.isArray(data) ? data : [];
   },
