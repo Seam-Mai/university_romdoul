@@ -563,7 +563,7 @@
       let stompClient = null;
 
       function connectWebSocket() {
-        const socket = new SockJS("http://206.189.94.76:8080/api/ws");
+        const socket = new SockJS("http://206.189.94.76:8080/ws");
         stompClient = Stomp.over(socket);
         stompClient.debug = null;
         stompClient.connect({}, function (frame) {
