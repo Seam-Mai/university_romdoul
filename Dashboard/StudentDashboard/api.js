@@ -1,4 +1,4 @@
-const API_BASE_URL = "http://206.189.94.76:8080/api";
+const API_BASE_URL = "http://206.189.94.76:8080";
 const PAYMENT_BASE_URL = "http://206.189.94.76";
 
 async function fetchWithErrorHandling(url, options = {}) {
@@ -109,9 +109,7 @@ export const API = {
   },
 
   async getUserPayments() {
-    const data = await fetchWithErrorHandling(
-      `${PAYMENT_BASE_URL}:8080/api/payments/all`,
-    );
+    const data = await fetchWithErrorHandling(`${PAYMENT_BASE_URL}:8080/`);
     return Array.isArray(data) ? data : [];
   },
 
