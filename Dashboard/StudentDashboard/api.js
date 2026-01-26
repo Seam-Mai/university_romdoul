@@ -119,7 +119,7 @@ export const API = {
   // ✅ Secure Image Fetching
   async fetchQRImage(qrString) {
     if (!qrString) return null;
-    const url = `${PAYMENT_BASE_URL}:8080/khqr/generate/image?qr=${encodeURIComponent(qrString)}&format=png`;
+    const url = `${PAYMENT_BASE_URL}/khqr/generate/image?qr=${encodeURIComponent(qrString)}&format=png`;
     const token = localStorage.getItem("token");
     try {
       const res = await fetch(url, {
