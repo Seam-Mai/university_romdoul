@@ -35,7 +35,7 @@ export const API = {
   // --- Existing Methods ---
   async checkTransactionStatus(paymentId) {
     return await fetchWithErrorHandling(
-      `${PAYMENT_BASE_URL}:8080/payments/check/${paymentId}`,
+      `${PAYMENT_BASE_URL}/payments/check/${paymentId}`,
       {
         method: "POST",
       },
