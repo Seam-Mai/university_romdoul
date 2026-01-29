@@ -309,16 +309,21 @@
     <!-- MAIN LOGIC -->
     <script type="module">
       import { API } from "./api.js";
-      import { loadStudents } from "./student-attendance.js";
+
+      import {
+        loadStudents,
+        loadAttendanceView,
+      } from "./student-attendance.js";
 
       // ==========================================
       // AUTHENTICATION CHECK
       // ==========================================
+      // Check if user is logged in
       const token = localStorage.getItem("token");
       const userStr = localStorage.getItem("user");
 
       if (!token || !userStr) {
-        window.location.href = "../../login.html";
+        window.location.href = "../../login.html"; // Go back to login
       }
 
       const currentUser = JSON.parse(userStr);
@@ -326,13 +331,9 @@
       // ==========================================
       // GLOBAL HELPERS
       // ==========================================
-      let appData = {};
 
-      // ATTENDANCE STATE VARIABLES
-      let attendancePage = 1;
-      const ATTENDANCE_ITEMS_PER_PAGE = 5; // <--- DISPLAY 5 RECORDS
-      let currentAttendanceStudents = [];
-      let attendanceCourseFilter = "";
+      // Store current data state
+      let appData = {};
 
       window.logout = function () {
         if (confirm("Are you sure you want to logout?")) {
@@ -352,120 +353,6 @@
         const modal = container.querySelector(".modal");
         modal.style.display = "flex";
         setTimeout(() => modal.classList.add("show"), 10);
-      };
-
-      // ==========================================
-      // ATTENDANCE LOGIC (UPDATED)
-      // ==========================================
-
-      window.handleAttendanceFilter = (courseId) => {
-        attendanceCourseFilter = courseId;
-        attendancePage = 1; // Reset to page 1
-
-        // In a real app, you might filter by course ID here.
-        // For now, we simulate by just taking all students or filtering if you have the data
-        // Assuming appData.students contains all students.
-        // We will just use all students for this demo to ensure data appears,
-        // but normally: currentAttendanceStudents = appData.students.filter(s => s.courseId == courseId);
-        currentAttendanceStudents = [...appData.students];
-
-        window.updateAttendanceUI();
-      };
-
-      window.changeAttendancePage = (direction) => {
-        const totalPages = Math.ceil(
-          currentAttendanceStudents.length / ATTENDANCE_ITEMS_PER_PAGE,
-        );
-        const newPage = attendancePage + direction;
-
-        if (newPage > 0 && newPage <= totalPages) {
-          attendancePage = newPage;
-          window.updateAttendanceUI();
-        }
-      };
-
-      window.updateAttendanceUI = () => {
-        const tableBody = document.getElementById("attendance-table-body");
-        const paginationFooter = document.getElementById(
-          "attendance-pagination",
-        );
-        const prevBtn = document.getElementById("att-btn-prev");
-        const nextBtn = document.getElementById("att-btn-next");
-        const pageInfo = document.getElementById("att-page-info");
-
-        if (!currentAttendanceStudents.length) {
-          tableBody.innerHTML = `<tr><td colspan="4" class="p-8 text-center text-gray-400">No students found.</td></tr>`;
-          paginationFooter.classList.add("hidden");
-          return;
-        }
-
-        // Show Footer
-        paginationFooter.classList.remove("hidden");
-        paginationFooter.classList.add("flex");
-
-        // Calculate Slice
-        const startIndex = (attendancePage - 1) * ATTENDANCE_ITEMS_PER_PAGE;
-        const endIndex = startIndex + ATTENDANCE_ITEMS_PER_PAGE;
-        const paginatedItems = currentAttendanceStudents.slice(
-          startIndex,
-          endIndex,
-        );
-        const totalPages = Math.ceil(
-          currentAttendanceStudents.length / ATTENDANCE_ITEMS_PER_PAGE,
-        );
-
-        // Update Buttons
-        prevBtn.disabled = attendancePage === 1;
-        nextBtn.disabled = attendancePage === totalPages;
-        pageInfo.textContent = `Page ${attendancePage} of ${totalPages}`;
-
-        // Render Rows
-        tableBody.innerHTML = paginatedItems
-          .map(
-            (student) => `
-            <tr class="hover:bg-gray-50 transition border-b border-gray-50 last:border-b-0">
-                <td class="p-4">
-                    <div class="flex items-center space-x-3">
-                        <img src="https://ui-avatars.com/api/?name=${student.name}&background=random" class="w-10 h-10 rounded-full">
-                        <div>
-                            <p class="font-bold text-gray-800">${student.name}</p>
-                            <p class="text-xs text-gray-500">${student.id}</p>
-                        </div>
-                    </div>
-                </td>
-                <td class="p-4">
-                     <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
-                        Present
-                     </span>
-                </td>
-                <td class="p-4 text-sm text-gray-600">
-                    ${new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
-                </td>
-                <td class="p-4">
-                    <select class="attendance-select border border-gray-300 p-2 rounded-lg bg-white focus:ring-2 focus:ring-indigo-500 outline-none text-sm shadow-sm" 
-                            data-student-id="${student.id}">
-                        <option value="PRESENT" selected>Present</option>
-                        <option value="LATE">Late</option>
-                        <option value="ABSENT">Absent</option>
-                        <option value="EXCUSED">Excused</option>
-                    </select>
-                </td>
-            </tr>
-        `,
-          )
-          .join("");
-      };
-
-      window.saveAttendance = () => {
-        const inputs = document.querySelectorAll(".attendance-select");
-        const changes = Array.from(inputs).map((input) => ({
-          studentId: input.dataset.studentId,
-          status: input.value,
-        }));
-        console.log("Saving data:", changes);
-        alert(
-          `Saved attendance for ${changes.length} students on Page ${attendancePage}!`,
-        );
       };
 
       // ==========================================
@@ -492,7 +379,7 @@
                  </div>
                  <div class="bg-white rounded-xl shadow p-6 border-l-4 border-red-500 card-hover">
                    <p class="text-gray-500 text-sm">Avg Attendance</p>
-                   <h3 class="text-3xl font-bold text-gray-800">88%</h3>
+                   <h3 class="text-3xl font-bold text-gray-800">1%</h3>
                  </div>
               </div>
               <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -506,6 +393,8 @@
                   </div>
               </div>
             `;
+
+      // ... (KEEP ALL YOUR EXISTING RENDER FUNCTIONS HERE: renderCourses, renderStudents, renderAssignments, etc.) ...
 
       const renderCourses = () => `
               <div class="flex justify-between items-center mb-6">
@@ -848,71 +737,97 @@
                    </div>`
               }
             `;
+      let attendancePage = 1;
+      let attendanceCourseFilter = 1;
+      let attendanceSearchQuery = "";
 
-      // --- ATTENDANCE RENDER FUNCTION WITH PAGINATION ---
+      // --- UPDATED SEARCH FUNCTION ---
+      // We attach this to 'window' so the HTML oninput event can find it.
+      window.handleSearch = (value) => {
+        // 1. Update the variable
+        attendanceSearchQuery = value.toLowerCase();
+        attendancePage = 1; // Reset to page 1
+
+        // 2. Re-Render the UI
+        // IMPORTANT: Replace 'app-content' with the ID of the div where you display this HTML
+        const container = document.getElementById("app-content");
+        if (container) {
+          container.innerHTML = renderAttendance();
+        }
+
+        // 3. Restore Focus (Fix for cursor disappearing)
+        const input = document.getElementById("searchInput");
+        if (input) {
+          input.focus();
+          // This moves the cursor to the end of the text
+          const val = input.value;
+          input.value = "";
+          input.value = val;
+        }
+      };
+
+      const saveAttendanceChanges = () => {
+        const inputs = document.querySelectorAll(".attendance-select");
+        const changes = Array.from(inputs).map((input) => ({
+          studentId: input.dataset.studentId,
+          status: input.value,
+        }));
+        console.log("Saving data:", changes);
+        alert(`Saved attendance for ${changes.length} students!`);
+      };
+
       const renderAttendance = () => `
   <div class="mb-6 flex flex-col xl:flex-row justify-between items-start xl:items-center gap-4">
     <h2 class="text-3xl font-bold text-gray-800">Attendance Manager</h2>
     
     <div class="flex flex-col md:flex-row gap-2 w-full md:w-auto">
-         <!-- Added onchange event -->
-         <select id="attFilter" onchange="window.handleAttendanceFilter(this.value)" class="border p-2 rounded-lg shadow-sm bg-white cursor-pointer min-w-[200px] text-sm">
-            <option value="" disabled selected>Select a Course</option>
-            ${appData.courses.map((c) => `<option value="${c.id}">${c.name}</option>`).join("")}
+         <select id="attFilter" class="border p-2 rounded-lg shadow-sm bg-white cursor-pointer min-w-[200px]">
+           <!-- Populated by JS -->
          </select>
 
          <div class="flex gap-2">
-           <button id="btn-save-attendance" onclick="window.saveAttendance()" class="bg-gray-200 text-gray-500 px-4 py-2 rounded-lg hover:bg-gray-300 transition shadow-sm whitespace-nowrap text-sm font-medium">
+           <button id="btn-save-attendance" onclick="window.saveAttendance()" class="bg-gray-200 text-gray-500 px-4 py-2 rounded-lg hover:bg-gray-300 transition shadow-sm whitespace-nowrap">
              <i class="fas fa-save mr-2"></i>Save
            </button>
-           <button onclick="window.exportAttendanceCSV()" class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition shadow-sm whitespace-nowrap text-sm font-medium">
+           <button onclick="window.exportAttendanceCSV()" class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition shadow-sm whitespace-nowrap">
              <i class="fas fa-file-export mr-2"></i>Export CSV
            </button>
          </div>
     </div>
   </div>
 
-  <div class="bg-white rounded-xl shadow overflow-hidden flex flex-col h-full min-h-[400px]">
-     <div class="overflow-x-auto flex-grow">
-         <table class="w-full text-left border-collapse">
-            <thead class="bg-gray-100 text-xs uppercase text-gray-600 sticky top-0">
-              <tr>
-                <th class="p-4 border-b">Student</th>
-                <th class="p-4 border-b">Current Status</th>
-                <th class="p-4 border-b">Time</th>
-                <th class="p-4 border-b">Mark Attendance</th>
-              </tr>
-            </thead>
-            <tbody id="attendance-table-body" class="divide-y divide-gray-100">
-               <!-- Rows injected via JS -->
-               <tr><td colspan="4" class="p-8 text-center text-gray-400">Please select a course to begin taking attendance.</td></tr>
-            </tbody>
-         </table>
-     </div>
-     
-     <!-- PAGINATION FOOTER -->
-     <div id="attendance-pagination" class="p-4 bg-gray-50 border-t border-gray-200 flex justify-between items-center hidden">
-          <button id="att-btn-prev" onclick="window.changeAttendancePage(-1)" class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed">
-            Previous
-          </button>
-          <span id="att-page-info" class="text-sm text-gray-700 font-medium">Page 1 of 1</span>
-          <button id="att-btn-next" onclick="window.changeAttendancePage(1)" class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed">
-            Next
-          </button>
-     </div>
+  <div class="bg-white rounded-xl shadow overflow-hidden">
+     <table class="w-full text-left">
+        <thead class="bg-gray-100 text-xs uppercase text-gray-600">
+          <tr>
+            <th class="p-4">Student</th>
+            <th class="p-4">Current Status</th>
+            <th class="p-4">Time</th>
+            <th class="p-4">Mark Attendance</th>
+          </tr>
+        </thead>
+        <tbody id="attendance-table-body" class="divide-y divide-gray-100">
+           <tr><td colspan="4" class="p-8 text-center text-gray-400">Please select a course to begin taking attendance.</td></tr>
+        </tbody>
+     </table>
   </div>
 `;
 
       const renderAnalytics = async () => {
+        console.log("🚀 Starting renderAnalytics...");
+
         const currentYear = new Date().getFullYear();
         const currentMonth = new Date().getMonth() + 1;
 
+        // Get selected course (from dropdown if exists, otherwise first course)
         let selectedCourseId = document.getElementById(
           "courseFilterAnalytics",
         )?.value;
         if (!selectedCourseId && appData.courses?.length > 0) {
           selectedCourseId = appData.courses[0].id;
         }
+
+        console.log("🎯 Selected Course ID:", selectedCourseId);
 
         if (!selectedCourseId) {
           return `
@@ -923,11 +838,14 @@
     `;
         }
 
+        // Fetch data
         const attendanceData = await API.getMonthlyAttendanceOverview(
           selectedCourseId,
           currentYear,
           currentMonth,
         );
+
+        console.log("📦 Attendance data received:", attendanceData);
 
         if (!attendanceData || attendanceData.length === 0) {
           const courseOptions = appData.courses
@@ -960,6 +878,11 @@
     `;
         }
 
+        // ──────────────────────────────────────────────
+        // Prepare all dynamic parts BEFORE the big template
+        // ──────────────────────────────────────────────
+
+        // 1. All unique dates
         const allDates = new Set();
         attendanceData.forEach((student) => {
           if (student.attendanceData) {
@@ -978,6 +901,7 @@
           };
         };
 
+        // 2. Date header cells
         const dateHeaderCells = sortedDates
           .map((date) => {
             const f = formatDate(date);
@@ -990,6 +914,7 @@
           })
           .join("");
 
+        // 3. Calculate stats helper
         const calculateStats = (student) => {
           const attendance = student.attendanceData || {};
           const statuses = Object.values(attendance);
@@ -1002,6 +927,7 @@
           return { present, late, absent, total, attendanceRate: rate };
         };
 
+        // 4. Status badge helper
         const getStatusBadge = (status) => {
           const map = {
             PRESENT:
@@ -1016,6 +942,7 @@
           );
         };
 
+        // 5. Student rows
         const studentRows = attendanceData
           .map((student, index) => {
             const stats = calculateStats(student);
@@ -1070,6 +997,10 @@
           })
           .join("");
 
+        // ──────────────────────────────────────────────
+        // Final template — now safe and clean
+        // ──────────────────────────────────────────────
+
         const selectedCourse = appData.courses.find(
           (c) => c.id == selectedCourseId,
         );
@@ -1096,6 +1027,7 @@
 
         return `
     <div class="max-w-7xl mx-auto">
+      <!-- Header -->
       <div class="flex justify-between items-center mb-6">
         <div>
           <h2 class="text-3xl font-bold text-gray-800">Performance Analytics</h2>
@@ -1116,6 +1048,7 @@
         </div>
       </div>
 
+      <!-- Summary Cards -->
       <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
         <div class="bg-white p-4 rounded-xl shadow">
           <div class="flex items-center justify-between">
@@ -1163,6 +1096,7 @@
         </div>
       </div>
 
+      <!-- Attendance Table -->
       <div class="bg-white rounded-xl shadow overflow-hidden">
         <div class="p-6 border-b border-gray-200">
           <h3 class="text-xl font-bold text-gray-800">Monthly Attendance Overview</h3>
@@ -1188,6 +1122,7 @@
           </table>
         </div>
 
+        <!-- Legend -->
         <div class="px-6 py-4 bg-gray-50 border-t border-gray-200">
           <div class="flex items-center justify-center gap-6 text-sm flex-wrap">
             <div class="flex items-center gap-2">
@@ -1250,53 +1185,84 @@
         if (!btn) return;
 
         btn.addEventListener("click", () => {
+          // Modal HTML (UI exactly as requested)
           const modalHtml = `
                   <div id="courseModal" class="modal fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden">
                       <div class="bg-white rounded-xl shadow-2xl p-6 w-full max-w-md mx-4">
                           <h3 class="text-xl font-bold mb-4">Create New Course</h3>
+
                           <form id="createCourseForm" class="space-y-4">
+
+                              <!-- Course Name -->
                               <div>
                                   <label class="block text-sm font-medium text-gray-700">Course Name</label>
-                                  <input required type="text" id="cName" class="w-full border rounded-lg p-2 focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+                                  <input required type="text" id="cName"
+                                      class="w-full border rounded-lg p-2 focus:ring-2 focus:ring-indigo-500 focus:outline-none">
                               </div>
+
+                              <!-- Course Code -->
                               <div>
                                   <label class="block text-sm font-medium text-gray-700">Course Code</label>
-                                  <input required type="text" id="cCode" class="w-full border rounded-lg p-2 focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+                                  <input required type="text" id="cCode"
+                                      class="w-full border rounded-lg p-2 focus:ring-2 focus:ring-indigo-500 focus:outline-none">
                               </div>
+
+                              <!-- Course Image -->
                               <div>
                                   <label class="block text-sm font-medium text-gray-700">Course Image</label>
-                                  <input type="file" id="cImage" accept="image/*" class="w-full border rounded-lg p-2 bg-gray-50">
+                                  <input type="file" id="cImage" accept="image/*"
+                                      class="w-full border rounded-lg p-2 bg-gray-50">
                               </div>
+
+                              <!-- Course Color -->
                               <div>
                                   <label class="block text-sm font-medium text-gray-700">Course Color</label>
-                                  <input type="color" id="cColor" value="#4F46E5" class="w-full h-10 border rounded-lg cursor-pointer">
+                                  <input type="color" id="cColor" value="#4F46E5"
+                                      class="w-full h-10 border rounded-lg cursor-pointer">
                               </div>
+
+                              <!-- Actions -->
                               <div class="flex justify-end space-x-2 mt-6">
-                                  <button type="button" onclick="closeModal('courseModal')" class="bg-gray-200 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-300">Cancel</button>
-                                  <button type="submit" class="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700">Create</button>
+                                  <button type="button"
+                                      onclick="closeModal('courseModal')"
+                                      class="bg-gray-200 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-300">
+                                      Cancel
+                                  </button>
+
+                                  <button type="submit"
+                                      class="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700">
+                                      Create
+                                  </button>
                               </div>
+
                           </form>
                       </div>
                   </div>`;
+
           showModal(modalHtml);
 
           document
             .getElementById("createCourseForm")
             .addEventListener("submit", async (e) => {
               e.preventDefault();
+
+              // 1. Get Values
               const name = document.getElementById("cName").value;
               const code = document.getElementById("cCode").value;
               const color = document.getElementById("cColor").value;
               const fileInput = document.getElementById("cImage");
-              let imgData = "fa-book";
+
+              // 2. Process Image (to Base64)
+              let imgData = "fa-book"; // Fallback string
               if (fileInput.files && fileInput.files[0]) {
                 try {
-                  // Helper function expected to exist in api.js or util
-                  // For now assuming simple string or handled by backend
+                  imgData = await toBase64(fileInput.files[0]);
                 } catch (err) {
                   console.error("Image convert error", err);
                 }
               }
+
+              // 3. Send to Backend
               try {
                 await API.createCourse({
                   name: name,
@@ -1307,10 +1273,13 @@
                   img: imgData,
                   color: color,
                 });
+
+                // 4. Refresh Data
                 closeModal("courseModal");
                 alert("Course created successfully!");
-                appData = await API.getAllData();
-                window.router("courses");
+
+                appData = await API.getAllData(); // Re-Fetch
+                window.router("courses"); // Re-Render
               } catch (error) {
                 alert("Error: " + error.message);
               }
@@ -1362,6 +1331,24 @@
         });
       }
 
+      function attachAttendanceEvents() {
+        document.getElementById("attFilter").addEventListener("change", (e) => {
+          attendanceCourseFilter = e.target.value;
+          attendancePage = 1;
+          window.router("attendance");
+        });
+        document.getElementById("prevPage").addEventListener("click", () => {
+          if (attendancePage > 1) {
+            attendancePage--;
+            window.router("attendance");
+          }
+        });
+        document.getElementById("nextPage").addEventListener("click", () => {
+          attendancePage++;
+          window.router("attendance");
+        });
+      }
+
       function attachMessageEvents() {
         document
           .getElementById("msgForm")
@@ -1402,8 +1389,9 @@
           }
         });
       }
-
+      //loand analytics view
       window.loadAnalytics = async () => {
+        console.log("🔄 Reloading analytics...");
         const main = document.getElementById("main-content");
         if (main) {
           main.innerHTML =
@@ -1418,7 +1406,6 @@
           }
         }
       };
-
       // ==========================================
       // ROUTER
       // ==========================================
@@ -1453,18 +1440,11 @@
             break;
           case "students":
             main.innerHTML = renderStudents();
-            loadStudents(0);
+            loadStudents(0); // Trigger fetch
             break;
           case "attendance":
             main.innerHTML = renderAttendance();
-            // If filter was previously selected, restore it
-            if (attendanceCourseFilter) {
-              const select = document.getElementById("attFilter");
-              if (select) {
-                select.value = attendanceCourseFilter;
-                window.handleAttendanceFilter(attendanceCourseFilter);
-              }
-            }
+            loadAttendanceView(); // Trigger setup
             break;
           case "assignments":
             main.innerHTML = renderAssignments();
@@ -1510,22 +1490,28 @@
       // ==========================================
 
       document.addEventListener("DOMContentLoaded", async () => {
+        console.log("Current User Data:", currentUser);
+
         const nameEl = document.getElementById("profile-name");
         const roleEl = document.getElementById("profile-role");
         const imgEl = document.getElementById("profile-img");
 
+        // ប្រើ fullName ឬ fallback ទៅ 'User'
         const displayName = currentUser.fullName || currentUser.email || "User";
 
         if (nameEl) nameEl.textContent = displayName;
         if (roleEl && currentUser.role) roleEl.textContent = currentUser.role;
 
         if (imgEl) {
+          // បង្កើត Avatar តាមឈ្មោះ
           imgEl.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(
             displayName,
           )}&background=6366f1&color=fff`;
         }
 
         appData = await API.getAllData();
+
+        // 2. Start Router (Teacher Dashboard ប្រើឈ្មោះ router)
         window.router("dashboard");
 
         // Mobile Sidebar Toggle
