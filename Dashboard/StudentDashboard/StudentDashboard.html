@@ -492,6 +492,189 @@
         </div>`;
       };
 
+      // --- SCHEDULE VIEW ---
+      const renderSchedule = async () => {
+        const scheduleData = await API.getSchedule();
+
+        return `
+        <div class="mb-8">
+          <h2 class="text-3xl font-bold mb-2">Class Schedule</h2>
+          <p class="text-gray-500">Weekly timetable and upcoming classes</p>
+        </div>
+        
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          <!-- Upcoming Classes Card -->
+          <div class="lg:col-span-2">
+            <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+              <div class="p-5 border-b border-gray-100 bg-gray-50">
+                <h3 class="font-bold text-gray-800">This Week's Schedule</h3>
+              </div>
+              <div class="overflow-x-auto">
+                <table class="w-full text-sm">
+                  <thead class="bg-gray-50 text-gray-600 text-xs border-b">
+                    <tr>
+                      <th class="px-6 py-3 text-left">Day</th>
+                      <th class="px-6 py-3 text-left">Time</th>
+                      <th class="px-6 py-3 text-left">Course</th>
+                      <th class="px-6 py-3 text-left">Room</th>
+                      <th class="px-6 py-3 text-left">Instructor</th>
+                    </tr>
+                  </thead>
+                  <tbody class="divide-y divide-gray-100">
+                    ${
+                      scheduleData && scheduleData.length > 0
+                        ? scheduleData
+                            .map(
+                              (item) => `
+                    <tr class="hover:bg-gray-50 transition">
+                      <td class="px-6 py-4 font-medium text-gray-900">${item.day || "Monday"}</td>
+                      <td class="px-6 py-4 text-gray-700">${item.time || "9:00 AM"}</td>
+                      <td class="px-6 py-4">
+                        <div class="font-medium">${item.course || "Computer Science"}</div>
+                        <div class="text-xs text-gray-500">${item.code || "CS101"}</div>
+                      </td>
+                      <td class="px-6 py-4 text-gray-700">${item.room || "Room 302"}</td>
+                      <td class="px-6 py-4">${item.instructor || "Dr. Smith"}</td>
+                    </tr>
+                    `,
+                            )
+                            .join("")
+                        : `
+                    <tr>
+                      <td colspan="5" class="px-6 py-12 text-center text-gray-500">
+                        <i class="fas fa-calendar-alt text-3xl mb-3 opacity-20"></i>
+                        <p>No schedule data available</p>
+                      </td>
+                    </tr>
+                    `
+                    }
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Calendar & Quick Actions -->
+          <div class="space-y-6">
+            <!-- Calendar Widget -->
+            <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+              <div class="p-4 border-b border-gray-100 bg-indigo-50">
+                <div class="flex justify-between items-center">
+                  <h3 class="font-bold text-indigo-900">Calendar</h3>
+                  <div class="flex space-x-2">
+                    <button class="p-1 hover:bg-indigo-100 rounded">
+                      <i class="fas fa-chevron-left text-indigo-600"></i>
+                    </button>
+                    <button class="p-1 hover:bg-indigo-100 rounded">
+                      <i class="fas fa-chevron-right text-indigo-600"></i>
+                    </button>
+                  </div>
+                </div>
+                <p class="text-sm text-indigo-600 mt-1">${new Date().toLocaleDateString("en-US", { month: "long", year: "numeric" })}</p>
+              </div>
+              <div class="p-4">
+                <div class="grid grid-cols-7 gap-1 text-center mb-3">
+                  ${["S", "M", "T", "W", "T", "F", "S"]
+                    .map(
+                      (day) => `
+                  <div class="text-xs font-bold text-gray-500 py-1">${day}</div>
+                  `,
+                    )
+                    .join("")}
+                </div>
+                <div class="grid grid-cols-7 gap-1">
+                  ${Array.from({ length: 31 }, (_, i) => {
+                    const date = i + 1;
+                    const isToday = date === new Date().getDate();
+                    const hasEvent = [5, 12, 19, 26].includes(date);
+                    return `
+                    <div class="text-center">
+                      <div class="text-sm p-1 rounded-full ${isToday ? "bg-indigo-600 text-white" : hasEvent ? "bg-red-100 text-red-700" : "text-gray-700 hover:bg-gray-100"}">
+                        ${date}
+                      </div>
+                    </div>
+                    `;
+                  }).join("")}
+                </div>
+              </div>
+            </div>
+            
+            <!-- Upcoming Deadlines -->
+            <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+              <div class="p-4 border-b border-gray-100">
+                <h3 class="font-bold text-gray-800">Upcoming Deadlines</h3>
+              </div>
+              <div class="p-4 space-y-3">
+                <div class="flex items-start space-x-3 p-3 bg-yellow-50 rounded-lg">
+                  <div class="bg-yellow-100 p-2 rounded-lg">
+                    <i class="fas fa-exclamation-triangle text-yellow-600"></i>
+                  </div>
+                  <div>
+                    <p class="text-sm font-medium">Math Assignment</p>
+                    <p class="text-xs text-gray-500">Due tomorrow, 11:59 PM</p>
+                  </div>
+                </div>
+                <div class="flex items-start space-x-3 p-3 bg-blue-50 rounded-lg">
+                  <div class="bg-blue-100 p-2 rounded-lg">
+                    <i class="fas fa-book text-blue-600"></i>
+                  </div>
+                  <div>
+                    <p class="text-sm font-medium">Physics Lab Report</p>
+                    <p class="text-xs text-gray-500">Due in 3 days</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Class Details -->
+        <div class="mt-8">
+          <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+            <h3 class="text-lg font-bold text-gray-800 mb-4">Class Details</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+              <div class="p-4 bg-indigo-50 rounded-lg">
+                <div class="flex items-center justify-between">
+                  <div>
+                    <p class="text-xs text-indigo-600 font-medium">Total Classes</p>
+                    <h3 class="text-2xl font-bold text-gray-800 mt-1">12</h3>
+                  </div>
+                  <i class="fas fa-calendar-alt text-indigo-400 text-xl"></i>
+                </div>
+              </div>
+              <div class="p-4 bg-green-50 rounded-lg">
+                <div class="flex items-center justify-between">
+                  <div>
+                    <p class="text-xs text-green-600 font-medium">Classes This Week</p>
+                    <h3 class="text-2xl font-bold text-gray-800 mt-1">5</h3>
+                  </div>
+                  <i class="fas fa-chalkboard-teacher text-green-400 text-xl"></i>
+                </div>
+              </div>
+              <div class="p-4 bg-purple-50 rounded-lg">
+                <div class="flex items-center justify-between">
+                  <div>
+                    <p class="text-xs text-purple-600 font-medium">Next Class</p>
+                    <h3 class="text-lg font-bold text-gray-800 mt-1">Tomorrow</h3>
+                  </div>
+                  <i class="fas fa-clock text-purple-400 text-xl"></i>
+                </div>
+              </div>
+              <div class="p-4 bg-orange-50 rounded-lg">
+                <div class="flex items-center justify-between">
+                  <div>
+                    <p class="text-xs text-orange-600 font-medium">Office Hours</p>
+                    <h3 class="text-lg font-bold text-gray-800 mt-1">2:00 PM</h3>
+                  </div>
+                  <i class="fas fa-door-open text-orange-400 text-xl"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        `;
+      };
+
       const renderAttendance = async () => {
         const attendance = await API.getAttendance(); // assuming this returns array of records
 
@@ -540,6 +723,229 @@
     </div>`;
       };
 
+      // --- FEEDBACK VIEW ---
+      const renderFeedback = async () => {
+        const feedbackData = await API.getFeedback();
+
+        return `
+        <div class="mb-8">
+          <h2 class="text-3xl font-bold mb-2">Course Feedback</h2>
+          <p class="text-gray-500">Provide feedback on your courses and instructors</p>
+        </div>
+        
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          <!-- Feedback Form -->
+          <div class="lg:col-span-2">
+            <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+              <div class="p-5 border-b border-gray-100 bg-gray-50">
+                <h3 class="font-bold text-gray-800">Submit Feedback</h3>
+              </div>
+              <div class="p-6">
+                <form id="feedbackForm" class="space-y-4">
+                  <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Select Course</label>
+                    <select class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
+                      <option value="">Choose a course...</option>
+                      <option value="cs101">CS101 - Introduction to Programming</option>
+                      <option value="math201">MATH201 - Calculus II</option>
+                      <option value="phy102">PHY102 - Physics Laboratory</option>
+                      <option value="eng101">ENG101 - English Composition</option>
+                    </select>
+                  </div>
+                  
+                  <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Rating</label>
+                    <div class="flex space-x-2">
+                      ${[1, 2, 3, 4, 5]
+                        .map(
+                          (star) => `
+                      <button type="button" class="rating-star p-2 text-2xl text-gray-300 hover:text-yellow-400" data-value="${star}">
+                        <i class="far fa-star"></i>
+                      </button>
+                      `,
+                        )
+                        .join("")}
+                    </div>
+                    <input type="hidden" id="ratingValue" name="rating" value="0">
+                  </div>
+                  
+                  <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Feedback Type</label>
+                    <div class="flex flex-wrap gap-2">
+                      ${[
+                        "Course Content",
+                        "Teaching Method",
+                        "Assignments",
+                        "Resources",
+                        "Communication",
+                        "Other",
+                      ]
+                        .map(
+                          (type) => `
+                      <label class="inline-flex items-center">
+                        <input type="radio" name="feedbackType" value="${type.toLowerCase()}" class="hidden peer">
+                        <span class="px-3 py-1 border border-gray-300 rounded-lg peer-checked:bg-indigo-600 peer-checked:text-white peer-checked:border-indigo-600 cursor-pointer text-sm">
+                          ${type}
+                        </span>
+                      </label>
+                      `,
+                        )
+                        .join("")}
+                    </div>
+                  </div>
+                  
+                  <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Your Feedback</label>
+                    <textarea 
+                      rows="4" 
+                      class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" 
+                      placeholder="Please provide detailed feedback about the course..."
+                    ></textarea>
+                  </div>
+                  
+                  <div class="flex items-center space-x-4">
+                    <div class="flex items-center">
+                      <input type="checkbox" id="anonymous" class="h-4 w-4 text-indigo-600 border-gray-300 rounded">
+                      <label for="anonymous" class="ml-2 text-sm text-gray-600">Submit anonymously</label>
+                    </div>
+                  </div>
+                  
+                  <div class="pt-4">
+                    <button type="submit" class="bg-indigo-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-indigo-700 transition">
+                      Submit Feedback
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Feedback History & Guidelines -->
+          <div class="space-y-6">
+            <!-- Feedback History -->
+            <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+              <div class="p-4 border-b border-gray-100">
+                <h3 class="font-bold text-gray-800">Recent Feedback</h3>
+              </div>
+              <div class="p-4 space-y-4 max-h-96 overflow-y-auto">
+                ${
+                  feedbackData && feedbackData.length > 0
+                    ? feedbackData
+                        .map(
+                          (feedback) => `
+                <div class="p-3 border border-gray-100 rounded-lg">
+                  <div class="flex justify-between items-start mb-2">
+                    <div>
+                      <span class="font-medium text-sm">${feedback.course || "Unknown Course"}</span>
+                      <div class="flex items-center mt-1">
+                        ${Array.from({ length: 5 })
+                          .map(
+                            (_, i) => `
+                        <i class="fas fa-star ${i < (feedback.rating || 0) ? "text-yellow-400" : "text-gray-300"} text-xs"></i>
+                        `,
+                          )
+                          .join("")}
+                      </div>
+                    </div>
+                    <span class="text-xs text-gray-500">${feedback.date || "Recently"}</span>
+                  </div>
+                  <p class="text-sm text-gray-600 truncate">${feedback.comment || "No comment provided"}</p>
+                  <div class="mt-2">
+                    <span class="inline-block px-2 py-1 text-xs rounded-full ${feedback.status === "Reviewed" ? "bg-green-100 text-green-700" : "bg-yellow-100 text-yellow-700"}">
+                      ${feedback.status || "Pending"}
+                    </span>
+                  </div>
+                </div>
+                `,
+                        )
+                        .join("")
+                    : `
+                <div class="text-center py-8 text-gray-500">
+                  <i class="fas fa-comment-alt text-3xl mb-3 opacity-20"></i>
+                  <p>No feedback submitted yet</p>
+                </div>
+                `
+                }
+              </div>
+            </div>
+            
+            <!-- Feedback Guidelines -->
+            <div class="bg-blue-50 border border-blue-100 rounded-xl p-5">
+              <div class="flex items-center mb-3">
+                <div class="bg-blue-100 p-2 rounded-lg mr-3">
+                  <i class="fas fa-info-circle text-blue-600"></i>
+                </div>
+                <h4 class="font-bold text-blue-900">Feedback Guidelines</h4>
+              </div>
+              <ul class="space-y-2 text-sm text-blue-800">
+                <li class="flex items-start">
+                  <i class="fas fa-check-circle text-blue-500 mt-0.5 mr-2 text-xs"></i>
+                  <span>Be specific and constructive</span>
+                </li>
+                <li class="flex items-start">
+                  <i class="fas fa-check-circle text-blue-500 mt-0.5 mr-2 text-xs"></i>
+                  <span>Focus on the course, not the instructor personally</span>
+                </li>
+                <li class="flex items-start">
+                  <i class="fas fa-check-circle text-blue-500 mt-0.5 mr-2 text-xs"></i>
+                  <span>Suggest improvements when possible</span>
+                </li>
+                <li class="flex items-start">
+                  <i class="fas fa-check-circle text-blue-500 mt-0.5 mr-2 text-xs"></i>
+                  <span>All feedback is reviewed by the department</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Feedback Statistics -->
+        <div class="mt-8">
+          <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+            <h3 class="text-lg font-bold text-gray-800 mb-4">Feedback Statistics</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+              <div class="p-4 bg-green-50 rounded-lg">
+                <div class="flex items-center justify-between">
+                  <div>
+                    <p class="text-xs text-green-600 font-medium">Submitted</p>
+                    <h3 class="text-2xl font-bold text-gray-800 mt-1">12</h3>
+                  </div>
+                  <i class="fas fa-paper-plane text-green-400 text-xl"></i>
+                </div>
+              </div>
+              <div class="p-4 bg-blue-50 rounded-lg">
+                <div class="flex items-center justify-between">
+                  <div>
+                    <p class="text-xs text-blue-600 font-medium">Average Rating</p>
+                    <h3 class="text-2xl font-bold text-gray-800 mt-1">4.2</h3>
+                  </div>
+                  <i class="fas fa-star text-blue-400 text-xl"></i>
+                </div>
+              </div>
+              <div class="p-4 bg-purple-50 rounded-lg">
+                <div class="flex items-center justify-between">
+                  <div>
+                    <p class="text-xs text-purple-600 font-medium">Reviewed</p>
+                    <h3 class="text-2xl font-bold text-gray-800 mt-1">8</h3>
+                  </div>
+                  <i class="fas fa-check-circle text-purple-400 text-xl"></i>
+                </div>
+              </div>
+              <div class="p-4 bg-orange-50 rounded-lg">
+                <div class="flex items-center justify-between">
+                  <div>
+                    <p class="text-xs text-orange-600 font-medium">Response Rate</p>
+                    <h3 class="text-2xl font-bold text-gray-800 mt-1">75%</h3>
+                  </div>
+                  <i class="fas fa-comment-alt text-orange-400 text-xl"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        `;
+      };
+
       const renderMessages = async () => {
         return `
         <div class="h-[calc(100vh-140px)] flex bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200">
@@ -557,6 +963,245 @@
                 </div>
             </div>
         </div>`;
+      };
+
+      // --- ANALYTICS VIEW ---
+      const renderAnalytics = async () => {
+        const analyticsData = await API.getAnalytics();
+
+        return `
+        <div class="mb-8">
+          <h2 class="text-3xl font-bold mb-2">Performance Analytics</h2>
+          <p class="text-gray-500">Track your academic progress and performance metrics</p>
+        </div>
+        
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
+          <!-- Performance Summary Cards -->
+          <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+            <div class="flex items-center justify-between mb-4">
+              <div>
+                <p class="text-sm text-gray-500 font-medium">Current GPA</p>
+                <h3 class="text-3xl font-bold mt-2">3.85</h3>
+              </div>
+              <div class="bg-indigo-100 p-4 rounded-xl">
+                <i class="fas fa-chart-line text-indigo-600 text-2xl"></i>
+              </div>
+            </div>
+            <div class="text-sm text-gray-600">
+              <span class="text-green-600 font-medium">↑ 0.15</span> from last semester
+            </div>
+          </div>
+          
+          <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+            <div class="flex items-center justify-between mb-4">
+              <div>
+                <p class="text-sm text-gray-500 font-medium">Attendance Rate</p>
+                <h3 class="text-3xl font-bold mt-2">94%</h3>
+              </div>
+              <div class="bg-green-100 p-4 rounded-xl">
+                <i class="fas fa-user-check text-green-600 text-2xl"></i>
+              </div>
+            </div>
+            <div class="text-sm text-gray-600">
+              <span class="text-green-600 font-medium">↑ 2%</span> improvement
+            </div>
+          </div>
+          
+          <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+            <div class="flex items-center justify-between mb-4">
+              <div>
+                <p class="text-sm text-gray-500 font-medium">Assignment Completion</p>
+                <h3 class="text-3xl font-bold mt-2">88%</h3>
+              </div>
+              <div class="bg-orange-100 p-4 rounded-xl">
+                <i class="fas fa-tasks text-orange-600 text-2xl"></i>
+              </div>
+            </div>
+            <div class="text-sm text-gray-600">
+              <span class="text-red-600 font-medium">↓ 5%</span> needs improvement
+            </div>
+          </div>
+        </div>
+        
+        <!-- Charts Section -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+          <!-- GPA Trend Chart -->
+          <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+            <h3 class="font-bold text-gray-800 mb-4">GPA Trend</h3>
+            <div class="h-64">
+              <canvas id="gpaChart"></canvas>
+            </div>
+          </div>
+          
+          <!-- Course Performance Chart -->
+          <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+            <h3 class="font-bold text-gray-800 mb-4">Course Performance</h3>
+            <div class="h-64">
+              <canvas id="courseChart"></canvas>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Detailed Analytics -->
+        <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+          <div class="p-5 border-b border-gray-100 bg-gray-50">
+            <h3 class="font-bold text-gray-800">Detailed Performance Metrics</h3>
+          </div>
+          <div class="overflow-x-auto">
+            <table class="w-full text-sm">
+              <thead class="bg-gray-50 text-gray-600 text-xs border-b">
+                <tr>
+                  <th class="px-6 py-3 text-left">Course</th>
+                  <th class="px-6 py-3 text-left">Grade</th>
+                  <th class="px-6 py-3 text-left">Attendance</th>
+                  <th class="px-6 py-3 text-left">Assignments</th>
+                  <th class="px-6 py-3 text-left">Exams</th>
+                  <th class="px-6 py-3 text-left">Performance</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-gray-100">
+                <tr class="hover:bg-gray-50">
+                  <td class="px-6 py-4 font-medium text-gray-900">CS101 - Programming</td>
+                  <td class="px-6 py-4">
+                    <span class="bg-green-100 text-green-700 px-2 py-1 rounded text-xs font-bold">A</span>
+                  </td>
+                  <td class="px-6 py-4">
+                    <div class="flex items-center">
+                      <div class="w-16 bg-gray-200 rounded-full h-2 mr-2">
+                        <div class="bg-green-500 h-2 rounded-full" style="width: 96%"></div>
+                      </div>
+                      <span class="text-sm">96%</span>
+                    </div>
+                  </td>
+                  <td class="px-6 py-4">
+                    <div class="flex items-center">
+                      <div class="w-16 bg-gray-200 rounded-full h-2 mr-2">
+                        <div class="bg-green-500 h-2 rounded-full" style="width: 92%"></div>
+                      </div>
+                      <span class="text-sm">92%</span>
+                    </div>
+                  </td>
+                  <td class="px-6 py-4">
+                    <div class="flex items-center">
+                      <div class="w-16 bg-gray-200 rounded-full h-2 mr-2">
+                        <div class="bg-green-500 h-2 rounded-full" style="width: 94%"></div>
+                      </div>
+                      <span class="text-sm">94%</span>
+                    </div>
+                  </td>
+                  <td class="px-6 py-4">
+                    <span class="text-green-600 font-medium">Excellent</span>
+                  </td>
+                </tr>
+                <tr class="hover:bg-gray-50">
+                  <td class="px-6 py-4 font-medium text-gray-900">MATH201 - Calculus</td>
+                  <td class="px-6 py-4">
+                    <span class="bg-blue-100 text-blue-700 px-2 py-1 rounded text-xs font-bold">B+</span>
+                  </td>
+                  <td class="px-6 py-4">
+                    <div class="flex items-center">
+                      <div class="w-16 bg-gray-200 rounded-full h-2 mr-2">
+                        <div class="bg-blue-500 h-2 rounded-full" style="width: 88%"></div>
+                      </div>
+                      <span class="text-sm">88%</span>
+                    </div>
+                  </td>
+                  <td class="px-6 py-4">
+                    <div class="flex items-center">
+                      <div class="w-16 bg-gray-200 rounded-full h-2 mr-2">
+                        <div class="bg-blue-500 h-2 rounded-full" style="width: 85%"></div>
+                      </div>
+                      <span class="text-sm">85%</span>
+                    </div>
+                  </td>
+                  <td class="px-6 py-4">
+                    <div class="flex items-center">
+                      <div class="w-16 bg-gray-200 rounded-full h-2 mr-2">
+                        <div class="bg-blue-500 h-2 rounded-full" style="width: 82%"></div>
+                      </div>
+                      <span class="text-sm">82%</span>
+                    </div>
+                  </td>
+                  <td class="px-6 py-4">
+                    <span class="text-blue-600 font-medium">Good</span>
+                  </td>
+                </tr>
+                <tr class="hover:bg-gray-50">
+                  <td class="px-6 py-4 font-medium text-gray-900">PHY102 - Physics Lab</td>
+                  <td class="px-6 py-4">
+                    <span class="bg-yellow-100 text-yellow-700 px-2 py-1 rounded text-xs font-bold">C+</span>
+                  </td>
+                  <td class="px-6 py-4">
+                    <div class="flex items-center">
+                      <div class="w-16 bg-gray-200 rounded-full h-2 mr-2">
+                        <div class="bg-yellow-500 h-2 rounded-full" style="width: 75%"></div>
+                      </div>
+                      <span class="text-sm">75%</span>
+                    </div>
+                  </td>
+                  <td class="px-6 py-4">
+                    <div class="flex items-center">
+                      <div class="w-16 bg-gray-200 rounded-full h-2 mr-2">
+                        <div class="bg-yellow-500 h-2 rounded-full" style="width: 70%"></div>
+                      </div>
+                      <span class="text-sm">70%</span>
+                    </div>
+                  </td>
+                  <td class="px-6 py-4">
+                    <div class="flex items-center">
+                      <div class="w-16 bg-gray-200 rounded-full h-2 mr-2">
+                        <div class="bg-yellow-500 h-2 rounded-full" style="width: 68%"></div>
+                      </div>
+                      <span class="text-sm">68%</span>
+                    </div>
+                  </td>
+                  <td class="px-6 py-4">
+                    <span class="text-yellow-600 font-medium">Needs Improvement</span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        
+        <!-- Recommendations Section -->
+        <div class="mt-8">
+          <div class="bg-gradient-to-r from-indigo-500 to-purple-600 rounded-xl shadow-lg p-6 text-white">
+            <div class="flex items-center mb-4">
+              <div class="bg-white/20 p-3 rounded-lg mr-4">
+                <i class="fas fa-lightbulb text-xl"></i>
+              </div>
+              <div>
+                <h3 class="text-xl font-bold">Personalized Recommendations</h3>
+                <p class="text-indigo-100">Based on your analytics data</p>
+              </div>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              <div class="bg-white/10 p-4 rounded-lg">
+                <div class="flex items-center mb-2">
+                  <i class="fas fa-book-reader mr-2"></i>
+                  <span class="font-bold">Study Strategy</span>
+                </div>
+                <p class="text-sm">Increase Physics study time by 2 hours weekly</p>
+              </div>
+              <div class="bg-white/10 p-4 rounded-lg">
+                <div class="flex items-center mb-2">
+                  <i class="fas fa-user-clock mr-2"></i>
+                  <span class="font-bold">Attendance Goal</span>
+                </div>
+                <p class="text-sm">Aim for 95% attendance in all courses</p>
+              </div>
+              <div class="bg-white/10 p-4 rounded-lg">
+                <div class="flex items-center mb-2">
+                  <i class="fas fa-tasks mr-2"></i>
+                  <span class="font-bold">Assignment Focus</span>
+                </div>
+                <p class="text-sm">Submit assignments 2 days before deadline</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        `;
       };
 
       // --- WEBSOCKET SETUP ---
@@ -1160,6 +1805,159 @@
         }
       }
 
+      // --- Feedback Form Logic ---
+      function attachFeedbackEvents() {
+        // Star rating functionality
+        const starButtons = document.querySelectorAll(".rating-star");
+        starButtons.forEach((star) => {
+          star.addEventListener("click", function () {
+            const value = parseInt(this.getAttribute("data-value"));
+            const hiddenInput = document.getElementById("ratingValue");
+            hiddenInput.value = value;
+
+            // Update star display
+            starButtons.forEach((s, index) => {
+              const icon = s.querySelector("i");
+              if (index < value) {
+                icon.classList.remove("far", "fa-star");
+                icon.classList.add("fas", "fa-star", "text-yellow-400");
+              } else {
+                icon.classList.remove("fas", "fa-star", "text-yellow-400");
+                icon.classList.add("far", "fa-star");
+              }
+            });
+          });
+        });
+
+        // Feedback form submission
+        const feedbackForm = document.getElementById("feedbackForm");
+        if (feedbackForm) {
+          feedbackForm.addEventListener("submit", async function (e) {
+            e.preventDefault();
+
+            const formData = new FormData(this);
+            const rating = document.getElementById("ratingValue").value;
+            const feedbackType = formData.get("feedbackType");
+            const comment = this.querySelector("textarea").value;
+            const anonymous = this.querySelector("#anonymous").checked;
+
+            if (rating === "0") {
+              alert("Please select a rating");
+              return;
+            }
+
+            if (!feedbackType) {
+              alert("Please select a feedback type");
+              return;
+            }
+
+            try {
+              // Submit feedback via API
+              const response = await API.submitFeedback({
+                rating: parseInt(rating),
+                type: feedbackType,
+                comment: comment,
+                anonymous: anonymous,
+                timestamp: new Date().toISOString(),
+              });
+
+              if (response.success) {
+                alert("Thank you for your feedback!");
+                this.reset();
+
+                // Reset stars
+                starButtons.forEach((star) => {
+                  const icon = star.querySelector("i");
+                  icon.classList.remove("fas", "fa-star", "text-yellow-400");
+                  icon.classList.add("far", "fa-star");
+                });
+                document.getElementById("ratingValue").value = "0";
+
+                // Refresh feedback view
+                window.switchView("feedback");
+              } else {
+                alert(
+                  "Failed to submit feedback: " +
+                    (response.error || "Unknown error"),
+                );
+              }
+            } catch (error) {
+              console.error("Feedback submission error:", error);
+              alert("An error occurred while submitting feedback");
+            }
+          });
+        }
+      }
+
+      // --- Analytics Chart Initialization ---
+      function initAnalyticsCharts() {
+        // GPA Trend Chart
+        const gpaCtx = document.getElementById("gpaChart");
+        if (gpaCtx) {
+          new Chart(gpaCtx.getContext("2d"), {
+            type: "line",
+            data: {
+              labels: ["Sem 1", "Sem 2", "Sem 3", "Sem 4", "Sem 5", "Sem 6"],
+              datasets: [
+                {
+                  label: "GPA",
+                  data: [3.2, 3.5, 3.7, 3.8, 3.85, 3.9],
+                  borderColor: "#6366f1",
+                  backgroundColor: "rgba(99, 102, 241, 0.1)",
+                  tension: 0.3,
+                  fill: true,
+                },
+              ],
+            },
+            options: {
+              responsive: true,
+              maintainAspectRatio: false,
+              scales: {
+                y: {
+                  beginAtZero: false,
+                  min: 3.0,
+                  max: 4.0,
+                },
+              },
+            },
+          });
+        }
+
+        // Course Performance Chart
+        const courseCtx = document.getElementById("courseChart");
+        if (courseCtx) {
+          new Chart(courseCtx.getContext("2d"), {
+            type: "bar",
+            data: {
+              labels: ["CS101", "MATH201", "PHY102", "ENG101", "HIST103"],
+              datasets: [
+                {
+                  label: "Grade Points",
+                  data: [94, 82, 68, 88, 91],
+                  backgroundColor: [
+                    "#10b981",
+                    "#3b82f6",
+                    "#f59e0b",
+                    "#8b5cf6",
+                    "#ec4899",
+                  ],
+                },
+              ],
+            },
+            options: {
+              responsive: true,
+              maintainAspectRatio: false,
+              scales: {
+                y: {
+                  beginAtZero: true,
+                  max: 100,
+                },
+              },
+            },
+          });
+        }
+      }
+
       // ==========================================
       // 4. ROUTER
       // ==========================================
@@ -1203,8 +2001,17 @@
             case "grades":
               html = await renderGrades();
               break;
+            case "schedule":
+              html = await renderSchedule();
+              break;
             case "attendance":
               html = await renderAttendance();
+              break;
+            case "feedback":
+              html = await renderFeedback();
+              break;
+            case "analytics":
+              html = await renderAnalytics();
               break;
             case "messages":
               html = await renderMessages();
@@ -1220,10 +2027,12 @@
           }
           main.innerHTML = html;
 
-          // Re-attach events
+          // Re-attach events based on view
           if (viewName === "messages") attachMessageEvents();
           if (viewName === "settings") attachSettingsEvents();
           if (viewName === "assignments") attachAssignmentEvents();
+          if (viewName === "feedback") attachFeedbackEvents();
+          if (viewName === "analytics") initAnalyticsCharts();
         } catch (error) {
           console.error("View Error:", error);
           main.innerHTML = `
