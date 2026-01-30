@@ -150,7 +150,7 @@ export const API = {
     try {
       // FIX: Removed extra quote " at end, added /api to match Controller
       const data = await fetchWithErrorHandling(
-        `${API_BASE_URL}/api/v1/student-grades`,
+        `${API_BASE_URL}/v1/student-grades`,
       );
       return data || [];
     } catch (e) {
@@ -169,7 +169,7 @@ export const API = {
     try {
       // 1. Get current data first (to preserve studentName, courseId, etc.)
       const currentData = await fetchWithErrorHandling(
-        `${API_BASE_URL}/api/v1/student-grades/${dbId}`,
+        `${API_BASE_URL}/v1/student-grades/${dbId}`,
       );
 
       if (!currentData) return;
@@ -177,7 +177,7 @@ export const API = {
       // 2. Send Update (PUT)
       // FIX: Match DTO structure. Points is the score.
       return await fetchWithErrorHandling(
-        `${API_BASE_URL}/api/v1/student-grades/${dbId}`,
+        `${API_BASE_URL}/v1/student-grades/${dbId}`,
         {
           method: "PUT",
           body: JSON.stringify({
