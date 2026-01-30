@@ -66,6 +66,9 @@ export const API = {
       []
     );
   },
+  async getFeedback() {
+    return (await fetchWithErrorHandling(`${API_BASE_URL}/api/feedback`)) || [];
+  },
   async getAttendance() {
     return (
       (await fetchWithErrorHandling(`${API_BASE_URL}/api/attendance/all`)) || []

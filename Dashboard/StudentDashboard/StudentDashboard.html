@@ -311,7 +311,7 @@
 
     <!-- MAIN LOGIC -->
     <script type="module">
-      import { API } from "./api.js?v=6"; // Updated Version to force reload
+      import { API } from "./api.js?v=6";
 
       // ==========================================
       // AUTHENTICATION CHECK
@@ -967,7 +967,7 @@
 
       // --- ANALYTICS VIEW ---
       const renderAnalytics = async () => {
-        const analyticsData = await API.getAnalytics();
+        const analyticsData = await API.getMonthlyAttendanceOverview();
 
         return `
         <div class="mb-8">
