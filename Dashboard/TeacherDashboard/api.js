@@ -1,5 +1,5 @@
 // api.js
-const API_BASE_URL = "http://206.189.94.76:8080/api";
+const API_BASE_URL = "http://206.189.94.76:8080";
 
 // 1. Helper for Fetching
 async function fetchWithErrorHandling(url, options = {}) {
@@ -51,6 +51,47 @@ async function fetchWithErrorHandling(url, options = {}) {
     return null;
   }
 }
+const attachGradeListeners = () => {
+  // ... (Keep your existing toggle listener) ...
+
+  // 1. ADD STUDENT FORM LISTENER
+  const addForm = document.getElementById("addStudentForm");
+  if (addForm) {
+    addForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      // Prepare Data for Backend
+      const newGradeData = {
+        studentName: document.getElementById("newStudentName").value,
+        studentId: document.getElementById("newStudentId").value, // e.g. "S001"
+        points: parseFloat(document.getElementById("newPoints").value),
+        courseId: parseInt(document.getElementById("newCourseId").value), // Backend needs this to link Course
+      };
+
+      // Call API
+      const result = await createStudentGrade(newGradeData);
+
+      if (result) {
+        alert("Student added successfully!");
+        toggleModal("addGradeModal"); // Close modal
+        initGradebook(); // Refresh the list
+      } else {
+        alert("Error adding student. Check if Course ID exists.");
+      }
+    });
+  }
+
+  // ... (Keep your existing Save button logic for the table view) ...
+  const saveButtons = document.querySelectorAll(".btn-save-grade");
+  saveButtons.forEach((btn) => {
+    btn.addEventListener("click", async (e) => {
+      const dbId = e.target.getAttribute("data-db-id");
+      const inputVal = document.getElementById(`input-${dbId}`).value;
+      await updateStudentGrade(dbId, inputVal);
+      initGradebook();
+    });
+  });
+};
 
 // 2. The API Object
 export const API = {

@@ -663,66 +663,73 @@
       };
 
       const renderGrades = () => `
-    <div class="flex justify-between items-center mb-6">
+    <!-- TOP HEADER & CONTROLS -->
+    <div class="flex flex-col md:flex-row justify-between items-center mb-6 gap-4">
         <h2 class="text-3xl font-bold text-gray-800">Gradebook</h2>
         
-        <!-- View Toggler -->
-        <div class="flex items-center space-x-3 bg-white px-3 py-1 rounded-full shadow-sm border">
-            <span class="text-sm ${!isGradeTableView ? "font-bold text-indigo-600" : "text-gray-500"}">Cards</span>
-            <label for="viewToggle" class="flex items-center cursor-pointer relative">
-                <input type="checkbox" id="viewToggle" class="sr-only toggle-checkbox" ${isGradeTableView ? "checked" : ""}>
-                <div class="w-10 h-6 bg-gray-200 rounded-full border border-gray-300 toggle-label transition duration-300"></div>
-                <div class="dot absolute left-1 top-1 bg-white w-4 h-4 rounded-full transition transform duration-300 ${isGradeTableView ? "translate-x-full border-indigo-600" : ""}"></div>
-            </label>
-            <span class="text-sm ${isGradeTableView ? "font-bold text-indigo-600" : "text-gray-500"}">Table</span>
+        <div class="flex items-center gap-3">
+            <!-- NEW: ADD BUTTON -->
+            <button onclick="toggleModal('addGradeModal')" class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg shadow flex items-center gap-2 transition">
+                <i class="fas fa-plus"></i> Add Student
+            </button>
+
+            <!-- VIEW TOGGLER -->
+            <div class="flex items-center space-x-3 bg-white px-3 py-1 rounded-full shadow-sm border">
+                <span class="text-xs font-bold ${!isGradeTableView ? "text-indigo-600" : "text-gray-400"}">Cards</span>
+                <label for="viewToggle" class="flex items-center cursor-pointer relative">
+                    <input type="checkbox" id="viewToggle" class="sr-only toggle-checkbox" ${isGradeTableView ? "checked" : ""}>
+                    <div class="w-8 h-5 bg-gray-200 rounded-full border border-gray-300 toggle-label"></div>
+                    <div class="dot absolute left-1 top-1 bg-white w-3 h-3 rounded-full transition transform ${isGradeTableView ? "translate-x-full border-indigo-600" : ""}"></div>
+                </label>
+                <span class="text-xs font-bold ${isGradeTableView ? "text-indigo-600" : "text-gray-400"}">Table</span>
+            </div>
         </div>
     </div>
 
-    <!-- Content Area -->
+    <!-- MAIN CONTENT (Grid or Table) -->
     ${
       !isGradeTableView
-        ? // --- CARD VIEW ---
-          `<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        ? `<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
           ${
             studentsData.length > 0
               ? studentsData
                   .map(
                     (s) => `
-              <div class="bg-white rounded-xl shadow border border-gray-100 p-5 relative overflow-hidden">
-                  <div class="absolute top-0 right-0 p-2">
-                    <i class="fas fa-pen text-gray-300 hover:text-indigo-600 cursor-pointer" onclick="enableEdit(${s.id})"></i>
+              <div class="bg-white rounded-xl shadow border border-gray-100 p-5 relative overflow-hidden group">
+                  <div class="absolute top-0 right-0 p-2 opacity-0 group-hover:opacity-100 transition">
+                    <i class="fas fa-pen text-gray-300 hover:text-indigo-600 cursor-pointer"></i>
                   </div>
                   <div class="flex items-center space-x-3 mb-4">
-                      <img src="https://ui-avatars.com/api/?name=${s.studentName}&background=random" class="w-12 h-12 rounded-full">
+                      <div class="w-12 h-12 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-600 font-bold text-xl">
+                        ${s.studentName.charAt(0)}
+                      </div>
                       <div>
                           <h4 class="font-bold text-gray-800">${s.studentName}</h4>
-                          <p class="text-xs text-gray-500">${s.studentId}</p>
+                          <p class="text-xs text-gray-500">ID: ${s.studentId}</p>
                       </div>
                   </div>
                   <div class="flex justify-between items-end">
                       <div>
-                          <p class="text-xs text-gray-500">Total Score</p>
-                          <p class="text-2xl font-bold text-indigo-600">${s.points}/100</p>
+                          <p class="text-xs text-gray-500">Score</p>
+                          <p class="text-2xl font-bold text-indigo-600">${s.points}</p>
                       </div>
-                      <!-- Use s.grade from backend (A, B, C) -->
-                      <div class="text-4xl font-black text-gray-100">${s.grade}</div>
+                      <div class="text-4xl font-black text-gray-200">${s.grade}</div>
                   </div>
               </div>`,
                   )
                   .join("")
-              : `<p class="text-gray-500 col-span-3">No grades found.</p>`
+              : `<div class="col-span-3 text-center py-10 text-gray-500">No grades found. Click "Add Student" to start.</div>`
           }
        </div>`
-        : // --- TABLE VIEW ---
-          `<div class="bg-white rounded-xl shadow overflow-hidden">
+        : `<div class="bg-white rounded-xl shadow overflow-hidden">
           <table class="w-full text-left">
               <thead class="bg-indigo-50 border-b">
                   <tr>
-                      <th class="p-4">Student</th>
+                      <th class="p-4">Name</th>
                       <th class="p-4">ID</th>
-                      <th class="p-4">Points (0-100)</th>
+                      <th class="p-4">Points</th>
                       <th class="p-4">Grade</th>
-                      <th class="p-4">Actions</th>
+                      <th class="p-4">Action</th>
                   </tr>
               </thead>
               <tbody class="divide-y divide-gray-100">
@@ -733,22 +740,10 @@
                           <td class="p-3 font-medium text-gray-700">${s.studentName}</td>
                           <td class="p-3 text-gray-500">${s.studentId}</td>
                           <td class="p-3">
-                              <!-- Data ID is the Database PK -->
-                              <input type="number" 
-                                     value="${s.points}" 
-                                     class="border rounded w-20 p-1 text-center grade-input focus:ring-2 focus:ring-indigo-500 outline-none" 
-                                     id="input-${s.id}"
-                                     min="0" max="100">
+                              <input type="number" value="${s.points}" class="border rounded w-16 p-1 text-center" id="input-${s.id}">
                           </td>
-                          <td class="p-3 font-bold text-indigo-600" id="grade-letter-${s.id}">
-                              ${s.grade}
-                          </td>
-                          <td class="p-3">
-                              <button class="text-blue-600 hover:underline font-medium btn-save-grade" 
-                                      data-db-id="${s.id}">
-                                  Save
-                              </button>
-                          </td>
+                          <td class="p-3 font-bold text-indigo-600">${s.grade}</td>
+                          <td class="p-3"><button class="text-blue-600 font-medium btn-save-grade" data-db-id="${s.id}">Save</button></td>
                       </tr>
                   `,
                     )
@@ -757,7 +752,42 @@
           </table>
        </div>`
     }
+
+    <!-- NEW: ADD STUDENT MODAL -->
+    <div id="addGradeModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 hidden overflow-y-auto h-full w-full z-50 flex items-center justify-center">
+        <div class="relative p-5 border w-96 shadow-lg rounded-md bg-white">
+            <h3 class="text-lg font-bold text-gray-900 mb-4">Add Student Grade</h3>
+            <form id="addStudentForm">
+                <div class="mb-4">
+                    <label class="block text-gray-700 text-sm font-bold mb-2">Student Name</label>
+                    <input type="text" id="newStudentName" required class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                </div>
+                <div class="mb-4">
+                    <label class="block text-gray-700 text-sm font-bold mb-2">Student ID (e.g. S001)</label>
+                    <input type="text" id="newStudentId" required class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                </div>
+                <div class="mb-4">
+                    <label class="block text-gray-700 text-sm font-bold mb-2">Score (0-100)</label>
+                    <input type="number" id="newPoints" min="0" max="100" required class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                </div>
+                <div class="mb-4">
+                    <label class="block text-gray-700 text-sm font-bold mb-2">Course ID</label>
+                    <input type="number" id="newCourseId" value="1" required class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                    <p class="text-xs text-gray-500 mt-1">Make sure this Course ID exists in your database.</p>
+                </div>
+                <div class="flex justify-end gap-2">
+                    <button type="button" onclick="toggleModal('addGradeModal')" class="bg-gray-300 text-gray-700 px-4 py-2 rounded hover:bg-gray-400">Cancel</button>
+                    <button type="submit" class="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
 `;
+
+      // Helper to toggle modal visibility
+      window.toggleModal = (modalID) => {
+        document.getElementById(modalID).classList.toggle("hidden");
+      };
 
       // Helper to handle events (Paste this outside the render function)
       const attachGradeListeners = () => {
