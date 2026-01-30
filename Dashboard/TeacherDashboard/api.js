@@ -1,5 +1,5 @@
 // api.js
-const API_BASE_URL = "http://206.189.94.76:8080";
+const API_BASE_URL = "http://206.189.94.76:8080/api";
 
 // 1. Helper for Fetching
 async function fetchWithErrorHandling(url, options = {}) {
@@ -51,47 +51,6 @@ async function fetchWithErrorHandling(url, options = {}) {
     return null;
   }
 }
-const attachGradeListeners = () => {
-  // ... (Keep your existing toggle listener) ...
-
-  // 1. ADD STUDENT FORM LISTENER
-  const addForm = document.getElementById("addStudentForm");
-  if (addForm) {
-    addForm.addEventListener("submit", async (e) => {
-      e.preventDefault();
-
-      // Prepare Data for Backend
-      const newGradeData = {
-        studentName: document.getElementById("newStudentName").value,
-        studentId: document.getElementById("newStudentId").value, // e.g. "S001"
-        points: parseFloat(document.getElementById("newPoints").value),
-        courseId: parseInt(document.getElementById("newCourseId").value), // Backend needs this to link Course
-      };
-
-      // Call API
-      const result = await createStudentGrade(newGradeData);
-
-      if (result) {
-        alert("Student added successfully!");
-        toggleModal("addGradeModal"); // Close modal
-        initGradebook(); // Refresh the list
-      } else {
-        alert("Error adding student. Check if Course ID exists.");
-      }
-    });
-  }
-
-  // ... (Keep your existing Save button logic for the table view) ...
-  const saveButtons = document.querySelectorAll(".btn-save-grade");
-  saveButtons.forEach((btn) => {
-    btn.addEventListener("click", async (e) => {
-      const dbId = e.target.getAttribute("data-db-id");
-      const inputVal = document.getElementById(`input-${dbId}`).value;
-      await updateStudentGrade(dbId, inputVal);
-      initGradebook();
-    });
-  });
-};
 
 // 2. The API Object
 export const API = {
@@ -184,18 +143,15 @@ export const API = {
       body: JSON.stringify(data),
     });
   },
-  // --- STUDENT GRADES API ---
 
-  // 1. Get All Grades
+  // --- STUDENT GRADES ---
   async getAllStudentGrades() {
     try {
-      // FIX: Removed extra quote " at end, added /api to match Controller
       const data = await fetchWithErrorHandling(
         `${API_BASE_URL}/v1/student-grades`,
       );
       return data || [];
     } catch (e) {
-      console.error("Error fetching grades:", e);
       return [];
     }
   },
@@ -205,32 +161,26 @@ export const API = {
     return this.getAllStudentGrades();
   },
 
-  // 2. Update Grade
-  async updateStudentGrade(dbId, newPoints) {
-    try {
-      // 1. Get current data first (to preserve studentName, courseId, etc.)
-      const currentData = await fetchWithErrorHandling(
-        `${API_BASE_URL}/v1/student-grades/${dbId}`,
-      );
+  async updateStudentGrade(id, gradeValue) {
+    // 1. Get current data
+    const currentData = await fetchWithErrorHandling(
+      `${API_BASE_URL}/v1/student-grades/${id}`,
+    );
+    if (!currentData) return;
 
-      if (!currentData) return;
-
-      // 2. Send Update (PUT)
-      // FIX: Match DTO structure. Points is the score.
-      return await fetchWithErrorHandling(
-        `${API_BASE_URL}/v1/student-grades/${dbId}`,
-        {
-          method: "PUT",
-          body: JSON.stringify({
-            ...currentData, // Keep existing ID, Name, CourseID
-            points: parseFloat(newPoints), // Ensure it's a number
-          }),
-        },
-      );
-    } catch (e) {
-      console.error("Error updating grade:", e);
-    }
+    // 2. Update
+    return await fetchWithErrorHandling(
+      `${API_BASE_URL}/v1/student-grades/${id}`,
+      {
+        method: "PUT",
+        body: JSON.stringify({
+          ...currentData,
+          points: gradeValue,
+        }),
+      },
+    );
   },
+
   // --- MESSAGES ---
   async getAllMessages() {
     return [

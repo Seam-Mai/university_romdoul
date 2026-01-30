@@ -66,28 +66,6 @@ export const API = {
       []
     );
   },
-  async getAnalysis(courseId, year, month) {
-    const url = `${API_BASE_URL}/attendance/monthly-overview?courseId=${courseId}&year=${year}&month=${month}`;
-    console.log("🔍 Calling API:", url);
-
-    try {
-      const data = await fetchWithErrorHandling(url);
-      console.log("✅ API Response:", data);
-      console.log("📊 Number of students:", data?.length || 0);
-
-      if (data && data.length > 0) {
-        console.log("👤 First student sample:", data[0]);
-      }
-
-      return data || [];
-    } catch (e) {
-      console.error("❌ API Error:", e);
-      return [];
-    }
-  },
-  async getFeedback() {
-    return (await fetchWithErrorHandling(`${API_BASE_URL}/api/feedback`)) || [];
-  },
   async getAttendance() {
     return (
       (await fetchWithErrorHandling(`${API_BASE_URL}/api/attendance/all`)) || []
