@@ -60,18 +60,12 @@ export const API = {
       (await fetchWithErrorHandling(`${API_BASE_URL}/api/v1/assignments`)) || []
     );
   },
- 
   async getGrades() {
     return (
       (await fetchWithErrorHandling(`${API_BASE_URL}/api/v1/student-grades`)) ||
       []
     );
   },
-
-  async feekbackSubmit() {
-    return (await fetchWithErrorHandling(`${API_BASE_URL}/api/feedback`)) || [];
-  },
-
   async getAttendance() {
     return (
       (await fetchWithErrorHandling(`${API_BASE_URL}/api/attendance/all`)) || []
