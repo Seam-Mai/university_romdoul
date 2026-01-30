@@ -143,15 +143,18 @@ export const API = {
       body: JSON.stringify(data),
     });
   },
+  // --- STUDENT GRADES API ---
 
-  // --- STUDENT GRADES ---
+  // 1. Get All Grades
   async getAllStudentGrades() {
     try {
+      // FIX: Removed extra quote " at end, added /api to match Controller
       const data = await fetchWithErrorHandling(
-        `${API_BASE_URL}/v1/student-grades"`,
+        `${API_BASE_URL}/api/v1/student-grades`,
       );
       return data || [];
     } catch (e) {
+      console.error("Error fetching grades:", e);
       return [];
     }
   },
@@ -161,26 +164,32 @@ export const API = {
     return this.getAllStudentGrades();
   },
 
-  async updateStudentGrade(id, gradeValue) {
-    // 1. Get current data
-    const currentData = await fetchWithErrorHandling(
-      `${API_BASE_URL}/v1/student-grades"/${id}`,
-    );
-    if (!currentData) return;
+  // 2. Update Grade
+  async updateStudentGrade(dbId, newPoints) {
+    try {
+      // 1. Get current data first (to preserve studentName, courseId, etc.)
+      const currentData = await fetchWithErrorHandling(
+        `${API_BASE_URL}/api/v1/student-grades/${dbId}`,
+      );
 
-    // 2. Update
-    return await fetchWithErrorHandling(
-      `${API_BASE_URL}/v1/student-grades"/${id}`,
-      {
-        method: "PUT",
-        body: JSON.stringify({
-          ...currentData,
-          points: gradeValue,
-        }),
-      },
-    );
+      if (!currentData) return;
+
+      // 2. Send Update (PUT)
+      // FIX: Match DTO structure. Points is the score.
+      return await fetchWithErrorHandling(
+        `${API_BASE_URL}/api/v1/student-grades/${dbId}`,
+        {
+          method: "PUT",
+          body: JSON.stringify({
+            ...currentData, // Keep existing ID, Name, CourseID
+            points: parseFloat(newPoints), // Ensure it's a number
+          }),
+        },
+      );
+    } catch (e) {
+      console.error("Error updating grade:", e);
+    }
   },
-
   // --- MESSAGES ---
   async getAllMessages() {
     return [
