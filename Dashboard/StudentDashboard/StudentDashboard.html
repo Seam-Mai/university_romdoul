@@ -493,187 +493,310 @@
       };
 
       // --- SCHEDULE VIEW ---
-      const renderSchedule = async () => {
-        const scheduleData = await API.getCourses();
+
+      // Fetch data
+      const attendanceData = await API.getMonthlyAttendanceOverview(
+        selectedCourseId,
+        currentYear,
+        currentMonth,
+      );
+
+      console.log("📦 Attendance data received:", attendanceData);
+
+      if (!attendanceData || attendanceData.length === 0) {
+        const courseOptions = appData.courses
+          .map(
+            (c) =>
+              `<option value="${c.id}" ${c.id == selectedCourseId ? "selected" : ""}>${c.name}</option>`,
+          )
+          .join("");
 
         return `
-        <div class="mb-8">
-          <h2 class="text-3xl font-bold mb-2">Class Schedule</h2>
-          <p class="text-gray-500">Weekly timetable and upcoming classes</p>
-        </div>
-        
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          <!-- Upcoming Classes Card -->
-          <div class="lg:col-span-2">
-            <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
-              <div class="p-5 border-b border-gray-100 bg-gray-50">
-                <h3 class="font-bold text-gray-800">This Week's Schedule</h3>
-              </div>
-              <div class="overflow-x-auto">
-                <table class="w-full text-sm">
-                  <thead class="bg-gray-50 text-gray-600 text-xs border-b">
-                    <tr>
-                      <th class="px-6 py-3 text-left">Day</th>
-                      <th class="px-6 py-3 text-left">Time</th>
-                      <th class="px-6 py-3 text-left">Course</th>
-                      <th class="px-6 py-3 text-left">Room</th>
-                      <th class="px-6 py-3 text-left">Instructor</th>
-                    </tr>
-                  </thead>
-                  <tbody class="divide-y divide-gray-100">
-                    ${
-                      scheduleData && scheduleData.length > 0
-                        ? scheduleData
-                            .map(
-                              (item) => `
-                    <tr class="hover:bg-gray-50 transition">
-                      <td class="px-6 py-4 font-medium text-gray-900">${item.day || "Monday"}</td>
-                      <td class="px-6 py-4 text-gray-700">${item.time || "9:00 AM"}</td>
-                      <td class="px-6 py-4">
-                        <div class="font-medium">${item.course || "Computer Science"}</div>
-                        <div class="text-xs text-gray-500">${item.code || "CS101"}</div>
-                      </td>
-                      <td class="px-6 py-4 text-gray-700">${item.room || "Room 302"}</td>
-                      <td class="px-6 py-4">${item.instructor || "Dr. Smith"}</td>
-                    </tr>
-                    `,
-                            )
-                            .join("")
-                        : `
-                    <tr>
-                      <td colspan="5" class="px-6 py-12 text-center text-gray-500">
-                        <i class="fas fa-calendar-alt text-3xl mb-3 opacity-20"></i>
-                        <p>No schedule data available</p>
-                      </td>
-                    </tr>
-                    `
-                    }
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-          
-          <!-- Calendar & Quick Actions -->
-          <div class="space-y-6">
-            <!-- Calendar Widget -->
-            <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
-              <div class="p-4 border-b border-gray-100 bg-indigo-50">
-                <div class="flex justify-between items-center">
-                  <h3 class="font-bold text-indigo-900">Calendar</h3>
-                  <div class="flex space-x-2">
-                    <button class="p-1 hover:bg-indigo-100 rounded">
-                      <i class="fas fa-chevron-left text-indigo-600"></i>
-                    </button>
-                    <button class="p-1 hover:bg-indigo-100 rounded">
-                      <i class="fas fa-chevron-right text-indigo-600"></i>
-                    </button>
-                  </div>
-                </div>
-                <p class="text-sm text-indigo-600 mt-1">${new Date().toLocaleDateString("en-US", { month: "long", year: "numeric" })}</p>
-              </div>
-              <div class="p-4">
-                <div class="grid grid-cols-7 gap-1 text-center mb-3">
-                  ${["S", "M", "T", "W", "T", "F", "S"]
-                    .map(
-                      (day) => `
-                  <div class="text-xs font-bold text-gray-500 py-1">${day}</div>
-                  `,
-                    )
-                    .join("")}
-                </div>
-                <div class="grid grid-cols-7 gap-1">
-                  ${Array.from({ length: 31 }, (_, i) => {
-                    const date = i + 1;
-                    const isToday = date === new Date().getDate();
-                    const hasEvent = [5, 12, 19, 26].includes(date);
-                    return `
-                    <div class="text-center">
-                      <div class="text-sm p-1 rounded-full ${isToday ? "bg-indigo-600 text-white" : hasEvent ? "bg-red-100 text-red-700" : "text-gray-700 hover:bg-gray-100"}">
-                        ${date}
-                      </div>
-                    </div>
-                    `;
-                  }).join("")}
-                </div>
-              </div>
-            </div>
-            
-            <!-- Upcoming Deadlines -->
-            <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
-              <div class="p-4 border-b border-gray-100">
-                <h3 class="font-bold text-gray-800">Upcoming Deadlines</h3>
-              </div>
-              <div class="p-4 space-y-3">
-                <div class="flex items-start space-x-3 p-3 bg-yellow-50 rounded-lg">
-                  <div class="bg-yellow-100 p-2 rounded-lg">
-                    <i class="fas fa-exclamation-triangle text-yellow-600"></i>
-                  </div>
-                  <div>
-                    <p class="text-sm font-medium">Math Assignment</p>
-                    <p class="text-xs text-gray-500">Due tomorrow, 11:59 PM</p>
-                  </div>
-                </div>
-                <div class="flex items-start space-x-3 p-3 bg-blue-50 rounded-lg">
-                  <div class="bg-blue-100 p-2 rounded-lg">
-                    <i class="fas fa-book text-blue-600"></i>
-                  </div>
-                  <div>
-                    <p class="text-sm font-medium">Physics Lab Report</p>
-                    <p class="text-xs text-gray-500">Due in 3 days</p>
-                  </div>
-                </div>
-              </div>
-            </div>
+      <div class="max-w-7xl mx-auto">
+        <div class="flex justify-between items-center mb-6">
+          <h2 class="text-3xl font-bold text-gray-800">Performance Analytics</h2>
+          <div class="flex gap-4">
+            <select id="courseFilterAnalytics" class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500">
+              ${courseOptions}
+            </select>
+            <button onclick="window.router('analytics')" class="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition">
+              <i class="fas fa-sync-alt mr-2"></i>Refresh
+            </button>
           </div>
         </div>
-        
-        <!-- Class Details -->
-        <div class="mt-8">
-          <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
-            <h3 class="text-lg font-bold text-gray-800 mb-4">Class Details</h3>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-              <div class="p-4 bg-indigo-50 rounded-lg">
-                <div class="flex items-center justify-between">
-                  <div>
-                    <p class="text-xs text-indigo-600 font-medium">Total Classes</p>
-                    <h3 class="text-2xl font-bold text-gray-800 mt-1">12</h3>
-                  </div>
-                  <i class="fas fa-calendar-alt text-indigo-400 text-xl"></i>
-                </div>
-              </div>
-              <div class="p-4 bg-green-50 rounded-lg">
-                <div class="flex items-center justify-between">
-                  <div>
-                    <p class="text-xs text-green-600 font-medium">Classes This Week</p>
-                    <h3 class="text-2xl font-bold text-gray-800 mt-1">5</h3>
-                  </div>
-                  <i class="fas fa-chalkboard-teacher text-green-400 text-xl"></i>
-                </div>
-              </div>
-              <div class="p-4 bg-purple-50 rounded-lg">
-                <div class="flex items-center justify-between">
-                  <div>
-                    <p class="text-xs text-purple-600 font-medium">Next Class</p>
-                    <h3 class="text-lg font-bold text-gray-800 mt-1">Tomorrow</h3>
-                  </div>
-                  <i class="fas fa-clock text-purple-400 text-xl"></i>
-                </div>
-              </div>
-              <div class="p-4 bg-orange-50 rounded-lg">
-                <div class="flex items-center justify-between">
-                  <div>
-                    <p class="text-xs text-orange-600 font-medium">Office Hours</p>
-                    <h3 class="text-lg font-bold text-gray-800 mt-1">2:00 PM</h3>
-                  </div>
-                  <i class="fas fa-door-open text-orange-400 text-xl"></i>
-                </div>
-              </div>
-            </div>
-          </div>
+
+        <div class="bg-white p-8 rounded-xl shadow text-center">
+          <i class="fas fa-clipboard-list text-gray-400 text-5xl mb-4"></i>
+          <p class="text-gray-600">No attendance records found for this month.</p>
+          <p class="text-sm text-gray-500 mt-2">Start taking attendance to see analytics here.</p>
         </div>
-        `;
+      </div>
+    `;
+      }
+
+      // ──────────────────────────────────────────────
+      // Prepare all dynamic parts BEFORE the big template
+      // ──────────────────────────────────────────────
+
+      // 1. All unique dates
+      const allDates = new Set();
+      attendanceData.forEach((student) => {
+        if (student.attendanceData) {
+          Object.keys(student.attendanceData).forEach((date) =>
+            allDates.add(date),
+          );
+        }
+      });
+      const sortedDates = Array.from(allDates).sort();
+
+      const formatDate = (dateStr) => {
+        const date = new Date(dateStr);
+        return {
+          day: date.getDate(),
+          weekday: date.toLocaleDateString("en-US", { weekday: "short" }),
+        };
       };
+
+      // 2. Date header cells
+      const dateHeaderCells = sortedDates
+        .map((date) => {
+          const f = formatDate(date);
+          return `
+        <th class="px-4 py-4 text-center border-l border-gray-200">
+          <div class="text-xs font-semibold text-gray-700">${f.weekday}</div>
+          <div class="text-lg font-bold text-gray-800">${f.day}</div>
+        </th>
+      `;
+        })
+        .join("");
+
+      // 3. Calculate stats helper
+      const calculateStats = (student) => {
+        const attendance = student.attendanceData || {};
+        const statuses = Object.values(attendance);
+        const present = statuses.filter((s) => s === "PRESENT").length;
+        const late = statuses.filter((s) => s === "LATE").length;
+        const absent = statuses.filter((s) => s === "ABSENT").length;
+        const total = statuses.filter((s) => s !== "N/A").length;
+        const rate =
+          total > 0 ? (((present + late) / total) * 100).toFixed(1) : 0;
+        return { present, late, absent, total, attendanceRate: rate };
+      };
+
+      // 4. Status badge helper
+      const getStatusBadge = (status) => {
+        const map = {
+          PRESENT:
+            '<span class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-green-100 text-green-600"><i class="fas fa-check text-sm"></i></span>',
+          LATE: '<span class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-yellow-100 text-yellow-600"><i class="fas fa-clock text-sm"></i></span>',
+          ABSENT:
+            '<span class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-red-100 text-red-600"><i class="fas fa-times text-sm"></i></span>',
+        };
+        return (
+          map[status] ||
+          '<span class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-gray-100 text-gray-400"><i class="fas fa-minus text-sm"></i></span>'
+        );
+      };
+
+      // 5. Student rows
+      const studentRows = attendanceData
+        .map((student, index) => {
+          const stats = calculateStats(student);
+
+          const statusCells = sortedDates
+            .map((date) => {
+              const status = student.attendanceData?.[date] || "N/A";
+              return `<td class="px-4 py-4 text-center border-l border-gray-200">${getStatusBadge(status)}</td>`;
+            })
+            .join("");
+
+          return `
+        <tr class="hover:bg-gray-50 transition ${index % 2 === 0 ? "bg-white" : "bg-gray-50"}">
+          <td class="sticky left-0 ${index % 2 === 0 ? "bg-white" : "bg-gray-50"} px-6 py-4 whitespace-nowrap z-10">
+            <div class="flex items-center">
+              <div class="flex-shrink-0 h-10 w-10 bg-indigo-100 rounded-full flex items-center justify-center">
+                <span class="text-indigo-600 font-semibold text-sm">${(student.studentName || "??").substring(0, 2).toUpperCase()}</span>
+              </div>
+              <div class="ml-4">
+                <div class="text-sm font-medium text-gray-900">${student.studentName || "Unknown Student"}</div>
+                <div class="text-xs text-gray-500">ID: ${student.studentId || "—"}</div>
+              </div>
+            </div>
+          </td>
+          ${statusCells}
+          <td class="px-6 py-4 whitespace-nowrap border-l-2 border-gray-300">
+            <div class="text-center">
+              <div class="flex items-center justify-center gap-3 mb-2">
+                <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                  <i class="fas fa-check mr-1"></i>${stats.present}
+                </span>
+                <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
+                  <i class="fas fa-clock mr-1"></i>${stats.late}
+                </span>
+                <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-red-100 text-red-800">
+                  <i class="fas fa-times mr-1"></i>${stats.absent}
+                </span>
+              </div>
+              <div class="text-sm font-semibold ${
+                stats.attendanceRate >= 90
+                  ? "text-green-600"
+                  : stats.attendanceRate >= 75
+                    ? "text-yellow-600"
+                    : "text-red-600"
+              }">
+                ${stats.attendanceRate}% Attendance
+              </div>
+            </div>
+          </td>
+        </tr>
+      `;
+        })
+        .join("");
+
+      // ──────────────────────────────────────────────
+      // Final template — now safe and clean
+      // ──────────────────────────────────────────────
+
+      const selectedCourse = appData.courses.find(
+        (c) => c.id == selectedCourseId,
+      );
+      const monthName = new Date(
+        currentYear,
+        currentMonth - 1,
+      ).toLocaleDateString("en-US", { month: "long", year: "numeric" });
+
+      const avgAttendance =
+        attendanceData.length > 0
+          ? (
+              attendanceData.reduce(
+                (sum, s) => sum + parseFloat(calculateStats(s).attendanceRate),
+                0,
+              ) / attendanceData.length
+            ).toFixed(1)
+          : "0.0";
+
+      const perfectCount = attendanceData.filter((s) => {
+        const st = calculateStats(s);
+        return st.absent === 0 && st.total > 0;
+      }).length;
+
+      return `
+    <div class="max-w-7xl mx-auto">
+      <!-- Header -->
+      <div class="flex justify-between items-center mb-6">
+        <div>
+          <h2 class="text-3xl font-bold text-gray-800">Performance Analytics</h2>
+          <p class="text-gray-600 mt-1">${selectedCourse?.name || "Selected Course"} — ${monthName}</p>
+        </div>
+        <div class="flex gap-4">
+          <select id="courseFilterAnalytics" class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500">
+            ${appData.courses
+              .map(
+                (c) =>
+                  `<option value="${c.id}" ${c.id == selectedCourseId ? "selected" : ""}>${c.name}</option>`,
+              )
+              .join("")}
+          </select>
+          <button onclick="window.router('analytics')" class="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition">
+            <i class="fas fa-sync-alt mr-2"></i>Refresh
+          </button>
+        </div>
+      </div>
+
+      <!-- Summary Cards -->
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+        <div class="bg-white p-4 rounded-xl shadow">
+          <div class="flex items-center justify-between">
+            <div>
+              <p class="text-sm text-gray-600">Total Students</p>
+              <p class="text-2xl font-bold text-gray-800">${attendanceData.length}</p>
+            </div>
+            <div class="bg-indigo-100 p-3 rounded-lg">
+              <i class="fas fa-users text-indigo-600 text-xl"></i>
+            </div>
+          </div>
+        </div>
+        <div class="bg-white p-4 rounded-xl shadow">
+          <div class="flex items-center justify-between">
+            <div>
+              <p class="text-sm text-gray-600">Class Days</p>
+              <p class="text-2xl font-bold text-gray-800">${sortedDates.length}</p>
+            </div>
+            <div class="bg-green-100 p-3 rounded-lg">
+              <i class="fas fa-calendar-check text-green-600 text-xl"></i>
+            </div>
+          </div>
+        </div>
+        <div class="bg-white p-4 rounded-xl shadow">
+          <div class="flex items-center justify-between">
+            <div>
+              <p class="text-sm text-gray-600">Avg. Attendance</p>
+              <p class="text-2xl font-bold text-gray-800">${avgAttendance}%</p>
+            </div>
+            <div class="bg-blue-100 p-3 rounded-lg">
+              <i class="fas fa-chart-line text-blue-600 text-xl"></i>
+            </div>
+          </div>
+        </div>
+        <div class="bg-white p-4 rounded-xl shadow">
+          <div class="flex items-center justify-between">
+            <div>
+              <p class="text-sm text-gray-600">Perfect Attendance</p>
+              <p class="text-2xl font-bold text-gray-800">${perfectCount}</p>
+            </div>
+            <div class="bg-yellow-100 p-3 rounded-lg">
+              <i class="fas fa-star text-yellow-600 text-xl"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Attendance Table -->
+      <div class="bg-white rounded-xl shadow overflow-hidden">
+        <div class="p-6 border-b border-gray-200">
+          <h3 class="text-xl font-bold text-gray-800">Monthly Attendance Overview</h3>
+          <p class="text-sm text-gray-600 mt-1">Track daily attendance status for all students</p>
+        </div>
+
+        <div class="overflow-x-auto">
+          <table class="w-full">
+            <thead class="bg-gray-50">
+              <tr>
+                <th class="sticky left-0 bg-gray-50 px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider z-10">
+                  Student
+                </th>
+                ${dateHeaderCells}
+                <th class="px-6 py-4 text-center text-xs font-semibold text-gray-700 uppercase tracking-wider border-l-2 border-gray-300">
+                  Stats
+                </th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-200">
+              ${studentRows}
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Legend -->
+        <div class="px-6 py-4 bg-gray-50 border-t border-gray-200">
+          <div class="flex items-center justify-center gap-6 text-sm flex-wrap">
+            <div class="flex items-center gap-2">
+              ${getStatusBadge("PRESENT")} <span class="text-gray-700">Present</span>
+            </div>
+            <div class="flex items-center gap-2">
+              ${getStatusBadge("LATE")} <span class="text-gray-700">Late</span>
+            </div>
+            <div class="flex items-center gap-2">
+              ${getStatusBadge("ABSENT")} <span class="text-gray-700">Absent</span>
+            </div>
+            <div class="flex items-center gap-2">
+              ${getStatusBadge("N/A")} <span class="text-gray-700">No Record</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
 
       const renderAttendance = async () => {
         const attendance = await API.getAttendance(); // assuming this returns array of records
