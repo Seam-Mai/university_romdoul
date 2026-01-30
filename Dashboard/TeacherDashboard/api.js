@@ -148,7 +148,7 @@ export const API = {
   async getAllStudentGrades() {
     try {
       const data = await fetchWithErrorHandling(
-        `${API_BASE_URL}/v1/student-grades`,
+        `${API_BASE_URL}/v1/student-grades"`,
       );
       return data || [];
     } catch (e) {
@@ -164,13 +164,13 @@ export const API = {
   async updateStudentGrade(id, gradeValue) {
     // 1. Get current data
     const currentData = await fetchWithErrorHandling(
-      `${API_BASE_URL}/v1/student-grades/${id}`,
+      `${API_BASE_URL}/v1/student-grades"/${id}`,
     );
     if (!currentData) return;
 
     // 2. Update
     return await fetchWithErrorHandling(
-      `${API_BASE_URL}/v1/student-grades/${id}`,
+      `${API_BASE_URL}/v1/student-grades"/${id}`,
       {
         method: "PUT",
         body: JSON.stringify({
